@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 jsonRVM - json Relation (Model) Virtual Machine
-https://
+https://github.com/netkeep80/jsonRVM
 */
 #include "BaseVoc.h"
 
