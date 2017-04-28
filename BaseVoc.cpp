@@ -327,6 +327,14 @@ __forceinline value Array_div_value(const value& a, const value& b)
 }
 
 
+__forceinline value value_div_Array(const value& a, const value& b)
+{
+	value ar = b;
+	for (auto& it : ar.as_array()) it = a / it;
+	return ar;
+}
+
+
 value operator / (const value& sub, const value& obj)
 {
 	if (sub.type() == obj.type()) switch (sub.type())
@@ -337,7 +345,7 @@ value operator / (const value& sub, const value& obj)
 	default: return value();
 	}
 	else if (sub.is_array()) return Array_div_value(sub, obj);
-	else if (obj.is_array()) return Array_div_value(obj, sub);
+	else if (obj.is_array()) return value_div_Array(sub, obj);
 	else return value();
 }
 
