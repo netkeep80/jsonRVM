@@ -691,11 +691,7 @@ value&	jsonJoinString(EntView &EV)
 				break;	//	сложные типы не печатаем
 
 			case value::value_type::Number:
-				if (!it.as_number().is_integral())
-				{
-					wstring tmp = to_wstring(it.as_number().to_double());
-					result += tmp.replace(tmp.find(L"."[0]), 1, L",");
-				}
+				if (!it.as_number().is_integral())		result += to_wstring(it.as_number().to_double());
 				else if (it.as_number().is_int32())		result += to_wstring(it.as_number().to_int32());
 				else if (it.as_number().is_uint32())	result += to_wstring(it.as_number().to_uint32());
 				else if (it.as_number().is_int64())		result += to_wstring(it.as_number().to_int64());
@@ -830,17 +826,7 @@ value&	jsonWhere(EntView &EV)
 	}
 	else
 	{
-		EntView	ctx(EV.parent, EV.ent, EV.sub, EV.obj, EV.obj, objview);
-		ctx.subview = &objview;	//	результат проверки критерия записываем в проекцию объекта
-		ctx.objview = &subview;	//	проекция объекта это элемент из множества проекции субъекта
-		objview = ctx.jsonExec(EV.obj/*ctx.rel*/);
-		if (objview.is_boolean())
-		{
-			if (objview.as_bool())
-			{
-				jsonView = subview;	//	фильтруем
-			}
-		}
+		jsonView = value();
 	}
 
 	return jsonView;
