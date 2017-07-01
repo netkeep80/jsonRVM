@@ -497,14 +497,7 @@ value&		jsonForEach(EntView &EV)
 			i++;
 		}
 	}
-	else
-	{
-		EntView	ctx(EV.parent, EV.ent, EV.ent, EV.sub, EV.obj, subview);
-		ctx.subview = &subview;
-		ctx.objview = &objview;
-		subview = ctx.jsonExec(EV.sub/*ctx.rel*/);
-	}
-
+	
 	return subview;
 }
 
@@ -678,12 +671,15 @@ value&	jsonJoinString(EntView &EV)
 	value&	subview = EV.GetSubView(EV._sv);	//	array
 	value&	objview = EV.GetObjView(EV._ov);	//	separator string
 	wstring	result = L"";
+	bool	first = true;
 
 	if (objview.is_string() && subview.is_array())
 	{
 		for (auto& it : subview.as_array())
 		{
-			if (result != L"") result += objview.as_string();
+			if (first) first = false;
+			else       result += objview.as_string();
+
 			switch (it.type())
 			{
 			case value::value_type::Object:
