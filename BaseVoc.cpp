@@ -643,26 +643,31 @@ value&	jsonSplitString(EntView &EV)
 {
 	value&	subview = EV.GetSubView(EV._sv);
 	value&	objview = EV.GetObjView(EV._ov);
+	value&	result = *EV.jsonView;
 
 	if (objview.is_string() && subview.is_string())
 	{
 		const string_t& str = objview.as_string();
 		const string_t& delim = subview.as_string();
 		size_t prev = 0, pos = 0, i = 0;
-		*EV.jsonView = value::array();
+		result = value::array();
+
 		do
 		{
 			pos = str.find(delim, prev);
 			if (pos == string_t::npos) pos = str.length();
 			string_t token = str.substr(prev, pos - prev);
-			if (!token.empty()) (*EV.jsonView)[i++] = value(token);
+			if (token.empty())
+				result[i++] = value();
+			else
+				result[i++] = value(token);
 			prev = pos + delim.length();
 		} while (pos < str.length() && prev < str.length());
 	}
 	else
-		*EV.jsonView = value();
+		result = value();
 
-	return *EV.jsonView;
+	return result;
 }
 
 
