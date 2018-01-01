@@ -358,6 +358,74 @@ value&	jsonDiv(EntView &EV)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+value operator + (const value& a, const value& b);
+
+__forceinline value add_Array(const value& a, const value& b)
+{
+	value ar = value::array();
+	bool	not_is_null = false;
+
+	for (size_t i = 0; (i < a.size()) && (i < b.size()); i++)
+		ar[i] = a.at(i) + b.at(i);
+
+	return ar;
+}
+
+
+__forceinline value add_Number(const value& a, const value& b)
+{
+	if (a.is_integer() && b.is_integer())
+		return value(a.as_number().to_int64() + b.as_number().to_int64());
+	else
+		return value(a.as_double() + b.as_double());
+}
+
+
+__forceinline value add_Object(const value& a, const value& b)
+{
+	value obj = value();
+
+	for (auto it = a.as_object().cbegin(); it != a.as_object().cend(); it++)
+	{
+		if (b.has_field(it->first))	obj[it->first] = it->second + b.at(it->first);
+	}
+
+	return obj;
+}
+
+
+__forceinline value Array_add_value(const value& a, const value& b)
+{
+	value ar = a;
+	for (auto& it : ar.as_array()) it = it + b;
+	return ar;
+}
+
+
+value operator + (const value& sub, const value& obj)
+{
+	if (sub.type() == obj.type()) switch (sub.type())
+	{
+		SUB_CASE(add, Array, sub, obj);
+		SUB_CASE(add, Number, sub, obj);
+		SUB_CASE(add, Object, sub, obj);
+	default: return value();
+	}
+	else if (sub.is_array()) return Array_add_value(sub, obj);
+	else if (obj.is_array()) return Array_add_value(obj, sub);
+	else return value();
+}
+
+
+value&	jsonAdd(EntView &EV)
+{
+	value&	subview = EV.GetSubView(EV._sv);
+	value&	objview = EV.GetObjView(EV._ov);
+	return *EV.jsonView = subview + objview;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 value operator - (const value& a, const value& b);
 
 __forceinline value subtract_Array(const value& a, const value& b)
@@ -878,6 +946,37 @@ value&	jsonAnd(EntView &EV)
 	return *EV.jsonView = value(false);
 }
 
+
+value&	jsonIf(EntView &EV)
+{
+	value&	objview = EV.GetObjView(EV._ov);
+
+	if (objview.is_boolean())
+	{
+		bool	objval = objview.as_bool();
+		*EV.jsonView = value(objval);
+		if (objval) EV.GetSubView(EV._sv);
+		return *EV.jsonView;
+	}
+
+	return *EV.jsonView = value(false);
+}
+
+value&	jsonElse(EntView &EV)
+{
+	value&	objview = EV.GetObjView(EV._ov);
+
+	if (objview.is_boolean())
+	{
+		bool	objval = objview.as_bool();
+		*EV.jsonView = value(objval);
+		if (!objval) EV.GetSubView(EV._sv);
+		return *EV.jsonView;
+	}
+
+	return *EV.jsonView = value(false);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 bool	InitBaseVoc(EntView &EV)
@@ -901,6 +1000,7 @@ bool	InitBaseVoc(EntView &EV)
 	EV.Addx86Entity(L"double"s, jsonDouble );
 	EV.Addx86Entity(L"*"s, jsonMul );
 	EV.Addx86Entity(L"/"s, jsonDiv );
+	EV.Addx86Entity(L"+", jsonAdd);
 	EV.Addx86Entity(L"-", jsonSubtract );
 	EV.Addx86Entity(L"pow"s, jsonPower );
 	EV.Addx86Entity(L"^"s, jsonXOR );
@@ -909,16 +1009,18 @@ bool	InitBaseVoc(EntView &EV)
 	EV.Addx86Entity(L"foreach"s, jsonForEach );
 	EV.Addx86Entity(L"int_seq"s, jsonIntSeq );
 	EV.Addx86Entity(L"size"s, jsonSize );
-	EV.Addx86Entity(L"JoinString", jsonJoinString );
+	EV.Addx86Entity(L"JoinString"s, jsonJoinString );
 	EV.Addx86Entity(L"at"s, jsonAt );
 	EV.Addx86Entity(L"."s, jsonAt );
 	EV.Addx86Entity(L"=="s, jsonEq );
 	EV.Addx86Entity(L"!="s, jsonNotEq );
 	EV.Addx86Entity(L"sum"s, jsonSum );
-	EV.Addx86Entity(L"Where", jsonWhere );
-	EV.Addx86Entity(L"<", jsonBelow );
-	EV.Addx86Entity(L"And", jsonAnd );
-	EV.Addx86Entity(L"&&", jsonAnd );
+	EV.Addx86Entity(L"Where"s, jsonWhere );
+	EV.Addx86Entity(L"<"s, jsonBelow );
+	EV.Addx86Entity(L"And"s, jsonAnd );
+	EV.Addx86Entity(L"&&"s, jsonAnd );
+	EV.Addx86Entity(L"if"s, jsonIf);
+	EV.Addx86Entity(L"else"s, jsonElse);
 	return true;
 }
 
