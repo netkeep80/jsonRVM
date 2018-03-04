@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{114dae44-406f-4224-90e9-4afee692eb21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nlohmann">
+      <UniqueIdentifier>{6f9e2bc2-2f6c-4ab7-95e3-c5a58c955986}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jsonRVM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nlohmann\json.hpp">
+      <Filter>nlohmann</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="jsonRVM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test\1.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\2.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\agregate.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\array_to_vector.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\bug.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\bug2.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\bug3.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\CompareSaasLocalRM.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\CompareSaasLocalRM2.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\convert_to_2.0.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\csv_to_json.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\Data_PWA.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\Data_PWA2.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\FilterTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\FromFileTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\HttpGetSesTokInfo.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\HttpGetTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\HttpGetTestConnection.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\HttpPostSMS.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\IdentityTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\IdentityTest39.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\json_tests_to_2.0.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\LoadDLLTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\LoadDLLTest.json.out.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\LocalTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\process_json_files.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ProcessAllBPW.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ReadBPWFileTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\report_config.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\res.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\rmodel.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ScanFolderTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ScanFolderTest.json.out.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_0_index.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_index.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\test_next.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ToFilesTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\ToFileTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\VasotensAPITest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\WebAPITest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\WebAPITest2.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\WhereTest.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\xor_test.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="..\test\xor_test2.json">
+      <Filter>test</Filter>
+    </None>
+  </ItemGroup>
+</Project>
