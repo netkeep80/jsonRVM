@@ -1,2 +1,2 @@
 # jsonRVM
-json Relation (Model) Virtual Machine
+json Relations (Model) Virtual Machine

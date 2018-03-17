@@ -1,14 +1,39 @@
+/*
+MIT License
+
+Copyright © 2016 Vertushkin Roman Pavlovich
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+jsonRVM - json Relations (Model) Virtual Machine
+https://github.com/netkeep80/jsonRVM
+*/
 // main.cpp: определяет точку входа для консольного приложения.
 //
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
 #include <string>
-//#include "Common.h"
 #include "jsonRVM.h"
 
 
-void	store_out(string& filename, json& val)
+void	dump_json(string& filename, json& val)
 {
 	std::ofstream out(filename);
 	if (out.good())
@@ -19,23 +44,7 @@ void	store_out(string& filename, json& val)
 
 
 int main(int argc, char* argv[])
-{/*
-	json	a = "hello";
-	jsonPtr	b = &a;	//	explicit
-	json	c = b;
-	json	d = &a;	//	implicit
-	json*	e = c.get<jsonPtr>();
-	json*	f = d.get<jsonPtr>();
-	json*	g = (jsonPtr)d;
-	
-	cout << "a = " << a << "\n";
-	//cout << "b = " << b << "\n";
-	cout << "c = " << c << "\n";
-	cout << "d = " << d << "\n";
-	cout << "*e = " << *e << "\n";
-	cout << "*f = " << *f << "\n";
-	cout << "*g = " << *g << "\n";
-	*/
+{
 	char *fileNameInput = NULL, *fileNameOutput = NULL;
 
 	switch (argc)
@@ -50,14 +59,11 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	if (fileNameInput)
+	if (fileNameInput[0] == 0)
 	{
-		if (fileNameInput[0] == 0)
-		{
-			cout << "{ \"result\" : 1 }" << endl;
-			cerr << "Error filename.\n";
-			return 1;
-		}
+		cout << "{ \"result\" : 1 }" << endl;
+		cerr << "Error filename.\n";
+		return 1;
 	}
 
 	std::ifstream in(fileNameInput);
@@ -68,20 +74,21 @@ int main(int argc, char* argv[])
 	else
 		cerr << "Can't restore json object from the " << fileNameInput << " file.\n";
 
-	// добавляем в корневую сущность базовые словари
-	InitRVMDict(input_json);
+	// добавляем в корневую сущность базовый словарь
+	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
 	json	result;
+	jsonPtr	ResPtr = &result;
 	vector<string>	CallStack;
-	EntView	root(input_json, CallStack);
-	result = root.jsonExec(input_json);
-	cout << result.dump(3);
+	EntView	root(input_json, CallStack, ResPtr);
+	root.jsonExec(input_json, ResPtr);
+	cout << ResPtr->dump(3);
 
 	if (fileNameOutput)
-		store_out(string(fileNameOutput), input_json);
-	else
-		store_out(fileNameInput + ".out.json"s, input_json);
+		dump_json(string(fileNameOutput), input_json);
+	//else
+	//	dump_json(fileNameInput + ".out.json"s, input_json);
 
 	return 0;
 }

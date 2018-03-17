@@ -556,7 +556,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 		Семантика json значения в поле "=" у объекта json:
 
 1. Number  - число
-2. Boolean - булевый тип
+2. Boolean - булевый тип = true/false
 3. String  - строка
 4. Object  - карта свойств
 5. Array   - последовательность
@@ -578,7 +578,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 		Семантика json значений при исполнении  (json как байткод RVM):
 
 1. Number  - адрес json значения в памяти, которое необходимо исполнить RVM
-2. Boolean - возврат значения результата исполнения true/false
+2. Boolean - прервать исполнение и вернуть в вызывающий контекст значение true/false
 3. String  - иерархическое имя json значения относительно контекста исполнения,
 				которое необходимо исполнить RVM
 4. Object  - множество пар "имя поля": значение поля, где
@@ -606,12 +606,42 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 using namespace std;
 using namespace nlohmann;
 
-class EntView;
-typedef json& (*x86View)(EntView &Ctx);
-typedef void (*InitDict)(json &Ent);
-#define FN_INIT_DICT "?InitDLLDict@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+class jsonPtr
+{
+	union
+	{
+		size_t	_ptr;
+		json*	jptr;
+	};
+public:
+	jsonPtr() : _ptr(0) {}
+	jsonPtr(json* ptr) : jptr(ptr) {}
+	jsonPtr(const size_t ptr) : _ptr(ptr) {}
+	json* operator->() { return jptr; }
+	const json* operator->() const { return jptr; }
+	json& operator*() const { return *jptr; }
+	operator json*() const { return jptr; }
+	operator json() const { return json(_ptr); }
+	operator size_t() { return _ptr; }
+	operator size_t() const { return _ptr; }
+};
 
-void	InitRVMDict(json &Ent);
+namespace nlohmann
+{
+	namespace detail
+	{
+		inline void to_json(json& j, const jsonPtr& p) { j = (size_t)p; }
+		inline void from_json(const json& j, jsonPtr& p) { p = j.get<size_t>(); }
+	}
+}
+
+
+class EntView;
+typedef void (*x86View)(EntView &Ctx, const jsonPtr& ResPtr);
+typedef void (*InitDict)(json &Ent);
+
+#define IMPORT_RELATIONS_MODEL "?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+__declspec(dllexport) void	ImportRelationsModel(json &Ent);
 
 //	для отладки
 class PushCS
@@ -627,7 +657,7 @@ public:
 #define	CSPush(name)	PushCS LevelName(name, CallStack, ctx_level);
 
 template<class _T>
-inline vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
+vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 {
 	vector<_T> tokens;
 	size_t prev = 0, pos = 0;
@@ -642,39 +672,6 @@ inline vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 	return tokens;
 }
 
-
-class jsonPtr
-{
-public:
-	jsonPtr() : _ptr(nullptr) {}
-	jsonPtr(json* ptr) : _ptr(ptr) {}
-	jsonPtr(const uint64_t ptr) : _ptr((json*)ptr) {}
-	~jsonPtr() {}
-
-	operator json*() { return _ptr; }
-	operator uint64_t() { return (uint64_t)_ptr; }
-	operator const uint64_t() const { return (uint64_t)_ptr; }
-
-private:
-	json*	_ptr;
-};
-
-
-namespace nlohmann
-{
-	namespace detail
-	{
-		inline void to_json(json& j, const jsonPtr& p)
-		{
-			j = json((uint64_t)p);
-		}
-
-		inline void from_json(const json& j, jsonPtr& p)
-		{
-			p = (json*)j.get<uint64_t>();
-		}
-	}
-}
 
 /*
 		TODO:
@@ -692,7 +689,8 @@ namespace nlohmann
 */
 
 //	контекст исполнения экземпляра отношения
-//	содержит указатели на проекции сущностей
+//	содержит только указатели на json проекции сущностей
+//ToDo: переделать на jsonPtr
 class EntView : public map<string, json*>
 {
 public:
@@ -700,55 +698,52 @@ public:
 	vector<string>&	CallStack;	//	для отладки
 	EntView&		parent;		//	родительский контекст, перенесем в последнюю очередь
 
-	EntView(EntView& pRef, json& ent_ref) : ctx_level(pRef.ctx_level + 1),  parent(pRef), CallStack(pRef.CallStack)
+	EntView(EntView& pRef, json& ent_ref, const jsonPtr& ResPtr) : ctx_level(pRef.ctx_level + 1),  parent(pRef), CallStack(pRef.CallStack)
 	{
 		EntView&	EV = *this;
 		EV["#"] = pRef["#"];	//	'#' - root entity model
-		InitCTX(ent_ref);
+		InitCTX(ent_ref, ResPtr);
 	}
 
-	EntView(json& root_ref, vector<string> &cs)	: ctx_level(0), parent(*this), CallStack(cs)
+	EntView(json& root_ref, vector<string> &cs, const jsonPtr& ResPtr) : ctx_level(0), parent(*this), CallStack(cs)
 	{
 		EntView&	EV = *this;
 		EV["#"] = &root_ref;	//	'#'	- root entity model
-		InitCTX(root_ref);
+		InitCTX(root_ref, ResPtr);
 	}
 
-	void	InitCTX(json& ent_ref)
+	void	InitCTX(json& ent_ref, const jsonPtr& ResPtr)
 	{
 		EntView&	EV = *this;
 		try
 		{
 			//	у сущности должны быть поля '<-', '()', '->' с указателями на сущности или значениями типа: сущность, структура, массив
-			if (!ent_ref.count("<-"))	ent_ref["<-"] = json();
-			if (!ent_ref.count("->"))	ent_ref["->"] = json();
-			if (!ent_ref.count("="))	ent_ref["="] = json();
+			if (!ent_ref.count("<-"))	ent_ref["<-"] = json();	//	объект не отличается от самой сущности
+			if (!ent_ref.count("->"))	ent_ref["->"] = json();	//	субъект не отличается от самой сущности
 			//ent_ref["exec_log"] = json();	//	очищаем лог
-			EV[""] = &ent_ref;				//	''		- entity model is json document root
-			EV["="] = &ent_ref["="];		//	'='		- default entity view
-			EV["<-"] = &parent.jsonViewRef(ent_ref["<-"]);	//	'<-'	- object model
-			EV["()"] = &parent.jsonViewRef(ent_ref["()"]);	//	'()'	- relation model
-			EV["->"] = &parent.jsonViewRef(ent_ref["->"]);	//	'->'	- subject model
+			EV[""] = &ent_ref;				//	''	- entity model is json document root
+			EV["="] = ResPtr;				//	'='	- entity view, points to ResPtr
+			EV["<-"] = &parent.jsonViewRef(ent_ref["<-"], ResPtr);	//	'<-' - object model
+			EV["()"] = &parent.jsonViewRef(ent_ref["()"], ResPtr);	//	'()' - relation model
+			EV["->"] = &parent.jsonViewRef(ent_ref["->"], ResPtr);	//	'->' - subject model
 		}
 		catch (...)
 		{
-			ErrorMessage("InitCTX"s, "Exception, may be parent of ent_ref was changed!"s);
+			ErrorMessage("InitCTX"s, "Exception, may be parent of ent_ref was changed!"s, ResPtr);
 		}
 	}
 
-	json&	ErrorMessage(string& EntityInfo, string & ErrorInfo)
+	void	ErrorMessage(string& EntityInfo, string & ErrorInfo, const jsonPtr& ResPtr)
 	{
 		EntView&	EV = *this;
 		json&	log = (*EV[""])["exec_log"];
 		if (!log.is_object()) log = json::object();
 		log[EntityInfo] = ErrorInfo;
-		json&	view = (*EV[""])["="];
-		view = json();
-		return view;
+		*ResPtr = json();
 	}
 
 	//ToDo: переделать входной аргумент на string?
-	json&	jsonViewRef(json &View)
+	json&	jsonViewRef(json &View, const jsonPtr& ResPtr)
 	{
 		EntView&	EV = *this;
 		switch (View.type())
@@ -767,7 +762,10 @@ public:
 					if (EV.find(it) != EV.end())
 						res = EV[it];
 					else
-						return ErrorMessage("ViewRef"s, "Warning: property '"s + it + "' does not exist in entity context!"s);
+					{
+						ErrorMessage("ViewRef"s, "Warning: property '"s + it + "' does not exist in entity context!"s, ResPtr);
+						return *ResPtr;
+					}
 				}
 				else try
 				{
@@ -790,7 +788,8 @@ public:
 				}
 				catch (...)
 				{
-					return ErrorMessage("ViewRef"s, "Error: property with name " + String + " does not exist!");
+					ErrorMessage("ViewRef"s, "Error: property with name " + String + " does not exist!", ResPtr);
+					return *ResPtr;
 				}
 			}
 
@@ -799,8 +798,8 @@ public:
 		}
 
 		//	ссылка на модель этой сущности
-		case json::value_t::null:
-			return *EV[""];
+		case json::value_t::null:	//	местоимение контекстной сущности
+			return *ResPtr;
 
 			//	если это не адрес то возвращаем значение
 		default:
@@ -809,29 +808,53 @@ public:
 	}
 
 	//	исполнение объекта
-	json&	GetObjView()
-	{
+	void	GetObjView(jsonPtr& entview)
+	{	//	переделать на вызов _jsonView
+		string		name = "<-";
+		string		view = name + "/=";
 		EntView&	EV = *this;
-		if (EV[""] == EV["<-"]) return *EV["="];
-		CSPush("<-/"s);
-		//закэшированная проекция может принадлежать другому контексту (если только она контекстно независимая), поэтому пересчитываем
-		return EV.parent.jsonExec(*EV["<-"]);	
+		if (EV["="] == EV[name])	//	если свойство и есть сама сущность
+			entview = EV["="];	//	то возвращаем текущую проекцию сущности
+		else
+		{
+			if (EV.count(view)) entview = EV[view]; //	is view already exists?
+			else
+			{
+				CSPush(view);
+				if (!EV[""]->count(view)) (*EV[""])[view] = json();
+				entview = EV[view] = &(*EV[""])[view];	//	'name/=' - default entity view
+				EV.parent.jsonExec(*EV[name], entview);
+			}
+		}
 	}
 
 	//	исполнение субъекта
-	json&	GetSubView()
-	{
+	void	GetSubView(jsonPtr& entview)
+	{	//	переделать на вызов _jsonView
+		string		name = "->";
+		string		view = name + "/=";
 		EntView&	EV = *this;
-		if (EV[""] == EV["->"]) return *EV["="];
-		CSPush("->/"s);
-		//закэшированная проекция может принадлежать другому контексту (если только она контекстно независимая), поэтому пересчитываем
-		return EV.parent.jsonExec(*EV["->"]);
+		if (EV["="] == EV[name])
+			entview = EV["="];
+		else
+		{
+			if (EV.count(view)) entview = EV[view]; //	is view already exists?
+			else
+			{
+				CSPush(view);
+				if (!EV[""]->count(view)) (*EV[""])[view] = json();
+				entview = EV[view] = &(*EV[""])[view];	//	'name/=' - default entity view
+				EV.parent.jsonExec(*EV[name], entview);
+			}
+		}
 	}
+
 
 	//	Исполнение сущности либо json байткода
 	//	имеет прототип отличный от других контроллеров и не является контроллером
 	//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-	json&	jsonExec(json &Ent)//, json& View);
+	//ToDo: если возврат будет через аргумент то: надо передавать ссылку на указатель
+	void	jsonExec(json &Ent, const jsonPtr& ResPtr)
 	{
 		EntView&	EV = *this;
 		CSPush("exec : "s + Ent.dump());
@@ -848,44 +871,55 @@ public:
 				case json::value_t::number_unsigned:		//	адрес скомпилированной сущности
 					try     //	если это единственное отношение, то сохранять промежуточный результат не надо
 					{		//	если же это векторное отношение, то промежуточные результаты сохраняет вызывающая функция
-						return ((x86View)x86Exec.get<uint64_t>())(*this);
+						//return ((x86View)x86Exec.get<uint64_t>())(*this);
 						//ToDo: если возврат будет через аргумент то: просто передаём View дальше
+						((x86View)x86Exec.get<uint64_t>())(*this, ResPtr);
+						return;
 					}
 					catch (...) {}
 
 				default:
-					return ErrorMessage("jsonExec"s, "Wrong Ent['@'] json '"s + Ent.dump() + "'"s);
+					//return ErrorMessage("jsonExec"s, "Wrong Ent['@'] json '"s + Ent.dump() + "'"s);
 					//ToDo:	если возврат будет через аргумент то: записываем ошибку во View
+					ErrorMessage("jsonExec"s, "Wrong Ent['@'] json '"s + Ent.dump() + "'"s, ResPtr);
+					return;
 				}
-			}
-			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
-			{
-				EntView	ctx(EV, Ent);	//	создаём контекстную проекцию сущности
-				CSPush("() : "s + Ent["()"].dump());
-				//	если это единственное отношение, то сохранять промежуточный результат не надо, т.к после возврата ctx будет уничтожен
-				//	если же это векторное отношение, то промежуточные результаты сохраняет вызывающая функция
-				return ctx.jsonExec(*ctx["()"]);
-				//ToDo:	если возврат будет через аргумент то: просто передаём View дальше
 			}
 			else if (Ent.count("="))	//	это сущность с закэшированной дефолтной проекцией?
 			{
-				return Ent["="];
+				//return Ent["="];
 				//ToDo:	если возврат будет через аргумент то: записываем во View дефолтную проекцию
+				*ResPtr = Ent["="];
+				return;
+			}
+			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
+			{
+				EntView	ctx(EV, Ent, ResPtr);	//	создаём контекстную проекцию сущности
+				CSPush("() : "s + Ent["()"].dump());
+				//	если это единственное отношение, то сохранять промежуточный результат не надо, т.к после возврата ctx будет уничтожен
+				//	если же это векторное отношение, то промежуточные результаты сохраняет вызывающая функция
+				//return ctx.jsonExec(*ctx["()"]);
+				//ToDo:	если возврат будет через аргумент то: просто передаём View дальше
+				ctx.jsonExec(*ctx["()"], ResPtr);
+				return;
 			}
 			else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
-			{
+			{							//	переделать на вызов _jsonView
+				if (!ResPtr->is_object()) *ResPtr = json::object();
 				//	каждое отношение исполняется независимо
 				for (auto& it : Ent.items())
 				{
-					const string& key = it.key();
-					CSPush(key);
+					const string& sub = it.key();
+					CSPush(sub);
 					//	надо переделать на параллельное проецирование
-					json&	Subject = jsonViewRef(json(key));
-					Subject = jsonExec(it.value());	//	исполняем в текущем контексте
+					jsonPtr	subPtr = &jsonViewRef(json(sub), &(*ResPtr)[sub]);
+					(*ResPtr)[sub] = subPtr;
+					jsonExec(it.value(), subPtr);	//	исполняем в текущем контексте
 				}
-				//	возвращаем текущее состояние проекции сущности
-				return *EV["="];
+				//	необходимо вернуть массив из jsonPtr
+				//return *EV["="];
 				//ToDo:	если возврат будет через аргумент то: для каждого свойства определяем свой View
+				return;
 			}
 		}
 
@@ -895,41 +929,50 @@ public:
 			{
 				CSPush("["s + to_string(i) + "]"s);
 				//	сохраняем результат исполнения как проекцию сущности
-				EV["="] = &jsonExec(Ent[i]);
+				jsonExec(Ent[i], ResPtr);
 			}
 			//	возвращаем текущее состояние проекции сущности
-			return *EV["="];
+			//return *EV["="];
 			//ToDo:	если возврат будет через аргумент то: просто передаём View дальше
+			return;
 
 		//	абсолютный адрес сущности
 		case json::value_t::number_float:
 		case json::value_t::number_integer:
 		case json::value_t::number_unsigned:
-			return jsonExec(*(json*)(Ent.get<uint64_t>()));
+			//return jsonExec(*(json*)(Ent.get<uint64_t>()));
 			//ToDo:	если возврат будет через аргумент то: просто передаём View дальше
+			jsonExec(*(json*)(Ent.get<uint64_t>()), ResPtr);
+			return;
 
 		//	иерархическая символьная ссылка в проекции сущности
 		case json::value_t::string:			
-			return jsonExec(jsonViewRef(Ent));
+			//return jsonExec(jsonViewRef(Ent));
 			//ToDo:	если возврат будет через аргумент то: просто передаём View дальше
+			jsonExec(jsonViewRef(Ent, ResPtr), ResPtr);
+			return;
 
 		case json::value_t::boolean:
-			return Ent;
+			//return Ent;
 			//ToDo:	если возврат будет через аргумент то: записываем Ent во View
+			*ResPtr = Ent;
+			return;
 
-		default:
-			return *EV["="];
-			//ToDo:	если возврат будет через аргумент то: ничего не делаем
+		default:	//	null - означает отсутствие отношения, т.е. неизменность проекции
+			//return *EV["="];
+			//ToDo:	если возврат будет через аргумент то: возвращаем проекцию сущности
+			*ResPtr = *EV["="];
+			return;
 		}
 	}
 };
 
 
-//	создание сущности с закэшированной x86 проекцией
-__forceinline json&	Addx86Entity(json& CtxView, const string& Name, x86View x86, const string& Info)
+//	добавление сущности с закэшированной x86 проекцией
+__forceinline json&	Addx86Entity(json& Subject, const string& EntName, x86View View, const string& EntInfo)
 {
-	CtxView[Name] = json::object();
-	CtxView[Name]["@"] = (uint64_t)x86;
-	CtxView[Name]["Info"] = Info;
-	return CtxView[Name];
+	Subject[EntName] = json::object();
+	Subject[EntName]["@"] = (uint64_t)View;
+	Subject[EntName]["Info"] = EntInfo;
+	return Subject[EntName];
 }
