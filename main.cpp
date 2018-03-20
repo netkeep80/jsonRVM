@@ -78,12 +78,11 @@ int main(int argc, char* argv[])
 	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
-	json	result;
-	jsonPtr	ResPtr = &result;
+	json	Result;
 	vector<string>	CallStack;
-	EntView	root(input_json, CallStack, ResPtr);
-	root.jsonExec(input_json, ResPtr);
-	cout << ResPtr->dump(3);
+	EntView	root(input_json, CallStack, Result);
+	root.ExecEntity(input_json, Result);
+	cout << Result.dump(3);
 
 	if (fileNameOutput)
 		dump_json(string(fileNameOutput), input_json);
