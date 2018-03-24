@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 	//	создаём контекст исполнения
 	json	Result;
 	vector<string>	CallStack;
-	EntView	root(input_json, CallStack, Result);
+	Entity	root(input_json, CallStack, Result);
 	root.ExecEntity(input_json, Result);
 	cout << Result.dump(3);
 

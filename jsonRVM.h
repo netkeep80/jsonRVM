@@ -420,7 +420,7 @@ RM  - relations model
 В МО это функционирующий объект (активный объект).
 
 ------------------------------------------------------------------------------
-#/RVM/Exec
+#/RVM/exec
 Нахождение результата экземпляра отношения происходит через интерпретацию
 сущности (либо исполнение её json проекции) выступающей в качестве отношения
 в данном экземпляре. Что бы исполнить сущность, у неё должна быть проекция в
@@ -434,7 +434,7 @@ RM  - relations model
 туда для непосредственного исполнения в следующий/этот раз.
 
 ------------------------------------------------------------------------------
-#/RVM/Exec
+#/RVM/exec
 При исполнении МО существует два потока:
 	вертикальный - это поток байткода json
 	горизонтальный - это поток данных в json.
@@ -477,8 +477,8 @@ Null и Array - это не совсем типы, они принципиаль
 	проекции которых были найдены до вызова контроллера.
 
 ------------------------------------------------------------------------------
-#/=
-Самое основное отношение это отношение "#/=", оно исполняет сущность объекта указанного
+#/exec
+Самое основное отношение это отношение "#/exec", оно исполняет сущность объекта указанного
 в поле "<-" и записывает полученную проекцию в поле "->" субъекта.
 Именно это отношение исполняется для кажого поля json объекта, когда он указан
 в качестве отношения сущности.
@@ -507,7 +507,7 @@ Null и Array - это не совсем типы, они принципиаль
 3. Сущность в проекции (в объекте или массиве)
 4. Проекция в сущности (в полях "<-", "()", "->", "")
 5. Ссылка на сущность в сущности (в полях "<-", "()", "->")
-6. Ссылка на сущность в проекции (в поле "=")
+6. Ссылка на сущность в проекции (в поле "/")
 
 ------------------------------------------------------------------------------
 		О свойствах (атрибутах) и элементах сущности:
@@ -528,7 +528,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 то субъект у сущности это родительский View вмещающий проекцию данной сущности.
 Таким образом результат проецирования сущности сохраняется в поле "", значение которого состоит из отдельных
 проекций агрегируемых сущностей. Следовательно если объект json имеет признак того, что это сущность,
-то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "<-", "()", "->", "=".
+то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "<-", "()", "->", "/".
 Решением данной проблемы может быть вариант когда текстовые поля внутри объекта json будут хранить в себе кэши проекций
 данной сущности другими контроллерами (сущностями-отношениями), например:
 
@@ -562,7 +562,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 У корневых сущностей EntId === SubId.
 
 ------------------------------------------------------------------------------
-		Семантика json значения в поле "=" у объекта json:
+		Семантика json значения в поле "/" у объекта json:
 
 1. Number  - число
 2. Boolean - булевый тип = true/false
@@ -645,8 +645,8 @@ namespace nlohmann
 }
 
 
-class EntView;
-typedef void (*x86View)(EntView &Ctx, json &Result);
+class Entity;
+typedef void (*x86View)(Entity &Ctx, json &Result);
 typedef void (*InitDict)(json &Ent);
 
 #define IMPORT_RELATIONS_MODEL "?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
@@ -688,7 +688,7 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 1 добавить возвращаемое значение в качестве аргумента?
  это так же связано с функцией _jsonView
 2 вынести все методы в функции
-3 заменить EntView на json
+3 заменить Entity на json
 4 переделать скрипты
 5. сделать внешнюю библиотеку для тестирования ptt.dll 2.1
 5.1 протестировать
@@ -700,31 +700,31 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 //	контекст исполнения экземпляра отношения
 //	содержит только указатели на json проекции сущностей
 //ToDo: переделать на jsonPtr
-class EntView : public map<string, json*>
+class Entity : public map<string, json*>
 {
 public:
 	int				ctx_level;	//	для отладки
 	vector<string>&	CallStack;	//	для отладки
-	EntView&		parent;		//	родительский контекст, перенесем в последнюю очередь
+	Entity&		parent;		//	родительский контекст, перенесем в последнюю очередь
 
 	//ToDo: сделать единый конструктор
-	EntView(EntView& pRef, json& ent_ref, json &Result) : ctx_level(pRef.ctx_level + 1),  parent(pRef), CallStack(pRef.CallStack)
+	Entity(Entity& pRef, json& ent_ref, json &Result) : ctx_level(pRef.ctx_level + 1),  parent(pRef), CallStack(pRef.CallStack)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		EV["#"] = pRef["#"];	//	'#' - root entity model
 		InitCTX(ent_ref, Result);
 	}
 
-	EntView(json& root_ref, vector<string> &cs, json &Result) : ctx_level(0), parent(*this), CallStack(cs)
+	Entity(json& root_ref, vector<string> &cs, json &Result) : ctx_level(0), parent(*this), CallStack(cs)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		EV["#"] = &root_ref;	//	'#'	- root entity model
 		InitCTX(root_ref, Result);
 	}
 
 	void	InitCTX(json& ent_ref, json &Result)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		try		//	процедура проецирования сущности в контекст исполнения, объёдинить с jsonView
 		{
 			//	у сущности должны быть поля '<-', '()', '->' с указателями на сущности или значениями типа: сущность, структура, массив
@@ -738,21 +738,21 @@ public:
 		}
 		catch (...)
 		{
-			ErrorMessage("InitCTX"s, "Exception, may be parent of ent_ref was changed!"s, Result);
+			ErrorMessage("InitCTX"s, "Exception, may be parent of ent_ref was changed!"s);
+			Result = json();
 		}
 	}
 
-	void	ErrorMessage(string& EntityInfo, string & ErrorInfo, json &Result)
+	void	ErrorMessage(string &Name, string &Message)
 	{
-		EntView& EV = *this;
-		(*EV["ent"])["errors"][EntityInfo] = ErrorInfo;
-		Result = false;
+		json	&Ent = *(*this)["ent"];
+		//if (!Ent["errors"].is_object()) Ent["errors"] = json::object();
+		Ent["errors"][Name] = Message;
 	}
-
 
 	json*	ReferEntity(json &Ent, json &Result)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		switch (Ent.type())
 		{
 		case json::value_t::string:		//	hierarchical address in projected ent view
@@ -772,7 +772,8 @@ public:
 						res = EV[it] = &(*EV["ent"])[it];
 					else
 					{
-						ErrorMessage("ReferEntity"s, "Warning: 'ent' does not exist in entity context!"s, Result);
+						ErrorMessage("ReferEntity"s, "warning: 'ent' does not exist in entity context!"s);
+						Result = json();
 						return &Result;
 					}
 				}
@@ -797,7 +798,8 @@ public:
 				}
 				catch (...)
 				{
-					ErrorMessage("ReferEntity"s, "Error: property with name " + String + " does not exist!", Result);
+					ErrorMessage("ReferEntity"s, "error: property with name " + String + " does not exist!");
+					Result = json();
 					return &Result;
 				}
 			}
@@ -827,10 +829,10 @@ public:
 	//	получение проекции сущности
 	void	ViewEntity(json &Ent, json &Result)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		CSPush("view : "s + Ent.dump());	//	debug
 		//	если свойство и есть сама сущность то возвращаем текущую проекцию сущности
-		if (Result == &Ent)
+		if (&Result == &Ent)
 			return;
 		else switch (Ent.type())
 		{
@@ -843,25 +845,37 @@ public:
 			}
 			else if (Ent.count("@"))		//	это скомпилированная сущность?
 			{
-				json& x86Exec = Ent["@"];
-				switch (x86Exec.type())
+				try
 				{
-				case json::value_t::number_unsigned:		//	адрес скомпилированной сущности
-					try
+					json& x86Exec = Ent["@"];
+					switch (x86Exec.type())
 					{
-						((x86View)x86Exec.get<uint64_t>())(*this, Result);
+					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
+						((x86View)x86Exec.get<json::number_unsigned_t>())(*this, Result);
 						return;
-					}
-					catch (...) {}	//	ловим всё что можно поймать
 
-				default:
-					ErrorMessage("ViewEntity"s, "Wrong Ent['@'] json '"s + Ent.dump() + "'"s, Result);
-					return;
+					default:
+						Result = json();
+						throw("ViewEntity: wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
+					}
 				}
+				catch (string& error)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "exception: "s + error);
+				}
+				catch (json::exception& e)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+				}
+				catch (...)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "unknown exception, objmodel = '"s + EV["<-"]->dump() + "'"s);
+				}
+				return;
 			}
 			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
 			{
-				EntView	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
+				Entity	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
 				CSPush("() : "s + Ent["()"].dump());	//	debug
 				ctx.ExecEntity(*ctx["()"], Result);
 				return;
@@ -880,7 +894,7 @@ public:
 	//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
 	void	ExecEntity(json &Ent, json &Result)
 	{
-		EntView&	EV = *this;
+		Entity&	EV = *this;
 		CSPush("exec : "s + Ent.dump());	//	debug
 		switch (Ent.type())
 		{
@@ -893,25 +907,37 @@ public:
 			}
 			else if (Ent.count("@"))		//	это скомпилированная сущность?
 			{
-				json& x86Exec = Ent["@"];
-				switch (x86Exec.type())
+				try
 				{
-				case json::value_t::number_unsigned:		//	адрес скомпилированной сущности
-					try
+					json& x86Exec = Ent["@"];
+					switch (x86Exec.type())
 					{
-						((x86View)x86Exec.get<uint64_t>())(*this, Result);
+					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
+						((x86View)x86Exec.get<json::number_unsigned_t>())(*this, Result);
 						return;
-					}
-					catch (...) {}	//	ловим всё что можно поймать
 
-				default:
-					ErrorMessage("ExecEntity"s, "Wrong Ent['@'] json '"s + Ent.dump() + "'"s, Result);
-					return;
+					default:
+						Result = json();
+						throw("ExecEntity: wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
+					}
 				}
+				catch (string& error)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "exception: "s + error);
+				}
+				catch (json::exception& e)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+				}
+				catch (...)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "unknown exception, objmodel = '"s + EV["<-"]->dump() + "'"s);
+				}
+				return;
 			}
 			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
 			{
-				EntView	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
+				Entity	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
 				CSPush("() : "s + Ent["()"].dump());	//	debug
 				ctx.ExecEntity(*ctx["()"], Result);
 				return;
@@ -968,10 +994,11 @@ public:
 
 
 //	добавление сущности с закэшированной x86 проекцией
-__forceinline json&	Addx86Entity(json& Subject, const string& EntName, x86View View, const string& EntInfo)
+inline json&	Addx86Entity(json& Subject, const string& Name, x86View View, const string& Description)
 {
-	Subject[EntName] = json::object();
-	Subject[EntName]["@"] = (uint64_t)View;
-	Subject[EntName]["Info"] = EntInfo;
-	return Subject[EntName];
+	Subject[Name] = json::object();
+	Subject[Name]["@"] = (uint64_t)View;
+	Subject[Name]["Name"] = Name;
+	Subject[Name]["Description"] = Description;
+	return Subject[Name];
 }
