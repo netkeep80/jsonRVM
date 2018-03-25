@@ -1,7 +1,16 @@
-/*
-MIT License
+/*        c
+       v__|__m
+     m   _|_   v
+  c__|__/_|_\__|__c  jsonRVM
+     |  \_|_/  |     json Relations (Model) Virtual Machine
+     v    |    m     https://github.com/netkeep80/jsonRVM
+        __|__
+       /  |  \
+      /___|___\
+Fractal Triune Entity
 
-Copyright © 2016 Vertushkin Roman Pavlovich
+Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+Copyright © 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,9 +29,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-jsonRVM - json Relations (Model) Virtual Machine
-https://github.com/netkeep80/jsonRVM
 */
 /*
 ------------------------------------------------------------------------------
