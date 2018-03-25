@@ -53,7 +53,7 @@ inline string utf8_to_cp1251(const string &data)	{ return wstring_to_cp1251(_to_
 inline string utf8_to_oem(const string &data)		{ return wstring_to_oem(_to_wstring<CP_UTF8>(data)); }
 
 
-void	jsonScanFolder(EntView &EV, json &Result)
+void	jsonScanFolder(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -69,8 +69,6 @@ void	jsonScanFolder(EntView &EV, json &Result)
 				json	FileInfo, FileInfoVal;
 				HANDLE	handle;
 				WIN32_FIND_DATA search_data;
-				//	записываем в результат указатель на значение субъекта
-				Result = subview;
 				//	подготавливаем проекцию субъекта
 				subview = json::array();	//	если адрес субъекта совпадает с проекцией сущности, то проекция пападёт в результат
 
@@ -96,11 +94,12 @@ void	jsonScanFolder(EntView &EV, json &Result)
 		}
 	}
 
-	EV.ErrorMessage("ScanFolder"s, "ent/<- must be json object with PathFolder and FileNameFormat properties"s, Result);
+	throw("<-/ must be json object with PathFolder and FileNameFormat properties"s);
+	Result = false;
 }
 
 
-void	jsonFromFile(EntView &EV, json &Result)
+void	jsonFromFile(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -142,7 +141,7 @@ void	jsonFromFile(EntView &EV, json &Result)
 }
 
 
-void	jsonFileToString(EntView &EV, json &Result)
+void	jsonFileToString(Entity &EV, json &Result)
 {
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 	jsonPtr	subview = EV["->"];
@@ -174,7 +173,7 @@ void	jsonFileToString(EntView &EV, json &Result)
 }
 
 
-void	jsonFileToStringArray(EntView &EV, json &Result)
+void	jsonFileToStringArray(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -217,7 +216,7 @@ void	jsonFileToStringArray(EntView &EV, json &Result)
 
 
 
-void	jsonStringArrayToFile(EntView &EV, json &Result)
+void	jsonStringArrayToFile(Entity &EV, json &Result)
 {
 	json FileInfoVal;
 	json& subview = *EV["->"];
@@ -249,48 +248,37 @@ void	jsonStringArrayToFile(EntView &EV, json &Result)
 }
 
 
-void	fs_file_write_json(EntView &EV, json &Result)
+void	fs_file_write_json(Entity &EV, json &Result)
 {
-	try
+	json& subview = *EV["->"];
+	EV.parent.ViewEntity(*EV["<-"], Result);
+
+	if (subview.is_object())
 	{
-		json& subview = *EV["->"];
-		json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+		json& FileInfoVal = subview["FileInfo"];
 
-		if (subview.is_object())
+		if (FileInfoVal.is_object())
 		{
-			json FileInfoVal = subview["FileInfo"];
+			std::ofstream out((utf8_to_cp1251(FileInfoVal["PathFolder"]) + utf8_to_cp1251(FileInfoVal["FileName"])).c_str());
 
-			if (FileInfoVal.is_object())
+			if (out.good())
 			{
-				std::ofstream out((utf8_to_cp1251(FileInfoVal["PathFolder"]) + utf8_to_cp1251(FileInfoVal["FileName"])).c_str());
-
-				if (out.good())
-					out << objview;
-				else
-					throw string("Can't store object in the "s + FileInfoVal["PathFolder"].get<string>() + FileInfoVal["FileName"].get<string>() + " file.\n"s);
+				out << Result;
+				Result = true;
+				return;
 			}
 
-			Result = subview;
+			Result = false;
+			throw string("Can't open "s + FileInfoVal["PathFolder"].get<string>() + FileInfoVal["FileName"].get<string>() + " file.\n"s);
 		}
-		else
-			throw string("ent/-> must be json object with FileInfo { PathFolder, FileName } property"s);
 	}
-	catch (string& error)
-	{
-		EV.ErrorMessage("fs/file/write/json"s, "exception: "s + error, Result);
-	}
-	catch (json::exception& e)
-	{
-		EV.ErrorMessage("fs/file/write/json"s, "exception: "s + e.what() + "\nexception id: "s + to_string(e.id), Result);
-	}
-	catch (...)
-	{
-		EV.ErrorMessage("fs/file/write/json"s, "exception, objmodel = '"s + EV["->"]->dump() + "'"s, Result);
-	}
+
+	Result = false;
+	throw string("->/ must be json object with FileInfo { PathFolder, FileName } property"s);
 }
 
 
-void	jsonToFiles(EntView &EV, json &Result)
+void	jsonToFiles(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -300,7 +288,7 @@ void	jsonToFiles(EntView &EV, json &Result)
 	{
 	size_t i = 0;
 	for (auto& it : subview.as_array())
-	jsonToFiles(EntView(EV.parent, (*EV["ent"]), it, json(), objview), Model, (View)[i++]);
+	jsonToFiles(Entity(EV.parent, (*EV["ent"]), it, json(), objview), Model, (View)[i++]);
 	}
 	else*/
 	if (subview.is_object())
@@ -338,7 +326,7 @@ void	jsonToFiles(EntView &EV, json &Result)
 				FileInfoVal["PathFolder"] = cp1251_to_wstring(PathName);
 				FileInfoVal["FileName"] = cp1251_to_wstring(FileName);
 				FileInfo["FileInfo"] = FileInfoVal;
-				//jsonToFile(EntView(EV.parent, (*EV["ent"]), FileInfo, json(), it), Model, View[i++]);
+				//jsonToFile(Entity(EV.parent, (*EV["ent"]), FileInfo, json(), it), Model, View[i++]);
 			}
 		}
 		else
@@ -371,7 +359,7 @@ void	jsonToFiles(EntView &EV, json &Result)
 			FileInfoVal["PathFolder"] = cp1251_to_utf8(PathName);
 			FileInfoVal["FileName"] = cp1251_to_utf8(FileName);
 			FileInfo["FileInfo"] = FileInfoVal;
-			//jsonToFile(EntView(EV.parent, (*EV["ent"]), FileInfo, json(), objview), Model, View);
+			//jsonToFile(Entity(EV.parent, (*EV["ent"]), FileInfo, json(), objview), Model, View);
 		}
 	}
 }
