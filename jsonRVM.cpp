@@ -543,9 +543,20 @@ void __fastcall jsonUnion(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = subview;
-	for (auto& it : objview)
-		(Result).push_back(it);
+
+	if (!subview.is_array())
+	{
+		json	tmp = subview;
+		subview = json::array();
+		if (!tmp.is_null()) subview[0] = tmp;
+	}
+
+	if (!objview.is_array())
+	{
+		if (!objview.is_null()) subview.push_back(objview);
+	}
+	else
+		for (auto& it : objview) subview.push_back(it);
 }
 
 void __fastcall jsonNull(Entity &EV, json &Result) {}
