@@ -616,6 +616,38 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 
 */
 #pragma once
+#ifndef NLOHMANN_JSON_FWD_HPP
+#define NLOHMANN_JSON_FWD_HPP
+
+#include <cstdint> // int64_t, uint64_t
+#include <map> // map
+#include <memory> // allocator
+#include <string> // string
+#include <vector> // vector
+
+namespace nlohmann
+{
+	template<typename = void, typename = void>
+	struct adl_serializer;
+
+	template<template<typename U, typename V, typename... Args> class ObjectType =
+		std::map,
+		template<typename U, typename... Args> class ArrayType = std::vector,
+		class StringType = std::string, class BooleanType = bool,
+		class NumberIntegerType = std::int32_t,
+		class NumberUnsignedType = std::uint32_t,
+		class NumberFloatType = float,
+		template<typename U> class AllocatorType = std::allocator,
+		template<typename T, typename SFINAE = void> class JSONSerializer =
+		adl_serializer>
+		class basic_json;
+
+	template<typename BasicJsonType>
+	class json_pointer;
+
+	using json = basic_json<>;
+}
+#endif
 #include "./nlohmann/json.hpp"
 
 using namespace std;
@@ -650,13 +682,14 @@ namespace nlohmann
 	}
 }
 
-
 class Entity;
-typedef void (*x86View)(Entity &Ctx, json &Result);
-typedef void (*InitDict)(json &Ent);
+typedef void (__fastcall *x86View)(Entity &Ctx, json &Result);
 
-#define IMPORT_RELATIONS_MODEL "?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
-__declspec(dllexport) void	ImportRelationsModel(json &Ent);
+
+#define IMPORT_RELATIONS_MODEL "?ImportRelationsModel@@YIXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+__declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent);
+typedef void (__fastcall *InitDict)(json &Ent);
+static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
 
 //	для отладки
 class PushCS
@@ -669,7 +702,11 @@ public:
 	{ CallStack.pop_back();	}
 };
 
-#define	CSPush(name)	PushCS LevelName(name, CallStack, ctx_level);
+#ifdef _DEBUG
+#define	CSPush(name)	PushCS LevelName(name, EV.CallStack, EV.ctx_level);
+#else
+#define	CSPush(name)
+#endif
 
 template<class _T>
 vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
@@ -709,19 +746,28 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 class Entity : public map<string, json*>
 {
 public:
+#ifdef _DEBUG
 	int				ctx_level;	//	для отладки
 	vector<string>&	CallStack;	//	для отладки
+#endif
 	Entity&		parent;		//	родительский контекст, перенесем в последнюю очередь
 
-	//ToDo: сделать единый конструктор
+#ifdef _DEBUG
 	Entity(Entity& pRef, json& ent_ref, json &Result) : ctx_level(pRef.ctx_level + 1),  parent(pRef), CallStack(pRef.CallStack)
+#else
+	Entity(Entity& pRef, json& ent_ref, json &Result) : parent(pRef)
+#endif
 	{
 		Entity&	EV = *this;
 		EV["#"] = pRef["#"];	//	'#' - root entity model
 		InitCTX(ent_ref, Result);
 	}
 
+#ifdef _DEBUG
 	Entity(json& root_ref, vector<string> &cs, json &Result) : ctx_level(0), parent(*this), CallStack(cs)
+#else
+	Entity(json& root_ref, vector<string> &cs, json &Result) : parent(*this)
+#endif
 	{
 		Entity&	EV = *this;
 		EV["#"] = &root_ref;	//	'#'	- root entity model
@@ -752,7 +798,6 @@ public:
 	void	ErrorMessage(string &Name, string &Message)
 	{
 		json	&Ent = *(*this)["ent"];
-		//if (!Ent["errors"].is_object()) Ent["errors"] = json::object();
 		Ent["errors"][Name] = Message;
 	}
 
@@ -857,8 +902,11 @@ public:
 					switch (x86Exec.type())
 					{
 					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-						((x86View)x86Exec.get<json::number_unsigned_t>())(*this, Result);
+					{
+						x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
+						entBody(*this, Result);
 						return;
+					}
 
 					default:
 						Result = json();
@@ -883,7 +931,8 @@ public:
 			{
 				Entity	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
 				CSPush("() : "s + Ent["()"].dump());	//	debug
-				ctx.ExecEntity(*ctx["()"], Result);
+				json&	relRef = *ctx["()"];
+				ctx.ExecEntity(relRef, Result);
 				return;
 			}
 		}
@@ -919,8 +968,11 @@ public:
 					switch (x86Exec.type())
 					{
 					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-						((x86View)x86Exec.get<json::number_unsigned_t>())(*this, Result);
+					{
+						x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
+						entBody(*this, Result);
 						return;
+					}
 
 					default:
 						Result = json();
@@ -933,7 +985,11 @@ public:
 				}
 				catch (json::exception& e)
 				{
-					EV.ErrorMessage(Ent["Name"].get<string>(), "exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+					EV.ErrorMessage(Ent["Name"].get<string>(), "json::exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+				}
+				catch (std::exception& e)
+				{
+					EV.ErrorMessage(Ent["Name"].get<string>(), "std::exception: "s + e.what());
 				}
 				catch (...)
 				{
@@ -945,16 +1001,20 @@ public:
 			{
 				Entity	ctx(EV, Ent, Result);	//	создаём контекстную проекцию сущности
 				CSPush("() : "s + Ent["()"].dump());	//	debug
-				ctx.ExecEntity(*ctx["()"], Result);
+				json&	relRef = *ctx["()"];
+				ctx.ExecEntity(relRef, Result);
 				return;
 			}
 			else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 			{	//ToDo:	надо переделать на параллельное проецирование
 				for (auto& it : Ent.items())
 				{
-					CSPush(it.key());	//	debug
+					string&	key = it.key();
+					CSPush(key);	//	debug
 					//	проецируем в текущем контексте
-					EV.ViewEntity(*ReferEntity(it.value(), Result), *ReferEntity(json(it.key()), Result));
+					json&	subRef = *ReferEntity(json(key), Result);
+					json&	objRef = *ReferEntity(it.value(), Result);
+					EV.ViewEntity(objRef, subRef);
 				}
 				return;
 			}
@@ -977,13 +1037,19 @@ public:
 		case json::value_t::number_float:
 		case json::value_t::number_integer:
 		case json::value_t::number_unsigned:
-			ExecEntity(*(json*)(Ent.get<uint64_t>()), Result);
+		{
+			json&	entRef = *(json*)(Ent.get<uint64_t>());
+			ExecEntity(entRef, Result);
 			return;
+		}
 
 		//	иерархическая символьная ссылка в проекции сущности
-		case json::value_t::string:			
-			ExecEntity(*ReferEntity(Ent, Result), Result);
+		case json::value_t::string:		
+		{
+			json&	entRef = *ReferEntity(Ent, Result);
+			ExecEntity(entRef, Result);
 			return;
+		}
 
 		//	битовая маска для условного проектора ViewEntity
 		case json::value_t::boolean:

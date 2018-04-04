@@ -33,24 +33,136 @@ SOFTWARE.
 #include "JsonRVM.h"
 #include "windows.h"
 
-#ifdef CSPush
-#undef CSPush
-#endif
+//	Поддержка загрузки DLL
+template<UINT CodePage>
+wstring	_to_wstring(const string &data)
+{
+	size_t			nLengthW = data.length() + 1;
+	wchar_t*	str = new wchar_t[nLengthW];
+	memset(str, 0, nLengthW * sizeof(wchar_t));
+	MultiByteToWideChar(CodePage, 0, data.c_str(), -1, str, (int)nLengthW);
+	wstring	res(str);
+	delete[] str;
+	return res;
+}
 
-#define	CSPush(name)	PushCS LevelName(name, EV.CallStack, EV.ctx_level);
+inline wstring cp1251_to_wstring(const string &data) { return _to_wstring<CP_ACP>(data); }
+inline wstring oem_to_wstring(const string &data) { return  _to_wstring<CP_OEMCP>(data); }
+inline wstring utf8_to_wstring(const string &data) { return  _to_wstring<CP_UTF8>(data); }
 
-void	jsonClone(Entity &EV, json &Result)
+template<UINT CodePage>
+string	wstring_to_(const wstring &data)
+{
+	size_t	size = data.length();
+	if (size)
+	{
+		char*		str = new char[2 * size + 1];	//	for russian utf8 string case
+		memset(str, 0, 2 * size + 1);
+		WideCharToMultiByte(CodePage, 0, data.c_str(), -1, str, 2 * (int)size + 1, NULL, NULL);
+		string		res(str);
+		delete[] str;
+		return res;
+	}
+	else
+		return string();
+}
+
+inline string to_cp1251_string(const wstring &data) { return wstring_to_<CP_ACP>(data); }
+inline string to_oem_string(const wstring &data) { return  wstring_to_<CP_OEMCP>(data); }
+inline string to_utf8_string(const wstring &data) { return  wstring_to_<CP_UTF8>(data); }
+
+class DLL
+{
+public:
+	HMODULE		handle;
+	InitDict	Init;
+	DLL() : handle(nullptr), Init(nullptr) {}
+};
+
+
+class DLLs : public map<string, DLL>
+{
+public:
+	DLLs() {}
+	~DLLs()
+	{
+		for each (auto dll in *this) if (dll.second.handle)
+		{
+			FreeLibrary(dll.second.handle);
+			dll.second.handle = nullptr;
+			dll.second.Init = nullptr;
+		}
+	}
+
+	bool	LoadDict(const string& LibName)
+	{
+		DLLs&	it = *this;
+		if (find(LibName) == end())	it[LibName] = DLL();
+
+		if (!it[LibName].handle)
+		{
+			//	перезагружаем либу
+			it[LibName].handle = LoadLibrary(utf8_to_wstring(LibName).c_str());
+
+			if (it[LibName].handle)
+			{
+				(FARPROC &)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
+				if (!it[LibName].Init)
+					throw(LibName + " does't has function "s + IMPORT_RELATIONS_MODEL);
+			}
+			else
+			{
+				it[LibName].Init = nullptr;
+				throw("can't load '" + LibName + "' dictionary"s);
+			}
+		}
+
+		return (it[LibName].Init != nullptr);
+	}
+} LoadedDLLs;
+
+
+void __fastcall jsonLoadDLL(Entity &EV, json &Result)
+{
+	json& subview = *EV["->"];//	определяем сущность для размещения словаря
+	EV.parent.ViewEntity(*EV["<-"], Result);//	вычисляем имя бибилиотеки
+
+	if (Result.is_object())
+	{
+		if (Result.count("PathFolder") && Result.count("FileName"))
+		{
+			string	FullFileName = Result["PathFolder"].get<string>() + Result["FileName"].get<string>();
+			if (!subview.is_object()) subview = json::object();
+			Result = LoadedDLLs.LoadDict(FullFileName);
+			if (Result) LoadedDLLs[FullFileName].Init(subview);
+			return;
+		}
+	}
+
+	Result = false;
+	throw("<-/ must be json object with PathFolder, FileName properties"s);
+}
+
+
+void __fastcall sleep_ms(Entity &EV, json &Result)
+{
+	json& subview = *EV["->"];
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	Sleep(objview.get<json::number_unsigned_t>());
+}
+
+void __fastcall jsonClone(Entity &EV, json &Result)
 {	//	детальное клонирование json значения
 	*EV["->"] = *EV["<-"];
 }
 
-void	jsonView(Entity &EV, json &Result)
+void __fastcall jsonView(Entity &EV, json &Result)
 {	//	получаем ссылку на субъект, что бы знать куда записывать проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 	EV.parent.ViewEntity(*EV["<-"], *EV["->"]);	//	проецируем во внешнем контексте
 }
 
-void	jsonExec(Entity &EV, json &Result)
+void __fastcall jsonExec(Entity &EV, json &Result)
 {	//	получаем ссылку на субъект, что бы знать где исполнять проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт исплнение
 	EV.parent.ExecEntity(*EV["<-"], *EV["->"]);	//	исполняем во внешнем контексте
@@ -122,12 +234,6 @@ json array_operation(const json& a, const json& b)
 }
 
 #define SUB_CASE(op,type,op1,op2) case json::value_t::##type: return op##_##type(op1,op2);
-
-#ifdef CSPush
-#undef CSPush
-#endif
-
-#define	CSPush(name)	PushCS LevelName(name, EV.CallStack, EV.ctx_level);
 
 json operator ^ (const json& a, const json& b);
 
@@ -258,7 +364,7 @@ json operator ^ (const json& a, const json& b)
 	else return json::array({ a, b });
 }
 
-void	jsonXOR(Entity &EV, json &Result)
+void __fastcall jsonXOR(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -303,7 +409,7 @@ typedef json::number_unsigned_t	ju;
 	OPP_ANYTO(operation, ju, number_unsigned)
 
 #define	OP_BODY( name, operation )								\
-void	json##name (Entity &EV, json &Result)					\
+void __fastcall json##name (Entity &EV, json &Result)					\
 {																\
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);		\
 	EV.parent.ViewEntity(*EV["->"], Result);					\
@@ -317,7 +423,7 @@ OP_BODY(Mul, *=);
 OP_BODY(Div, /=);
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-void	jsonPower(Entity &EV, json &Result)
+void __fastcall jsonPower(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -341,7 +447,7 @@ void	jsonPower(Entity &EV, json &Result)
 		Result = "power: error, both arguments must be numbers!"s;
 }
 
-void	jsonSqrt(Entity &EV, json &Result)
+void __fastcall jsonSqrt(Entity &EV, json &Result)
 {
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 	json& subview = *EV["->"];
@@ -359,7 +465,7 @@ void	jsonSqrt(Entity &EV, json &Result)
  subv  | null  | foreach val in Result: val = subv(val)
  subv  | objv  | foreach val in objv:   val = subv(val)
 */
-void	jsonForEach(Entity &EV, json &Result)
+void __fastcall jsonForEach(Entity &EV, json &Result)
 {
 	json subview = *EV["->"];
 	EV.parent.ViewEntity(*EV["<-"], Result);
@@ -384,7 +490,7 @@ void	jsonForEach(Entity &EV, json &Result)
 	}
 }
 
-void	jsonSize(Entity &EV, json &Result)
+void __fastcall jsonSize(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	EV.parent.ViewEntity(*EV["<-"], Result);
@@ -392,7 +498,7 @@ void	jsonSize(Entity &EV, json &Result)
 }
 
 #define define_json_is_type(json_type)						\
-void	json_is_##json_type(Entity &EV, json &Result)		\
+void __fastcall json_is_##json_type(Entity &EV, json &Result)		\
 {															\
 	json& subview = *EV["->"];								\
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);	\
@@ -411,7 +517,7 @@ define_json_is_type(string)
 define_json_is_type(structured)
 define_json_is_type(discarded)
 
-void	jsonIntegerSequence(Entity &EV, json &Result)
+void __fastcall jsonIntegerSequence(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -433,7 +539,7 @@ void	jsonIntegerSequence(Entity &EV, json &Result)
 	}
 }
 
-void	jsonUnion(Entity &EV, json &Result)
+void __fastcall jsonUnion(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -442,9 +548,9 @@ void	jsonUnion(Entity &EV, json &Result)
 		(Result).push_back(it);
 }
 
-void	jsonNull(Entity &EV, json &Result) {}
+void __fastcall jsonNull(Entity &EV, json &Result) {}
 
-void	jsonInt32(Entity &EV, json &Result)
+void __fastcall jsonInt32(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -480,7 +586,7 @@ void	jsonInt32(Entity &EV, json &Result)
 	Result = subview;
 }
 
-void	jsonDouble(Entity &EV, json &Result)
+void __fastcall jsonDouble(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -516,7 +622,7 @@ void	jsonDouble(Entity &EV, json &Result)
 	Result = subview;
 }
 
-void	jsonSplitstring(Entity &EV, json &Result)
+void __fastcall jsonSplitstring(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -545,7 +651,7 @@ void	jsonSplitstring(Entity &EV, json &Result)
 
 }
 
-void	jsonJoinstring(Entity &EV, json &Result)
+void __fastcall jsonJoinstring(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -592,7 +698,7 @@ void	jsonJoinstring(Entity &EV, json &Result)
 	Result = json(result);
 }
 
-void	jsonAt(Entity &EV, json &Result)
+void __fastcall jsonAt(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -628,21 +734,21 @@ void	jsonAt(Entity &EV, json &Result)
 		Result = json();
 }
 
-void	jsonIsEq(Entity &EV, json &Result)
+void __fastcall jsonIsEq(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = json(subview == objview);
+	Result = subview == objview;
 }
 
-void	jsonIsNotEq(Entity &EV, json &Result)
+void __fastcall jsonIsNotEq(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = json(subview != objview);
+	Result = subview != objview;
 }
 
-void	jsonSum(Entity &EV, json &Result)
+void __fastcall jsonSum(Entity &EV, json &Result)
 {
 	__int64	isum = 0;
 	double	dsum = 0.0;
@@ -673,7 +779,7 @@ void	jsonSum(Entity &EV, json &Result)
 	Result = subview;
 }
 
-void	jsonWhere(Entity &EV, json &Result)
+void __fastcall jsonWhere(Entity &EV, json &Result)
 {
 	json subview = *EV["->"];	//	фильтр для where clause, при исполнении должен возвращать bool
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -697,7 +803,7 @@ void	jsonWhere(Entity &EV, json &Result)
 	}
 }
 
-void	jsonBelow(Entity &EV, json &Result)	//	<
+void __fastcall jsonBelow(Entity &EV, json &Result)	//	<
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -729,7 +835,7 @@ void	jsonBelow(Entity &EV, json &Result)	//	<
 	}
 }
 
-void	jsonAnd(Entity &EV, json &Result)
+void __fastcall jsonAnd(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -742,7 +848,7 @@ void	jsonAnd(Entity &EV, json &Result)
 	Result = false;
 }
 
-void	IfObjTrueThenExecSub(Entity &EV, json &Result)
+void __fastcall IfObjTrueThenExecSub(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	EV.parent.ViewEntity(*EV["<-"], Result);
@@ -757,7 +863,7 @@ void	IfObjTrueThenExecSub(Entity &EV, json &Result)
 		EV.parent.ExecEntity(subview, Result);
 }
 
-void	IfObjFalseThenExecSub(Entity &EV, json &Result)
+void __fastcall IfObjFalseThenExecSub(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	EV.parent.ViewEntity(*EV["<-"], Result);
@@ -772,123 +878,37 @@ void	IfObjFalseThenExecSub(Entity &EV, json &Result)
 		EV.parent.ExecEntity(subview, Result);
 }
 
-//	Поддержка загрузки DLL
-template<UINT CodePage>
-wstring	_to_wstring(const string &data)
+void __fastcall ExecSubWhileObjTrue(Entity &EV, json &Result)
 {
-	size_t			nLengthW = data.length() + 1;
-	wchar_t*	str = new wchar_t[nLengthW];
-	memset(str, 0, nLengthW * sizeof(wchar_t));
-	MultiByteToWideChar(CodePage, 0, data.c_str(), -1, str, (int)nLengthW);
-	wstring	res(str);
-	delete[] str;
-	return res;
-}
+	json& subview = *EV["->"];
 
-inline wstring cp1251_to_wstring(const string &data) { return _to_wstring<CP_ACP>(data); }
-inline wstring oem_to_wstring(const string &data) { return  _to_wstring<CP_OEMCP>(data); }
-inline wstring utf8_to_wstring(const string &data) { return  _to_wstring<CP_UTF8>(data); }
-
-template<UINT CodePage>
-string	wstring_to_(const wstring &data)
-{
-	size_t	size = data.length();
-	if (size)
+	while (true)
 	{
-		char*		str = new char[2 * size + 1];	//	for russian utf8 string case
-		memset(str, 0, 2 * size + 1);
-		WideCharToMultiByte(CodePage, 0, data.c_str(), -1, str, 2 * (int)size + 1, NULL, NULL);
-		string		res(str);
-		delete[] str;
-		return res;
-	}
-	else
-		return string();
-}
+		EV.parent.ViewEntity(*EV["<-"], Result);
 
-inline string to_cp1251_string(const wstring &data) { return wstring_to_<CP_ACP>(data); }
-inline string to_oem_string(const wstring &data) { return  wstring_to_<CP_OEMCP>(data); }
-inline string to_utf8_string(const wstring &data) { return  wstring_to_<CP_UTF8>(data); }
-
-class DLL
-{
-public:
-	HMODULE		handle;
-	InitDict	Init;
-	DLL() : handle(nullptr), Init(nullptr) {}
-};
-
-
-class DLLs : public map<string, DLL>
-{
-public:
-	DLLs() {}
-	~DLLs()
-	{
-		for each (auto dll in *this) if (dll.second.handle)
+		if (!Result.is_boolean())
 		{
-			FreeLibrary(dll.second.handle);
-			dll.second.handle = nullptr;
-			dll.second.Init = nullptr;
-		}
-	}
-
-	bool	LoadDict(const string& LibName)
-	{
-		DLLs&	it = *this;
-		if (find(LibName) == end())	it[LibName] = DLL();
-
-		if (!it[LibName].handle)
-		{
-			//	перезагружаем либу
-			it[LibName].handle = LoadLibrary(utf8_to_wstring(LibName).c_str());
-
-			if (it[LibName].handle)
-			{
-				(FARPROC &)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
-				if (!it[LibName].Init)
-					throw(LibName + " does't has function "s + IMPORT_RELATIONS_MODEL);
-			}
-			else
-			{
-				it[LibName].Init = nullptr;
-				throw("can't load '" + LibName + "' dictionary"s);
-			}
+			Result = false;
+			throw("<-/ must be boolean!"s);
 		}
 
-		return (it[LibName].Init != nullptr);
-	}
-} LoadedDLLs;
-
-
-void	jsonLoadDLL(Entity &EV, json &Result)
-{
-	json& subview = *EV["->"];//	определяем сущность для размещения словаря
-	EV.parent.ViewEntity(*EV["<-"], Result);//	вычисляем имя бибилиотеки
-
-	if (Result.is_object())
-	{
-		if (Result.count("PathFolder") && Result.count("FileName"))
-		{
-			string	FullFileName = Result["PathFolder"].get<string>() + Result["FileName"].get<string>();
-			if (!subview.is_object()) subview = json::object();
-			Result = LoadedDLLs.LoadDict(FullFileName);
-			if (Result) LoadedDLLs[FullFileName].Init(subview);
+		if (Result.get<bool>())
+			EV.parent.ExecEntity(subview, Result);
+		else
 			return;
-		}
 	}
-
-	Result = false;
-	throw("<-/ must be json object with PathFolder, FileName properties"s);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void	ImportRelationsModel(json &Ent)
+void __fastcall ImportRelationsModel(json &Ent)
 {
+	Addx86Entity(Ent["RVM"]["load"], "dll"s, jsonLoadDLL, "загружает словарь сущностей из dll");
+	Addx86Entity(Ent["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 	Addx86Entity(Ent["RVM"], "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 	Addx86Entity(Ent["RVM"], "exec"s, jsonExec, "EcexEntity: Executes object model in parent ctx and then set subject value"s);
-	Addx86Entity(Ent["RVM"]["load"], "dll"s, jsonLoadDLL, "загружает словарь сущностей из dll");
+	Addx86Entity(Ent, "="s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+	Addx86Entity(Ent, "clone"s, jsonClone, "clone: clone object model to subject"s);
 
 #define map_json_is_type(json_type)	Addx86Entity(Ent, "is_"s + #json_type, json_is_##json_type, ""s );
 	map_json_is_type(array);
@@ -933,6 +953,5 @@ void	ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent, "&&"s, jsonAnd, ""s);
 	Addx86Entity(Ent, "then"s, IfObjTrueThenExecSub, ""s);
 	Addx86Entity(Ent, "else"s, IfObjFalseThenExecSub, "");
-	//Addx86Entity(Ent, "="s, jsonCopy, "jsonCopy: Copy object view to subject value"s);
-	Addx86Entity(Ent, "clone"s, jsonClone, "clone: clone object model to subject"s);
+	Addx86Entity(Ent, "while"s, ExecSubWhileObjTrue, ""s);
 }

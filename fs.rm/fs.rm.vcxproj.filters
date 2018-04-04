@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="nlohmann">
-      <UniqueIdentifier>{4ca73fd8-7125-402f-8ef2-7ec766aaed1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="jsonRVM">
       <UniqueIdentifier>{c2b70619-b044-4d00-a708-2c8d85e61d75}</UniqueIdentifier>
     </Filter>
@@ -32,9 +29,6 @@
     </ClInclude>
     <ClInclude Include="fs.rm.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\nlohmann\json.hpp">
-      <Filter>nlohmann</Filter>
     </ClInclude>
     <ClInclude Include="..\jsonRVM.h">
       <Filter>jsonRVM</Filter>

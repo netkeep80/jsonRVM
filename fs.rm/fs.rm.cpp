@@ -53,7 +53,7 @@ inline string utf8_to_cp1251(const string &data)	{ return wstring_to_cp1251(_to_
 inline string utf8_to_oem(const string &data)		{ return wstring_to_oem(_to_wstring<CP_UTF8>(data)); }
 
 
-void	jsonScanFolder(Entity &EV, json &Result)
+void __fastcall jsonScanFolder(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -99,7 +99,7 @@ void	jsonScanFolder(Entity &EV, json &Result)
 }
 
 
-void	jsonFromFile(Entity &EV, json &Result)
+void __fastcall jsonFromFile(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -141,7 +141,7 @@ void	jsonFromFile(Entity &EV, json &Result)
 }
 
 
-void	jsonFileToString(Entity &EV, json &Result)
+void __fastcall jsonFileToString(Entity &EV, json &Result)
 {
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 	jsonPtr	subview = EV["->"];
@@ -173,7 +173,7 @@ void	jsonFileToString(Entity &EV, json &Result)
 }
 
 
-void	jsonFileToStringArray(Entity &EV, json &Result)
+void __fastcall jsonFileToStringArray(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -216,7 +216,7 @@ void	jsonFileToStringArray(Entity &EV, json &Result)
 
 
 
-void	jsonStringArrayToFile(Entity &EV, json &Result)
+void __fastcall jsonStringArrayToFile(Entity &EV, json &Result)
 {
 	json FileInfoVal;
 	json& subview = *EV["->"];
@@ -248,7 +248,7 @@ void	jsonStringArrayToFile(Entity &EV, json &Result)
 }
 
 
-void	fs_file_write_json(Entity &EV, json &Result)
+void __fastcall fs_file_write_json(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	EV.parent.ViewEntity(*EV["<-"], Result);
@@ -278,7 +278,7 @@ void	fs_file_write_json(Entity &EV, json &Result)
 }
 
 
-void	jsonToFiles(Entity &EV, json &Result)
+void __fastcall jsonToFiles(Entity &EV, json &Result)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -365,7 +365,7 @@ void	jsonToFiles(Entity &EV, json &Result)
 }
 
 
-FSRM_API void ImportRelationsModel(json &Ent)
+FSRM_API void __fastcall ImportRelationsModel(json &Ent)
 {
 	Addx86Entity(Ent["fs"]["dir"], "scan"s, jsonScanFolder, "Scanning filesystem directory"s);
 	
