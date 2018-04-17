@@ -122,47 +122,57 @@ public:
 } LoadedDLLs;
 
 
-void __fastcall jsonLoadDLL(Entity &EV, json &Result)
+void __fastcall jsonLoadDLL(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];//	определяем сущность для размещения словаря
-	EV.parent.ViewEntity(*EV["<-"], Result);//	вычисляем имя бибилиотеки
+	EV.parent.ViewEntity(*EV["<-"], Value);//	вычисляем имя бибилиотеки
 
-	if (Result.is_object())
+	if (Value.is_object())
 	{
-		if (Result.count("PathFolder") && Result.count("FileName"))
+		if (Value.count("PathFolder") && Value.count("FileName"))
 		{
-			string	FullFileName = Result["PathFolder"].get<string>() + Result["FileName"].get<string>();
+			string	FullFileName = Value["PathFolder"].get<string>() + Value["FileName"].get<string>();
 			if (!subview.is_object()) subview = json::object();
-			Result = LoadedDLLs.LoadDict(FullFileName);
-			if (Result) LoadedDLLs[FullFileName].Init(subview);
+			Value = LoadedDLLs.LoadDict(FullFileName);
+			if (Value) LoadedDLLs[FullFileName].Init(subview);
 			return;
 		}
 	}
 
-	Result = false;
-	throw("<-/ must be json object with PathFolder, FileName properties"s);
+	Value = false;
+	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder, FileName properties"s);
 }
 
 
-void __fastcall sleep_ms(Entity &EV, json &Result)
+void __fastcall sleep_ms(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 	Sleep(objview.get<json::number_unsigned_t>());
 }
 
-void __fastcall jsonClone(Entity &EV, json &Result)
+void __fastcall jsonClone(Entity &EV, json &Value)
 {	//	детальное клонирование json значения
 	*EV["->"] = *EV["<-"];
 }
 
-void __fastcall jsonView(Entity &EV, json &Result)
+void __fastcall jsonView(Entity &EV, json &Value)
 {	//	получаем ссылку на субъект, что бы знать куда записывать проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 	EV.parent.ViewEntity(*EV["<-"], *EV["->"]);	//	проецируем во внешнем контексте
 }
 
-void __fastcall jsonExec(Entity &EV, json &Result)
+void __fastcall jsonExternViewObj(Entity &EV, json &Value)
+{
+	EV.parent.ViewEntity(*EV["<-"], Value);	//	проецируем во внешнем контексте
+}
+
+void __fastcall jsonExternViewSub(Entity &EV, json &Value)
+{
+	EV.parent.ViewEntity(*EV["->"], Value);	//	проецируем во внешнем контексте
+}
+
+void __fastcall jsonExec(Entity &EV, json &Value)
 {	//	получаем ссылку на субъект, что бы знать где исполнять проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт исплнение
 	EV.parent.ExecEntity(*EV["<-"], *EV["->"]);	//	исполняем во внешнем контексте
@@ -275,9 +285,9 @@ __forceinline json xor_boolean(const json& a, const json& b)
 	else return json();
 }
 
-__forceinline json xor_number_float(const json& a, const json& b) { return diff_operation<double, _sub<double>>(a, b); }
-__forceinline json xor_number_integer(const json& a, const json& b) { return diff_operation<int64_t, _sub<int64_t>>(a, b); }
-__forceinline json xor_number_unsigned(const json& a, const json& b) { return diff_operation<uint64_t, _sub<uint64_t>>(a, b); }
+__forceinline json xor_number_float(const json& a, const json& b) { return diff_operation<json::number_float_t, _sub<json::number_float_t>>(a, b); }
+__forceinline json xor_number_integer(const json& a, const json& b) { return diff_operation<json::number_integer_t, _sub<json::number_integer_t>>(a, b); }
+__forceinline json xor_number_unsigned(const json& a, const json& b) { return diff_operation<json::number_unsigned_t, _sub<json::number_unsigned_t>>(a, b); }
 
 __forceinline json xor_object(const json& a, const json& b)
 {
@@ -364,11 +374,11 @@ json operator ^ (const json& a, const json& b)
 	else return json::array({ a, b });
 }
 
-void __fastcall jsonXOR(Entity &EV, json &Result)
+void __fastcall jsonXOR(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = subview ^ objview;
+	Value = subview ^ objview;
 }
 
 ////////////////////////////////////////////////////////
@@ -396,113 +406,123 @@ typedef json::number_unsigned_t	ju;
 
 #define OPP_STO(operation,stype,stype_id,otype,otype_id)										\
 	case (uint8_t(json::value_t::stype_id) << sub_field) | uint8_t(json::value_t::otype_id):	\
-	{ Result.get_ref<stype&>() operation stype##( objview.get<otype>() ); return; }
+	{ Value = (subview.get_ref<stype&>()) operation (objview.get_ref<otype&>()); return; }
 
-#define OPP_ANYTO(operation,type,type_id)						\
-	OPP_STO(operation, jf, number_float,    type, type_id)		\
-	OPP_STO(operation, ji, number_integer,  type, type_id)		\
+#define OPP_ANYTO(operation,type,type_id)														\
+	OPP_STO(operation, jf, number_float,    type, type_id)										\
+	OPP_STO(operation, ji, number_integer,  type, type_id)										\
 	OPP_STO(operation, ju, number_unsigned, type, type_id)
 
-#define VM_OPP(operation)										\
-	OPP_ANYTO(operation, jf, number_float)						\
-	OPP_ANYTO(operation, ji, number_integer)					\
+#define VM_OPP(operation)																		\
+	OPP_ANYTO(operation, jf, number_float)														\
+	OPP_ANYTO(operation, ji, number_integer)													\
 	OPP_ANYTO(operation, ju, number_unsigned)
 
-#define	OP_BODY( name, operation )								\
-void __fastcall json##name (Entity &EV, json &Result)					\
-{																\
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);		\
-	EV.parent.ViewEntity(*EV["->"], Result);					\
-	switch( (uint8_t(Result.type()) << sub_field) | uint8_t(objview.type()) )	\
-	{ VM_OPP( operation ) default: Result = json(); }			\
+#define	OP_BODY( name, operation )																\
+void __fastcall json##name (Entity &EV, json &Value)											\
+{																								\
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);										\
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);										\
+	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )					\
+	{ VM_OPP( operation ) default: throw(__FUNCTION__ + ": <-/ and -> must be numbers"s); }		\
 }
 
-OP_BODY(Add, +=);
-OP_BODY(Substract, -=);
-OP_BODY(Mul, *=);
-OP_BODY(Div, /=);
+OP_BODY(Add, +);
+OP_BODY(Substract, -);
+OP_BODY(Mul, *);
+OP_BODY(Div, /);
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-void __fastcall jsonPower(Entity &EV, json &Result)
+void __fastcall jsonPower(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
 	if (subview.is_number() && objview.is_number())
 	{
-		double db = objview.is_number_float() ? objview.get<double>() : double(objview.get<int64_t>());
+		json::number_float_t db = objview.is_number_float() ? objview.get<json::number_float_t>() : json::number_float_t(objview.get<json::number_integer_t>());
 
 		if (!subview.is_number_float())
 		{	//	result must be integer
-			double da = double(subview.get<int64_t>());
-			Result = json(__int64(pow(da, db) + .5));
+			json::number_float_t da = json::number_float_t(subview.get<json::number_integer_t>());
+			Value = json::number_integer_t(pow(da, db) + .5);
 		}
 		else
 		{	//	result must be double
-			double da = subview.get<double>();
-			Result = json(pow(da, db));
+			json::number_float_t da = subview.get<json::number_float_t>();
+			Value = json::number_float_t(pow(da, db));
 		}
 	}
 	else
-		Result = "power: error, both arguments must be numbers!"s;
+		Value = "power: error, both arguments must be numbers!"s;
 }
 
-void __fastcall jsonSqrt(Entity &EV, json &Result)
+void __fastcall jsonSqrt(Entity &EV, json &Value)
 {
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 	json& subview = *EV["->"];
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
-	if (objview.is_number()) subview = json(sqrt(objview.get<double>()));
-	else Result = json("sqrt: error, objview must be number!");
+	if (objview.is_number())
+		subview = json::number_float_t(sqrt(objview.get<json::number_float_t>()));
+	else
+		throw(__FUNCTION__ + ": /<- must be number!"s);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 /*
   sub  |  obj  |                action
 ------------------------------------------------------------------------------------
- null  | null  | foreach val in Result: val = Result(val)
- null  | objv  | foreach val in objv:   val = Result(val)
- subv  | null  | foreach val in Result: val = subv(val)
+ null  | null  | foreach val in Value: val = Value(val)
+ null  | objv  | foreach val in objv:   val = Value(val)
+ subv  | null  | foreach val in Value: val = subv(val)
  subv  | objv  | foreach val in objv:   val = subv(val)
 */
-void __fastcall jsonForEach(Entity &EV, json &Result)
+void __fastcall jsonForEach(Entity &EV, json &Value)
 {
 	json subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Result);
+	EV.parent.ViewEntity(*EV["<-"], Value);
 
-	if (Result.is_array())
+	if (Value.is_array())
 	{
-		for (size_t i = 0; i < Result.size(); i++)
+		for (auto& it : Value)
 		{
-			CSPush("["s + to_string(i) + "]"s);
-			EV["<-"] = EV["->"] = &Result[i];
-			EV.ExecEntity(subview, Result[i]);
+			json	objview = it;	//	кэшируем значение
+			EV["<-"] = &objview;
+			EV[""] = EV["->"] = &it;
+			//EV[""] = EV["<-"] = EV["->"] = &it;
+			EV.ExecEntity(subview, it);
 		}
+		EV[""] = &Value;
 	}
-	else if (Result.is_object())
-	{
-		for (auto& it : Result.items())
-		{
-			CSPush(it.key());
-			EV["<-"] = EV["->"] = &it.value();
-			EV.ExecEntity(subview, it.value());
-		}
-	}
+	else
+		throw(__FUNCTION__ + ": <-/ must be array"s);
 }
 
-void __fastcall jsonSize(Entity &EV, json &Result)
+void __fastcall jsonSize(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Result);
-	subview = Result.size();
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	size_t	size = objview.size();
+	if (!size)
+	{
+		objview = json();
+	}
+	subview = size;
 }
 
 #define define_json_is_type(json_type)						\
-void __fastcall json_is_##json_type(Entity &EV, json &Result)		\
+void __fastcall json_is_##json_type(Entity &EV, json &Value)\
 {															\
 	json& subview = *EV["->"];								\
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);	\
 	subview = objview.is_##json_type();						\
+}
+
+void __fastcall json_is_not_null(Entity &EV, json &Value)	\
+{															\
+	json& subview = *EV["->"];								\
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);	\
+	subview = !objview.is_null();							\
 }
 
 define_json_is_type(array)
@@ -517,7 +537,7 @@ define_json_is_type(string)
 define_json_is_type(structured)
 define_json_is_type(discarded)
 
-void __fastcall jsonIntegerSequence(Entity &EV, json &Result)
+void __fastcall jsonIntegerSequence(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -529,39 +549,41 @@ void __fastcall jsonIntegerSequence(Entity &EV, json &Result)
 		json::number_integer_t	step = objview.count("step") ? objview["step"] : 1;
 		subview = json::array();
 
-		for (json::number_integer_t i = from; from <= to; from += step)
+		for (json::number_integer_t i = from; i <= to; i += step)
 			subview.push_back(i);
 	}
 	else
-	{
-		subview = json::array();
-		throw("<-/ must has 'from', 'to' and 'step' properties, but <-/ = '"s + objview.dump() + "'"s);
-	}
+		throw(__FUNCTION__ + ": <-/ must has 'from', 'to' and 'step' properties"s);
 }
 
-void __fastcall jsonUnion(Entity &EV, json &Result)
+void __fastcall jsonUnion(Entity &EV, json &Value)
 {
-	json& subview = *EV["->"];
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
 	if (!subview.is_array())
 	{
 		json	tmp = subview;
 		subview = json::array();
-		if (!tmp.is_null()) subview[0] = tmp;
+		if (!tmp.is_null())
+			subview[0] = tmp;
 	}
 
 	if (!objview.is_array())
 	{
-		if (!objview.is_null()) subview.push_back(objview);
+		if (!objview.is_null())
+			subview.push_back(objview);
 	}
 	else
-		for (auto& it : objview) subview.push_back(it);
+		for (auto& it : objview)
+			subview.push_back(it);
+
+	Value = subview;
 }
 
-void __fastcall jsonNull(Entity &EV, json &Result) {}
+void __fastcall jsonNull(Entity &EV, json &Value) {}
 
-void __fastcall jsonInt32(Entity &EV, json &Result)
+void __fastcall jsonInt32(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -594,10 +616,10 @@ void __fastcall jsonInt32(Entity &EV, json &Result)
 		subview = int(0);
 	}
 
-	Result = subview;
+	Value = subview;
 }
 
-void __fastcall jsonDouble(Entity &EV, json &Result)
+void __fastcall jsonDouble(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -606,63 +628,62 @@ void __fastcall jsonDouble(Entity &EV, json &Result)
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		subview = double(objview.size());
+		subview = json::number_float_t(objview.size());
 		break;
 
 	case json::value_t::string:
-		subview = double(atof(objview.get<string>().c_str()));
+		subview = json::number_float_t(std::stod(objview.get_ref<string&>()));
 		break;
 
 	case json::value_t::boolean:
 		if (objview.get<bool>())
-			subview = double(1);
+			subview = json::number_float_t(1.0);
 		else
-			subview = double(0);
+			subview = json::number_float_t(0.0);
 		break;
 
 	case json::value_t::number_float:
+		subview = objview;
+		break;
+
 	case json::value_t::number_integer:
+		subview = json::number_float_t(objview.get<json::number_integer_t>());
+		break;
+
 	case json::value_t::number_unsigned:
-		subview = double(objview.get<double>());
+		subview = json::number_float_t(objview.get<json::number_unsigned_t>());
 		break;
 
 	default:
-		subview = double(0);
+		subview = json::number_float_t(0);
 	}
-
-	Result = subview;
 }
 
-void __fastcall jsonSplitstring(Entity &EV, json &Result)
+void __fastcall string_split(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
 	if (objview.is_string() && subview.is_string())
 	{
-		const string& str = objview.get<string>();
-		const string& delim = subview.get<string>();
-		size_t prev = 0, pos = 0, i = 0;
-		Result = json::array();
+		const string& delim = objview.get_ref<string&>();
+		string str = subview.get_ref<string&>();
+		size_t prev = 0, pos = 0;
+		Value = json::array();
 
 		do
 		{
 			pos = str.find(delim, prev);
 			if (pos == string::npos) pos = str.length();
-			string token = str.substr(prev, pos - prev);
-			if (token.empty())
-				(Result)[i++] = json();
-			else
-				(Result)[i++] = json(token);
+			Value.push_back(str.substr(prev, pos - prev));
 			prev = pos + delim.length();
 		} while (pos < str.length() && prev < str.length());
 	}
 	else
-		Result = json();
-
+		throw(__FUNCTION__ + ": <-/ and -> must be string"s);
 }
 
-void __fastcall jsonJoinstring(Entity &EV, json &Result)
+void __fastcall string_join(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -671,32 +692,36 @@ void __fastcall jsonJoinstring(Entity &EV, json &Result)
 
 	if (objview.is_string() && subview.is_array())
 	{
+		string&	splitter = objview.get_ref<string&>();
+
 		for (auto& it : subview)
 		{
 			if (first) first = false;
-			else       result += objview.get<string>();
+			else       result += splitter;
 
 			switch (it.type())
 			{
 			case json::value_t::object:
 			case json::value_t::array:
-				break;	//	сложные типы не печатаем
+				throw(__FUNCTION__ + ": -> must be array of simple type values"s);
 
 			case json::value_t::number_float:
+				result += to_string(it.get<json::number_float_t>());
+				break;
+
 			case json::value_t::number_integer:
+				result += to_string(it.get<json::number_integer_t>());
+				break;
+
 			case json::value_t::number_unsigned:
-				if (it.is_number_float())		result += to_string(it.get<double>());
-				else if (it.get<int32_t>())		result += to_string(it.get<int32_t>());
-				else if (it.get<uint32_t>())	result += to_string(it.get<uint32_t>());
-				else if (it.get<int64_t>())		result += to_string(it.get<int64_t>());
-				else if (it.get<uint64_t>())	result += to_string(it.get<uint64_t>());
+				result += to_string(it.get<json::number_unsigned_t>());
 				break;
 
-			case json::value_t::string:		//	иерархическая символьная ссылка в проекции сущности
-				result += it.get<string>();
+			case json::value_t::string:
+				result += it.get_ref<string&>();
 				break;
 
-			case json::value_t::boolean:	//	фильтрация атрибутов модели по маске, управление видимостью проекций
+			case json::value_t::boolean:
 				result += it.dump();
 				break;
 
@@ -704,12 +729,14 @@ void __fastcall jsonJoinstring(Entity &EV, json &Result)
 				break;
 			}
 		}
-	}
 
-	Result = json(result);
+		Value = result;
+	}
+	else
+		throw(__FUNCTION__ + ": <-/ must be string and -> must be array"s);
 }
 
-void __fastcall jsonAt(Entity &EV, json &Result)
+void __fastcall jsonGet(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
@@ -717,49 +744,84 @@ void __fastcall jsonAt(Entity &EV, json &Result)
 	if (subview.is_array())
 	{
 		if (objview.is_number())
-			Result = &subview[objview.get<size_t>()];
-		else if (objview.is_string())
-			Result = &subview[atoi(objview.get<string>().c_str())];
+			Value = subview[objview.get<size_t>()];
+		else
+			throw(__FUNCTION__ + ": <-/ must be unsigned number"s);
 	}
 	else if (subview.is_object())
 	{
-		if (objview.is_number())
-			Result = &subview[to_string(objview.get<uint64_t>())];
-		else if (objview.is_string())
-			Result = &subview[objview.get<string>()];
+		if (objview.is_string())
+			Value = subview[objview.get_ref<string&>()];
+		else
+			throw(__FUNCTION__ + ": <-/ must be string"s);
+	}
+	else
+		throw(__FUNCTION__ + ": -> must be array or object"s);
+}
+
+void __fastcall jsonSet(Entity &EV, json &Value)
+{
+	json& subview = *EV["->"];
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+
+	if (subview.is_array())
+	{
+		if (objview.is_number_unsigned())
+			subview[objview.get<size_t>()] = Value;
+		else
+			throw(__FUNCTION__ + ": <-/ must be unsigned number"s);
+	}
+	else if (subview.is_object())
+	{
+		if (objview.is_string())
+			subview[objview.get_ref<string&>()] = Value;
+		else
+			throw(__FUNCTION__ + ": <-/ must be string"s);
 	}
 	else if (subview.is_null())
 	{
-		if (objview.is_number())
-		{
-			subview = json::array();
-			Result = &subview[objview.get<size_t>()];
-		}
+		if (objview.is_number_unsigned())
+			subview[objview.get<size_t>()] = Value;
 		else if (objview.is_string())
-		{
-			subview = json::object();
-			Result = &subview[objview.get<string>()];
-		}
+			subview[objview.get_ref<string&>()] = Value;
+		else
+			throw(__FUNCTION__ + ": <-/ must be unsigned number or string"s);
 	}
 	else
-		Result = json();
+		throw(__FUNCTION__ + ": -> must be array, object or null"s);
 }
 
-void __fastcall jsonIsEq(Entity &EV, json &Result)
+void __fastcall jsonErase(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = subview == objview;
+	
+	if (subview.is_object())
+	{
+		if (objview.is_string())
+			subview.erase(objview.get_ref<string&>());
+		else
+			throw(__FUNCTION__ + ": <-/ must be string"s);
+	}
+	else
+		throw(__FUNCTION__ + ": -> must be object"s);
 }
 
-void __fastcall jsonIsNotEq(Entity &EV, json &Result)
+void __fastcall jsonIsEq(Entity &EV, json &Value)
 {
-	json& subview = *EV["->"];
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = subview != objview;
+	Value = subview == objview;
 }
 
-void __fastcall jsonSum(Entity &EV, json &Result)
+void __fastcall jsonIsNotEq(Entity &EV, json &Value)
+{
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	Value = subview != objview;
+}
+
+void __fastcall jsonSum(Entity &EV, json &Value)
 {
 	__int64	isum = 0;
 	double	dsum = 0.0;
@@ -768,143 +830,151 @@ void __fastcall jsonSum(Entity &EV, json &Result)
 
 	if (objview.is_array())
 	{
-		for (auto& it : objview)
+		for (auto& it : objview) switch (it.type())
 		{
-			if (it.is_number())
-			{
-				if (!it.is_number_float())
-					isum += it.get<int64_t>();
-				else
-					dsum += it.get<double>();
-			}
+		case json::value_t::number_float:
+			dsum += it.get<json::number_float_t>();
+			break;
+
+		case json::value_t::number_integer:
+			isum += it.get<json::number_integer_t>();
+			break;
+
+		case json::value_t::number_unsigned:
+			isum += it.get<json::number_unsigned_t>();
+			break;
+
+		default:
+			break;
 		}
+
+		if (0.0 == dsum)	subview = json::number_integer_t(isum);
+		else if (0 == isum)	subview = json::number_float_t(dsum);
+		else				subview = json::number_float_t(dsum + json::number_float_t(isum));
+		return;
 	}
-
-	if (0.0 == dsum)
-		subview = isum;
-	else if (0 == isum)
-		subview = dsum;
 	else
-		subview = dsum + double(isum);
-
-	Result = subview;
+		throw(__FUNCTION__ + ": <-/ must be json array"s);
 }
 
-void __fastcall jsonWhere(Entity &EV, json &Result)
+void __fastcall jsonWhere(Entity &EV, json &Value)
 {
 	json subview = *EV["->"];	//	фильтр для where clause, при исполнении должен возвращать bool
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
-	Result = json::array();
-
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);	//	фильтруемые данные
+	Value = json::array();		//	подготовка выходного массива
+	
 	if (objview.is_array())
 	{
-		CSPush(".->/"s);
-		for (size_t i = 0; i < objview.size(); i++)
-		{	//	исполняем объект
-			CSPush("["s + to_string(i) + "]"s);
-			json	boolres;
-			EV[""] = &boolres;
-			EV["<-"] = EV["->"] = &objview[i];
+		for (auto& it : objview)
+		{
+			json	boolres = it;
+			EV["<-"] = &it;
+			EV[""] = EV["->"] = &boolres;
 			EV.ExecEntity(subview, boolres);
-
 			if (boolres.is_boolean())
-				if (boolres.get<bool>())
-					Result.push_back(objview[i]);	//	фильтруем
+				if (boolres.get_ref<bool&>())
+					Value.push_back(it);	//	фильтруем
 		}
+		EV[""] = &Value;
 	}
+	else if (objview.is_null())
+	{
+		Value = json();
+	}
+	else
+		throw(__FUNCTION__ + ": <-/ must be json array"s);
 }
 
-void __fastcall jsonBelow(Entity &EV, json &Result)	//	<
+void __fastcall jsonBelow(Entity &EV, json &Value)	//	<
 {
-	json& subview = *EV["->"];
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
 	if (subview.type() == objview.type()) switch (objview.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		Result = json(subview.size() < objview.size());
+		Value = json(subview.size() < objview.size());
 		return;
 
 	case json::value_t::string:
-		Result = json(subview.get<string>().size() < objview.get<string>().size());
+		Value = json(subview.get<string>().size() < objview.get<string>().size());
+		return;
 
 	case json::value_t::boolean:
-		Result = json(int(subview.get<bool>()) < int(objview.get<bool>()));
+		Value = json(int(subview.get<bool>()) < int(objview.get<bool>()));
+		return;
 
 	case json::value_t::number_float:
-		Result = json(subview.get<double>() < objview.get<double>());
+		Value = json(subview.get<json::number_float_t>() < objview.get<json::number_float_t>());
+		return;
 
 	case json::value_t::number_integer:
-		Result = json(subview.get<int64_t>() < objview.get<int64_t>());
+		Value = json(subview.get<json::number_integer_t>() < objview.get<json::number_integer_t>());
+		return;
 
 	case json::value_t::number_unsigned:
-		Result = json(subview.get<uint64_t>() < objview.get<uint64_t>());
+		Value = json(subview.get<json::number_unsigned_t>() < objview.get<json::number_unsigned_t>());
+		return;
 
 	default:
-		Result = json();
+		Value = json();
+		return;
 	}
 }
 
-void __fastcall jsonAnd(Entity &EV, json &Result)
+void __fastcall jsonAnd(Entity &EV, json &Value)
 {
-	json& subview = *EV["->"];
+	json subview; EV.parent.ViewEntity(*EV["->"], subview);
 	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
 	if (subview.is_boolean() && objview.is_boolean())
 	{
-		Result = subview.get<bool>() && objview.get<bool>();
+		Value = subview.get<bool>() && objview.get<bool>();
 	}
-
-	Result = false;
+	else throw(__FUNCTION__ + ": <-/ and ->/ must be boolean"s);
 }
 
-void __fastcall IfObjTrueThenExecSub(Entity &EV, json &Result)
+void __fastcall IfObjTrueThenExecSub(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Result);
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
-	if (!Result.is_boolean())
-	{
-		Result = false;
-		throw("<-/ must be boolean!"s);
-	}
+	if (!objview.is_boolean())
+		throw(__FUNCTION__ + ": <-/ must be boolean!"s);
 
-	if (Result.get<bool>())
-		EV.parent.ExecEntity(subview, Result);
+	if (objview.get<bool>())
+		EV.parent.ExecEntity(subview, Value);
 }
 
-void __fastcall IfObjFalseThenExecSub(Entity &EV, json &Result)
+void __fastcall IfObjFalseThenExecSub(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Result);
+	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
 
-	if (!Result.is_boolean())
-	{
-		Result = false;
-		throw("<-/ must be boolean!"s);
-	}
+	if (!objview.is_boolean())
+		throw(__FUNCTION__ + ": <-/ must be boolean!"s);
 
-	if (!Result.get<bool>())
-		EV.parent.ExecEntity(subview, Result);
+	if (!objview.get<bool>())
+		EV.parent.ExecEntity(subview, Value);
 }
 
-void __fastcall ExecSubWhileObjTrue(Entity &EV, json &Result)
+void __fastcall ExecSubWhileObjTrue(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
 
 	while (true)
 	{
-		EV.parent.ViewEntity(*EV["<-"], Result);
+		EV.parent.ViewEntity(*EV["<-"], Value);
 
-		if (!Result.is_boolean())
+		if (!Value.is_boolean())
 		{
-			Result = false;
-			throw("<-/ must be boolean!"s);
+			Value = false;
+			throw(__FUNCTION__ + ": <-/ must be boolean!"s);
 		}
 
-		if (Result.get<bool>())
-			EV.parent.ExecEntity(subview, Result);
+		if (Value.get<bool>())
+			EV.parent.ExecEntity(subview, Value);
 		else
 			return;
 	}
@@ -916,11 +986,13 @@ void __fastcall ImportRelationsModel(json &Ent)
 {
 	Addx86Entity(Ent["RVM"]["load"], "dll"s, jsonLoadDLL, "загружает словарь сущностей из dll");
 	Addx86Entity(Ent["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
-	Addx86Entity(Ent["RVM"], "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+	Addx86Entity(Ent, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+	Addx86Entity(Ent["extern"], "<-"s, jsonExternViewObj, "View object model in parent ctx and then set Value"s);
+	Addx86Entity(Ent["extern"], "->"s, jsonExternViewSub, "View subject model in parent ctx and then set Value"s);
 	Addx86Entity(Ent["RVM"], "exec"s, jsonExec, "EcexEntity: Executes object model in parent ctx and then set subject value"s);
 	Addx86Entity(Ent, "="s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 	Addx86Entity(Ent, "clone"s, jsonClone, "clone: clone object model to subject"s);
-
+	
 #define map_json_is_type(json_type)	Addx86Entity(Ent, "is_"s + #json_type, json_is_##json_type, ""s );
 	map_json_is_type(array);
 	map_json_is_type(boolean);
@@ -928,40 +1000,51 @@ void __fastcall ImportRelationsModel(json &Ent)
 	map_json_is_type(number_integer);
 	map_json_is_type(number_unsigned);
 	map_json_is_type(null);
+	map_json_is_type(not_null);
 	map_json_is_type(number);
 	map_json_is_type(object);
 	map_json_is_type(string);
 	map_json_is_type(structured);
 	map_json_is_type(discarded);
 
-	Addx86Entity(Ent, "union"s, jsonUnion, ""s);
-	Addx86Entity(Ent, "Union"s, jsonUnion, ""s);
-	Addx86Entity(Ent, "null"s, jsonNull, ""s);
+	//	convert
 	Addx86Entity(Ent, "integer"s, jsonInt32, ""s);
 	Addx86Entity(Ent, "int"s, jsonInt32, ""s);
 	Addx86Entity(Ent, "float"s, jsonDouble, ""s);
 	Addx86Entity(Ent, "double"s, jsonDouble, ""s);
+	Addx86Entity(Ent, "null"s, jsonNull, ""s);
+
+	//	data operations
+	Addx86Entity(Ent, "where"s, jsonWhere, ""s);
+	Addx86Entity(Ent, "union"s, jsonUnion, ""s);
+	Addx86Entity(Ent, "size"s, jsonSize, ""s);
+	Addx86Entity(Ent, "get"s, jsonGet, ""s);
+	Addx86Entity(Ent, "set"s, jsonSet, ""s);
+	Addx86Entity(Ent, "erase"s, jsonErase, "Удаляет элемент элементы, которые соответствуют заданному ключу."s);
+	Addx86Entity(Ent["sequence"], "integer"s, jsonIntegerSequence, ""s);
+	
+	//	math
 	Addx86Entity(Ent, "*"s, jsonMul, ""s);
-	Addx86Entity(Ent, ":"s, jsonDiv, "субъект делитель, объект делимое"s);
+	Addx86Entity(Ent, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
 	Addx86Entity(Ent, "+", jsonAdd, ""s);
 	Addx86Entity(Ent, "-", jsonSubstract, ""s);
 	Addx86Entity(Ent, "pow"s, jsonPower, ""s);
-	Addx86Entity(Ent, "^"s, jsonXOR, ""s);
-	Addx86Entity(Ent, "Splitstring"s, jsonSplitstring, ""s);
 	Addx86Entity(Ent, "sqrt"s, jsonSqrt, ""s);
-	Addx86Entity(Ent, "foreach"s, jsonForEach, ""s);
-	Addx86Entity(Ent["sequence"], "integer"s, jsonIntegerSequence, ""s);
-	Addx86Entity(Ent, "size"s, jsonSize, ""s);
-	Addx86Entity(Ent, "Joinstring"s, jsonJoinstring, ""s);
-	Addx86Entity(Ent, "at"s, jsonAt, ""s);
-	Addx86Entity(Ent, "[]"s, jsonAt, ""s);
+	Addx86Entity(Ent, "sum"s, jsonSum, ""s);
+
+	//	logic
+	Addx86Entity(Ent, "^"s, jsonXOR, ""s);
 	Addx86Entity(Ent, "=="s, jsonIsEq, ""s);
 	Addx86Entity(Ent, "!="s, jsonIsNotEq, ""s);
-	Addx86Entity(Ent, "sum"s, jsonSum, ""s);
-	Addx86Entity(Ent, "Where"s, jsonWhere, ""s);
 	Addx86Entity(Ent, "<"s, jsonBelow, ""s);
-	Addx86Entity(Ent, "And"s, jsonAnd, ""s);
 	Addx86Entity(Ent, "&&"s, jsonAnd, ""s);
+
+	//	strings
+	Addx86Entity(Ent["string"], "split"s, string_split, ""s);
+	Addx86Entity(Ent["string"], "join"s, string_join, ""s);
+
+	//	control
+	Addx86Entity(Ent, "foreach"s, jsonForEach, ""s);
 	Addx86Entity(Ent, "then"s, IfObjTrueThenExecSub, ""s);
 	Addx86Entity(Ent, "else"s, IfObjFalseThenExecSub, "");
 	Addx86Entity(Ent, "while"s, ExecSubWhileObjTrue, ""s);

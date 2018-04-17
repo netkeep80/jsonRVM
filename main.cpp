@@ -43,7 +43,7 @@ void	dump_json(string& filename, json& val)
 {
 	std::ofstream out(filename);
 	if (out.good())
-		out << val.dump(3);
+		out << val.dump();
 	else
 		cerr << "Can't store object in the " << filename << " file.\n";
 }
@@ -62,6 +62,7 @@ int main(int argc, char* argv[])
 		break;
 	default:
 		cout << "{ \"result\" : 1 }" << endl;
+		cout << "sizeof(json) = " << sizeof(json) << endl;
 		return 1;
 	}
 
@@ -84,11 +85,11 @@ int main(int argc, char* argv[])
 	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
-	json	Result;
+	json	Value;
 	vector<string>	CallStack;
-	Entity	root(input_json, CallStack, Result);
-	root.ExecEntity(input_json, Result);
-	cout << Result.dump(3);
+	Entity	root(input_json, CallStack, Value);
+	root.ExecEntity(input_json, Value);
+	cout << Value.dump(3);
 
 	if (fileNameOutput)
 		dump_json(string(fileNameOutput), input_json);
