@@ -1,0 +1,54 @@
+{
+   "()" : [
+      {
+         "#/additional_rm_loaded/imgui.rm.dll" : {
+            "<-" : {
+               "PathFolder" : ".\\",
+               "FileName" : "imgui.rm.dll"
+            },
+            "()" : "#/RVM/load/dll",
+            "->" : "#"
+         }
+      },
+      {
+         "<-" : {
+            "controls" : [ "#/CalcControl" ],
+            "title" : "imgui.rm.dll main_frame"
+         },
+         "()" : "#/imgui/viewport"
+      }
+   ],
+   "CalcControl" : {
+      "<-" : {
+         "controls" : [
+            {
+               "<-" : "#/additional_rm_loaded/imgui.rm.dll",
+               "()" : "#/imgui/text",
+               "->" : {
+                  "visible" : true
+               }
+            },
+            "#/button/close"
+         ],
+         "title" : "Calculator"
+      },
+      "()" : "#/imgui/window",
+      "name" : "CalcControl",
+      "->" : {
+         "visible" : true
+      }
+   },
+   "button" : {
+      "close" : {
+         "<-" : {
+            "text" : "Close",
+            "clicked" : {
+               "ctx/->/visible" : false
+            }
+         },
+         "()" : "#/imgui/button",
+         "name" : "CloseButton",
+         "->" : "->/button/close"
+      }
+   }
+}
