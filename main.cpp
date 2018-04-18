@@ -61,15 +61,21 @@ int main(int argc, char* argv[])
 		fileNameInput = argv[1];
 		break;
 	default:
-		cout << "{ \"result\" : 1 }" << endl;
-		cout << "sizeof(json) = " << sizeof(json) << endl;
-		return 1;
-	}
-
-	if (fileNameInput[0] == 0)
-	{
-		cout << "{ \"result\" : 1 }" << endl;
-		cerr << "Error filename.\n";
+		cout << "          c                                                                   " << endl;
+		cout << "       v__|__m                                                                " << endl;
+		cout << "     m   _|_   v                                                              " << endl;
+		cout << "  c__|__/_|_\\__|__c  jsonRVM                                                 " << endl;
+		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
+		cout << "     v    |    m     https://github.com/netkeep80/jsonRVM                     " << endl;
+		cout << "        __|__                                                                 " << endl;
+		cout << "       /  |  \\                                                               " << endl;
+		cout << "      /___|___\\                                                              " << endl;
+		cout << "Fractal Triune Entity                                                         " << endl;
+		cout << "                                                                              " << endl;
+		cout << "Licensed under the MIT License <http://opensource.org/licenses/MIT>.          " << endl;
+		cout << "Copyright (c) 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
+		cout << "                                                                              " << endl;
+		cout << "usage: jsonRVM.exe [input RM json file [output RM json file]]                 " << endl;
 		return 1;
 	}
 
@@ -79,23 +85,28 @@ int main(int argc, char* argv[])
 	if (in.good())
 		in >> input_json;
 	else
-		cerr << "Can't restore json object from the " << fileNameInput << " file.\n";
+		cerr << "Can't restore RM json from the " << fileNameInput << " file.\n";
 
 	// добавляем в корневую сущность базовый словарь
 	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
-	json	Value;
+	json			returnValue;
 	vector<string>	CallStack;
-	Entity	root(input_json, CallStack, Value);
-	root.ExecEntity(input_json, Value);
-	cout << Value.dump(3);
+	Entity			root(input_json, CallStack, returnValue);
+	root.ExecEntity(input_json, returnValue);
 
 	if (fileNameOutput)
 		dump_json(string(fileNameOutput), input_json);
-	//else
-	//	dump_json(fileNameInput + ".out.json"s, input_json);
 
-	return 0;
+	try
+	{
+		return returnValue.get<int>();
+	}
+	catch (...)
+	{
+		cout << returnValue.dump(3);
+		return 1;
+	}
 }
 
