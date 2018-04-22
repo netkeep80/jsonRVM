@@ -26,6 +26,50 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	return TRUE;
 }
 
+
+namespace nlohmann
+{
+	namespace detail
+	{
+		void to_json(json& jsonValue, const ImVec2& data)
+		{
+			jsonValue[0] = data.x;
+			jsonValue[1] = data.y;
+		}
+
+		void from_json(const json& jsonValue, ImVec2& data)
+		{
+			data = { 0, 0 };
+			if (jsonValue.is_array())
+			{
+				if (jsonValue.size() > 0) data.x = jsonValue[0].get<float>();
+				if (jsonValue.size() > 1) data.y = jsonValue[1].get<float>();
+			}
+		}
+
+		void to_json(json& jsonValue, const ImVec4& data)
+		{
+			jsonValue[0] = data.x;
+			jsonValue[1] = data.y;
+			jsonValue[2] = data.z;
+			jsonValue[3] = data.w;
+		}
+
+		void from_json(const json& jsonValue, ImVec4& data)
+		{
+			data = { 0, 0, 0, 0 };
+			if (jsonValue.is_array())
+			{
+				if (jsonValue.size() > 0) data.x = jsonValue[0].get<float>();
+				if (jsonValue.size() > 1) data.y = jsonValue[1].get<float>();
+				if (jsonValue.size() > 2) data.z = jsonValue[2].get<float>();
+				if (jsonValue.size() > 3) data.w = jsonValue[3].get<float>();
+			}
+		}
+	}
+}
+
+
 static void glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Error %d: %s\n", error, description);
@@ -36,14 +80,14 @@ extern double g_Time;
 void __fastcall viewport(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
 
 	if (!objview.is_object()) objview = json::object();
 	if (!objview.count("title")) objview["title"] = ""s;
-	if (!objview.count("controls")) objview["controls"] = json::array();
+	if (!objview.count("elements")) objview["elements"] = json::array();
 
 	bool&	visible = subview["visible"].get_ref<bool&>();
 
@@ -123,8 +167,8 @@ void __fastcall viewport(Entity &EV, json &Value)
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         }
 
-        // 2. Show another simple window. In most cases you will use an explicit Begin/End pair to name your windows.
-		EV.ExecEntity(objview["controls"], Value);
+        // 2. Show another window
+		ExecEntity(EV, objview["elements"], Value);
 
         // 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
         if (show_demo_window)
@@ -151,24 +195,24 @@ void __fastcall viewport(Entity &EV, json &Value)
 }
 
 
-void __fastcall window(Entity &EV, json &Value)
+void __fastcall form(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
 
 	if (!objview.is_object()) objview = json::object();
 	if (!objview.count("title")) objview["title"] = ""s;
-	if (!objview.count("controls")) objview["controls"] = json::array();
+	if (!objview.count("elements")) objview["elements"] = json::array();
 
 	bool&	visible = subview["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
 		ImGui::Begin(objview["title"].get_ref<string&>().c_str(), &visible);
-		EV.ExecEntity(objview["controls"], Value);
+		ExecEntity(EV, objview["elements"], Value);
 		ImGui::End();
 	}
 }
@@ -177,7 +221,7 @@ void __fastcall window(Entity &EV, json &Value)
 void __fastcall text(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -196,7 +240,7 @@ void __fastcall text(Entity &EV, json &Value)
 void __fastcall button(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -209,8 +253,9 @@ void __fastcall button(Entity &EV, json &Value)
 
 	if (visible)
 	{
-		if (ImGui::Button(objview["text"].get_ref<string&>().c_str()))
-			EV.ExecEntity(objview["clicked"], Value);	//	исполняем в текущем контексте
+		ImVec2	size = { get_float(objview, "width"s), get_float(objview, "height"s) };
+		if (ImGui::Button(objview["text"].get_ref<string&>().c_str(), size))
+			ExecEntity(EV, objview["clicked"], Value);	//	исполняем в текущем контексте
 	}
 }
 
@@ -218,7 +263,7 @@ void __fastcall button(Entity &EV, json &Value)
 __declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
 {
 	Addx86Entity(Ent["imgui"], "viewport"s, viewport, "");
-	Addx86Entity(Ent["imgui"], "window"s, window, "");
+	Addx86Entity(Ent["imgui"], "form"s, form, "");
 	Addx86Entity(Ent["imgui"], "text"s, text, "");
 	Addx86Entity(Ent["imgui"], "button"s, button, "");
 }
