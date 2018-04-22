@@ -114,7 +114,7 @@ namespace nlohmann
 void __fastcall fs_dir_scan(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (objview.is_object())
 	{
@@ -153,7 +153,7 @@ void __fastcall fs_dir_scan(Entity &EV, json &Value)
 void __fastcall fs_file_read_json(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (objview.is_object())
 	{
@@ -178,7 +178,7 @@ void __fastcall fs_file_read_json(Entity &EV, json &Value)
 
 void __fastcall jsonFileToString(Entity &EV, json &Value)
 {
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 	jsonPtr	subview = EV["->"];
 	subview = json();
 
@@ -210,7 +210,7 @@ void __fastcall jsonFileToString(Entity &EV, json &Value)
 void __fastcall jsonFileToStringArray(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (objview.is_object())
 	{
@@ -255,7 +255,7 @@ void __fastcall jsonFileToStringArray(Entity &EV, json &Value)
 void __fastcall jsonStringArrayToFile(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (objview.is_object() && subview.is_array())
 	{
@@ -287,7 +287,7 @@ void __fastcall jsonStringArrayToFile(Entity &EV, json &Value)
 void __fastcall fs_file_write_json(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 
 	if (objview.is_object())
 	{
@@ -316,7 +316,7 @@ void __fastcall fs_file_write_json(Entity &EV, json &Value)
 void __fastcall jsonToFiles(Entity &EV, json &Value)
 {
 	json& subview = *EV["->"];
-	json objview; EV.parent.ViewEntity(*EV["<-"], objview);
+	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
 	Value = json::array();
 
 	/*if (subview.is_array())	//	в subview массив объектов FileInfo, каждый из которых описывает файл в который надо сохранить

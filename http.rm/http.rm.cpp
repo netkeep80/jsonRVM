@@ -236,7 +236,7 @@ struct application_xml
 void	HTTP_METHOD_json(Entity &EV, json &Value, const method &mtd)
 {
 	json& subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Value);
+	ViewEntity(EV.parent, *EV["<-"], Value);
 
 	if (Value.is_object())
 	{
@@ -316,7 +316,7 @@ template<typename _convert>
 void __fastcall HTTP_METHOD(Entity &EV, json &Value, const method &mtd)
 {
 	json& subview = *EV["->"];
-	EV.parent.ViewEntity(*EV["<-"], Value);
+	ViewEntity(EV.parent, *EV["<-"], Value);
 
 	if (Value.is_object())
 	{

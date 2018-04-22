@@ -93,8 +93,8 @@ int main(int argc, char* argv[])
 	//	создаём контекст исполнения
 	json			returnValue;
 	vector<string>	CallStack;
-	Entity			root(input_json, CallStack, returnValue);
-	root.ExecEntity(input_json, returnValue);
+	Entity			root(input_json, &CallStack, returnValue);
+	ExecEntity(root, input_json, returnValue);
 
 	if (fileNameOutput)
 		dump_json(string(fileNameOutput), input_json);

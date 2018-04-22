@@ -12,7 +12,7 @@
       },
       {
          "<-" : {
-            "controls" : [ "#/CalcControl" ],
+            "elements" : [ "#/CalcControl" ],
             "title" : "imgui.rm.dll main_frame"
          },
          "()" : "#/imgui/viewport"
@@ -20,7 +20,7 @@
    ],
    "CalcControl" : {
       "<-" : {
-         "controls" : [
+         "elements" : [
             {
                "<-" : "#/additional_rm_loaded/imgui.rm.dll",
                "()" : "#/imgui/text",
@@ -32,7 +32,7 @@
          ],
          "title" : "Calculator"
       },
-      "()" : "#/imgui/window",
+      "()" : "#/imgui/form",
       "name" : "CalcControl",
       "->" : {
          "visible" : true
@@ -44,7 +44,9 @@
             "text" : "Close",
             "clicked" : {
                "ctx/->/visible" : false
-            }
+            },
+            "//width" : "200",
+            "//height" : "100"
          },
          "()" : "#/imgui/button",
          "name" : "CloseButton",

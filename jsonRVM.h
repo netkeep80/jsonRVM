@@ -704,7 +704,7 @@ public:
 };
 
 #ifdef _DEBUG
-#define	CSPush(name)	PushCS LevelName(name, EV.CallStack, EV.ctx_level);
+#define	CSPush(name)	PushCS LevelName(name, *EV.CallStack, EV.ctx_level);
 #else
 #define	CSPush(name)
 #endif
@@ -729,10 +729,19 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 /*
 		TODO:
 
-1 вынести все методы в функции
-2 заменить Entity на json
-
+1. заменить CallStack на json
+2. заменить конструктор Entity на InitCTX
+3. заменить map<string, json*> на map<string, json>
+4. заменить Entity& parent на json
+5. перенести int ctx_level в json
+6. заменить Entity на json
 */
+
+inline void		InitCTX(Entity &EV, json& ent_ref, json &Value);
+inline void		ErrorMessage(Entity &EV, const string &Name, const string &Message);
+inline json*	ReferEntity(Entity &EV, json &Ent, json &Value);
+inline void		ViewEntity(Entity &EV, json &Ent, json &Value);
+inline void		ExecEntity(Entity &EV, json &Ent, json &Value);
 
 //	контекст исполнения экземпляра отношения
 //	содержит только указатели на json проекции сущностей
@@ -742,7 +751,7 @@ class Entity : public map<string, json*>
 public:
 #ifdef _DEBUG
 	int				ctx_level;	//	для отладки
-	vector<string>&	CallStack;	//	для отладки
+	vector<string>*	CallStack;	//	для отладки
 #endif
 	Entity&		parent;		//	родительский контекст, перенесем в последнюю очередь
 
@@ -754,317 +763,310 @@ public:
 	{
 		Entity&	EV = *this;
 		EV["#"] = pRef["#"];	//	'#' - root entity model
-		InitCTX(ent_ref, Value);
+		InitCTX(EV, ent_ref, Value);
 	}
 
 #ifdef _DEBUG
-	Entity(json& root_ref, vector<string> &cs, json &Value) : ctx_level(0), parent(*this), CallStack(cs)
+	Entity(json& root_ref, vector<string> *cs, json &Value) : ctx_level(0), parent(*this), CallStack(cs)
 #else
-	Entity(json& root_ref, vector<string> &cs, json &Value) : parent(*this)
+	Entity(json& root_ref, vector<string> *cs, json &Value) : parent(*this)
 #endif
 	{
 		Entity&	EV = *this;
 		EV["#"] = &root_ref;	//	'#'	- root entity model
-		InitCTX(root_ref, Value);
-	}
-
-	void	InitCTX(json& ent_ref, json &Value)
-	{
-		Entity&	EV = *this;
-		try		//	процедура проецирования сущности в контекст исполнения, объёдинить с jsonView
-		{
-			//	у сущности должны быть поля '<-', '()', '->' с указателями на сущности или значениями типа: сущность, структура, массив
-			if (!ent_ref.count("<-"))	ent_ref["<-"] = json();	//	объект не отличается от самой сущности
-			if (!ent_ref.count("->"))	ent_ref["->"] = json();	//	субъект не отличается от самой сущности
-			EV["ent"] = &ent_ref;			//	'ent'	- entity model
-			EV[""] = &Value;				//	''	- entity view, points to Value
-			EV["<-"] = EV.parent.ReferEntity(ent_ref["<-"], Value);
-			EV["()"] = EV.parent.ReferEntity(ent_ref["()"], Value);
-			EV["->"] = EV.parent.ReferEntity(ent_ref["->"], Value);
-		}
-		catch (...)
-		{
-			ErrorMessage("InitCTX"s, "Exception, may be parent of ent_ref was changed!"s);
-			Value = json();
-		}
-	}
-
-	void	ErrorMessage(string &Name, string &Message)
-	{
-		json	&Ent = *(*this)["ent"];
-		Ent["errors"][Name] = Message;
-	}
-
-	//ToDo: переделать что бы значение возвращалось в Value
-	json*	ReferEntity(json &Ent, json &Value)
-	{
-		Entity*	ctx = this;
-		switch (Ent.type())
-		{
-		case json::value_t::string:		//	hierarchical address in projected ent view
-		{
-			const string&	String = Ent.get<string>();
-			//if (EV.find(String) != EV.end()) return *EV[String];	//ToDo:	strong reference cashing
-			auto			path = split(String, "/"s, true);
-			json*			res = nullptr;
-
-			for (auto it : path)
-			{
-				if (nullptr == res)	//	контекст определён?
-				{
-					if (ctx->find(it) != ctx->end())
-						res = (*ctx)[it];
-					else if("ctx"s == it)
-						ctx = &ctx->parent;
-					else
-						throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
-				}
-				else try
-				{
-					if (res->is_array())
-					{
-						res = &(*res)[std::stoul(it)];
-					}
-					else if (res->is_object())
-					{
-						res = &(*res)[it];
-					}
-					else if (res->is_null())
-					{
-						try {
-							*res = json::array();
-							res = &(*res)[std::stoul(it)];
-						}
-						catch (...)	//	это не число
-						{
-							*res = json::object();
-							res = &(*res)[it];
-						}
-					}
-					else throw it;
-				}
-				catch(invalid_argument e)
-				{
-					throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what());
-				}
-				catch (out_of_range e)
-				{
-					throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what());
-				}
-				catch (...)
-				{
-					throw(__FUNCTION__ + ": property '"s + String + "' does not exist!");
-				}
-			}
-
-			//EV[String] = res;	//ToDo:	strong reference cashing
-			return res;
-		}
-
-		//	абсолютный адрес сущности
-		case json::value_t::number_float:
-		case json::value_t::number_integer:
-		case json::value_t::number_unsigned:
-			return (json*)(Ent.get<uint64_t>());
-
-		//	местоимение проекции контекстной сущности
-		case json::value_t::null:
-			return &Value;
-
-		//	если это не адрес то возвращаем значение
-		default:
-			return &Ent;
-		}
-	}
-
-	//	если субъект никогда не исполнять, то для результата исполнения объекта
-	//	можно всегда использовать Value (т.е. проекцию контекстной сущности)
-	//	получение проекции сущности
-	void	ViewEntity(json &Ent, json &Value)
-	{
-		Entity&	EV = *this;
-		CSPush("view : "s + Ent.dump());	//	debug
-		//	если свойство и есть сама сущность то возвращаем текущую проекцию сущности
-		if (&Value == &Ent)
-			return;
-		else switch (Ent.type())
-		{
-		case json::value_t::object:
-			try
-			{
-				if (Ent.count("/"))	//	это сущность с закэшированной дефолтной проекцией?
-				{	//	приоритет у закэшированной проекции выше
-					Value = Ent["/"];
-				}
-				else if (Ent.count("@"))		//	это скомпилированная сущность?
-				{
-					json& x86Exec = Ent["@"];
-					switch (x86Exec.type())
-					{
-					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-					{
-						x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
-						entBody(*this, Value);
-						return;
-					}
-
-					default:
-						Value = json();
-						throw(__FUNCTION__ + ": wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
-					}
-				}
-				else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
-				{
-					Entity	ctx(EV, Ent, Value);	//	создаём контекстную проекцию сущности
-					CSPush("() : "s + Ent["()"].dump());	//	debug
-					json&	relRef = *ctx["()"];
-					ctx.ExecEntity(relRef, Value);
-				}
-				else
-					Value = Ent;
-			}
-			catch (string& error)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "exception: "s + error);
-			}
-			catch (json::exception& e)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "exception: "s + e.what() + ", exception id: "s + to_string(e.id));
-			}
-			catch (...)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "unknown exception"s);
-			}
-			return;
-
-		//	во всех остальных случаях проекция просто копируется
-		default:
-			Value = Ent;
-		}
-	}
-
-
-	//	Исполнение сущности либо json байткода
-	//	имеет прототип отличный от других контроллеров и не является контроллером
-	//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-	void	ExecEntity(json &Ent, json &Value)
-	{
-		Entity&	EV = *this;
-		CSPush("exec : "s + Ent.dump());	//	debug
-		switch (Ent.type())
-		{
-		case json::value_t::object:
-			try
-			{
-				if (Ent.count("/"))	//	это сущность с закэшированной дефолтной проекцией?
-				{	//	приоритет у закэшированной проекции выше
-					Value = Ent["/"];
-				}
-				else if (Ent.count("@"))		//	это скомпилированная сущность?
-				{
-					json& x86Exec = Ent["@"];
-					switch (x86Exec.type())
-					{
-					case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-					{
-						x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
-						entBody(*this, Value);
-						return;
-					}
-
-					default:
-						Value = json();
-						throw(__FUNCTION__ + ": wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
-					}
-				}
-				else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
-				{
-					Entity	ctx(EV, Ent, Value);	//	создаём контекстную проекцию сущности
-					CSPush("() : "s + Ent["()"].dump());	//	debug
-					json&	relRef = *ctx["()"];
-					ctx.ExecEntity(relRef, Value);
-				}
-				else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
-				{	//ToDo:	надо переделать на параллельное проецирование
-					for (auto& it : Ent.items())
-					{
-						string&	key = it.key();
-						CSPush(key);	//	debug
-						//	проецируем в текущем контексте
-						json&	subRef = *ReferEntity(json(key), Value);
-						json&	objRef = *ReferEntity(it.value(), Value);
-						EV.ViewEntity(objRef, subRef);
-					}
-				}
-			}
-			catch (string& error)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "exception: "s + error);
-			}
-			catch (json::exception& e)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "json::exception: "s + e.what() + ", exception id: "s + to_string(e.id));
-			}
-			catch (std::exception& e)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "std::exception: "s + e.what());
-			}
-			catch (...)
-			{
-				string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
-				EV.ErrorMessage(name, "unknown exception"s);
-			}
-			return;
-
-			//	лямбда вектор, который управляет последовательным изменением проекции сущности
-		case json::value_t::array:
-		{
-			int i = 0;	//	debug
-			for (auto& it : Ent)
-			{
-				CSPush("["s + to_string(i++) + "]"s);	//	debug
-				//	сохраняем результат исполнения как проекцию сущности
-				ExecEntity(it, Value);
-			}
-			return;
-		}
-
-		//	абсолютный адрес сущности
-		case json::value_t::number_float:
-		case json::value_t::number_integer:
-		case json::value_t::number_unsigned:
-		{
-			json&	entRef = *(json*)(Ent.get<uint64_t>());
-			ExecEntity(entRef, Value);
-			return;
-		}
-
-		//	иерархическая символьная ссылка в проекции сущности
-		case json::value_t::string:
-		{
-			json&	entRef = *ReferEntity(Ent, Value);
-			ExecEntity(entRef, Value);
-			return;
-		}
-
-		//	битовая маска для условного проектора ViewEntity
-		case json::value_t::boolean:
-			if (Ent) ViewEntity(*EV["<-"], *EV["->"]);
-			return;
-
-			//	null - означает отсутствие отношения, т.е. неизменность проекции
-		default:
-			return;
-		}
+		InitCTX(EV, root_ref, Value);
 	}
 };
 
+
+inline void InitCTX(Entity&	EV, json& ent_ref, json &Value)
+{
+	try		//	процедура проецирования сущности в контекст исполнения, объёдинить с jsonView
+	{
+		//	у сущности должны быть поля '<-', '()', '->' с указателями на сущности или значениями типа: сущность, структура, массив
+		if (!ent_ref.count("<-"))	ent_ref["<-"] = json();	//	объект не отличается от самой сущности
+		if (!ent_ref.count("->"))	ent_ref["->"] = json();	//	субъект не отличается от самой сущности
+		EV["ent"] = &ent_ref;			//	'ent'	- entity model
+		EV[""] = &Value;				//	''	- entity view, points to Value
+		EV["<-"] = ReferEntity(EV.parent, ent_ref["<-"], Value);
+		EV["()"] = ReferEntity(EV.parent, ent_ref["()"], Value);
+		EV["->"] = ReferEntity(EV.parent, ent_ref["->"], Value);
+	}
+	catch (...)
+	{
+		ErrorMessage(EV, "InitCTX"s, "Exception, may be parent of ent_ref was changed!"s);
+		Value = json();
+	}
+}
+
+inline void ErrorMessage(Entity &EV, const string &Name, const string &Message)
+{
+	json &Ent = *EV["ent"];
+	Ent["errors"][Name] = Message;
+}
+
+inline json* ReferEntity(Entity &EV, json &Ent, json &Value)
+{
+	Entity*	ctx = &EV;
+	switch (Ent.type())
+	{
+	case json::value_t::string:		//	hierarchical address in projected ent view
+	{
+		const string&	String = Ent.get<string>();
+		//if (EV.find(String) != EV.end()) return *EV[String];	//ToDo:	strong reference cashing
+		auto			path = split(String, "/"s, true);
+		json*			res = nullptr;
+
+		for (auto it : path)
+		{
+			if (nullptr == res)	//	контекст определён?
+			{
+				if (ctx->find(it) != ctx->end())
+					res = (*ctx)[it];
+				else if ("ctx"s == it)
+					ctx = &ctx->parent;
+				else
+					throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
+			}
+			else try
+			{
+				if (res->is_array())
+				{
+					res = &(*res)[std::stoul(it)];
+				}
+				else if (res->is_object())
+				{
+					res = &(*res)[it];
+				}
+				else if (res->is_null())
+				{
+					try {
+						*res = json::array();
+						res = &(*res)[std::stoul(it)];
+					}
+					catch (...)	//	это не число
+					{
+						*res = json::object();
+						res = &(*res)[it];
+					}
+				}
+				else throw it;
+			}
+			catch (invalid_argument e)
+			{
+				throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what());
+			}
+			catch (out_of_range e)
+			{
+				throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what());
+			}
+			catch (...)
+			{
+				throw(__FUNCTION__ + ": property '"s + String + "' does not exist!");
+			}
+		}
+
+		//EV[String] = res;	//ToDo:	strong reference cashing
+		return res;
+	}
+
+	//	абсолютный адрес сущности
+	case json::value_t::number_float:
+	case json::value_t::number_integer:
+	case json::value_t::number_unsigned:
+		return (json*)(Ent.get<uint64_t>());
+
+		//	местоимение проекции контекстной сущности
+	case json::value_t::null:
+		return &Value;
+
+		//	если это не адрес то возвращаем значение
+	default:
+		return &Ent;
+	}
+}
+
+//	получение проекции сущности
+inline void ViewEntity(Entity &EV, json &Ent, json &Value)
+{
+	CSPush("view : "s + Ent.dump());	//	debug
+										//	если свойство и есть сама сущность то возвращаем текущую проекцию сущности
+	if (&Value == &Ent)
+		return;
+	else switch (Ent.type())
+	{
+	case json::value_t::object:
+		try
+		{
+			if (Ent.count("/"))	//	это сущность с закэшированной дефолтной проекцией?
+			{	//	приоритет у закэшированной проекции выше
+				Value = Ent["/"];
+			}
+			else if (Ent.count("@"))		//	это скомпилированная сущность?
+			{
+				json& x86Exec = Ent["@"];
+				switch (x86Exec.type())
+				{
+				case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
+				{
+					x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
+					entBody(EV, Value);
+					return;
+				}
+
+				default:
+					Value = json();
+					throw(__FUNCTION__ + ": wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
+				}
+			}
+			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
+			{
+				Entity	ctx(EV, Ent, Value);	//	создаём контекстную проекцию сущности
+				CSPush("() : "s + Ent["()"].dump());	//	debug
+				json&	relRef = *ctx["()"];
+				ExecEntity(ctx, relRef, Value);
+			}
+			else
+				Value = Ent;
+		}
+		catch (string& error)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "exception: "s + error);
+		}
+		catch (json::exception& e)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+		}
+		catch (...)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "unknown exception"s);
+		}
+		return;
+
+		//	во всех остальных случаях проекция просто копируется
+	default:
+		Value = Ent;
+	}
+}
+
+//	Исполнение сущности либо json байткода
+//	имеет прототип отличный от других контроллеров и не является контроллером
+//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
+inline void ExecEntity(Entity &EV, json &Ent, json &Value)
+{
+	CSPush("exec : "s + Ent.dump());	//	debug
+	switch (Ent.type())
+	{
+	case json::value_t::object:
+		try
+		{
+			if (Ent.count("/"))	//	это сущность с закэшированной дефолтной проекцией?
+			{	//	приоритет у закэшированной проекции выше
+				Value = Ent["/"];
+			}
+			else if (Ent.count("@"))		//	это скомпилированная сущность?
+			{
+				json& x86Exec = Ent["@"];
+				switch (x86Exec.type())
+				{
+				case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
+				{
+					x86View	entBody = (x86View)x86Exec.get<json::number_unsigned_t>();
+					entBody(EV, Value);
+					return;
+				}
+
+				default:
+					Value = json();
+					throw(__FUNCTION__ + ": wrong Ent['@'] json type '"s + x86Exec.dump() + "'"s);
+				}
+			}
+			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
+			{
+				Entity	ctx(EV, Ent, Value);	//	создаём контекстную проекцию сущности
+				CSPush("() : "s + Ent["()"].dump());	//	debug
+				json&	relRef = *ctx["()"];
+				ExecEntity(ctx, relRef, Value);
+			}
+			else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
+			{	//ToDo:	надо переделать на параллельное проецирование
+				for (auto& it : Ent.items())
+				{
+					const string&	key = it.key();
+					CSPush(key);	//	debug
+									//	проецируем в текущем контексте
+					json&	subRef = *ReferEntity(EV, json(key), Value);
+					json&	objRef = *ReferEntity(EV, it.value(), Value);
+					ViewEntity(EV, objRef, subRef);
+				}
+			}
+		}
+		catch (string& error)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "exception: "s + error);
+		}
+		catch (json::exception& e)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "json::exception: "s + e.what() + ", exception id: "s + to_string(e.id));
+		}
+		catch (std::exception& e)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "std::exception: "s + e.what());
+		}
+		catch (...)
+		{
+			string	name = Ent.count("name") ? Ent["name"].get<string>() : "";
+			ErrorMessage(EV, name, "unknown exception"s);
+		}
+		return;
+
+		//	лямбда вектор, который управляет последовательным изменением проекции сущности
+	case json::value_t::array:
+	{
+		int i = 0;	//	debug
+		for (auto& it : Ent)
+		{
+			CSPush("["s + to_string(i++) + "]"s);	//	debug
+													//	сохраняем результат исполнения как проекцию сущности
+			ExecEntity(EV, it, Value);
+		}
+		return;
+	}
+
+	//	абсолютный адрес сущности
+	case json::value_t::number_float:
+	case json::value_t::number_integer:
+	case json::value_t::number_unsigned:
+	{
+		json&	entRef = *(json*)(Ent.get<uint64_t>());
+		ExecEntity(EV, entRef, Value);
+		return;
+	}
+
+	//	иерархическая символьная ссылка в проекции сущности
+	case json::value_t::string:
+	{
+		json&	entRef = *ReferEntity(EV, Ent, Value);
+		ExecEntity(EV, entRef, Value);
+		return;
+	}
+
+	//	битовая маска для условного проектора ViewEntity
+	case json::value_t::boolean:
+		if (Ent) ViewEntity(EV, *EV["<-"], *EV["->"]);
+		return;
+
+		//	null - означает отсутствие отношения, т.е. неизменность проекции
+	default:
+		return;
+	}
+}
 
 //	добавление сущности с закэшированной x86 проекцией
 inline json&	Addx86Entity(json& Subject, const string& Name, x86View View, const string& Description)
@@ -1075,3 +1077,85 @@ inline json&	Addx86Entity(json& Subject, const string& Name, x86View View, const
 	Subject[Name]["description"] = Description;
 	return Subject[Name];
 }
+
+#pragma warning (disable: 4244)
+
+inline bool get_bool(const json& obj, const string& field)
+{
+	if (obj.count(field))
+	{
+		const json& val = obj[field];
+		switch (val.type())
+		{
+		case json::value_t::number_float:   return bool(val.get<json::number_float_t>() != 0.0);
+		case json::value_t::number_integer: return bool(val.get<json::number_integer_t>() != 0);
+		case json::value_t::number_unsigned:return bool(val.get<json::number_unsigned_t>() != 0);
+		case json::value_t::boolean:        return bool(val.get<json::boolean_t>());
+		case json::value_t::string:         return bool(val.get_ref<const json::string_t&>() != ""s && val.get_ref<const json::string_t&>() != "false"s);
+		default: break;
+		}
+	}
+
+	return bool();
+}
+
+
+inline float get_float(const json& obj, const string& field)
+{
+	if (obj.count(field))
+	{
+		const json& val = obj[field];
+		switch (val.type())
+		{
+		case json::value_t::number_float:   return float(val.get<json::number_float_t>());
+		case json::value_t::number_integer: return float(val.get<json::number_integer_t>());
+		case json::value_t::number_unsigned:return float(val.get<json::number_unsigned_t>());
+		case json::value_t::boolean:        return float(val.get<json::boolean_t>() ? 1.0 : 0.0);
+		case json::value_t::string:         return float(std::stod(val.get_ref<const json::string_t&>()));
+		default: break;
+		}
+	}
+
+	return float();
+}
+
+
+inline float get_int(const json& obj, const string& field)
+{
+	if (obj.count(field))
+	{
+		const json& val = obj[field];
+		switch (val.type())
+		{
+		case json::value_t::number_float:   return int(val.get<json::number_float_t>());
+		case json::value_t::number_integer: return int(val.get<json::number_integer_t>());
+		case json::value_t::number_unsigned:return int(val.get<json::number_unsigned_t>());
+		case json::value_t::boolean:        return int(val.get<json::boolean_t>() ? 1 : 0);
+		case json::value_t::string:         return int(std::stoi(val.get_ref<const json::string_t&>()));
+		default: break;
+		}
+	}
+
+	return int();
+}
+
+
+inline float get_unsigned(const json& obj, const string& field)
+{
+	if (obj.count(field))
+	{
+		const json& val = obj[field];
+		switch (val.type())
+		{
+		case json::value_t::number_float:   return unsigned(val.get<json::number_float_t>());
+		case json::value_t::number_integer: return unsigned(val.get<json::number_integer_t>());
+		case json::value_t::number_unsigned:return unsigned(val.get<json::number_unsigned_t>());
+		case json::value_t::boolean:        return unsigned(val.get<json::boolean_t>() ? 1 : 0);
+		case json::value_t::string:         return unsigned(std::stoul(val.get_ref<const json::string_t&>()));
+		default: break;
+		}
+	}
+
+	return unsigned();
+}
+
