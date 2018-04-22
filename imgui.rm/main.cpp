@@ -77,10 +77,10 @@ static void glfw_error_callback(int error, const char* description)
 
 extern double g_Time;
 
-void __fastcall viewport(Entity &EV, json &Value)
+void __fastcall viewport(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -195,10 +195,10 @@ void __fastcall viewport(Entity &EV, json &Value)
 }
 
 
-void __fastcall form(Entity &EV, json &Value)
+void __fastcall form(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -218,10 +218,10 @@ void __fastcall form(Entity &EV, json &Value)
 }
 
 
-void __fastcall text(Entity &EV, json &Value)
+void __fastcall text(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -237,10 +237,10 @@ void __fastcall text(Entity &EV, json &Value)
 }
 
 
-void __fastcall button(Entity &EV, json &Value)
+void __fastcall button(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;

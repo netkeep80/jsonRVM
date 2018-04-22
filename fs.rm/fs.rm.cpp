@@ -111,10 +111,10 @@ namespace nlohmann
 }
 
 
-void __fastcall fs_dir_scan(Entity &EV, json &Value)
+void __fastcall fs_dir_scan(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -150,10 +150,10 @@ void __fastcall fs_dir_scan(Entity &EV, json &Value)
 	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileNameFormat properties"s);
 }
 
-void __fastcall fs_file_read_json(Entity &EV, json &Value)
+void __fastcall fs_file_read_json(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -176,10 +176,10 @@ void __fastcall fs_file_read_json(Entity &EV, json &Value)
 	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties"s);
 }
 
-void __fastcall jsonFileToString(Entity &EV, json &Value)
+void __fastcall jsonFileToString(json &EV, json &Value)
 {
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
-	jsonPtr	subview = EV["->"];
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 	subview = json();
 
 	if (objview.is_object())
@@ -207,10 +207,10 @@ void __fastcall jsonFileToString(Entity &EV, json &Value)
 	Value = false;
 }
 
-void __fastcall jsonFileToStringArray(Entity &EV, json &Value)
+void __fastcall jsonFileToStringArray(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -252,10 +252,10 @@ void __fastcall jsonFileToStringArray(Entity &EV, json &Value)
 	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName property"s);
 }
 
-void __fastcall jsonStringArrayToFile(Entity &EV, json &Value)
+void __fastcall jsonStringArrayToFile(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (objview.is_object() && subview.is_array())
 	{
@@ -284,10 +284,10 @@ void __fastcall jsonStringArrayToFile(Entity &EV, json &Value)
 		throw(__FUNCTION__ + ": <-/ must be object and -> must be array"s);
 }
 
-void __fastcall fs_file_write_json(Entity &EV, json &Value)
+void __fastcall fs_file_write_json(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -313,17 +313,17 @@ void __fastcall fs_file_write_json(Entity &EV, json &Value)
 }
 
 
-void __fastcall jsonToFiles(Entity &EV, json &Value)
+void __fastcall jsonToFiles(json &EV, json &Value)
 {
-	json& subview = *EV["->"];
-	json objview; ViewEntity(EV.parent, *EV["<-"], objview);
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
 	Value = json::array();
 
 	/*if (subview.is_array())	//	в subview массив объектов FileInfo, каждый из которых описывает файл в который надо сохранить
 	{
 	size_t i = 0;
 	for (auto& it : subview.as_array())
-	jsonToFiles(Entity(EV.parent, (*EV["ent"]), it, json(), objview), Model, (View)[i++]);
+	jsonToFiles(json(jref(EV["ctx"]), jref(EV["ent"]), it, json(), objview), Model, (View)[i++]);
 	}
 	else*/
 	if (subview.is_object())
@@ -361,7 +361,7 @@ void __fastcall jsonToFiles(Entity &EV, json &Value)
 				FileInfoVal["PathFolder"] = cp1251_to_wstring(PathName);
 				FileInfoVal["FileName"] = cp1251_to_wstring(FileName);
 				FileInfo["FileInfo"] = FileInfoVal;
-				//jsonToFile(Entity(EV.parent, (*EV["ent"]), FileInfo, json(), it), Model, View[i++]);
+				//jsonToFile(json(jref(EV["ctx"]), jref(EV["ent"]), FileInfo, json(), it), Model, View[i++]);
 			}
 		}
 		else
@@ -394,7 +394,7 @@ void __fastcall jsonToFiles(Entity &EV, json &Value)
 			FileInfoVal["PathFolder"] = cp1251_to_utf8(PathName);
 			FileInfoVal["FileName"] = cp1251_to_utf8(FileName);
 			FileInfo["FileInfo"] = FileInfoVal;
-			//jsonToFile(Entity(EV.parent, (*EV["ent"]), FileInfo, json(), objview), Model, View);
+			//jsonToFile(json(jref(EV["ctx"]), jref(EV["ent"]), FileInfo, json(), objview), Model, View);
 		}
 	}
 }

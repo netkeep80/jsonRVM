@@ -233,10 +233,10 @@ struct application_xml
 
 
 /*
-void	HTTP_METHOD_json(Entity &EV, json &Value, const method &mtd)
+void	HTTP_METHOD_json(json &EV, json &Value, const method &mtd)
 {
-	json& subview = *EV["->"];
-	ViewEntity(EV.parent, *EV["<-"], Value);
+	json& subview = jref(EV["->"]);
+	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
 
 	if (Value.is_object())
 	{
@@ -313,10 +313,10 @@ authority   = [ userinfo "@" ] host [ ":" port ]
 userinfo    = *( unreserved / pct-encoded / sub-delims / ":" )
 */
 template<typename _convert>
-void __fastcall HTTP_METHOD(Entity &EV, json &Value, const method &mtd)
+void __fastcall HTTP_METHOD(json &EV, json &Value, const method &mtd)
 {
-	json& subview = *EV["->"];
-	ViewEntity(EV.parent, *EV["<-"], Value);
+	json& subview = jref(EV["->"]);
+	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
 
 	if (Value.is_object())
 	{
@@ -381,14 +381,14 @@ void __fastcall HTTP_METHOD(Entity &EV, json &Value, const method &mtd)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void __fastcall HTTP_GET_json(Entity &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::GET); }
-void __fastcall HTTP_POST_json(Entity &EV, json &Value)   { HTTP_METHOD<application_json>(EV, Value, methods::POST); }
-void __fastcall HTTP_PUT_json(Entity &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::PUT); }
-void __fastcall HTTP_DELETE_json(Entity &EV, json &Value) { HTTP_METHOD<application_json>(EV, Value, methods::DEL); }
-void __fastcall HTTP_GET_xml(Entity &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::GET); }
-void __fastcall HTTP_POST_xml(Entity &EV, json &Value)    { HTTP_METHOD<application_xml>(EV, Value, methods::POST); }
-void __fastcall HTTP_PUT_xml(Entity &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::PUT); }
-void __fastcall HTTP_DELETE_xml(Entity &EV, json &Value)  { HTTP_METHOD<application_xml>(EV, Value, methods::DEL); }
+void __fastcall HTTP_GET_json(json &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::GET); }
+void __fastcall HTTP_POST_json(json &EV, json &Value)   { HTTP_METHOD<application_json>(EV, Value, methods::POST); }
+void __fastcall HTTP_PUT_json(json &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::PUT); }
+void __fastcall HTTP_DELETE_json(json &EV, json &Value) { HTTP_METHOD<application_json>(EV, Value, methods::DEL); }
+void __fastcall HTTP_GET_xml(json &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::GET); }
+void __fastcall HTTP_POST_xml(json &EV, json &Value)    { HTTP_METHOD<application_xml>(EV, Value, methods::POST); }
+void __fastcall HTTP_PUT_xml(json &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::PUT); }
+void __fastcall HTTP_DELETE_xml(json &EV, json &Value)  { HTTP_METHOD<application_xml>(EV, Value, methods::DEL); }
 
 __declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
 {

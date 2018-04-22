@@ -91,9 +91,11 @@ int main(int argc, char* argv[])
 	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
-	json			returnValue;
-	vector<string>	CallStack;
-	Entity			root(input_json, &CallStack, returnValue);
+	json	returnValue;
+	input_json["CallStack"] = json::array();
+
+	json	root;
+	InitCtx(root, input_json, returnValue, &root);
 	ExecEntity(root, input_json, returnValue);
 
 	if (fileNameOutput)
