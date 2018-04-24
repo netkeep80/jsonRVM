@@ -2,6 +2,7 @@ Release
 Debug
 packages
 .vs
+rvm.dump.json
 
 # Windows image file caches
 Thumbs.db
