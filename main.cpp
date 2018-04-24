@@ -95,7 +95,7 @@ int main(int argc, char* argv[])
 	input_json["CallStack"] = json::array();
 
 	json	root;
-	InitCtx(root, input_json, returnValue, &root);
+	InitCtx(root, input_json, returnValue, root);
 	ExecEntity(root, input_json, returnValue);
 
 	if (fileNameOutput)

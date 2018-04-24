@@ -813,11 +813,11 @@ inline json* ReferEntity(json &EV, json &Ent, json &Value)
 	}
 }
 
-inline void InitCtx(json &EV, json& ent_ref, json &Value, json* pRef)
+inline void InitCtx(json &EV, json& ent_ref, json &Value, json& ctx)
 {
 	try		//	процедура проецирования сущности в контекст исполнения
 	{
-		EV["ctx"] = pRef;
+		EV["ctx"] = &ctx;
 #ifdef _DEBUG	//	для отладки
 		if (jref(EV["ctx"]).count("level"))
 			EV["level"] = jptr(jref(EV["ctx"])["level"].get<size_t>() + 1);
@@ -881,7 +881,7 @@ inline void ViewEntity(json &EV, json &Ent, json &Value)
 			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
 			{
 				json	ctx;
-				InitCtx(ctx, Ent, Value, &EV);	//	создаём контекстную проекцию сущности
+				InitCtx(ctx, Ent, Value, EV);	//	создаём контекстную проекцию сущности
 				json&	relRef = jref(ctx["()"]);
 				ExecEntity(ctx, relRef, Value);
 			}
@@ -946,7 +946,7 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 			else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
 			{
 				json	ctx;
-				InitCtx(ctx, Ent, Value, &EV);	//	создаём контекстную проекцию сущности
+				InitCtx(ctx, Ent, Value, EV);	//	создаём контекстную проекцию сущности
 				json&	relRef = jref(ctx["()"]);
 				ExecEntity(ctx, relRef, Value);
 			}
@@ -954,10 +954,10 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 			{	//ToDo:	надо переделать на параллельное проецирование
 				for (auto& it : Ent.items())
 				{
-					const string&	key = it.key();
-					CSPush(key);	//	debug
+					json	key = it.key();
+					CSPush(key.get<string>());	//	debug
 					//	проецируем в текущем контексте
-					json&	subRef = *ReferEntity(EV, json(key), Value);
+					json&	subRef = *ReferEntity(EV, key, Value);
 					json&	objRef = *ReferEntity(EV, it.value(), Value);
 					ViewEntity(EV, objRef, subRef);
 				}
