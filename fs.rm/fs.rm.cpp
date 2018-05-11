@@ -150,6 +150,34 @@ void __fastcall fs_dir_scan(json &EV, json &Value)
 	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileNameFormat properties"s);
 }
 
+void __fastcall fs_dir_create(json &EV, json &Value)
+{
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+
+	if (objview.is_string())
+	{
+		string	PathName = utf8_to_cp1251(objview);
+		subview = bool(CreateDirectoryA(PathName.c_str(), nullptr));
+	}
+	else
+		throw(__FUNCTION__ + ": <-/ must be json string with PathName"s);
+}
+
+void __fastcall fs_dir_delete(json &EV, json &Value)
+{
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+
+	if (objview.is_string())
+	{
+		string	PathName = utf8_to_cp1251(objview);
+		subview = bool(RemoveDirectoryA(PathName.c_str()));
+	}
+	else
+		throw(__FUNCTION__ + ": <-/ must be json string with PathName"s);
+}
+
 void __fastcall fs_file_read_json(json &EV, json &Value)
 {
 	json& subview = jref(EV["->"]);
@@ -403,6 +431,8 @@ void __fastcall jsonToFiles(json &EV, json &Value)
 FSRM_API void __fastcall ImportRelationsModel(json &Ent)
 {
 	Addx86Entity(Ent["fs"]["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory"s);
+	Addx86Entity(Ent["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, <- must be string"s);
+	Addx86Entity(Ent["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, <- must be string"s);
 	
 	Addx86Entity(Ent["fs"]["file"]["read"], "json"s, fs_file_read_json, ""s);
 	Addx86Entity(Ent["fs"]["file"]["read"], "string"s, jsonFileToString, ""s);
