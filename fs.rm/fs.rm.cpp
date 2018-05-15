@@ -178,6 +178,38 @@ void __fastcall fs_dir_delete(json &EV, json &Value)
 		throw(__FUNCTION__ + ": <-/ must be json string with PathName"s);
 }
 
+void __fastcall fs_file_load_rm(json &EV, json &Value)
+{
+	json& subview = jref(EV["->"]);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+
+	if (objview.is_object())
+	{
+		if (objview.count("PathFolder") && objview.count("FileName"))
+		{
+			string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+			std::ifstream in(PathName.c_str());
+
+			if (in.good())
+			{
+				json	rm;
+				in >> rm;
+				if (rm.is_object())
+				{
+					Value = true;
+					for( auto& p : rm.items() )
+						subview[p.key()] = p.value();
+				}
+				else Value = false;
+			}
+			else
+				throw(__FUNCTION__ + ": Can't load json from the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!");
+		}
+	}
+
+	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties"s);
+}
+
 void __fastcall fs_file_read_json(json &EV, json &Value)
 {
 	json& subview = jref(EV["->"]);
@@ -194,7 +226,8 @@ void __fastcall fs_file_read_json(json &EV, json &Value)
 			{
 				Value = true;
 				in >> subview;
-				if (subview.is_object()) subview["FileInfo"] = objview;
+				if (subview.is_object())
+					subview["FileInfo"] = objview;
 			}
 			else
 				throw(__FUNCTION__ + ": Can't load json from the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!");
@@ -434,6 +467,8 @@ FSRM_API void __fastcall ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, <- must be string"s);
 	Addx86Entity(Ent["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, <- must be string"s);
 	
+	Addx86Entity(Ent["fs"]["file"]["load"], "rm"s, fs_file_load_rm, ""s);
+
 	Addx86Entity(Ent["fs"]["file"]["read"], "json"s, fs_file_read_json, ""s);
 	Addx86Entity(Ent["fs"]["file"]["read"], "string"s, jsonFileToString, ""s);
 	Addx86Entity(Ent["fs"]["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
