@@ -3,6 +3,8 @@ Debug
 packages
 .vs
 rvm.dump.json
+*.vcxproj.user
+imgui.ini
 
 # Windows image file caches
 Thumbs.db

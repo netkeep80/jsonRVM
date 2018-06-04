@@ -419,18 +419,29 @@ typedef json::number_unsigned_t	ju;
 	OPP_ANYTO(operation, ju, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-void __fastcall json##name (json &EV, json &Value)											\
+void __fastcall json##name (json &EV, json &Value)												\
 {																								\
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);										\
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);										\
+	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);							\
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);							\
 	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )					\
-	{ VM_OPP( operation ) default: throw(__FUNCTION__ + ": <-/ and -> must be numbers"s); }		\
+	{ VM_OPP( operation ) default: throw(__FUNCTION__ + ": <-/ and ->/ must be numbers"s); }		\
 }
 
 OP_BODY(Add, +);
 OP_BODY(Substract, -);
 OP_BODY(Mul, *);
-OP_BODY(Div, /);
+
+void __fastcall jsonDiv(json &EV, json &Value)
+{
+	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
+	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	if (objview.is_number())
+		if (objview.get<double>() == 0.0)
+			throw(__FUNCTION__ + ": <-/ must be not zere"s);
+	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )
+	{ VM_OPP(/) default: throw(__FUNCTION__ + ": <-/ and ->/ must be numbers"s); }
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 void __fastcall jsonPower(json &EV, json &Value)
