@@ -122,6 +122,14 @@ public:
 } LoadedDLLs;
 
 
+bool	LoadAndInitDict(const string& LibName, json &Ent)
+{
+	bool	Value = LoadedDLLs.LoadDict(LibName);
+	if (Value) LoadedDLLs[LibName].Init(Ent);
+	return Value;
+}
+
+
 void __fastcall jsonLoadDLL(json &EV, json &Value)
 {
 	json& subview = jref(EV["->"]);//	определяем сущность для размещения словаря
@@ -133,8 +141,7 @@ void __fastcall jsonLoadDLL(json &EV, json &Value)
 		{
 			string	FullFileName = Value["PathFolder"].get<string>() + Value["FileName"].get<string>();
 			if (!subview.is_object()) subview = json::object();
-			Value = LoadedDLLs.LoadDict(FullFileName);
-			if (Value) LoadedDLLs[FullFileName].Init(subview);
+			Value = LoadAndInitDict(FullFileName, subview);
 			return;
 		}
 	}
