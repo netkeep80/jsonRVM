@@ -38,6 +38,7 @@ SOFTWARE.
 #include <string>
 #include "jsonRVM.h"
 
+extern bool	LoadAndInitDict(const string& LibName, json &Ent);
 
 void	dump_json(string& filename, json& val)
 {
@@ -51,6 +52,7 @@ void	dump_json(string& filename, json& val)
 
 int main(int argc, char* argv[])
 {
+	json	returnValue;
 	char *fileNameInput = NULL, *fileNameOutput = NULL;
 
 	switch (argc)
@@ -76,7 +78,51 @@ int main(int argc, char* argv[])
 		cout << "Copyright (c) 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
 		cout << "                                                                              " << endl;
 		cout << "usage: jsonRVM.exe [input RM json file [output RM json file]]                 " << endl;
+		cout << "       jsonRVM.exe [input RM DLL file ]                                       " << endl;
+		cout << "       jsonRVM.exe [jsonRVM.exe]                                              " << endl;
 		return 1;
+	}
+
+	size_t fileNameInputLen = strlen(fileNameInput);
+
+	if (fileNameInputLen > 4)
+	{
+		char *fileNameInputExt = &fileNameInput[fileNameInputLen - 4];
+
+		if (!strcmp(fileNameInputExt, ".dll") || !strcmp(fileNameInputExt, ".DLL"))
+		{
+			string	FullFileName = string(".\\") + fileNameInput;
+			returnValue = json::object();
+			try
+			{
+				if (LoadAndInitDict(FullFileName, returnValue))
+				{
+					cout << returnValue.dump(3);
+					return 0;
+				}
+			}
+			catch (string& error)
+			{
+				cout << "Exception: " << error;
+			}
+			catch (std::exception& e)
+			{
+				cout << "Exception: " << e.what();
+			}
+			catch (...)
+			{
+				cout << "Unknown exception";
+			}
+			return 1;
+		}
+	}
+
+	if (!strcmp(fileNameInput, "jsonRVM.exe"))
+	{
+		returnValue = json::object();
+		ImportRelationsModel(returnValue);
+		cout << returnValue.dump(3);
+		return 0;
 	}
 
 	std::ifstream in(fileNameInput);
@@ -91,7 +137,6 @@ int main(int argc, char* argv[])
 	ImportRelationsModel(input_json);
 
 	//	создаём контекст исполнения
-	json	returnValue;
 	input_json["CallStack"] = json::array();
 
 	json	root;
