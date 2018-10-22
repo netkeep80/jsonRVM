@@ -132,8 +132,8 @@ bool	LoadAndInitDict(const string& LibName, json &Ent)
 
 void __fastcall jsonLoadDLL(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);//	определяем сущность для размещения словаря
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);//	вычисляем имя бибилиотеки
+	json& subview = val2ref(EV["->"]);//	определяем сущность для размещения словаря
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);//	вычисляем имя бибилиотеки
 
 	if (Value.is_object())
 	{
@@ -153,36 +153,36 @@ void __fastcall jsonLoadDLL(json &EV, json &Value)
 
 void __fastcall sleep_ms(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	Sleep(objview.get<json::number_unsigned_t>());
 }
 
 void __fastcall jsonClone(json &EV, json &Value)
 {	//	детальное клонирование json значения
-	jref(EV["->"]) = jref(EV["<-"]);
+	val2ref(EV["->"]) = val2ref(EV["<-"]);
 }
 
 void __fastcall jsonView(json &EV, json &Value)
 {	//	получаем ссылку на субъект, что бы знать куда записывать проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), jref(EV["->"]));	//	проецируем во внешнем контексте
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), val2ref(EV["->"]));	//	проецируем во внешнем контексте
 }
 
 void __fastcall jsonExternViewObj(json &EV, json &Value)
 {
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);	//	проецируем во внешнем контексте
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);	//	проецируем во внешнем контексте
 }
 
 void __fastcall jsonExternViewSub(json &EV, json &Value)
 {
-	ViewEntity(jref(EV["ctx"]), jref(EV["->"]), Value);	//	проецируем во внешнем контексте
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), Value);	//	проецируем во внешнем контексте
 }
 
 void __fastcall jsonExec(json &EV, json &Value)
 {	//	получаем ссылку на субъект, что бы знать где исполнять проекцию объекта
 	//	контекст EV относится к сущности внутри которой идёт исплнение
-	ExecEntity(jref(EV["ctx"]), jref(EV["<-"]), jref(EV["->"]));	//	исполняем во внешнем контексте
+	ExecEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), val2ref(EV["->"]));	//	исполняем во внешнем контексте
 }
 
 template<typename _T> struct _add
@@ -383,8 +383,8 @@ json operator ^ (const json& a, const json& b)
 
 void __fastcall jsonXOR(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	Value = subview ^ objview;
 }
 
@@ -428,8 +428,8 @@ typedef json::number_unsigned_t	ju;
 #define	OP_BODY( name, operation )																\
 void __fastcall json##name (json &EV, json &Value)												\
 {																								\
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);							\
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);							\
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);							\
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);							\
 	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )					\
 	{ VM_OPP( operation ) default: throw(__FUNCTION__ + ": <-/ and ->/ must be numbers"s); }		\
 }
@@ -440,8 +440,8 @@ OP_BODY(Mul, *);
 
 void __fastcall jsonDiv(json &EV, json &Value)
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	if (objview.is_number())
 		if (objview.get<double>() == 0.0)
 			throw(__FUNCTION__ + ": <-/ must be not zere"s);
@@ -453,8 +453,8 @@ void __fastcall jsonDiv(json &EV, json &Value)
 //////////////////////////////////////////////////////////////////////////////////////////////
 void __fastcall jsonPower(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (subview.is_number() && objview.is_number())
 	{
@@ -477,8 +477,8 @@ void __fastcall jsonPower(json &EV, json &Value)
 
 void __fastcall jsonSqrt(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_number())
 		subview = json::number_float_t(sqrt(objview.get<json::number_float_t>()));
@@ -497,20 +497,20 @@ void __fastcall jsonSqrt(json &EV, json &Value)
 */
 void __fastcall jsonForEach(json &EV, json &Value)
 {
-	json subview = jref(EV["->"]);
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
+	json subview = val2ref(EV["->"]);
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
 
 	if (Value.is_array())
 	{
 		for (auto& it : Value)
 		{
 			json	objview = it;	//	кэшируем значение
-			EV["<-"] = jrefval(objview);
-			EV[""] = EV["->"] = jrefval(it);
+			EV["<-"] = ref2id(objview);
+			EV[""] = EV["->"] = ref2id(it);
 			//EV[""] = EV["<-"] = EV["->"] = &it;
 			ExecEntity(EV, subview, it);
 		}
-		EV[""] = jrefval(Value);
+		EV[""] = ref2id(Value);
 	}
 	else
 		throw(__FUNCTION__ + ": <-/ must be array"s);
@@ -518,8 +518,8 @@ void __fastcall jsonForEach(json &EV, json &Value)
 
 void __fastcall jsonSize(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	size_t	size = objview.size();
 	if (!size)
 	{
@@ -531,15 +531,15 @@ void __fastcall jsonSize(json &EV, json &Value)
 #define define_json_is_type(json_type)						\
 void __fastcall json_is_##json_type(json &EV, json &Value)\
 {															\
-	json& subview = jref(EV["->"]);								\
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);	\
+	json& subview = val2ref(EV["->"]);								\
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	\
 	subview = objview.is_##json_type();						\
 }
 
 void __fastcall json_is_not_null(json &EV, json &Value)	\
 {															\
-	json& subview = jref(EV["->"]);								\
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);	\
+	json& subview = val2ref(EV["->"]);								\
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	\
 	subview = !objview.is_null();							\
 }
 
@@ -557,8 +557,8 @@ define_json_is_type(discarded)
 
 void __fastcall jsonIntegerSequence(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -576,8 +576,8 @@ void __fastcall jsonIntegerSequence(json &EV, json &Value)
 
 void __fastcall jsonUnion(json &EV, json &Value)
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!subview.is_array())
 	{
@@ -603,8 +603,8 @@ void __fastcall jsonNull(json &EV, json &Value) {}
 
 void __fastcall jsonInt32(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	switch (objview.type())
 	{
@@ -639,8 +639,8 @@ void __fastcall jsonInt32(json &EV, json &Value)
 
 void __fastcall jsonDouble(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	switch (objview.type())
 	{
@@ -679,8 +679,8 @@ void __fastcall jsonDouble(json &EV, json &Value)
 
 void __fastcall string_split(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_string() && subview.is_string())
 	{
@@ -703,8 +703,8 @@ void __fastcall string_split(json &EV, json &Value)
 
 void __fastcall string_join(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	string	result = "";
 	bool	first = true;
 
@@ -756,8 +756,8 @@ void __fastcall string_join(json &EV, json &Value)
 
 void __fastcall jsonGet(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (subview.is_array())
 	{
@@ -779,8 +779,8 @@ void __fastcall jsonGet(json &EV, json &Value)
 
 void __fastcall jsonSet(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (subview.is_array())
 	{
@@ -811,8 +811,8 @@ void __fastcall jsonSet(json &EV, json &Value)
 
 void __fastcall jsonErase(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	
 	if (subview.is_object())
 	{
@@ -827,15 +827,15 @@ void __fastcall jsonErase(json &EV, json &Value)
 
 void __fastcall jsonIsEq(json &EV, json &Value)
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	Value = subview == objview;
 }
 
 void __fastcall jsonIsNotEq(json &EV, json &Value)
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	Value = subview != objview;
 }
 
@@ -843,8 +843,8 @@ void __fastcall jsonSum(json &EV, json &Value)
 {
 	__int64	isum = 0;
 	double	dsum = 0.0;
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_array())
 	{
@@ -877,8 +877,8 @@ void __fastcall jsonSum(json &EV, json &Value)
 
 void __fastcall jsonWhere(json &EV, json &Value)
 {
-	json subview = jref(EV["->"]);	//	фильтр для where clause, при исполнении должен возвращать bool
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);	//	фильтруемые данные
+	json subview = val2ref(EV["->"]);	//	фильтр для where clause, при исполнении должен возвращать bool
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	//	фильтруемые данные
 	Value = json::array();		//	подготовка выходного массива
 	
 	if (objview.is_array())
@@ -886,14 +886,14 @@ void __fastcall jsonWhere(json &EV, json &Value)
 		for (auto& it : objview)
 		{
 			json	boolres = it;
-			EV["<-"] = jrefval(it);
-			EV[""] = EV["->"] = jrefval(boolres);
+			EV["<-"] = ref2id(it);
+			EV[""] = EV["->"] = ref2id(boolres);
 			ExecEntity(EV, subview, boolres);
 			if (boolres.is_boolean())
 				if (boolres.get_ref<bool&>())
 					Value.push_back(it);	//	фильтруем
 		}
-		EV[""] = jrefval(Value);
+		EV[""] = ref2id(Value);
 	}
 	else if (objview.is_null())
 	{
@@ -905,8 +905,8 @@ void __fastcall jsonWhere(json &EV, json &Value)
 
 void __fastcall jsonBelow(json &EV, json &Value)	//	<
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (subview.type() == objview.type()) switch (objview.type())
 	{
@@ -943,8 +943,8 @@ void __fastcall jsonBelow(json &EV, json &Value)	//	<
 
 void __fastcall jsonAnd(json &EV, json &Value)
 {
-	json subview; ViewEntity(jref(EV["ctx"]), jref(EV["->"]), subview);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (subview.is_boolean() && objview.is_boolean())
 	{
@@ -955,35 +955,35 @@ void __fastcall jsonAnd(json &EV, json &Value)
 
 void __fastcall IfObjTrueThenExecSub(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!objview.is_boolean())
 		throw(__FUNCTION__ + ": <-/ must be boolean!"s);
 
 	if (objview.get<bool>())
-		ExecEntity(jref(EV["ctx"]), subview, Value);
+		ExecEntity(val2ref(EV["ctx"]), subview, Value);
 }
 
 void __fastcall IfObjFalseThenExecSub(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!objview.is_boolean())
 		throw(__FUNCTION__ + ": <-/ must be boolean!"s);
 
 	if (!objview.get<bool>())
-		ExecEntity(jref(EV["ctx"]), subview, Value);
+		ExecEntity(val2ref(EV["ctx"]), subview, Value);
 }
 
 void __fastcall ExecSubWhileObjTrue(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
+	json& subview = val2ref(EV["->"]);
 
 	while (true)
 	{
-		ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
+		ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
 
 		if (!Value.is_boolean())
 		{
@@ -992,7 +992,7 @@ void __fastcall ExecSubWhileObjTrue(json &EV, json &Value)
 		}
 
 		if (Value.get<bool>())
-			ExecEntity(jref(EV["ctx"]), subview, Value);
+			ExecEntity(val2ref(EV["ctx"]), subview, Value);
 		else
 			return;
 	}

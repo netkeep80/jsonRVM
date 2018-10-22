@@ -315,8 +315,8 @@ userinfo    = *( unreserved / pct-encoded / sub-delims / ":" )
 template<typename _convert>
 void __fastcall HTTP_METHOD(json &EV, json &Value, const method &mtd)
 {
-	json& subview = jref(EV["->"]);
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
+	json& subview = val2ref(EV["->"]);
+	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
 
 	if (Value.is_object())
 	{

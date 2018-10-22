@@ -79,8 +79,8 @@ extern double g_Time;
 
 void __fastcall viewport(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -197,8 +197,8 @@ void __fastcall viewport(json &EV, json &Value)
 
 void __fastcall form(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -220,8 +220,8 @@ void __fastcall form(json &EV, json &Value)
 
 void __fastcall text(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;
@@ -239,8 +239,8 @@ void __fastcall text(json &EV, json &Value)
 
 void __fastcall button(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (!subview.is_object()) subview = json::object();
 	if (!subview.count("visible")) subview["visible"] = true;

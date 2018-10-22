@@ -113,8 +113,8 @@ namespace nlohmann
 
 void __fastcall fs_dir_scan(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -152,8 +152,8 @@ void __fastcall fs_dir_scan(json &EV, json &Value)
 
 void __fastcall fs_dir_create(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_string())
 	{
@@ -166,8 +166,8 @@ void __fastcall fs_dir_create(json &EV, json &Value)
 
 void __fastcall fs_dir_delete(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_string())
 	{
@@ -180,8 +180,8 @@ void __fastcall fs_dir_delete(json &EV, json &Value)
 
 void __fastcall fs_file_load_rm(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -212,8 +212,8 @@ void __fastcall fs_file_load_rm(json &EV, json &Value)
 
 void __fastcall fs_file_read_json(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -239,8 +239,8 @@ void __fastcall fs_file_read_json(json &EV, json &Value)
 
 void __fastcall jsonFileToString(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	subview = json();
 
 	if (objview.is_object())
@@ -270,8 +270,8 @@ void __fastcall jsonFileToString(json &EV, json &Value)
 
 void __fastcall jsonFileToStringArray(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -315,8 +315,8 @@ void __fastcall jsonFileToStringArray(json &EV, json &Value)
 
 void __fastcall jsonStringArrayToFile(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object() && subview.is_array())
 	{
@@ -347,8 +347,8 @@ void __fastcall jsonStringArrayToFile(json &EV, json &Value)
 
 void __fastcall fs_file_write_json(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 
 	if (objview.is_object())
 	{
@@ -376,8 +376,8 @@ void __fastcall fs_file_write_json(json &EV, json &Value)
 
 void __fastcall jsonToFiles(json &EV, json &Value)
 {
-	json& subview = jref(EV["->"]);
-	json objview; ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), objview);
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
 	Value = json::array();
 
 	/*if (subview.is_array())	//	в subview массив объектов FileInfo, каждый из которых описывает файл в который надо сохранить
