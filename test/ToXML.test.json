@@ -1,0 +1,30 @@
+{
+   "()" : [
+      {
+         "#/additional_rm_loaded/http.rm.dll" : {
+            "<-" : {
+               "PathFolder" : ".\\",
+               "FileName" : "http.rm.dll"
+            },
+            "()" : "#/RVM/load/dll",
+            "->" : "#"
+         }
+      },
+      {
+         "<-" : {
+            "request" : {
+               "Index" : "-1",
+               "Phones" : {
+                  "Phone" : "89875421631"
+               },
+               "Sca" : "",
+               "Content" : "test message from watchdog",
+               "Length" : "3",
+               "Reserved" : "1",
+               "Date" : "2017-12-18 15:01:01"
+            }
+         },
+         "()" : "#/ToXML"
+      }
+   ]
+}

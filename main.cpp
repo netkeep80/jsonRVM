@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 		cout << "          c                                                                   " << endl;
 		cout << "       v__|__m                                                                " << endl;
 		cout << "     m   _|_   v                                                              " << endl;
-		cout << "  c__|__/_|_\\__|__c  jsonRVM                                                 " << endl;
+		cout << "  c__|__/_|_\\__|__c  jsonRVM [Version " << RVM_version << "]                 " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
 		cout << "     v    |    m     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;
@@ -140,20 +140,29 @@ int main(int argc, char* argv[])
 	input_json["CallStack"] = json::array();
 
 	json	root;
-	InitCtx(root, input_json, returnValue, root);
-	ExecEntity(root, input_json, returnValue);
-
-	if (fileNameOutput)
-		dump_json(string(fileNameOutput), input_json);
-
 	try
 	{
-		return returnValue.get<int>();
+		InitCtx(root, input_json, returnValue, root);
+		ExecEntity(root, input_json, returnValue);
+
+		if (fileNameOutput) dump_json(string(fileNameOutput), input_json);
+
+		try
+		{
+			return returnValue.get<int>();
+		}
+		catch (...)
+		{
+			cout << returnValue.dump(3);
+			return 1;
+		}
 	}
-	catch (...)
-	{
-		cout << returnValue.dump(3);
-		return 1;
-	}
+	catch (string& error)		{ cout << "#/"s + error; }
+	catch (json::exception& e)	{ cout << "json::exception: "s + e.what() + ", exception id: "s + to_string(e.id); }
+	catch (std::exception& e)	{ cout << "std::exception: "s + e.what(); }
+	catch (...)					{ cout << "unknown exception"s; }
+
+	if (fileNameOutput) dump_json(string(fileNameOutput), input_json);
+	return 1;
 }
 

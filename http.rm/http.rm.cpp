@@ -217,6 +217,160 @@ string_t WebAPISetAccessToken()
 	return WebAPIAccessToken;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
+
+std::string json_string2xml(const std::string& tag, const json &Value)
+{
+	return "<"s + tag + ">" + Value.get<json::string_t>() + "</"s + tag + ">";
+}
+
+
+std::string json_float2xml(const std::string& tag, const json &Value)
+{
+	return "<"s + tag + ">" + std::to_string(Value.get<json::number_float_t>()) + "</"s + tag + ">";
+}
+
+
+std::string json_integer2xml(const std::string& tag, const json &Value)
+{
+	return "<"s + tag + ">" + std::to_string(Value.get<json::number_integer_t>()) + "</"s + tag + ">";
+}
+
+
+std::string json_unsigned2xml(const std::string& tag, const json &Value)
+{
+	return "<"s + tag + ">" + std::to_string(Value.get<json::number_unsigned_t>()) + "</"s + tag + ">";
+}
+
+
+std::string json_bool2xml(const std::string& tag, const json &Value)
+{
+	if (Value.get<json::boolean_t>()) return json_string2xml(tag, json("true"));
+	else                              return json_string2xml(tag, json("false"));
+}
+
+
+std::string json_null2xml(const std::string& tag)
+{
+	return "<"s + tag + "/>";
+}
+
+
+std::string json_type2xml(const std::string& tag, const json &Value)
+{
+	std::string res = "";
+
+	switch (Value.type())
+	{
+	case json::value_t::object:
+	{
+		res += "<"s + tag + ">";
+		for (auto& it : Value.items())
+		{
+			res += json_type2xml(it.key(), it.value());
+		}
+		res += "</"s + tag + ">";
+		return res;
+	}
+
+	case json::value_t::array:
+	{
+		for (auto& it : Value)
+		{
+			res += json_type2xml(tag, it);
+		}
+		return res;
+	}
+
+	case json::value_t::number_float:
+		return json_float2xml(tag, Value);
+
+	case json::value_t::number_integer:
+		return json_integer2xml(tag, Value);
+
+	case json::value_t::number_unsigned:
+		return json_unsigned2xml(tag, Value);
+
+	case json::value_t::string:
+		return json_string2xml(tag, Value);
+
+	case json::value_t::boolean:
+		return json_bool2xml(tag, Value);
+
+	default:	//	null
+		return json_null2xml(tag);
+	}
+}
+
+
+std::string json2xml(const json &Value)
+{
+	std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s,
+				tag = "root"s;
+	
+	switch (Value.type())
+	{
+	case json::value_t::object:
+	{
+		if (1 == Value.size())
+			res += json_type2xml(Value.begin().key(), Value.cbegin().value());
+		else
+		{
+			res += "<"s + tag + ">";
+			for (auto& it : Value.items())
+			{
+				res += json_type2xml(it.key(), it.value());
+			}
+			res += "</"s + tag + ">";
+		}
+		return res;
+	}
+
+	case json::value_t::array:
+	{
+		if (1 == Value.size())
+			res += json_type2xml(tag, Value.cbegin().value());
+		else
+		{
+			res += "<"s + tag + ">";
+			for (auto& it : Value)
+			{
+				res += json_type2xml("element"s, it);
+			}
+			res += "</"s + tag + ">";
+		}
+		return res;
+	}
+
+	case json::value_t::number_float:
+		return res + json_float2xml(tag, Value);
+
+	case json::value_t::number_integer:
+		return res + json_integer2xml(tag, Value);
+
+	case json::value_t::number_unsigned:
+		return res + json_unsigned2xml(tag, Value);
+
+	case json::value_t::string:
+		return res + json_string2xml(tag, Value);
+
+	case json::value_t::boolean:
+		return res + json_bool2xml(tag, Value);
+
+	default:	//	null
+		return res + json_string2xml(tag, json(""));
+	}
+}
+
+void __fastcall jsonToXML(json &EV, json &Value)
+{
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	subview = json2xml(objview);
+}
+
+
 struct application_json
 {
 	static wstring content_type() { return L"application/json"; }
@@ -390,8 +544,40 @@ void __fastcall HTTP_POST_xml(json &EV, json &Value)    { HTTP_METHOD<applicatio
 void __fastcall HTTP_PUT_xml(json &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::PUT); }
 void __fastcall HTTP_DELETE_xml(json &EV, json &Value)  { HTTP_METHOD<application_xml>(EV, Value, methods::DEL); }
 
+/*
+void __fastcall json2html(json &EV, json &Value)
+{
+	json& subview = val2ref(EV["->"]);
+	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	string	result = "";
+	
+	if (Value.is_object())
+	{
+		if (!Value.count("URI")) Value["URI"] = ""s;
+		
+		for (auto& it : Ent.items())
+		{
+			json	key = it.key();
+			CSPush(key.get<string>());	//	debug
+										//	проецируем в текущем контексте
+			json&	subRef = ReferEntity(EV, key, Value);
+			json&	objRef = ReferEntity(EV, it.value(), Value);
+			ViewEntity(EV, objRef, subRef);
+		}
+
+		subview = result;
+	}
+	else
+	{
+		subview = result;
+		throw(__FUNCTION__ + ": ->/ must be object"s);
+	}
+}
+*/
+
 __declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
 {
+	Addx86Entity(Ent, "ToXML"s, jsonToXML, "");
 	Addx86Entity(Ent["HTTP"]["GET"], "json"s, HTTP_GET_json,    "");
 	Addx86Entity(Ent["HTTP"]["POST"],"json"s, HTTP_POST_json,   "");
 	Addx86Entity(Ent["HTTP"]["PUT"], "json"s, HTTP_PUT_json,    "");
@@ -400,4 +586,5 @@ __declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent["HTTP"]["POST"],"xml"s,  HTTP_POST_xml,    "");
 	Addx86Entity(Ent["HTTP"]["PUT"], "xml"s,  HTTP_PUT_xml,     "");
 	Addx86Entity(Ent["HTTP"]["DEL"], "xml"s,  HTTP_DELETE_xml,  "");
+//	Addx86Entity(Ent, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
 }

@@ -1,0 +1,69 @@
+{
+   "()" : [
+      {
+         "#/additional_rm_loaded/http.rm.dll" : {
+            "<-" : {
+               "PathFolder" : ".\\",
+               "FileName" : "http.rm.dll"
+            },
+            "()" : "#/RVM/load/dll",
+            "->" : "#"
+         }
+      },
+      {
+         "<-" : {
+            "URI" : "http://192.168.8.1/api/webserver/token"
+         },
+         "()" : "#/HTTP/GET/xml",
+         "old()" : "#/HTTP/GET/xml",
+         "->" : "#/Modem/SesTokInfo"
+      },
+      {
+         "<-" : "#/HTTP/CODE_OK",
+         "()" : "#/=="
+      },
+      {
+         "()" : "#/then",
+         "->" : {
+            "<-" : {
+               "<-" : "#/Modem/SesTokInfo/body/response",
+               "()" : [
+                  {
+                     "/" : {}
+                  },
+                  {
+                     "/URI" : "#/Modem/SendSMS/URI",
+                     "/body" : "#/Modem/SendSMS/Message",
+                     "/header/__RequestVerificationToken" : "<-/token"
+                  }
+               ]
+            },
+            "()" : "#/HTTP/POST/xml"
+         }
+      }
+   ],
+   "HTTP" : {
+      "CODE_OK" : 200
+   },
+   "Modem" : {
+      "SendSMS" : {
+         "URI" : "http://192.168.8.1/api/sms/send-sms",
+         "Message" : {
+            "request" : "<Index>-1</Index><Phones><Phone>89875421631</Phone></Phones><Sca></Sca><Content>test message from watchdog</Content><Length>3</Length><Reserved>1</Reserved><Date>2017-12-18 15:01:01</Date>"
+         },
+         "4Message" : {
+            "request" : {
+               "Index" : "-1",
+               "Phones" : {
+                  "Phone" : "89875421631"
+               },
+               "Sca" : "",
+               "Content" : "test message from watchdog",
+               "Length" : "3",
+               "Reserved" : "1",
+               "Date" : "2017-12-18 15:01:01"
+            }
+         }
+      }
+   }
+}
