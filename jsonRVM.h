@@ -32,29 +32,35 @@ SOFTWARE.
 */
 /*
 ------------------------------------------------------------------------------
-		От автора
+		Введение
 
 	Модель отношений (МО) возникла, в результате попытки найти единый концептуальный атом
-из которых состоят все программы. В основе существующих методологий программирования
-всегда лежат две концепции: это объект (или структура) и метод (или функция).
+который лежит в основе всех программы. В основе существующих методологий программирования
+всегда лежат две концепции: это объект (структура) и метод (функция).
 
-	Создание языка Модели Отношений это попытка переосмыслить программирование и взглянуть
-на него как на прикладную философию.
+	Создание языка метапрограммирования Модель Отношений, есть попытка переосмыслить
+программирование и взглянуть на него как на прикладную философию.
 
-	В МО всё построено на основе единой концепции - сущности, которая в зависимости
-от своей внутренней реляционной топологии может быть как объектом так и методом.
-Сущность по своей структуре триедина, т.к. объединяет в себе 3 связи с другими
-(или же с самой собой) сущностями. Каждая из 3х связей имеет своё уникальное значение
+	В основе Модели Отношений положена филосовская концепция сущности, которая в зависимости
+от своего внутреннего конститутивного принципа может быть либо объектом либо методом.
+Сущность по своей сути триедина, потому что она есть объединение трёх связей с другими
+(или же с самой собой) сущностями. Каждая из 3х связей имеет своё значение
 и характеризует то качество в котором выступает связанная сущность. Всего существует 
-3 типа связи: субъект, отношение, объект.
+3 типа связи:
+1. с сущностью субъектом
+2. с сущностью отношением
+3. с сущностью объектом
+
+	Т.е. в МО полагается, что внутренний конститутивный принцип конечного сущего реализается 
+бинарным направленным отношением между сущностями.
 	Таким образом каждая сущность есть экземпляр определённого отношения между определённым
 субъектом и определённым объектом.
 
-	У сущности есть 3 качества, в которых она может проявиться в других сущностях:
+	У сущности есть 3 качества (аспекта), в которых она может выступать в других сущностях:
 
-1. объект определяющий модель
-2. субъект определяющий представление
-3. отношение определяющий контроллер
+1. объект определяющий модель (Model)
+2. субъект определяющий представление (View)
+3. отношение определяющий контроллер (Controller)
 
 	У каждого проявления качества есть 3 определяющих параметра:
 
@@ -65,14 +71,14 @@ SOFTWARE.
 3. сущность, характеризующая качество проявления:
 	объективное	,	субъективное	,	качественное
 
-	С точки зрения объектно-ориентированного программирования сущность это активный объект,
-который одновременно может обладать и состоянием и выполнять определённую функцию.
+	В объектно-ориентированном программировании аналог сущности это активный объект,
+который одновременно имеет собственное состояние и выполняет определённую функцию.
 
 	В начале этого файла идёт терминологический словарь, в котором представлены
 термины из независимых источников информации.
 
 	Комментарии расположенные ниже не имеют определённой общей структуры, потому что,
-представляют из себя разрозненные мысли записанные в разное время на тему МО.	
+представляют из себя разные мысли записанные в разное время в результате исследования МО.	
 	Однако каждый комментарий помечен отдельным иерархическим тэгом, что позволит в
 будущем сгенерировать единый структурированный и упорядоченный документ с описанием МО.
 
@@ -422,7 +428,7 @@ RM  - relations model
 #/RM/jsonView
 В дереве значений json, где значения проекций сущностей известно (закэшировано),
 находятся обычные значения json. В тех узлах json, где требуется вычислить json проекцию МО,
-находится json объект с дополнительными свойствами "<-", "()", "->", "/".
+находится json объект с дополнительными свойствами "$obj", "$rel", "$sub", "/".
 Такой объект интерпретируется RVM как сущность МО, которую можно исполнить и
 найти её json проекцию. Сущности могут иметь дополнительные поля в которых
 закэшированы проекции свойств сущности или заданы сущности определяющие проекции данных свойств.
@@ -465,7 +471,7 @@ RM  - relations model
 1. Number  - стабильная топологически замкнутая (т.е. сама в себя) проекция отношения double|int32|int64|uint32|uint64
 2. Boolean - стабильная топологически замкнутая проекция отношения bool
 3. String  - стабильная топологически замкнутая проекция отношения string, либо имя сущности
-4. Object  - стабильная топологически замкнутая проекция отношения вмещения структуры, либо сущность если есть поля "<-" или "()" или "->" или "/"
+4. Object  - стабильная топологически замкнутая проекция отношения вмещения структуры, либо сущность если есть поля "$obj" или "$rel" или "$sub" или "/"
 5. Array   - стабильная топологически замкнутая проекция цепочки отношений последовательного следования - ","
 6. Null    - пустое пространство как потенциал вмещения проекции
 
@@ -496,7 +502,7 @@ Null и Array - это не совсем типы, они принципиаль
 ------------------------------------------------------------------------------
 #/exec
 Самое основное отношение это отношение "#/exec", оно исполняет сущность объекта указанного
-в поле "<-" и записывает полученную проекцию в поле "->" субъекта.
+в поле "$obj" и записывает полученную проекцию в поле "$sub" субъекта.
 Именно это отношение исполняется для кажого поля json объекта, когда он указан
 в качестве отношения сущности.
 
@@ -504,12 +510,12 @@ Null и Array - это не совсем типы, они принципиаль
 		Правила json скрипта (проекции МО в json):
 
 1. json представляет собой агрегат проекций сущностей т.е. иерархию МО по сущности-субъекту,
-2. местоимение субъекта "->" может являеться сущностью агрегатом проекции
+2. местоимение субъекта "$sub" может являеться сущностью агрегатом проекции
 3. запуск скрипта это вычисление проекции корневой сущности
 4. внутри корневой json-сущности лежат разные проекции её свойств, либо...
 5. внутри корневой json проекции лежит jsonView корневой сущности
-6. у локальных не корневых проекций субъект "->" равен сущности в которой они лежат
-7. если в json объекте есть поле "()", то значит этот объект описывает сущность МО
+6. у локальных не корневых проекций субъект "$sub" равен сущности в которой они лежат
+7. если в json объекте есть поле "$rel", то значит этот объект описывает сущность МО
 8. проекция состоит из проекций, т.о. получается иерархичность агрегирования
 
 Внутри сущности находится иерархия по сущности-субъекту.
@@ -520,10 +526,10 @@ Null и Array - это не совсем типы, они принципиаль
 		Варианты взаимоотношений узлов json:
 
 1. Проекция в проекции
-2. Сущность в сущности (в полях "<-", "()", "->")
+2. Сущность в сущности (в полях "$obj", "$rel", "$sub")
 3. Сущность в проекции (в объекте или массиве)
-4. Проекция в сущности (в полях "<-", "()", "->", "")
-5. Ссылка на сущность в сущности (в полях "<-", "()", "->")
+4. Проекция в сущности (в полях "$obj", "$rel", "$sub", "\")
+5. Строковая или адресная ссылка на сущность в сущности (в полях "$obj", "$rel", "$sub")
 
 ------------------------------------------------------------------------------
 		О свойствах (атрибутах) и элементах сущности:
@@ -544,7 +550,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 то субъект у сущности это родительский View вмещающий проекцию данной сущности.
 Таким образом результат проецирования сущности сохраняется в поле "", значение которого состоит из отдельных
 проекций агрегируемых сущностей. Следовательно если объект json имеет признак того, что это сущность,
-то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "<-", "()", "->", "/".
+то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "$obj", "$rel", "$sub", "/".
 Решением данной проблемы может быть вариант когда текстовые поля внутри объекта json будут хранить в себе кэши проекций
 данной сущности другими контроллерами (сущностями-отношениями), например:
 
@@ -553,10 +559,10 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
    "RusView": "русское название этой сущности",
    "jsView": "this entity java script view",
    "C#View": "this entity C# code view",
-   "<-": "object entity model",
-   "()": "relation entity model",
-   "->": "subject entity model",
-   "/": "this entity default view"
+   "$obj": "object entity model",
+   "$rel": "relation entity model",
+   "$sub": "subject entity model",
+   "/": "this entity json view result cache"
 }
 
 ------------------------------------------------------------------------------
@@ -570,7 +576,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 		Заметки:
 
 1. кэширование проекций сущностей осуществляется только явным образом, через отношение jsonView?
-3. для символьных ссылок указанных в качестве субъекта, отношения или объекта сущности должна быть найдена указанная сущность
+3. для символьных или индексных ссылок указанных в качестве субъекта, отношения или объекта сущности должна быть найдена указанная сущность
 
 ------------------------------------------------------------------------------
 		Виды топологий сущностей:
@@ -590,7 +596,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 	через другую сущность проектор - сущность отношение
 
 ------------------------------------------------------------------------------
-		Семантика json значения в поле "/" у объекта json:
+		Семантика json значения в поле кэша проекции "/" у json сущности:
 
 1. Number  - число
 2. Boolean - булевый тип = true/false
@@ -601,40 +607,55 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 7. Entity  - json проекция содержащая модель сущности
 
 ------------------------------------------------------------------------------
-		Семантика json значений в полях "->", "()", "<-" json объекта описывающего сущность:
+		Семантика json значений в полях "$sub", "$rel", "$obj" json объекта описывающего сущность:
 
 1. Number  - адрес json объекта в памяти
-2. Boolean - значение проекция сущности = true/false
-3. String  - иерархическое имя сущности относительно контекста исполнения
-4. Object  - json объект определяющий проекцию
-5. Array   - json массив определяющий проекцию
-6. Null    - пустой указатель на сущностьобозначающий топологическая замкнутость на текущую проекцию сущности
-7. Entity  - описание другой сущности
+2. Boolean - непосредственное значение = true/false
+3. String  - иерархический путь к сущности относительно текущего контекста исполнения
+4. Object  - json объект определяющий непосредственное значение сущности
+5. Array   - json массив определяющий непосредственное значение сущности
+6. Null    - значение по умолчанию, пустой указатель на сущность обозначающий топологическая замкнутость на текущую проекцию сущности в контексте исполнения EV[""]
+7. Entity  - другая сущность
 
 ------------------------------------------------------------------------------
 		Семантика json значений при исполнении  (json как байткод RVM):
 
-1. Number  - адрес json значения в памяти, которое необходимо исполнить RVM
-2. Boolean - прервать исполнение и вернуть в вызывающий контекст значение true/false
-3. String  - иерархическое имя json объекта относительно контекста исполнения,
+1. Number  - адрес скомпилированного тела сущности, которое необходимо исполнить RVM
+2. Boolean - true : спроецировать / false : не проецировать объект в субъект
+3. String  - иерархический путь к json значению относительно контекста исполнения,
 				которое необходимо исполнить RVM
 4. Object  - множество пар "имя поля": значение поля, где
-			значение поля - иерархическое имя сущности относительно контекста исполнения, проекцию которой необходимо вычислить
-			имя поля - иерархическое имя json объекта относительно контекста исполнения, куда необходимо записать проекцию
-			вычисление проекций множества пар происходит параллельно
+			значение поля - иерархический путь к json значению относительно контекста исполнения, которое необходимо исполнить
+			имя поля - иерархический путь к json значению относительно контекста исполнения, куда необходимо спроецировать сущность
+			вычисление проекций множества пар может происходить параллельно, в многопоточном режиме
 5. Array   - массив значений json которые необходимо последовательность исполнить
 				в текущем контексте исполнения, при этом результат предыщущего
 				исполнения всегда доступен для следующей исполняющейся сущности
-6. Null    - отсутствие действия над текущей проекцией в контексте исполнения, эквивалент NOP
-7. Entity  - сущность, которую надо исполнить в дочернем контексте исполнения
+6. Null    - возврат текущей контекстной проекции в саму себя, т.е. по сути отсутствие действия над текущей проекцией в контексте исполнения
+7. Entity  - сущность, для которой надо создать дочерний контекст и исполнить
 
 ------------------------------------------------------------------------------
 		Программирование на МО
 
 Контекстно зависимая проекция сущности может быть получена в результате
-исполнения (или вычисления) отношения "()" в контексте субъекта "->", объекта "<-" и контекстного текущего значения проекции "/".
+исполнения (или вычисления) отношения "$rel" в контексте субъекта "$sub", объекта "$obj" и контекстного текущего значения проекции "/".
 Сущность может использовать контекстно зависимые местоимения в своей модели,
 таким образом реализуется контекстно зависимость проекции сущности.
+
+В отличие от обычных языков программирования, в МО стек контекстов вызовов и стэк локальных адресных пространств принципиально разделены
+локальное адресное пространство при исполнении сущности-отношения указывается всегда явно,
+а стэк контекстов исполнения в общем случае древовидный, т.е. и не стек совсем а дерево
+что обеспечивает лёгкое многопоточное исполнение сущностей
+Так же при исполнении сущности-отношения можно указать в каком контексте она будет исполняться, в текущем или родительском
+аргументы тоже группируются в независимый от вызова пакет, и может быть многократно использован в контексте исполнения
+в обычных языках стэк контекстов (агрументы вызова, адреса возвратов из функции) объединён с локальными адресными пространствами функций, поэтому очень важно четко знать где что записано в стэке, четко соблюдать call convention что бы случайно не использовать некую переменную или аргумент как адрес возврата
+
+адресация у МО сейчас устроена так, корневое адресное пространство это контекст, он содержит ссылки на адресные подпространства:
+./        - модель сущности (для которой инстанцирован данный контекст)
+$obj/       - контекстный объект
+$sub/       - контекстное субъект
+$rel/       - контекстно отношение
+/         - локальное адресное пространство для создания проекции, т.е. результата исполнения сущности-отношения
 
 */
 #pragma once
@@ -675,21 +696,26 @@ namespace nlohmann
 using namespace std;
 using namespace nlohmann;
 
-const string RVM_version = "0.1.0.0"s;
+const string RVM_version = "1.0.0.0"s;
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }
-inline  json&  val2ref(json& ptr_val) { if (ptr_val.is_number_unsigned()) return id2ref(ptr_val.get<size_t>()); else throw(__FUNCTION__ + ": incorrect ptr_val type"s); }
-inline  void   ExecEntity(json &EV, json &Ent, json &Value);
-typedef void   (__fastcall *x86View)(json &Ctx, json &Value);
+inline  json&  val2ref(json& ptr_val)
+{
+	if (ptr_val.is_number_unsigned())
+		return id2ref(ptr_val.get<size_t>());
+	else
+		throw(__FUNCTION__ + ": incorrect ptr_val type"s);
+}
+inline  void	JSONExec(json &EV, json &Ent);
+typedef void	(*x86View)(json &Ctx);
 
-#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YIXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
-//#define IMPORT_RELATIONS_MODEL	"?ImportRelationsModel@@YIXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHINVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
-__declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent);
-typedef void (__fastcall *InitDict)(json &Ent);
+#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+__declspec(dllexport) void ImportRelationsModel(json &Ent);
+typedef void (*InitDict)(json &Ent);
 static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
 
-//	для отладки
+#ifdef _DEBUG
 class PushCS
 {
 	json &CallStack;
@@ -699,8 +725,6 @@ public:
 	PushCS::~PushCS()
 	{ if (CallStack.size()) CallStack.erase(CallStack.size() - 1);	}
 };
-
-#ifdef _DEBUG
 #define	CSPush(name)	PushCS LevelName(name, val2ref(EV["#"])["CallStack"], EV["level"].get<size_t>());
 #else
 #define	CSPush(name)
@@ -723,78 +747,60 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 }
 
 
-inline void ErrorMessage(json &EV, const string &Name, const string &Message)
-{
-	json &Ent = val2ref(EV["ent"]);
-	Ent["errors"][Name] = Message;
-#ifdef _DEBUG
-	//Ent["errors"]["CallStack"] = val2ref(EV["#"])["CallStack"];
-#endif
-}
-
-inline json& ReferEntity(json &EV, json &Ent, json &Value)
+inline json& ReferEntity(json &EV, json &Ent)
 {
 	size_t	ctx = ref2id(EV);
 	switch (Ent.type())
 	{
-	case json::value_t::string:		//	hierarchical address in projected ent view
+	case json::value_t::string:		//	иерархический путь к json значению
 	{
 		const string&	String = Ent.get<string>();
-		//if (EV.find(String) != EV.end()) return *EV[String];	//ToDo:	strong reference cashing
 		auto			path = split(String, "/"s, true);
-		size_t			res = NULL;
+		size_t			segment = NULL;
 
 		for (auto it : path)
 		{
-			if (NULL == res)	//	контекст определён?
+			if (NULL == segment)	//	сегмент относительной адресации определён?
 			{
-				if ("ctx"s == it)
-					ctx = id2ref(ctx)["ctx"];
+				if (".."s == it)
+					ctx = id2ref(ctx)[".."];
 				else if (id2ref(ctx).find(it) != id2ref(ctx).end())
-					res = id2ref(ctx)[it];
+					segment = id2ref(ctx)[it];
 				else
 					throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
 			}
 			else try
 			{
-				if (id2ref(res).is_array())
+				json&	ref = id2ref(segment);
+				if (ref.is_array())
 				{
-					res = ref2id(id2ref(res)[std::stoul(it)]);
+					segment = ref2id(ref[std::stoul(it)]);
 				}
-				else if (id2ref(res).is_object())
+				else if (ref.is_object())
 				{
-					res = ref2id(id2ref(res)[it]);
+					segment = ref2id(ref[it]);
 				}
-				else if (id2ref(res).is_null())
+				else if (ref.is_null())
 				{
 					try {
-						id2ref(res) = json::array();
-						res = ref2id(id2ref(res)[std::stoul(it)]);
+						ref = json::array();
+						segment = ref2id(ref[std::stoul(it)]);
 					}
 					catch (...)	//	это не число
 					{
-						id2ref(res) = json::object();
-						res = ref2id(id2ref(res)[it]);
+						ref = json::object();
+						segment = ref2id(ref[it]);
 					}
 				}
-				else throw it;
+				else
+					throw it;
 			}
-			catch (invalid_argument e)
-			{
-				throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what());
-			}
-			catch (out_of_range e)
-			{
-				throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what());
-			}
-			catch (...)
-			{
-				throw(__FUNCTION__ + ": property '"s + String + "' does not exist!");
-			}
+			catch (invalid_argument e)	{ throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what()); }
+			catch (out_of_range e)		{ throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what()); }
+			catch (...)					{ throw(__FUNCTION__ + ": property '"s + String + "' does not exist!"); }
 		}
 
-		//EV[String] = res;	//ToDo:	strong reference cashing
-		return id2ref(res);
+		return id2ref(segment);
 	}
 
 	//	абсолютный адрес сущности
@@ -805,7 +811,7 @@ inline json& ReferEntity(json &EV, json &Ent, json &Value)
 
 		//	местоимение проекции контекстной сущности
 	case json::value_t::null:
-		return Value;
+		return val2ref(EV[""]);
 
 		//	если это не адрес то возвращаем значение
 	default:
@@ -813,151 +819,95 @@ inline json& ReferEntity(json &EV, json &Ent, json &Value)
 	}
 }
 
-inline void InitCtx(json &EV, json& ent_ref, json &Value, json& ctx)
+inline void ExecEntity(json &ctx, json &Ent)
 {
-	try		//	процедура проецирования сущности в контекст исполнения
-	{
-		EV["ctx"] = ref2id(ctx);
-#ifdef _DEBUG	//	для отладки
-		if (val2ref(EV["ctx"]).count("level"))
-			EV["level"] = val2ref(EV["ctx"])["level"].get<size_t>() + 1;
-		else
-			EV["level"] = 0;
+	json EV;	//	конфигурируем новый контекст
+	EV[".."] = ref2id(ctx);
+	EV["#"] = ctx["#"];
+#ifdef _DEBUG
+	EV["level"] = ctx["level"].get<size_t>() + 1;
 #endif
-		//	'#' - root entity model
-		if (ctx.count("#"))
-			EV["#"] = ctx["#"];
-		else
-			EV["#"] = ref2id(ent_ref);
-		//	у сущности должны быть поля '<-', '()', '->' с указателями на сущности или значениями типа: сущность, структура, массив
-		if (!ent_ref.count("<-"))	ent_ref["<-"] = json();	//	объект не отличается от самой сущности
-		if (!ent_ref.count("->"))	ent_ref["->"] = json();	//	субъект не отличается от самой сущности
-		EV["ent"] = ref2id(ent_ref);			//	'ent'	- entity model
-		EV[""] = ref2id(Value);				//	''	- entity view, points to Value
-		EV["<-"] = ref2id(ReferEntity(ctx, ent_ref["<-"], Value));
-		EV["()"] = ref2id(ReferEntity(ctx, ent_ref["()"], Value));
-		EV["->"] = ref2id(ReferEntity(ctx, ent_ref["->"], Value));
-	}
-	catch (...)
-	{
-		Value = json();
-		throw(__FUNCTION__ + ": Exception, may be parent of ent_ref was changed!"s);
-	}
+	EV["."] = ref2id(Ent);						//	'.'	- entity model
+	EV["$obj"] = ref2id(ReferEntity(ctx, Ent["$obj"]));
+	EV["$sub"] = ref2id(ReferEntity(ctx, Ent["$sub"]));
+	EV[""] = ctx[""];						//	''	- entity view, points to Value
+	JSONExec(EV, ReferEntity(ctx, Ent["$rel"]));
 }
 
-//	получение проекции сущности
-inline void ViewEntity(json &EV, json &Ent, json &Value)
-{
-	CSPush("view : "s + Ent.dump());	//	debug
-										//	если свойство и есть сама сущность то возвращаем текущую проекцию сущности
-	if (&Value == &Ent)
-		return;
-	else switch (Ent.type())
-	{
-	case json::value_t::object:
-		if (Ent.count("/"))	//	это сущность с закэшированной дефолтной json проекцией?
-		{	//	приоритет у закэшированной проекции выше
-			Value = Ent["/"];
-		}
-		else if (Ent.count("@"))		//	ToDo: удалить
-		{
-			json& x86Exec = Ent["@"];
-			switch (x86Exec.type())
-			{
-			case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-			{
-				try
-				{
-					x86View	entBody = (x86View)x86Exec.get<size_t>();
-					entBody(EV, Value);
-				}
-				catch (string& error)		{ throw(error); }
-				catch (json::exception& e)	{ throw("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-				catch (std::exception& e)	{ throw("std::exception: "s + e.what()); }
-				catch (...)					{ throw("unknown exception"s); }
-				return;
-			}
-
-			default:
-				Value = json();
-				throw("@/wrong json type '"s + x86Exec.dump() + "'"s);
-			}
-		}
-		else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
-		{
-			json	ctx;
-			try
-			{
-				InitCtx(ctx, Ent, Value, EV);	//	создаём контекстную проекцию сущности
-				json&	relRef = val2ref(ctx["()"]);
-				ExecEntity(ctx, relRef, Value);
-			}
-			catch (string& error)		{ throw(Ent["()"].dump() + "\n exec "s + error); }
-			catch (json::exception& e)	{ throw(Ent["()"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw(Ent["()"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw(Ent["()"].dump() + "\n exec "s + "unknown exception"s); }
-		}
-		else
-			Value = Ent;
-		return;
-
-		//	если это массив то надо перепроецировать его???
-		//	во всех остальных случаях проекция просто копируется
-	default:
-		Value = Ent;
-	}
-}
 
 //	Исполнение сущности либо json байткода
 //	имеет прототип отличный от других контроллеров и не является контроллером
 //	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-inline void ExecEntity(json &EV, json &Ent, json &Value)
+inline void JSONExec(json &EV, json &Ent)
 {
 	CSPush("exec : "s + Ent.dump());	//	debug
-	switch (Ent.type())
+	switch (Ent.type())	//	ранжирование по частоте использования json типов
 	{
+	//	абсолютный адрес скомпилированного тела сущности
+	case json::value_t::number_unsigned:
+	{
+		try
+		{
+			x86View	entBody = (x86View)Ent.get<size_t>();
+			entBody(EV);
+		}
+		catch (string& error)		{ throw("func at "s + Ent.dump() + "/"s + error); }
+		catch (json::exception& e)	{ throw("func at "s + Ent.dump() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e)	{ throw("func at "s + Ent.dump() + "/"s + "std::exception: "s + e.what()); }
+		catch (...)					{ throw("func at "s + Ent.dump() + "/"s + "unknown exception"s); }
+		return;
+	}
+
+	//	иерархический путь к json значению
+	case json::value_t::string:
+	{
+		json&	entRef = ReferEntity(EV, Ent);
+		try {
+			JSONExec(EV, entRef);
+		}
+		catch (string& error) { throw("\n exec "s + Ent.get<string>() + "/"s + error); }
+		catch (json::exception& e) { throw("\n exec "s + Ent.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { throw("\n exec "s + Ent.get<string>() + "/"s + "std::exception: "s + e.what()); }
+		catch (...) { throw("\n exec "s + Ent.get<string>() + "/"s + "unknown exception"s); }
+		return;
+	}
+
+	//	лямбда вектор, который управляет последовательным изменением проекции сущности
+	case json::value_t::array:
+	{
+		int i = 0;
+		for (auto& it : Ent)
+		{
+			try
+			{
+				CSPush("["s + to_string(i) + "]"s);	//	debug
+				JSONExec(EV, it);
+			}
+			catch (string& error) { throw("["s + to_string(i) + "]/"s + error); }
+			catch (json::exception& e) { throw("["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { throw("["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
+			catch (...) { throw("["s + to_string(i) + "]/"s + "unknown exception"s); }
+			i++;
+		}
+		return;
+	}
+
 	case json::value_t::object:
 	{
 		if (Ent.count("/"))	//	это сущность с закэшированной дефолтной json проекцией?
 		{	//	приоритет у закэшированной проекции выше
-			Value = Ent["/"];	//	ToDo: похоже необходимо исполнить проекцию
+			json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+			Value = Ent["/"];
 		}
-		else if (Ent.count("@"))		//	ToDo: перенести в отрицательные числа
+		else if (Ent.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
 		{
-			json& x86Exec = Ent["@"];
-			switch (x86Exec.type())
-			{
-			case json::value_t::number_unsigned:	//	адрес скомпилированной сущности
-			{
-				try
-				{
-					x86View	entBody = (x86View)x86Exec.get<size_t>();
-					entBody(EV, Value);
-				}
-				catch (string& error)		{ throw(error); }
-				catch (json::exception& e)	{ throw("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-				catch (std::exception& e)	{ throw("std::exception: "s + e.what()); }
-				catch (...)					{ throw("unknown exception"s); }
-				return;
-			}
-
-			default:
-				Value = json();
-				throw("@/wrong json type '"s + x86Exec.dump() + "'"s);
-			}
-		}
-		else if (Ent.count("()"))	//	это сущность, которую надо исполнить в новом контексте?
-		{
-			json	ctx;
 			try {
-				InitCtx(ctx, Ent, Value, EV);	//	создаём контекстную проекцию сущности
-				json&	relRef = val2ref(ctx["()"]);
-				ExecEntity(ctx, relRef, Value);
+				ExecEntity(EV, Ent);
 			}
-			catch (string& error)		{ throw("() : "s + Ent["()"].dump() + "\n exec "s + error); }
-			catch (json::exception& e)	{ throw("() : "s + Ent["()"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw("() : "s + Ent["()"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw("() : "s + Ent["()"].dump() + "\n exec "s + "unknown exception"s); }
+			catch (string& error)		{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + error); }
+			catch (json::exception& e)	{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e)	{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
+			catch (...)					{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "unknown exception"s); }
 		}
 		else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 		{	//ToDo:	надо переделать на параллельное проецирование
@@ -967,10 +917,11 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 				try
 				{
 					CSPush(key.get<string>());	//	debug
-					//	проецируем в текущем контексте
-					json&	subRef = ReferEntity(EV, key, Value);
-					json&	objRef = ReferEntity(EV, it.value(), Value);
-					ViewEntity(EV, objRef, subRef);
+					//	клонируем контекст
+					json	clone = EV;
+					clone[""] = ref2id(ReferEntity(EV, key));
+					json&	entRef = ReferEntity(EV, it.value());
+					JSONExec(clone, entRef);
 				}
 				catch (string& error)		{ throw("\n view "s + key.get<string>() + " : "s + error); }
 				catch (json::exception& e)	{ throw("\n view "s + key.get<string>() + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -981,65 +932,15 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 		return;
 	}
 
-		//	лямбда вектор, который управляет последовательным изменением проекции сущности
-	case json::value_t::array:
-	{
-		int i = 0;	//	debug
-		for (auto& it : Ent)
-		{
-			try
-			{
-				CSPush("["s + to_string(i) + "]"s);	//	debug
-														//	сохраняем результат исполнения как проекцию сущности
-				ExecEntity(EV, it, Value);
-			}
-			catch (string& error)		{ throw("["s + to_string(i) + "]/"s + error); }
-			catch (json::exception& e)	{ throw("["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw("["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw("["s + to_string(i) + "]/"s + "unknown exception"s); }
-			i++;
-		}
-		return;
-	}
-
-	//	абсолютный адрес сущности
-	case json::value_t::number_float:
-	case json::value_t::number_integer:	//	ToDo: если отрицательное число то индекс в словаре бинарных функций
-	case json::value_t::number_unsigned:
-	{
-		try
-		{
-			json&	entRef = id2ref(Ent.get<size_t>());
-			ExecEntity(EV, entRef, Value);
-		}
-		catch (string& error)		{ throw("\n exec Ent"s + to_string(Ent.get<size_t>()) + "/"s + error); }
-		catch (json::exception& e)	{ throw("\n exec Ent"s + to_string(Ent.get<size_t>()) + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("\n exec Ent"s + to_string(Ent.get<size_t>()) + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("\n exec Ent"s + to_string(Ent.get<size_t>()) + "/"s + "unknown exception"s); }
-		return;
-	}
-
-	//	иерархическая символьная ссылка в проекции сущности
-	case json::value_t::string:
-	{
-		json&	entRef = ReferEntity(EV, Ent, Value);
-		try {
-			ExecEntity(EV, entRef, Value);
-		}
-		catch (string& error)		{ throw("\n exec "s + Ent.get<string>() + "/"s + error); }
-		catch (json::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("\n exec "s + Ent.get<string>() + "/"s + "unknown exception"s); }
-		return;
-	}
-
 	//	битовая маска для условного проектора ViewEntity
 	case json::value_t::boolean:
 	{
 		if (Ent)
 		{
 			try {
-				ViewEntity(EV, val2ref(EV["<-"]), val2ref(EV["->"]));
+				json	clone = val2ref(EV[".."]);
+				clone[""] = EV["$sub"];
+				JSONExec(clone, val2ref(EV["$obj"]));
 			}
 			catch (string& error)		{ throw("\ntrue/"s + error); }
 			catch (json::exception& e)	{ throw("\ntrue/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -1049,7 +950,11 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 		return;
 	}
 
-		//	null - означает отсутствие отношения, т.е. неизменность проекции
+	case json::value_t::number_float:
+	case json::value_t::number_integer:
+		throw("\n can't exec wrong json numeric type "s + Ent.dump());
+
+	//	null - означает отсутствие отношения, т.е. неизменность проекции
 	default:
 		return;
 	}
@@ -1058,11 +963,10 @@ inline void ExecEntity(json &EV, json &Ent, json &Value)
 //	добавление сущности с закэшированной x86 проекцией
 inline json&	Addx86Entity(json& Subject, const string& Name, x86View View, const string& Description)
 {
-	Subject[Name] = json::object();
-	Subject[Name]["@"] = (size_t)View;	//	ToDo: добавить в динамический словарь, переделать на Subject[Name]["/"]
-	Subject[Name]["name"] = Name;
-	Subject[Name]["description"] = Description;
-	return Subject[Name];
+	Subject[Name] = (size_t)View;
+	Subject["help"][Name] = json::object();
+	Subject["help"][Name]["description"] = Description;
+	return Subject["help"][Name];
 }
 
 #pragma warning (disable: 4244)

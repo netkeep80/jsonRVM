@@ -2,8 +2,8 @@
 //
 #include "stdafx.h"
 #include "fs.rm.h"
-#include "iostream"
-#include "fstream"
+#include <iostream>
+#include <fstream>
 #include "windows.h"
 
 #define MAX_NAME	1024
@@ -112,26 +112,27 @@ namespace nlohmann
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void __fastcall fs_dir_scan(json &EV, json &Value)
+void  fs_dir_scan(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_object())
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileNameFormat properties!\n EV = "s + EV.dump());
+	if (!obj.is_object())
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	if (!objview.count("PathFolder") || !objview.count("FileNameFormat"))
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileNameFormat properties!\n EV = "s + EV.dump());
+	if (!obj.count("PathFolder") || !obj.count("FileNameFormat"))
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	string	FileNameFormat = objview["FileNameFormat"];
-	string	PathFolder = objview["PathFolder"];
+	string	FileNameFormat = obj["FileNameFormat"];
+	string	PathFolder = obj["PathFolder"];
 	json	FileInfo;
 	HANDLE	handle;
 	WIN32_FIND_DATA search_data;
 	unsigned int i = 0;
 
 	//	подготавливаем проекцию субъекта
-	subview = json::array();	//	если адрес субъекта совпадает с проекцией сущности, то проекция пападёт в результат
+	sub = json::array();	//	если адрес субъекта совпадает с проекцией сущности, то проекция пападёт в результат
 	memset(&search_data, 0, sizeof(WIN32_FIND_DATA));
 	handle = FindFirstFile((utf8_to_wstring(PathFolder) + utf8_to_wstring(FileNameFormat)).c_str(), &search_data);
 
@@ -139,7 +140,7 @@ void __fastcall fs_dir_scan(json &EV, json &Value)
 	{
 		FileInfo = search_data;
 		FileInfo["PathFolder"] = PathFolder;
-		subview[i++] = FileInfo;
+		sub[i++] = FileInfo;
 
 		if (FindNextFile(handle, &search_data) == FALSE)
 		{
@@ -150,46 +151,49 @@ void __fastcall fs_dir_scan(json &EV, json &Value)
 
 }
 
-void __fastcall fs_dir_create(json &EV, json &Value)
+void  fs_dir_create(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_string())
-		throw(__FUNCTION__ + ": <-/ must be json string with PathName!\n EV = "s + EV.dump());
+	if (!obj.is_string())
+		throw(__FUNCTION__ + ": $obj must be json string with PathName!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	string	PathName = utf8_to_cp1251(objview);
-	subview = bool(CreateDirectoryA(PathName.c_str(), nullptr));
+	string	PathName = utf8_to_cp1251(obj);
+	sub = bool(CreateDirectoryA(PathName.c_str(), nullptr));
 }
 
-void __fastcall fs_dir_delete(json &EV, json &Value)
+void  fs_dir_delete(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_string())
-		throw(__FUNCTION__ + ": <-/ must be json string with PathName!\n EV = "s + EV.dump());
+	if (!obj.is_string())
+		throw(__FUNCTION__ + ": $obj must be json string with PathName!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	string	PathName = utf8_to_cp1251(objview);
-	subview = bool(RemoveDirectoryA(PathName.c_str()));
+	string	PathName = utf8_to_cp1251(obj);
+	sub = bool(RemoveDirectoryA(PathName.c_str()));
 }
 
-void __fastcall fs_file_load_rm(json &EV, json &Value)
+void  fs_file_load_rm(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_object())
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties!\n EV = "s + EV.dump());
+	if (!obj.is_object())
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	if (!objview.count("PathFolder") || !objview.count("FileName"))
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties!\n EV = "s + EV.dump());
+	if (!obj.count("PathFolder") || !obj.count("FileName"))
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+	string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		throw(__FUNCTION__ + ": Can't load json from the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": Can't load json from the "s + obj["PathFolder"].get<string>() + obj["FileName"].get<string>() + " file!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
 	json	rm;
 	in >> rm;
@@ -198,47 +202,49 @@ void __fastcall fs_file_load_rm(json &EV, json &Value)
 	{
 		Value = true;
 		for (auto& p : rm.items())
-			subview[p.key()] = p.value();
+			sub[p.key()] = p.value();
 	}
 	else
 		Value = false;
 }
 
-void __fastcall fs_file_read_json(json &EV, json &Value)
+void  fs_file_read_json(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_object())
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties!\n EV = "s + EV.dump());
+	if (!obj.is_object())
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	if (!objview.count("PathFolder") || !objview.count("FileName"))
-		throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName properties!\n EV = "s + EV.dump());
+	if (!obj.count("PathFolder") || !obj.count("FileName"))
+		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+	string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		throw(__FUNCTION__ + ": Can't load json from the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": Can't load json from the "s + obj["PathFolder"].get<string>() + obj["FileName"].get<string>() + " file!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
 	Value = true;
-	in >> subview;
-	if (subview.is_object())
-		subview["FileInfo"] = objview;
+	in >> sub;
+	if (sub.is_object())
+		sub["FileInfo"] = obj;
 
 }
 
-void __fastcall jsonFileToString(json &EV, json &Value)
+void  jsonFileToString(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	subview = json();
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = json();
 
-	if (objview.is_object())
+	if (obj.is_object())
 	{
-		if (objview.count("PathFolder") && objview.count("FileName"))
+		if (obj.count("PathFolder") && obj.count("FileName"))
 		{
-			string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+			string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 			std::ifstream in(PathName.c_str(), ios_base::binary);
 
 			if (in.good())
@@ -248,7 +254,7 @@ void __fastcall jsonFileToString(json &EV, json &Value)
 				char*	buf = new char[size + 1];
 				in.read(buf, size);
 				buf[size] = 0;
-				subview = json(utf8_to_wstring(string(buf)));
+				sub = json(utf8_to_wstring(string(buf)));
 				delete[] buf;
 				Value = true;
 				return;
@@ -259,24 +265,23 @@ void __fastcall jsonFileToString(json &EV, json &Value)
 	Value = false;
 }
 
-void __fastcall jsonFileToStringArray(json &EV, json &Value)
+void  jsonFileToStringArray(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_object())
+	if (obj.is_object())
 	{
-		if (objview.count("PathFolder") && objview.count("FileName"))
+		if (obj.count("PathFolder") && obj.count("FileName"))
 		{
-			string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+			string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 			std::ifstream in(PathName.c_str(), ios::binary | ios::ate);
-			//ifstream file("example.txt", ios::binary | ios::ate);
-			//return file.tellg();
-
+			
 			if (in.good())
 			{
 				Value = true;
-				size_t size = in.tellg();// size_t(in.seekg(0, ios::end).tellg().seekpos());
+				size_t size = in.tellg();
 				in.seekg(0, ios::beg);
 				char*	buf = new char[size + 1];
 				in.read(buf, size);
@@ -284,14 +289,14 @@ void __fastcall jsonFileToStringArray(json &EV, json &Value)
 				string str(buf);
 				string delim("\r\n");
 				size_t prev = 0, pos = 0, i = 0;
-				subview = json::array();
+				sub = json::array();
 
 				do
 				{
 					pos = str.find(delim, prev);
 					if (pos == string::npos) pos = str.length();
 					string token = str.substr(prev, pos - prev);
-					if (!token.empty())	subview.push_back(token);
+					if (!token.empty())	sub.push_back(token);
 					prev = pos + delim.length();
 				} while (pos < str.length() && prev < str.length());
 
@@ -299,27 +304,28 @@ void __fastcall jsonFileToStringArray(json &EV, json &Value)
 				return;
 			}
 
-			throw(__FUNCTION__ + ": Can't load string array from the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": Can't load string array from the "s + obj["PathFolder"].get<string>() + obj["FileName"].get<string>() + " file!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 		}
 	}
 
-	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName property!\n EV = "s + EV.dump());
+	throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonStringArrayToFile(json &EV, json &Value)
+void  jsonStringArrayToFile(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_object() && subview.is_array())
+	if (obj.is_object() && sub.is_array())
 	{
-		if (objview.count("PathFolder") && objview.count("FileName"))
+		if (obj.count("PathFolder") && obj.count("FileName"))
 		{
-			string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+			string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 			std::ofstream out(PathName.c_str());
 			if (out.good())
 			{
-				for (auto& it : subview)
+				for (auto& it : sub)
 				{
 					if (it.is_string())
 						out << it.get_ref<string&>() << endl;
@@ -329,30 +335,31 @@ void __fastcall jsonStringArrayToFile(json &EV, json &Value)
 				return;
 			}
 			else
-				throw(__FUNCTION__ + ": Can't create the "s + objview["PathFolder"].get<string>() + objview["FileName"].get<string>() + " file!\n EV = "s + EV.dump());
+				throw(__FUNCTION__ + ": Can't create the "s + obj["PathFolder"].get<string>() + obj["FileName"].get<string>() + " file!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 		}
 		else
-			throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName property!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must be object and -> must be array!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must be object and $sub must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall fs_file_write_json(json &EV, json &Value)
+void  fs_file_write_json(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_object())
+	if (obj.is_object())
 	{
-		if (objview.count("PathFolder") && objview.count("FileName"))
+		if (obj.count("PathFolder") && obj.count("FileName"))
 		{
-			string	PathName = utf8_to_cp1251(objview["PathFolder"].get<string>() + objview["FileName"].get<string>());
+			string	PathName = utf8_to_cp1251(obj["PathFolder"].get<string>() + obj["FileName"].get<string>());
 			std::ofstream out(PathName.c_str());
 
 			if (out.good())
 			{
-				out << subview;
+				out << sub;
 				Value = true;
 				return;
 			}
@@ -363,32 +370,33 @@ void __fastcall fs_file_write_json(json &EV, json &Value)
 	}
 
 	Value = false;
-	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder and FileName property!\n EV = "s + EV.dump());
+	throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
 
-void __fastcall jsonToFiles(json &EV, json &Value)
+void  jsonToFiles(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 	Value = json::array();
 
-	/*if (subview.is_array())	//	в subview массив объектов FileInfo, каждый из которых описывает файл в который надо сохранить
+	/*if (sub.is_array())	//	в sub массив объектов FileInfo, каждый из которых описывает файл в который надо сохранить
 	{
 	size_t i = 0;
-	for (auto& it : subview.as_array())
-	jsonToFiles(json(jref(EV["ctx"]), jref(EV["ent"]), it, json(), objview), Model, (View)[i++]);
+	for (auto& it : sub.as_array())
+	jsonToFiles(json(jref(EV["ctx"]), jref(EV["ent"]), it, json(), obj), Model, (View)[i++]);
 	}
 	else*/
-	if (subview.is_object())
+	if (sub.is_object())
 	{
-		if (objview.is_array())
+		if (obj.is_array())
 		{
 			size_t i = 0;
-			for (auto& it : objview)
+			for (auto& it : obj)
 			{
-				json&	FileNameFormat = subview["FileNameFormat"];
-				json&	PathFolder = subview["PathFolder"];
+				json&	FileNameFormat = sub["FileNameFormat"];
+				json&	PathFolder = sub["PathFolder"];
 				string	FileInfoPathFolder = ".\\";
 				string	FileInfoFileName = to_string(i) + ".json";
 
@@ -420,17 +428,17 @@ void __fastcall jsonToFiles(json &EV, json &Value)
 		}
 		else
 		{
-			json&	FileNameFormat = subview["FileNameFormat"];
-			json&	PathFolder = subview["PathFolder"];
+			json&	FileNameFormat = sub["FileNameFormat"];
+			json&	PathFolder = sub["PathFolder"];
 			string	FileInfoPathFolder = ".\\";
 			string	FileInfoFileName = ".json";
 
 			if (FileNameFormat.is_null()) FileNameFormat = "%s"s;
 			if (PathFolder.is_null()) PathFolder = "%s"s;
 
-			if (objview.is_object())
+			if (obj.is_object())
 			{
-				json &FileInfoVal = objview["FileInfo"];
+				json &FileInfoVal = obj["FileInfo"];
 
 				if (FileInfoVal.is_object())
 				{
@@ -448,17 +456,18 @@ void __fastcall jsonToFiles(json &EV, json &Value)
 			FileInfoVal["PathFolder"] = cp1251_to_utf8(PathName);
 			FileInfoVal["FileName"] = cp1251_to_utf8(FileName);
 			FileInfo["FileInfo"] = FileInfoVal;
-			//jsonToFile(json(jref(EV["ctx"]), jref(EV["ent"]), FileInfo, json(), objview), Model, View);
+			//jsonToFile(json(jref(EV["ctx"]), jref(EV["ent"]), FileInfo, json(), obj), Model, View);
 		}
 	}
 }
 
 
-FSRM_API void __fastcall ImportRelationsModel(json &Ent)
+FSRM_API void  ImportRelationsModel(json &Ent)
 {
+	Ent["fs"]["RVM_version"] = RVM_version;
 	Addx86Entity(Ent["fs"]["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory"s);
-	Addx86Entity(Ent["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, <- must be string"s);
-	Addx86Entity(Ent["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, <- must be string"s);
+	Addx86Entity(Ent["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
+	Addx86Entity(Ent["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
 
 	Addx86Entity(Ent["fs"]["file"]["load"], "rm"s, fs_file_load_rm, ""s);
 

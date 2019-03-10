@@ -1,45 +1,124 @@
 {
-   "()" : [
+   "$rel" : [
       {
          "#/additional_rm_loaded/http.rm.dll" : {
-            "<-" : {
+            "$obj" : {
                "PathFolder" : ".\\",
                "FileName" : "http.rm.dll"
             },
-            "()" : "#/RVM/load/dll",
-            "->" : "#"
+            "$rel" : "#/RVM/load/dll",
+            "$sub" : "#"
          }
       },
       {
-         "<-" : {
+         "$obj" : {
             "URI" : "http://192.168.8.1/api/webserver/token"
          },
-         "()" : "#/HTTP/GET/xml",
-         "old()" : "#/HTTP/GET/xml",
-         "->" : "#/Modem/SesTokInfo"
+         "$rel" : "#/HTTP/GET/xml",
+         "$sub" : "#/Modem/SesTokInfo"
       },
       {
-         "<-" : "#/HTTP/CODE_OK",
-         "()" : "#/=="
+         "$obj" : "#/HTTP/CODE_OK",
+         "$rel" : "#/=="
       },
       {
-         "()" : "#/then",
-         "->" : {
-            "<-" : {
-               "<-" : "#/Modem/SesTokInfo/body/response",
-               "()" : [
-                  {
-                     "/" : {}
-                  },
-                  {
-                     "/URI" : "#/Modem/SendSMS/URI",
-                     "/body" : "#/Modem/SendSMS/Message",
-                     "/header/__RequestVerificationToken" : "<-/token"
+         "$rel" : "#/then",
+         "$sub" : [
+            {
+               "#/Modem/request" : "#/json/object",
+               "#/Modem/request/URI" : {
+                  "$obj" : "#/Modem/SendSMS/URI",
+                  "$rel" : "#/="
+               },
+               "#/Modem/request/header/__RequestVerificationToken" : {
+                  "$obj" : "#/Modem/SesTokInfo/body/response/token",
+                  "$rel" : "#/="
+               },
+               "#/Modem/request/body" : {
+                  "$obj" : [
+                     {
+                        "$obj" : {
+                           "/" : "-1"
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Index"
+                        }
+                     },
+                     {
+                        "$obj" : [
+                           {
+                              "$obj" : {
+                                 "/" : "89875421631"
+                              },
+                              "$rel" : "#/tag",
+                              "$sub" : {
+                                 "<>" : "Phone"
+                              }
+                           }
+                        ],
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Phones"
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "/" : ""
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Sca"
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "/" : "test message from watchdog"
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Content"
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "/" : "3"
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Length"
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "/" : "1"
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Reserved"
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "/" : "2017-12-18 15:01:01"
+                        },
+                        "$rel" : "#/tag",
+                        "$sub" : {
+                           "<>" : "Date"
+                        }
+                     }
+                  ],
+                  "$rel" : "#/xml",
+                  "$sub" : {
+                     "<>" : "request"
                   }
-               ]
+               }
             },
-            "()" : "#/HTTP/POST/xml"
-         }
+            {
+               "$obj" : "#/Modem/request",
+               "$rel" : "#/HTTP/POST/xml"
+            }
+         ]
       }
    ],
    "HTTP" : {
@@ -47,23 +126,7 @@
    },
    "Modem" : {
       "SendSMS" : {
-         "URI" : "http://192.168.8.1/api/sms/send-sms",
-         "Message" : {
-            "request" : "<Index>-1</Index><Phones><Phone>89875421631</Phone></Phones><Sca></Sca><Content>test message from watchdog</Content><Length>3</Length><Reserved>1</Reserved><Date>2017-12-18 15:01:01</Date>"
-         },
-         "4Message" : {
-            "request" : {
-               "Index" : "-1",
-               "Phones" : {
-                  "Phone" : "89875421631"
-               },
-               "Sca" : "",
-               "Content" : "test message from watchdog",
-               "Length" : "3",
-               "Reserved" : "1",
-               "Date" : "2017-12-18 15:01:01"
-            }
-         }
+         "URI" : "http://192.168.8.1/api/sms/send-sms"
       }
    }
 }

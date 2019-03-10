@@ -125,26 +125,30 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	std::ifstream in(fileNameInput);
-	json input_json;
+	json input_json, rootctx;
 
-	if (in.good())
-		in >> input_json;
-	else
-		cerr << "Can't restore RM json from the " << fileNameInput << " file.\n";
-
-	// добавляем в корневую сущность базовый словарь
-	ImportRelationsModel(input_json);
-
-	//	создаём контекст исполнения
-	input_json["CallStack"] = json::array();
-
-	json	root;
 	try
 	{
-		InitCtx(root, input_json, returnValue, root);
-		ExecEntity(root, input_json, returnValue);
+		std::ifstream in(fileNameInput);
 
+		if (in.good())
+			in >> input_json;
+		else
+			cerr << "Can't restore RM json from the " << fileNameInput << " file.\n";
+
+		// добавляем в корневую сущность базовый словарь
+		ImportRelationsModel(input_json);
+
+		//	создаём контекст исполнения
+#ifdef _DEBUG
+		input_json["CallStack"] = json::array();
+		rootctx["level"] = 0;
+#endif
+
+		rootctx["#"] = ref2id(input_json);
+		rootctx[""] = ref2id(returnValue);
+		rootctx[".."] = ref2id(rootctx);
+		JSONExec(rootctx, input_json);
 		if (fileNameOutput) dump_json(string(fileNameOutput), input_json);
 
 		try

@@ -1,56 +1,68 @@
 {
-   "()" : [
+   "$rel" : [
       {
          "#/additional_rm_loaded/imgui.rm.dll" : {
-            "<-" : {
+            "$obj" : {
                "PathFolder" : ".\\",
                "FileName" : "imgui.rm.dll"
             },
-            "()" : "#/RVM/load/dll",
-            "->" : "#"
+            "$rel" : "#/RVM/load/dll",
+            "$sub" : "#"
          }
       },
       {
-         "<-" : {
-            "elements" : [ "#/CalcControl" ],
+         "$obj" : [ "#/CalcControl" ],
+         "$rel" : "#/imgui/viewport",
+         "$sub" : {
             "title" : "imgui.rm.dll main_frame"
-         },
-         "()" : "#/imgui/viewport"
+         }
       }
    ],
    "CalcControl" : {
-      "<-" : {
-         "elements" : [
-            {
-               "<-" : "#/additional_rm_loaded/imgui.rm.dll",
-               "()" : "#/imgui/text",
-               "->" : {
-                  "visible" : true
+      "button" : {
+         "close" : {
+            "$obj" : {
+               "../$sub/visible" : {
+                  "/" : false
                }
             },
-            "#/button/close"
-         ],
-         "title" : "Calculator"
+            "$rel" : "#/imgui/button",
+            "$sub" : {
+               "text" : "Close",
+               "//width" : "200",
+               "//height" : "100"
+            }
+         }
       },
-      "()" : "#/imgui/form",
-      "name" : "CalcControl",
-      "->" : {
-         "visible" : true
+      "$obj" : [
+         {
+            "$obj" : "#/additional_rm_loaded/imgui.rm.dll",
+            "$rel" : "#/imgui/text",
+            "$sub" : {
+               "visible" : true
+            }
+         },
+         "#/button/close"
+      ],
+      "$rel" : "#/imgui/form",
+      "$sub" : {
+         "visible" : true,
+         "title" : "Calculator"
       }
    },
    "button" : {
       "close" : {
-         "<-" : {
-            "text" : "Close",
-            "clicked" : {
-               "ctx/->/visible" : false
-            },
-            "//width" : "200",
-            "//height" : "100"
+         "$obj" : {
+            "../$sub/visible" : {
+               "/" : false
+            }
          },
-         "()" : "#/imgui/button",
-         "name" : "CloseButton",
-         "->" : "->/button/close"
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "Close",
+            "width" : "200",
+            "height" : "100"
+         }
       }
    }
 }

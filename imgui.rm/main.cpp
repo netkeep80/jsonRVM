@@ -77,19 +77,17 @@ static void glfw_error_callback(int error, const char* description)
 
 extern double g_Time;
 
-void __fastcall viewport(json &EV, json &Value)
+void viewport(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!subview.is_object()) subview = json::object();
-	if (!subview.count("visible")) subview["visible"] = true;
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	if (!sub.count("title")) sub["title"] = ""s;
 
-	if (!objview.is_object()) objview = json::object();
-	if (!objview.count("title")) objview["title"] = ""s;
-	if (!objview.count("elements")) objview["elements"] = json::array();
-
-	bool&	visible = subview["visible"].get_ref<bool&>();
+	bool&	visible = sub["visible"].get_ref<bool&>();
 
 	g_Time = 0.0f;
     // Setup window
@@ -102,7 +100,7 @@ void __fastcall viewport(json &EV, json &Value)
 #if __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    GLFWwindow* window = glfwCreateWindow(800, 600, objview["title"].get_ref<string&>().c_str(), NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, sub["title"].get_ref<string&>().c_str(), NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
     gl3wInit();
@@ -168,7 +166,7 @@ void __fastcall viewport(json &EV, json &Value)
         }
 
         // 2. Show another window
-		ExecEntity(EV, objview["elements"], Value);
+		JSONExec(EV, obj);
 
         // 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
         if (show_demo_window)
@@ -195,73 +193,71 @@ void __fastcall viewport(json &EV, json &Value)
 }
 
 
-void __fastcall form(json &EV, json &Value)
+void form(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!subview.is_object()) subview = json::object();
-	if (!subview.count("visible")) subview["visible"] = true;
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	if (!sub.count("title")) sub["title"] = ""s;
 
-	if (!objview.is_object()) objview = json::object();
-	if (!objview.count("title")) objview["title"] = ""s;
-	if (!objview.count("elements")) objview["elements"] = json::array();
-
-	bool&	visible = subview["visible"].get_ref<bool&>();
+	bool&	visible = sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		ImGui::Begin(objview["title"].get_ref<string&>().c_str(), &visible);
-		ExecEntity(EV, objview["elements"], Value);
+		ImGui::Begin(sub["title"].get_ref<string&>().c_str(), &visible);
+		JSONExec(EV, obj);
 		ImGui::End();
 	}
 }
 
 
-void __fastcall text(json &EV, json &Value)
+void text(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!subview.is_object()) subview = json::object();
-	if (!subview.count("visible")) subview["visible"] = true;
-	bool&	visible = subview["visible"].get_ref<bool&>();
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	bool&	visible = sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		if (objview.is_string())
-			ImGui::Text(objview.get_ref<string&>().c_str());
+		if (obj.is_string())
+			ImGui::Text(obj.get_ref<string&>().c_str());
 		else
-			ImGui::Text(objview.dump().c_str());
+			ImGui::Text(obj.dump().c_str());
 	}
 }
 
 
-void __fastcall button(json &EV, json &Value)
+void button(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!subview.is_object()) subview = json::object();
-	if (!subview.count("visible")) subview["visible"] = true;
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	if (!sub.count("text")) sub["text"] = ""s;
 
-	if (!objview.is_object()) objview = json::object();
-	if (!objview.count("text")) objview["text"] = ""s;
-	if (!objview.count("clicked")) objview["clicked"] = json();
-
-	bool&	visible = subview["visible"].get_ref<bool&>();
+	bool&	visible = sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		ImVec2	size = { get_float(objview, "width"s), get_float(objview, "height"s) };
-		if (ImGui::Button(objview["text"].get_ref<string&>().c_str(), size))
-			ExecEntity(EV, objview["clicked"], Value);	//	исполняем в текущем контексте
+		ImVec2	size = { get_float(sub, "width"s), get_float(sub, "height"s) };
+		if (ImGui::Button(sub["text"].get_ref<string&>().c_str(), size))
+			JSONExec(EV, obj);	//	исполняем в текущем контексте
 	}
 }
 
 
-__declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
+__declspec(dllexport) void ImportRelationsModel(json &Ent)
 {
+	Ent["imgui"]["RVM_version"] = RVM_version;
 	Addx86Entity(Ent["imgui"], "viewport"s, viewport, "");
 	Addx86Entity(Ent["imgui"], "form"s, form, "");
 	Addx86Entity(Ent["imgui"], "text"s, text, "");

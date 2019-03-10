@@ -129,60 +129,49 @@ bool	LoadAndInitDict(const string& LibName, json &Ent)
 	return Value;
 }
 
+//////////////////////////	base dictionary  ///////////////////////////////////
 
-void __fastcall jsonLoadDLL(json &EV, json &Value)
+void  jsonLoadDLL(json &EV)
 {
-	json& subview = val2ref(EV["->"]);//	определяем сущность для размещения словаря
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);//	вычисляем имя бибилиотеки
+	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);//	определяем сущность для размещения словаря
+	json& obj = val2ref(EV["$obj"]);//	вычисляем имя бибилиотеки
 
-	if (Value.is_object())
+	if (obj.is_object())
 	{
-		if (Value.count("PathFolder") && Value.count("FileName"))
+		if (obj.count("PathFolder") && obj.count("FileName"))
 		{
-			string	FullFileName = Value["PathFolder"].get<string>() + Value["FileName"].get<string>();
-			if (!subview.is_object()) subview = json::object();
-			Value = LoadAndInitDict(FullFileName, subview);
+			string	FullFileName = obj["PathFolder"].get<string>() + obj["FileName"].get<string>();
+			if (!sub.is_object()) sub = json::object();
+			Value = LoadAndInitDict(FullFileName, sub);
 			return;
 		}
 	}
 
 	Value = false;
-	throw(__FUNCTION__ + ": <-/ must be json object with PathFolder, FileName properties!\n EV = "s + EV.dump());
+	throw(__FUNCTION__ + ": $obj must be json object with PathFolder, FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
 
-void __fastcall sleep_ms(json &EV, json &Value)
+void  sleep_ms(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	Sleep(objview.get<json::number_unsigned_t>());
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	Sleep(obj.get<json::number_unsigned_t>());
 }
 
-void __fastcall jsonClone(json &EV, json &Value)
-{	//	детальное клонирование json значения
-	val2ref(EV["->"]) = val2ref(EV["<-"]);
+void  jsonCopy(json &EV)
+{	//	полное копированиее json значения объекта в субъект
+	val2ref(EV["$sub"]) = val2ref(EV["$obj"]);
 }
 
-void __fastcall jsonView(json &EV, json &Value)
-{	//	получаем ссылку на субъект, что бы знать куда записывать проекцию объекта
-	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), val2ref(EV["->"]));	//	проецируем во внешнем контексте
-}
-
-void __fastcall jsonExternViewObj(json &EV, json &Value)
-{
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);	//	проецируем во внешнем контексте
-}
-
-void __fastcall jsonExternViewSub(json &EV, json &Value)
-{
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), Value);	//	проецируем во внешнем контексте
-}
-
-void __fastcall jsonExec(json &EV, json &Value)
-{	//	получаем ссылку на субъект, что бы знать где исполнять проекцию объекта
-	//	контекст EV относится к сущности внутри которой идёт исплнение
-	ExecEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), val2ref(EV["->"]));	//	исполняем во внешнем контексте
+void  jsonView(json &EV)
+{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
+	//	проецируем во внешнем контексте
+	json	clone = val2ref(EV[".."]);
+	clone[""] = EV["$sub"];
+	JSONExec(clone, val2ref(EV["$obj"]));
 }
 
 template<typename _T> struct _add
@@ -381,11 +370,12 @@ json operator ^ (const json& a, const json& b)
 	else return json::array({ a, b });
 }
 
-void __fastcall jsonXOR(json &EV, json &Value)
+void  jsonXOR(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	Value = subview ^ objview;
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	Value = sub ^ obj;
 }
 
 ////////////////////////////////////////////////////////
@@ -413,7 +403,7 @@ typedef json::number_unsigned_t	ju;
 
 #define OPP_STO(operation,stype,stype_id,otype,otype_id)										\
 	case (uint8_t(json::value_t::stype_id) << sub_field) | uint8_t(json::value_t::otype_id):	\
-	{ Value = (subview.get_ref<stype&>()) operation (objview.get_ref<otype&>()); return; }
+	{ Value = (sub.get_ref<stype&>()) operation (obj.get_ref<otype&>()); return; }
 
 #define OPP_ANYTO(operation,type,type_id)														\
 	OPP_STO(operation, jf, number_float,    type, type_id)										\
@@ -426,130 +416,160 @@ typedef json::number_unsigned_t	ju;
 	OPP_ANYTO(operation, ju, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-void __fastcall json##name (json &EV, json &Value)												\
+void  json##name (json &EV)																		\
 {																								\
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);							\
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);							\
-	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )					\
-	{ VM_OPP( operation ) default: throw(__FUNCTION__ + ": <-/ and ->/ must be numbers!\n EV = "s + EV.dump() + "\n Value = " + Value.dump()); }		\
+	json &Value = val2ref(EV[""]);																\
+	json& sub = val2ref(EV["$sub"]);					\
+	json& obj = val2ref(EV["$obj"]);					\
+	switch( (uint8_t(sub.type()) << sub_field) | uint8_t(obj.type()) )					\
+	{ VM_OPP( operation ) default: Value = json(); }		\
 }
 
 OP_BODY(Add, +);
 OP_BODY(Substract, -);
 OP_BODY(Mul, *);
 
-void __fastcall jsonDiv(json &EV, json &Value)
+void  jsonDiv(json &EV)
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	if (objview.is_number())
-		if (objview.get<double>() == 0.0)
-			throw(__FUNCTION__ + ": <-/ must be not zero!\n EV = "s + EV.dump() + "\n Value = " + Value.dump());
-	switch( (uint8_t(subview.type()) << sub_field) | uint8_t(objview.type()) )
-	{ VM_OPP(/) default: throw(__FUNCTION__ + ": <-/ and ->/ must be numbers!\n EV = "s + EV.dump() + "\n Value = " + Value.dump()); }
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	if (obj.is_number())
+		if (obj.get<double>() == 0.0)
+		{
+			Value = json();
+			return;
+		}
+	switch( (uint8_t(sub.type()) << sub_field) | uint8_t(obj.type()) )
+	{ VM_OPP(/) default: Value = json(); }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-void __fastcall jsonPower(json &EV, json &Value)
+void  jsonPower(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (subview.is_number() && objview.is_number())
+	if (sub.is_number() && obj.is_number())
 	{
-		json::number_float_t db = objview.is_number_float() ? objview.get<json::number_float_t>() : json::number_float_t(objview.get<json::number_integer_t>());
+		json::number_float_t db = obj.is_number_float() ? obj.get<json::number_float_t>() : json::number_float_t(obj.get<json::number_integer_t>());
 
-		if (!subview.is_number_float())
+		if (!sub.is_number_float())
 		{	//	result must be integer
-			json::number_float_t da = json::number_float_t(subview.get<json::number_integer_t>());
+			json::number_float_t da = json::number_float_t(sub.get<json::number_integer_t>());
 			Value = json::number_integer_t(pow(da, db) + .5);
 		}
 		else
 		{	//	result must be double
-			json::number_float_t da = subview.get<json::number_float_t>();
+			json::number_float_t da = sub.get<json::number_float_t>();
 			Value = json::number_float_t(pow(da, db));
 		}
 	}
 	else
-		Value = "power: error, both arguments must be numbers!\n EV = "s + EV.dump();
+		Value = json();
 }
 
-void __fastcall jsonSqrt(json &EV, json &Value)
+void  jsonSqrt(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_number())
-		subview = json::number_float_t(sqrt(objview.get<json::number_float_t>()));
+	if (obj.is_number())
+		sub = json::number_float_t(sqrt(obj.get<json::number_float_t>()));
 	else
-		throw(__FUNCTION__ + ": /<- must be number!\n EV = "s + EV.dump());
+		sub = json();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
-/*
-  sub  |  obj  |                action
-------------------------------------------------------------------------------------
- null  | null  | foreach val in Value: val = Value(val)
- null  | objv  | foreach val in objv:   val = Value(val)
- subv  | null  | foreach val in Value: val = subv(val)
- subv  | objv  | foreach val in objv:   val = subv(val)
-*/
-void __fastcall jsonForEach(json &EV, json &Value)
-{
-	json subview = val2ref(EV["->"]);
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
 
-	if (Value.is_array())
+
+void  jsonForEachObject(json &EV)
+{	/*
+		Множественный JSONExec для проекции объекта типа array
+	*/
+	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& obj = val2ref(EV["$obj"]);
+	json& sub = val2ref(EV["$sub"]);
+
+	if (obj.is_array())
 	{
-		int	i = 0;
-		for (auto& it : Value)
-		{
-			json	objview = it;	//	кэшируем значение
-			try {
-				EV["<-"] = ref2id(objview);
-				EV[""] = EV["->"] = ref2id(it);
-				//EV[""] = EV["<-"] = EV["->"] = &it;
-				ExecEntity(EV, subview, it);
-			}
-			catch (string& error)		{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
-			catch (json::exception& e)	{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "unknown exception"s); }
-			i++;
-		}
+		if (!Value.is_array()) Value = json::array();
 
-		EV[""] = ref2id(Value);
+		for (size_t i = 0; i < obj.size(); i++)
+		{
+			try {
+				json& it = obj[i];
+				json& val = Value[i];
+				json  clone = EV;
+				clone["$obj"] = ref2id(it);
+				clone[""] = clone["$sub"] = ref2id(val);
+				JSONExec(clone, sub);
+			}
+			catch (string& error) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
+			catch (json::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
+			catch (...) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "unknown exception"s); }
+		}
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must be array!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonSize(json &EV, json &Value)
+void  jsonForEachSubject(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	size_t	size = objview.size();
-	if (!size)
+	/*
+		Множественный JSONExec для субъекта типа array
+	*/
+	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& obj = val2ref(EV["$obj"]);
+	json& sub = val2ref(EV["$sub"]);
+
+	if (sub.is_array())
 	{
-		objview = json();
+		if (!Value.is_array()) Value = json::array();
+
+		for (size_t i = 0; i < sub.size(); i++)
+		{
+			try {
+				json& it = sub[i];
+				json& val = Value[i];
+				json  clone = EV;
+				clone["$sub"] = ref2id(it);
+				clone[""] = clone["$obj"] = ref2id(val);
+				JSONExec(clone, obj);
+			}
+			catch (string& error) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
+			catch (json::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
+			catch (...) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "unknown exception"s); }
+		}
 	}
-	subview = size;
+	else
+		throw(__FUNCTION__ + ": $sub must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-#define define_json_is_type(json_type)						\
-void __fastcall json_is_##json_type(json &EV, json &Value)\
-{															\
-	json& subview = val2ref(EV["->"]);								\
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	\
-	subview = objview.is_##json_type();						\
+void  jsonSize(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = obj.size();
 }
 
-void __fastcall json_is_not_null(json &EV, json &Value)	\
-{															\
-	json& subview = val2ref(EV["->"]);								\
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	\
-	subview = !objview.is_null();							\
+#define define_json_is_type(json_type)		\
+void  json_is_##json_type(json &EV)			\
+{											\
+	json& sub = val2ref(EV["$sub"]);		\
+	json& obj = val2ref(EV["$obj"]);		\
+	sub = obj.is_##json_type();		\
+}
+
+void  json_is_not_null(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = !obj.is_null();
 }
 
 define_json_is_type(array)
@@ -564,137 +584,140 @@ define_json_is_type(string)
 define_json_is_type(structured)
 define_json_is_type(discarded)
 
-void __fastcall jsonIntegerSequence(json &EV, json &Value)
+void  jsonIntegerSequence(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_object())
+	if (obj.is_object())
 	{
-		json::number_integer_t	from = objview["from"];
-		json::number_integer_t	to = objview["to"];
-		json::number_integer_t	step = objview.count("step") ? objview["step"] : 1;
-		subview = json::array();
+		json::number_integer_t	from = obj["from"];
+		json::number_integer_t	to = obj["to"];
+		json::number_integer_t	step = obj.count("step") ? obj["step"] : 1;
+		sub = json::array();
 
 		for (json::number_integer_t i = from; i <= to; i += step)
-			subview.push_back(i);
+			sub.push_back(i);
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must has 'from', 'to' and 'step' properties!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must has 'from', 'to' and 'step' properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonUnion(json &EV, json &Value)
+void  jsonUnion(json &EV)
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!subview.is_array())
+	if (!sub.is_array())
 	{
-		json	tmp = subview;
-		subview = json::array();
+		json	tmp = sub;
+		sub = json::array();
 		if (!tmp.is_null())
-			subview[0] = tmp;
+			sub[0] = tmp;
 	}
 
-	if (!objview.is_array())
+	if (!obj.is_array())
 	{
-		if (!objview.is_null())
-			subview.push_back(objview);
+		if (!obj.is_null())
+			sub.push_back(obj);
 	}
 	else
-		for (auto& it : objview)
-			subview.push_back(it);
+		for (auto& it : obj)
+			sub.push_back(it);
 
-	Value = subview;
+	Value = sub;
 }
 
-void __fastcall jsonNull(json &EV, json &Value) {}
+void  jsonNull(json &EV) {}
 
-void __fastcall jsonInt32(json &EV, json &Value)
+void  jsonInt32(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	switch (objview.type())
+	switch (obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		subview = objview.size();
+		sub = obj.size();
 		break;
 
 	case json::value_t::string:
-		subview = atoi(objview.get<string>().c_str());
+		sub = atoi(obj.get<string>().c_str());
 		break;
 
 	case json::value_t::boolean:
-		if (objview.get<bool>())
-			subview = int(1);
+		if (obj.get<bool>())
+			sub = int(1);
 		else
-			subview = int(0);
+			sub = int(0);
 		break;
 
 	case json::value_t::number_float:
 	case json::value_t::number_integer:
 	case json::value_t::number_unsigned:
-		subview = objview.get<int>();
+		sub = obj.get<int>();
 		break;
 
 	default:
-		subview = int(0);
+		sub = int(0);
 	}
 
-	Value = subview;
+	Value = sub;
 }
 
-void __fastcall jsonDouble(json &EV, json &Value)
+void  jsonDouble(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	switch (objview.type())
+	switch (obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		subview = json::number_float_t(objview.size());
+		sub = json::number_float_t(obj.size());
 		break;
 
 	case json::value_t::string:
-		subview = json::number_float_t(std::stod(objview.get_ref<string&>()));
+		sub = json::number_float_t(std::stod(obj.get_ref<string&>()));
 		break;
 
 	case json::value_t::boolean:
-		if (objview.get<bool>())
-			subview = json::number_float_t(1.0);
+		if (obj.get<bool>())
+			sub = json::number_float_t(1.0);
 		else
-			subview = json::number_float_t(0.0);
+			sub = json::number_float_t(0.0);
 		break;
 
 	case json::value_t::number_float:
-		subview = objview;
+		sub = obj;
 		break;
 
 	case json::value_t::number_integer:
-		subview = json::number_float_t(objview.get<json::number_integer_t>());
+		sub = json::number_float_t(obj.get<json::number_integer_t>());
 		break;
 
 	case json::value_t::number_unsigned:
-		subview = json::number_float_t(objview.get<json::number_unsigned_t>());
+		sub = json::number_float_t(obj.get<json::number_unsigned_t>());
 		break;
 
 	default:
-		subview = json::number_float_t(0);
+		sub = json::number_float_t(0);
 	}
 }
 
-void __fastcall string_split(json &EV, json &Value)
+void  string_split(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_string() && subview.is_string())
+	if (obj.is_string() && sub.is_string())
 	{
-		const string& delim = objview.get_ref<string&>();
-		string str = subview.get_ref<string&>();
+		const string& delim = obj.get_ref<string&>();
+		string str = sub.get_ref<string&>();
 		size_t prev = 0, pos = 0;
 		Value = json::array();
 
@@ -707,21 +730,22 @@ void __fastcall string_split(json &EV, json &Value)
 		} while (pos < str.length() && prev < str.length());
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ and -> must be string!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj and $sub must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall string_join(json &EV, json &Value)
+void  string_join(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 	string	result = "";
 	bool	first = true;
 
-	if (objview.is_string() && subview.is_array())
+	if (obj.is_string() && sub.is_array())
 	{
-		string&	splitter = objview.get_ref<string&>();
+		string&	splitter = obj.get_ref<string&>();
 
-		for (auto& it : subview)
+		for (auto& it : sub)
 		{
 			if (first) first = false;
 			else       result += splitter;
@@ -730,7 +754,7 @@ void __fastcall string_join(json &EV, json &Value)
 			{
 			case json::value_t::object:
 			case json::value_t::array:
-				throw(__FUNCTION__ + ": -> must be array of simple type values!\n EV = "s + EV.dump());
+				throw(__FUNCTION__ + ": $sub must be array of simple type values!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
 			case json::value_t::number_float:
 				result += to_string(it.get<json::number_float_t>());
@@ -760,104 +784,110 @@ void __fastcall string_join(json &EV, json &Value)
 		Value = result;
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must be string and -> must be array!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must be string and $sub must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonGet(json &EV, json &Value)
+void  jsonGet(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (subview.is_array())
+	if (sub.is_array())
 	{
-		if (objview.is_number())
-			Value = subview[objview.get<size_t>()];
+		if (obj.is_number())
+			Value = sub[obj.get<size_t>()];
 		else
-			throw(__FUNCTION__ + ": <-/ must be unsigned number!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
-	else if (subview.is_object())
+	else if (sub.is_object())
 	{
-		if (objview.is_string())
-			Value = subview[objview.get_ref<string&>()];
+		if (obj.is_string())
+			Value = sub[obj.get_ref<string&>()];
 		else
-			throw(__FUNCTION__ + ": <-/ must be string!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": -> must be array or object!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $sub must be array or object!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonSet(json &EV, json &Value)
+void  jsonSet(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (subview.is_array())
+	if (sub.is_array())
 	{
-		if (objview.is_number_unsigned())
-			subview[objview.get<size_t>()] = Value;
+		if (obj.is_number_unsigned())
+			sub[obj.get<size_t>()] = Value;
 		else
-			throw(__FUNCTION__ + ": <-/ must be unsigned number!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
-	else if (subview.is_object())
+	else if (sub.is_object())
 	{
-		if (objview.is_string())
-			subview[objview.get_ref<string&>()] = Value;
+		if (obj.is_string())
+			sub[obj.get_ref<string&>()] = Value;
 		else
-			throw(__FUNCTION__ + ": <-/ must be string!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
-	else if (subview.is_null())
+	else if (sub.is_null())
 	{
-		if (objview.is_number_unsigned())
-			subview[objview.get<size_t>()] = Value;
-		else if (objview.is_string())
-			subview[objview.get_ref<string&>()] = Value;
+		if (obj.is_number_unsigned())
+			sub[obj.get<size_t>()] = Value;
+		else if (obj.is_string())
+			sub[obj.get_ref<string&>()] = Value;
 		else
-			throw(__FUNCTION__ + ": <-/ must be unsigned number or string!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number or string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": -> must be array, object or null!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $sub must be array, object or null!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonErase(json &EV, json &Value)
+void  jsonErase(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 	
-	if (subview.is_object())
+	if (sub.is_object())
 	{
-		if (objview.is_string())
-			subview.erase(objview.get_ref<string&>());
+		if (obj.is_string())
+			sub.erase(obj.get_ref<string&>());
 		else
-			throw(__FUNCTION__ + ": <-/ must be string!\n EV = "s + EV.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": -> must be object!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $sub must be object!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonIsEq(json &EV, json &Value)
+void  jsonIsEq(json &EV)
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	Value = subview == objview;
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	Value = sub == obj;
 }
 
-void __fastcall jsonIsNotEq(json &EV, json &Value)
+void  jsonIsNotEq(json &EV)
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	Value = subview != objview;
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	Value = sub != obj;
 }
 
-void __fastcall jsonSum(json &EV, json &Value)
+void  jsonSum(json &EV)
 {
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
 	__int64	isum = 0;
 	double	dsum = 0.0;
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (objview.is_array())
+	if (obj.is_array())
 	{
-		for (auto& it : objview) switch (it.type())
+		for (auto& it : obj) switch (it.type())
 		{
 		case json::value_t::number_float:
 			dsum += it.get<json::number_float_t>();
@@ -875,73 +905,80 @@ void __fastcall jsonSum(json &EV, json &Value)
 			break;
 		}
 
-		if (0.0 == dsum)	subview = json::number_integer_t(isum);
-		else if (0 == isum)	subview = json::number_float_t(dsum);
-		else				subview = json::number_float_t(dsum + json::number_float_t(isum));
+		if (0.0 == dsum)	sub = json::number_integer_t(isum);
+		else if (0 == isum)	sub = json::number_float_t(dsum);
+		else				sub = json::number_float_t(dsum + json::number_float_t(isum));
 		return;
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must be json array!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonWhere(json &EV, json &Value)
+void  jsonWhere(json &EV)
 {
-	json subview = val2ref(EV["->"]);	//	фильтр для where clause, при исполнении должен возвращать bool
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);	//	фильтруемые данные
+	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& obj = val2ref(EV["$obj"]);	//	фильтруемые данные
+	json& sub = val2ref(EV["$sub"]);	//	фильтр для where clause, при исполнении должен возвращать bool
 	Value = json::array();		//	подготовка выходного массива
 	
-	if (objview.is_array())
+	if (obj.is_null()) return;
+
+	if (obj.is_array())
 	{
-		for (auto& it : objview)
+		for (size_t i = 0; i < obj.size(); i++)
 		{
-			json	boolres = it;
-			EV["<-"] = ref2id(it);
-			EV[""] = EV["->"] = ref2id(boolres);
-			ExecEntity(EV, subview, boolres);
-			if (boolres.is_boolean())
-				if (boolres.get_ref<bool&>())
-					Value.push_back(it);	//	фильтруем
+			try {
+				json	boolres;
+				json&	it = obj[i];
+				json	clone = EV;
+				clone["$obj"] = ref2id(it);
+				clone[""] = clone["$sub"] = ref2id(boolres);
+				JSONExec(clone, sub);
+				if (boolres.is_boolean())
+					if (boolres.get<bool>())
+						Value.push_back(it);	//	фильтруем
+			}
+			catch (string& error)		{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
+			catch (json::exception& e)	{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e)	{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
+			catch (...)					{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "unknown exception"s); }
 		}
-		EV[""] = ref2id(Value);
-	}
-	else if (objview.is_null())
-	{
-		Value = json();
 	}
 	else
-		throw(__FUNCTION__ + ": <-/ must be json array!\n EV = "s + EV.dump());
+		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall jsonBelow(json &EV, json &Value)	//	<
+void  jsonBelow(json &EV)	//	<
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (subview.type() == objview.type()) switch (objview.type())
+	if (sub.type() == obj.type()) switch (obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		Value = json(subview.size() < objview.size());
+		Value = json(sub.size() < obj.size());
 		return;
 
 	case json::value_t::string:
-		Value = json(subview.get<string>().size() < objview.get<string>().size());
+		Value = json(sub.get<string>().size() < obj.get<string>().size());
 		return;
 
 	case json::value_t::boolean:
-		Value = json(int(subview.get<bool>()) < int(objview.get<bool>()));
+		Value = json(int(sub.get<bool>()) < int(obj.get<bool>()));
 		return;
 
 	case json::value_t::number_float:
-		Value = json(subview.get<json::number_float_t>() < objview.get<json::number_float_t>());
+		Value = json(sub.get<json::number_float_t>() < obj.get<json::number_float_t>());
 		return;
 
 	case json::value_t::number_integer:
-		Value = json(subview.get<json::number_integer_t>() < objview.get<json::number_integer_t>());
+		Value = json(sub.get<json::number_integer_t>() < obj.get<json::number_integer_t>());
 		return;
 
 	case json::value_t::number_unsigned:
-		Value = json(subview.get<json::number_unsigned_t>() < objview.get<json::number_unsigned_t>());
+		Value = json(sub.get<json::number_unsigned_t>() < obj.get<json::number_unsigned_t>());
 		return;
 
 	default:
@@ -950,77 +987,216 @@ void __fastcall jsonBelow(json &EV, json &Value)	//	<
 	}
 }
 
-void __fastcall jsonAnd(json &EV, json &Value)
+void  jsonAnd(json &EV)
 {
-	json subview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["->"]), subview);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (subview.is_boolean() && objview.is_boolean())
+	if (sub.is_boolean() && obj.is_boolean())
 	{
-		Value = subview.get<bool>() && objview.get<bool>();
+		Value = sub.get<bool>() && obj.get<bool>();
 	}
-	else throw(__FUNCTION__ + ": <-/ and ->/ must be boolean!\n EV = "s + EV.dump());
+	else throw(__FUNCTION__ + ": $obj and $sub must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 }
 
-void __fastcall IfObjTrueThenExecSub(json &EV, json &Value)
+void  IfObjTrueThenExecSub(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_boolean())
-		throw(__FUNCTION__ + ": <-/ must be boolean!\n EV = "s + EV.dump());
+	if (!obj.is_boolean())
+		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	if (objview.get<bool>())
-		ExecEntity(val2ref(EV["ctx"]), subview, Value);
+	try
+	{
+		if (obj.get<bool>())
+			JSONExec(val2ref(EV[".."]), sub);
+	}
+	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...)					{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
-void __fastcall IfObjFalseThenExecSub(json &EV, json &Value)
+void  IfObjFalseThenExecSub(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
-	if (!objview.is_boolean())
-		throw(__FUNCTION__ + ": <-/ must be boolean!\n EV = "s + EV.dump());
+	if (!obj.is_boolean())
+		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-	if (!objview.get<bool>())
-		ExecEntity(val2ref(EV["ctx"]), subview, Value);
+	try
+	{
+		if (!obj.get<bool>())
+			JSONExec(val2ref(EV[".."]), sub);
+	}
+	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...)					{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
-void __fastcall ExecSubWhileObjTrue(json &EV, json &Value)
+void  ExecSubWhileObjTrue(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 
 	while (true)
 	{
-		ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
+		if (!obj.is_boolean())
+			throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
 
-		if (!Value.is_boolean())
-		{
-			Value = false;
-			throw(__FUNCTION__ + ": <-/ must be boolean!\n EV = "s + EV.dump());
-		}
-
-		if (Value.get<bool>())
-			ExecEntity(val2ref(EV["ctx"]), subview, Value);
+		if (obj.get<bool>())
+			JSONExec(val2ref(EV[".."]), sub);
 		else
 			return;
 	}
 }
 
+
+#define define_object_method(object_method)	\
+void  json_call_##object_method(json &EV)	\
+{											\
+	json& sub = val2ref(EV["$sub"]);		\
+	json& obj = val2ref(EV["$obj"]);		\
+	sub = obj.##object_method();	\
+}
+
+#define define_static_method(static_method)	\
+void  json_call_##static_method(json &EV)	\
+{											\
+	json& Value = val2ref(EV[""]);		\
+	Value = json::##static_method();		\
+}
+
+define_static_method(array)
+define_static_method(meta)
+define_static_method(object)
+
+#include <iostream>
+
+void  jsonPrint(json &EV)
+{
+	json& obj = val2ref(EV["$obj"]);
+	cout << obj.dump(1) << endl;
+}
+
+
+void  jsonTAG(json &EV)
+{
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	
+	if (!sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+
+	string	tag = sub["<>"];
+
+	if (!Value.is_string())
+		Value = ""s;
+
+	string& body = Value.get_ref<string&>();
+	body += "<" + tag;
+
+	for (auto& it : sub.items())
+		if ("<>" != it.key())
+			body += " " + it.key() + "=" + it.value().dump();
+
+	body += ">";
+	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
+	json	clone = EV, objview;
+	clone[""] = ref2id(objview);
+	JSONExec(clone, obj);
+	if (objview.is_string()) body += objview.get_ref<string&>();
+	else                     body += objview.dump();
+	body += "</" + tag + ">";
+}
+
+
+void  jsonXML(json &EV)
+{
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
+
+	if (!sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+
+	string	tag = sub["<>"];
+
+	if (!Value.is_string())
+		Value = res;
+	else if(!Value.get_ref<string&>().size())
+		Value = res;
+
+	string& body = Value.get_ref<string&>();
+	body += "<" + tag;
+
+	for (auto& it : sub.items())
+		if ("<>" != it.key())
+			body += " " + it.key() + "=" + it.value().dump();
+
+	body += ">";
+	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
+	json	clone = EV, objview;
+	clone[""] = ref2id(objview);
+	JSONExec(clone, obj);
+	if (objview.is_string()) body += objview.get_ref<string&>();
+	else                     body += objview.dump();
+	body += "</" + tag + ">";
+}
+
+
+void  jsonHTML(json &EV)
+{
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	std::string res = "<!DOCTYPE html>"s;
+
+	if (!sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+
+	string	tag = sub["<>"];
+
+	if (!Value.is_string())
+		Value = res;
+	else if (!Value.get_ref<string&>().size())
+		Value = res;
+
+	string& body = Value.get_ref<string&>();
+	body += "<" + tag;
+
+	for (auto& it : sub.items())
+		if ("<>" != it.key())
+			body += " " + it.key() + "=" + it.value().dump();
+
+	body += ">";
+	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
+	json	clone = EV, objview;
+	clone[""] = ref2id(objview);
+	JSONExec(clone, obj);
+	if (objview.is_string()) body += objview.get_ref<string&>();
+	else                     body += objview.dump();
+	body += "</" + tag + ">";
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
-void __fastcall ImportRelationsModel(json &Ent)
+void  ImportRelationsModel(json &Ent)
 {
-	Ent["RVM"]["version"] = RVM_version;
-
+	Ent["RVM_version"] = RVM_version;
 	Addx86Entity(Ent["RVM"]["load"], "dll"s, jsonLoadDLL, "загружает словарь сущностей из dll");
 	Addx86Entity(Ent["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 	Addx86Entity(Ent, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
-	Addx86Entity(Ent["extern"], "<-"s, jsonExternViewObj, "View object model in parent ctx and then set Value"s);
-	Addx86Entity(Ent["extern"], "->"s, jsonExternViewSub, "View subject model in parent ctx and then set Value"s);
-	Addx86Entity(Ent["RVM"], "exec"s, jsonExec, "EcexEntity: Executes object model in parent ctx and then set subject value"s);
-	Addx86Entity(Ent, "="s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
-	Addx86Entity(Ent, "clone"s, jsonClone, "clone: clone object model to subject"s);
+	Addx86Entity(Ent, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 	
 #define map_json_is_type(json_type)	Addx86Entity(Ent, "is_"s + #json_type, json_is_##json_type, ""s );
 	map_json_is_type(array);
@@ -1035,6 +1211,11 @@ void __fastcall ImportRelationsModel(json &Ent)
 	map_json_is_type(string);
 	map_json_is_type(structured);
 	map_json_is_type(discarded);
+
+#define map_json_static_method(static_method)	Addx86Entity(Ent["json"], #static_method, json_call_##static_method, ""s );
+	map_json_static_method(array);
+	map_json_static_method(meta);
+	map_json_static_method(object);
 
 	//	convert
 	Addx86Entity(Ent, "integer"s, jsonInt32, ""s);
@@ -1073,8 +1254,17 @@ void __fastcall ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent["string"], "join"s, string_join, ""s);
 
 	//	control
-	Addx86Entity(Ent, "foreach"s, jsonForEach, ""s);
+	Addx86Entity(Ent, "foreachobj"s, jsonForEachObject, ""s);
+	Addx86Entity(Ent, "foreachsub"s, jsonForEachSubject, ""s);
 	Addx86Entity(Ent, "then"s, IfObjTrueThenExecSub, ""s);
 	Addx86Entity(Ent, "else"s, IfObjFalseThenExecSub, "");
 	Addx86Entity(Ent, "while"s, ExecSubWhileObjTrue, ""s);
+
+	//	display
+	Addx86Entity(Ent, "print"s, jsonPrint, ""s);
+
+	//	browser
+	Addx86Entity(Ent, "tag"s, jsonTAG, ""s);
+	Addx86Entity(Ent, "xml"s, jsonXML, ""s);
+	Addx86Entity(Ent, "html"s, jsonHTML, ""s);
 }

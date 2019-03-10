@@ -1,30 +1,79 @@
 {
-   "()" : [
+   "$obj" : [
       {
-         "#/additional_rm_loaded/http.rm.dll" : {
-            "<-" : {
-               "PathFolder" : ".\\",
-               "FileName" : "http.rm.dll"
-            },
-            "()" : "#/RVM/load/dll",
-            "->" : "#"
+         "$obj" : {
+            "/" : "-1"
+         },
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Index"
          }
       },
       {
-         "<-" : {
-            "request" : {
-               "Index" : "-1",
-               "Phones" : {
-                  "Phone" : "89875421631"
+         "$obj" : [
+            {
+               "$obj" : {
+                  "/" : "89875421631"
                },
-               "Sca" : "",
-               "Content" : "test message from watchdog",
-               "Length" : "3",
-               "Reserved" : "1",
-               "Date" : "2017-12-18 15:01:01"
+               "$rel" : "#/tag",
+               "$sub" : {
+                  "<>" : "Phone"
+               }
             }
+         ],
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Phones"
+         }
+      },
+      {
+         "$obj" : {
+            "/" : ""
          },
-         "()" : "#/ToXML"
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Sca"
+         }
+      },
+      {
+         "$obj" : {
+            "/" : "test message from watchdog"
+         },
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Content"
+         }
+      },
+      {
+         "$obj" : {
+            "/" : "3"
+         },
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Length"
+         }
+      },
+      {
+         "$obj" : {
+            "/" : "1"
+         },
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Reserved"
+         }
+      },
+      {
+         "$obj" : {
+            "/" : "2017-12-18 15:01:01"
+         },
+         "$rel" : "#/tag",
+         "$sub" : {
+            "<>" : "Date"
+         }
       }
-   ]
+   ],
+   "$rel" : "#/xml",
+   "$sub" : {
+      "<>" : "request"
+   }
 }

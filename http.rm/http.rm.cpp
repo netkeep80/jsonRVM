@@ -363,11 +363,12 @@ std::string json2xml(const json &Value)
 	}
 }
 
-void __fastcall jsonToXML(json &EV, json &Value)
+void jsonToXML(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
-	subview = json2xml(objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = json2xml(obj);
 }
 
 
@@ -382,29 +383,36 @@ struct application_xml
 {
 	static wstring content_type() { return L"application/xml"; }
 	static void to_json(json& j, const wstring& data) { j = json::parse(xml2json(wstring_to_utf8(data).c_str())); }
-	static void from_json(const json& j, wstring& data) { data = utf8_to_wstring(j.get<string>()); }
+	static void from_json(const json& j, wstring& data)
+	{
+		if(j.is_string())
+			data = utf8_to_wstring(j.get<string>());
+		else
+			data = utf8_to_wstring(json2xml(j));
+	}
 };
 
 
 /*
-void	HTTP_METHOD_json(json &EV, json &Value, const method &mtd)
+void	HTTP_METHOD_json(json &EV, const method &mtd)
 {
-	json& subview = jref(EV["->"]);
-	ViewEntity(jref(EV["ctx"]), jref(EV["<-"]), Value);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = jref(EV["$sub"]);
+	ViewEntity(jref(EV["ctx"]), jref(EV["$obj"]), Value);
 
 	if (Value.is_object())
 	{
 		try
 		{
-			if (!subview.count("URL")) subview["URL"] = "s";
-			if (!subview.count("method")) subview["method"] = ""s;
-			if (!subview.count("UserName")) subview["UserName"] = ""s;
-			if (!subview.count("Password")) subview["Password"] = ""s;
+			if (!sub.count("URL")) sub["URL"] = "s";
+			if (!sub.count("method")) sub["method"] = ""s;
+			if (!sub.count("UserName")) sub["UserName"] = ""s;
+			if (!sub.count("Password")) sub["Password"] = ""s;
 
-			WebAPIURI = utf8_to_wstring(subview["URL"].get<string>());
+			WebAPIURI = utf8_to_wstring(sub["URL"].get<string>());
 
-			if (subview[L"UserName"].as_string() != L"")
-				WebAPIconfig.set_credentials(credentials(subview[L"UserName"].as_string(), subview[L"Password"].as_string()));
+			if (sub[L"UserName"].as_string() != L"")
+				WebAPIconfig.set_credentials(credentials(sub[L"UserName"].as_string(), sub[L"Password"].as_string()));
 
 			if (WebAPIUseBearer) // Bearer
 			{
@@ -415,17 +423,17 @@ void	HTTP_METHOD_json(json &EV, json &Value, const method &mtd)
 				http_client	client(WebAPIURI);
 				http_request requestObj(methods::POST);
 				requestObj.headers().add(L"Authorization", L"Bearer " + WebAPIAccessToken);
-				requestObj.set_request_uri(subview[L"method"].as_string());
-				if (!objview.is_null()) requestObj.set_body(objview.serialize(), U("application/json"));
+				requestObj.set_request_uri(sub[L"method"].as_string());
+				if (!obj.is_null()) requestObj.set_body(obj.serialize(), U("application/json"));
 				WebAPI_last_task = client.request(requestObj);
 			}
 			else
 			{
 				http_client client(WebAPIURI, WebAPIconfig);
-				if (!objview.is_null())
-					WebAPI_last_task = client.request(mtd, subview[L"method"].as_string(), objview.serialize(), U("application/json"));
+				if (!obj.is_null())
+					WebAPI_last_task = client.request(mtd, sub[L"method"].as_string(), obj.serialize(), U("application/json"));
 				else
-					WebAPI_last_task = client.request(mtd, subview[L"method"].as_string());
+					WebAPI_last_task = client.request(mtd, sub[L"method"].as_string());
 			}
 
 			Value = value::object();
@@ -450,7 +458,7 @@ void	HTTP_METHOD_json(json &EV, json &Value, const method &mtd)
 	else
 	{
 		Value = value::object();
-		Value[L"error"] = value(L"-> must be object");
+		Value[L"error"] = value(L"$sub must be object");
 	}
 }
 */
@@ -467,17 +475,21 @@ authority   = [ userinfo "@" ] host [ ":" port ]
 userinfo    = *( unreserved / pct-encoded / sub-delims / ":" )
 */
 template<typename _convert>
-void __fastcall HTTP_METHOD(json &EV, json &Value, const method &mtd)
+void  HTTP_METHOD(json &EV, const method &mtd)
 {
-	json& subview = val2ref(EV["->"]);
-	ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), Value);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& obj = val2ref(EV["$obj"]);
+	json& sub = val2ref(EV["$sub"]);
+	
+	if (!obj.is_object())
+		throw(__FUNCTION__ + ": $sub must be object"s);
 
-	if (Value.is_object())
+	try
 	{
 		uri base_uri;
 		http_client_config	client_config;
-		if (!Value.count("URI")) Value["URI"] = ""s;
-		json& uri = Value["URI"];
+		if (!obj.count("URI")) obj["URI"] = ""s;
+		json& uri = obj["URI"];
 
 		if (uri.is_string()) base_uri = utf8_to_wstring(uri);
 		else if (uri.is_object())
@@ -492,63 +504,63 @@ void __fastcall HTTP_METHOD(json &EV, json &Value, const method &mtd)
 			base_uri = components;
 		}
 
-		if (Value.count("timeout"))
-			client_config.set_timeout(std::chrono::microseconds(Value["timeout"].get<json::number_unsigned_t>()));
+		if (obj.count("timeout"))
+			client_config.set_timeout(std::chrono::microseconds(obj["timeout"].get<json::number_unsigned_t>()));
 
-		if (Value.count("username") && Value.count("password"))
-			client_config.set_credentials(credentials(utf8_to_wstring(Value["username"]), utf8_to_wstring(Value["password"])));
+		if (obj.count("username") && obj.count("password"))
+			client_config.set_credentials(credentials(utf8_to_wstring(obj["username"]), utf8_to_wstring(obj["password"])));
 
 		http_client client(base_uri, client_config);
 		http_request requestObj(mtd);
 
-		if (Value.count("header"))
-			if (Value["header"].is_object())
-				for (auto& it : Value["header"].items())
+		if (obj.count("header"))
+			if (obj["header"].is_object())
+				for (auto& it : obj["header"].items())
 					requestObj.headers().add(utf8_to_wstring(it.key()), utf8_to_wstring(it.value().is_string() ? it.value().get<string>() : it.value().dump()));
 
-		if (Value.count("body"))
+		if (obj.count("body"))
 		{
 			wstring	body;
-			_convert::from_json(Value["body"], body);
+			_convert::from_json(obj["body"], body);
 			requestObj.set_body(body, _convert::content_type());
 		}
-		
+
 		WebAPI_last_task = client.request(requestObj);
 		Value = IsAsyncRequestDone();
-		subview = json::object();
-		subview["header"] = json::object();
-		subview["body"] = json();
+		sub = json::object();
+		sub["header"] = json::object();
+		sub["body"] = json();
 
 		if (!WebAPIResponceHeaders.empty())
 			for (auto& it : WebAPIResponceHeaders)
-				subview["header"][wstring_to_utf8(it.first)] = wstring_to_utf8(it.second);
+				sub["header"][wstring_to_utf8(it.first)] = wstring_to_utf8(it.second);
 
 		if (WebAPIStringAnswer.length())
-			_convert::to_json(subview["body"], WebAPIStringAnswer);
+			_convert::to_json(sub["body"], WebAPIStringAnswer);
 	}
-	else
-	{
-		Value = HTTP_CODE_UNKNOWN;
-		throw(__FUNCTION__ + ": ->/ must be object"s);
-	}
+	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...)	{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void __fastcall HTTP_GET_json(json &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::GET); }
-void __fastcall HTTP_POST_json(json &EV, json &Value)   { HTTP_METHOD<application_json>(EV, Value, methods::POST); }
-void __fastcall HTTP_PUT_json(json &EV, json &Value)    { HTTP_METHOD<application_json>(EV, Value, methods::PUT); }
-void __fastcall HTTP_DELETE_json(json &EV, json &Value) { HTTP_METHOD<application_json>(EV, Value, methods::DEL); }
-void __fastcall HTTP_GET_xml(json &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::GET); }
-void __fastcall HTTP_POST_xml(json &EV, json &Value)    { HTTP_METHOD<application_xml>(EV, Value, methods::POST); }
-void __fastcall HTTP_PUT_xml(json &EV, json &Value)     { HTTP_METHOD<application_xml>(EV, Value, methods::PUT); }
-void __fastcall HTTP_DELETE_xml(json &EV, json &Value)  { HTTP_METHOD<application_xml>(EV, Value, methods::DEL); }
+void  HTTP_GET_json(json &EV)    { HTTP_METHOD<application_json>(EV, methods::GET); }
+void  HTTP_POST_json(json &EV)   { HTTP_METHOD<application_json>(EV, methods::POST); }
+void  HTTP_PUT_json(json &EV)    { HTTP_METHOD<application_json>(EV, methods::PUT); }
+void  HTTP_DELETE_json(json &EV) { HTTP_METHOD<application_json>(EV, methods::DEL); }
+void  HTTP_GET_xml(json &EV)     { HTTP_METHOD<application_xml>(EV, methods::GET); }
+void  HTTP_POST_xml(json &EV)    { HTTP_METHOD<application_xml>(EV, methods::POST); }
+void  HTTP_PUT_xml(json &EV)     { HTTP_METHOD<application_xml>(EV, methods::PUT); }
+void  HTTP_DELETE_xml(json &EV)  { HTTP_METHOD<application_xml>(EV, methods::DEL); }
 
 /*
-void __fastcall json2html(json &EV, json &Value)
+void json2html(json &EV)
 {
-	json& subview = val2ref(EV["->"]);
-	json objview; ViewEntity(val2ref(EV["ctx"]), val2ref(EV["<-"]), objview);
+	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
 	string	result = "";
 	
 	if (Value.is_object())
@@ -565,18 +577,19 @@ void __fastcall json2html(json &EV, json &Value)
 			ViewEntity(EV, objRef, subRef);
 		}
 
-		subview = result;
+		sub = result;
 	}
 	else
 	{
-		subview = result;
-		throw(__FUNCTION__ + ": ->/ must be object"s);
+		sub = result;
+		throw(__FUNCTION__ + ": $sub must be object"s);
 	}
 }
 */
 
-__declspec(dllexport) void __fastcall ImportRelationsModel(json &Ent)
+__declspec(dllexport) void ImportRelationsModel(json &Ent)
 {
+	Ent["HTTP"]["RVM_version"] = RVM_version;
 	Addx86Entity(Ent, "ToXML"s, jsonToXML, "");
 	Addx86Entity(Ent["HTTP"]["GET"], "json"s, HTTP_GET_json,    "");
 	Addx86Entity(Ent["HTTP"]["POST"],"json"s, HTTP_POST_json,   "");

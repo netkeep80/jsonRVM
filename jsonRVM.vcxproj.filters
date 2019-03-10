@@ -47,5 +47,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="test\fs.rm.test.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="test\http_POST_xml_SMS.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="test\imgui.rm.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="test\ToXML.test.json">
+      <Filter>test</Filter>
+    </None>
+    <None Include="test\version.json">
+      <Filter>test</Filter>
+    </None>
   </ItemGroup>
 </Project>

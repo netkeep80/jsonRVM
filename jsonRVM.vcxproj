@@ -166,6 +166,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="test\fs.rm.test.json" />
+    <None Include="test\http_POST_xml_SMS.json" />
+    <None Include="test\imgui.rm.json" />
+    <None Include="test\ToXML.test.json" />
+    <None Include="test\version.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
