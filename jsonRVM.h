@@ -614,7 +614,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 3. String  - иерархический путь к сущности относительно текущего контекста исполнения
 4. Object  - json объект определяющий непосредственное значение сущности
 5. Array   - json массив определяющий непосредственное значение сущности
-6. Null    - значение по умолчанию, пустой указатель на сущность обозначающий топологическая замкнутость на текущую проекцию сущности в контексте исполнения EV[""]
+6. Null    - значение по умолчанию, пустой указатель на сущность обозначающий топологическая замкнутость на текущую проекцию сущности в контексте исполнения EntView[""]
 7. Entity  - непосредственное описание другой сущности
 
 ------------------------------------------------------------------------------
@@ -696,7 +696,7 @@ namespace nlohmann
 using namespace std;
 using namespace nlohmann;
 
-const string RVM_version = "1.1.0.0"s;
+const string RVM_version = "1.1.0.2"s;
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }
@@ -714,21 +714,6 @@ typedef void	(*x86View)(json &Ctx);
 __declspec(dllexport) void ImportRelationsModel(json &Ent);
 typedef void (*InitDict)(json &Ent);
 static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
-
-#ifdef _DEBUG
-class PushCS
-{
-	json &CallStack;
-public:
-	PushCS::PushCS(const string& name, json &cs, size_t level) : CallStack(cs)
-	{ CallStack.push_back("L"s + to_string(level) + ": "s + name); }
-	PushCS::~PushCS()
-	{ if (CallStack.size()) CallStack.erase(CallStack.size() - 1);	}
-};
-#define	CSPush(name)	PushCS LevelName(name, val2ref(EV["#"])["CallStack"], EV["level"].get<size_t>());
-#else
-#define	CSPush(name)
-#endif
 
 template<class _T>
 vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
@@ -822,37 +807,19 @@ inline json& ReferEntity(json &EV, json &Ent)
 	}
 }
 
-inline void ExecEntity(json &ctx, json &Ent)
-{
-	json EV;	//	конфигурируем новый контекст
-	EV[".."] = ref2id(ctx);
-	EV["#"] = ctx["#"];
-#ifdef _DEBUG
-	EV["level"] = ctx["level"].get<size_t>() + 1;
-#endif
-	EV["."] = ref2id(Ent);						//	'.'	- entity model
-	EV["$obj"] = ref2id(ReferEntity(ctx, Ent["$obj"]));
-	EV["$sub"] = ref2id(ReferEntity(ctx, Ent["$sub"]));
-	EV[""] = ctx[""];						//	''	- entity view, points to Value
-	JSONExec(EV, ReferEntity(ctx, Ent["$rel"]));
-}
-
 
 //	Исполнение сущности либо json байткода
 //	имеет прототип отличный от других контроллеров и не является контроллером
 //	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
 inline void JSONExec(json &EV, json &Ent)
 {
-	CSPush("exec : "s + Ent.dump());	//	debug
-	switch (Ent.type())	//	ранжирование по частоте использования json типов
+	switch (Ent.type())
 	{
 	//	абсолютный адрес скомпилированного тела сущности
 	case json::value_t::number_unsigned:
 	{
-		try
-		{
-			x86View	entBody = (x86View)Ent.get<size_t>();
-			entBody(EV);
+		try	{
+			((x86View)Ent.get<size_t>())(EV);
 		}
 		catch (string& error)		{ throw("func at "s + Ent.dump() + "/"s + error); }
 		catch (json::exception& e)	{ throw("func at "s + Ent.dump() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -864,14 +831,13 @@ inline void JSONExec(json &EV, json &Ent)
 	//	иерархический путь к json значению
 	case json::value_t::string:
 	{
-		json&	entRef = ReferEntity(EV, Ent);
 		try {
-			JSONExec(EV, entRef);
+			JSONExec(EV, ReferEntity(EV, Ent));
 		}
-		catch (string& error) { throw("\n exec "s + Ent.get<string>() + "/"s + error); }
-		catch (json::exception& e) { throw("\n exec "s + Ent.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { throw("\n exec "s + Ent.get<string>() + "/"s + "std::exception: "s + e.what()); }
-		catch (...) { throw("\n exec "s + Ent.get<string>() + "/"s + "unknown exception"s); }
+		catch (string& error)		{ throw("\n exec "s + Ent.get<string>() + "/"s + error); }
+		catch (json::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "std::exception: "s + e.what()); }
+		catch (...)					{ throw("\n exec "s + Ent.get<string>() + "/"s + "unknown exception"s); }
 		return;
 	}
 
@@ -881,9 +847,7 @@ inline void JSONExec(json &EV, json &Ent)
 		int i = 0;
 		for (auto& it : Ent)
 		{
-			try
-			{
-				CSPush("["s + to_string(i) + "]"s);	//	debug
+			try	{
 				JSONExec(EV, it);
 			}
 			catch (string& error) { throw("["s + to_string(i) + "]/"s + error); }
@@ -899,13 +863,19 @@ inline void JSONExec(json &EV, json &Ent)
 	{
 		if (Ent.count("/"))	//	это сущность с закэшированной дефолтной json проекцией?
 		{	//	приоритет у закэшированной проекции выше
-			json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-			Value = Ent["/"];
+			val2ref(EV[""]) = Ent["/"];
 		}
 		else if (Ent.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
 		{
 			try {
-				ExecEntity(EV, Ent);
+				json EntView;	//	конфигурируем новый контекст - представление модели сущности
+				EntView["#"] = EV["#"];
+				EntView[""] = EV[""];						//	''	- entity view, points to Value
+				EntView["."] = ref2id(Ent);						//	'.'	- entity model
+				EntView[".."] = ref2id(EV);
+				EntView["$obj"] = ref2id(ReferEntity(EV, Ent["$obj"]));
+				EntView["$sub"] = ref2id(ReferEntity(EV, Ent["$sub"]));
+				JSONExec(EntView, ReferEntity(EV, Ent["$rel"]));
 			}
 			catch (string& error)		{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + error); }
 			catch (json::exception& e)	{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -917,14 +887,10 @@ inline void JSONExec(json &EV, json &Ent)
 			for (auto& it : Ent.items())
 			{
 				json	key = it.key();
-				try
-				{
-					CSPush(key.get<string>());	//	debug
-					//	клонируем контекст
+				try	{
 					json	clone = EV;
 					clone[""] = ref2id(ReferEntity(EV, key));
-					json&	entRef = ReferEntity(EV, it.value());
-					JSONExec(clone, entRef);
+					JSONExec(clone, ReferEntity(EV, it.value()));
 				}
 				catch (string& error)		{ throw("\n view "s + key.get<string>() + " : "s + error); }
 				catch (json::exception& e)	{ throw("\n view "s + key.get<string>() + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }

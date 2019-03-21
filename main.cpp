@@ -140,11 +140,6 @@ int main(int argc, char* argv[])
 		ImportRelationsModel(input_json);
 
 		//	создаём контекст исполнения
-#ifdef _DEBUG
-		input_json["CallStack"] = json::array();
-		rootctx["level"] = 0;
-#endif
-
 		rootctx["#"] = ref2id(input_json);
 		rootctx[""] = ref2id(returnValue);
 		rootctx[".."] = ref2id(rootctx);
