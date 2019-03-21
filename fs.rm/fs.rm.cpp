@@ -465,7 +465,7 @@ void  jsonToFiles(json &EV)
 FSRM_API void  ImportRelationsModel(json &Ent)
 {
 	Ent["fs"]["RVM_version"] = RVM_version;
-	Addx86Entity(Ent["fs"]["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory"s);
+	Addx86Entity(Ent["fs"]["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
 	Addx86Entity(Ent["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
 	Addx86Entity(Ent["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
 

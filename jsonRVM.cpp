@@ -708,6 +708,72 @@ void  jsonDouble(json &EV)
 	}
 }
 
+
+void  string_string(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = ""s;
+	string&	result = sub.get_ref<string&>();
+
+	switch (obj.type())
+	{
+	case json::value_t::number_float:
+		result = to_string(obj.get<json::number_float_t>());
+		break;
+
+	case json::value_t::number_integer:
+		result = to_string(obj.get<json::number_integer_t>());
+		break;
+
+	case json::value_t::number_unsigned:
+		result = to_string(obj.get<json::number_unsigned_t>());
+		break;
+
+	case json::value_t::string:
+		result = obj.get_ref<string&>();
+		break;
+
+	default:
+		result = obj.dump();
+		break;
+	}
+}
+
+
+void  string_add(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+
+	if(!sub.is_string())	sub = ""s;
+	string&	result = sub.get_ref<string&>();
+
+	switch (obj.type())
+	{
+	case json::value_t::number_float:
+		result += to_string(obj.get<json::number_float_t>());
+		break;
+
+	case json::value_t::number_integer:
+		result += to_string(obj.get<json::number_integer_t>());
+		break;
+
+	case json::value_t::number_unsigned:
+		result += to_string(obj.get<json::number_unsigned_t>());
+		break;
+
+	case json::value_t::string:
+		result += obj.get_ref<string&>();
+		break;
+
+	default:
+		result += obj.dump();
+		break;
+	}
+}
+
+
 void  string_split(json &EV)
 {
 	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
@@ -1188,6 +1254,14 @@ void  jsonHTML(json &EV)
 	body += "</" + tag + ">";
 }
 
+
+void  jsonDump(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+	sub = obj.dump(3);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 void  ImportRelationsModel(json &Ent)
@@ -1212,10 +1286,12 @@ void  ImportRelationsModel(json &Ent)
 	map_json_is_type(structured);
 	map_json_is_type(discarded);
 
+	//	json
 #define map_json_static_method(static_method)	Addx86Entity(Ent["json"], #static_method, json_call_##static_method, ""s );
 	map_json_static_method(array);
 	map_json_static_method(meta);
 	map_json_static_method(object);
+	Addx86Entity(Ent["json"], "dump"s, jsonDump, ""s);
 
 	//	convert
 	Addx86Entity(Ent, "integer"s, jsonInt32, ""s);
@@ -1250,6 +1326,8 @@ void  ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent, "&&"s, jsonAnd, ""s);
 
 	//	strings
+	Addx86Entity(Ent["string"], "="s, string_string, ""s);
+	Addx86Entity(Ent["string"], "+="s, string_add, ""s);
 	Addx86Entity(Ent["string"], "split"s, string_split, ""s);
 	Addx86Entity(Ent["string"], "join"s, string_join, ""s);
 

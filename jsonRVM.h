@@ -615,7 +615,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 4. Object  - json объект определяющий непосредственное значение сущности
 5. Array   - json массив определяющий непосредственное значение сущности
 6. Null    - значение по умолчанию, пустой указатель на сущность обозначающий топологическая замкнутость на текущую проекцию сущности в контексте исполнения EV[""]
-7. Entity  - другая сущность
+7. Entity  - непосредственное описание другой сущности
 
 ------------------------------------------------------------------------------
 		Семантика json значений при исполнении  (json как байткод RVM):
@@ -696,7 +696,7 @@ namespace nlohmann
 using namespace std;
 using namespace nlohmann;
 
-const string RVM_version = "1.0.0.0"s;
+const string RVM_version = "1.1.0.0"s;
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }
@@ -795,7 +795,10 @@ inline json& ReferEntity(json &EV, json &Ent)
 				else
 					throw it;
 			}
-			catch (invalid_argument e)	{ throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what()); }
+			catch (invalid_argument e)
+			{
+				throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what());
+			}
 			catch (out_of_range e)		{ throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what()); }
 			catch (...)					{ throw(__FUNCTION__ + ": property '"s + String + "' does not exist!"); }
 		}

@@ -195,7 +195,6 @@ void viewport(json &EV)
 
 void form(json &EV)
 {
-//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
 	json& sub = val2ref(EV["$sub"]);
 	json& obj = val2ref(EV["$obj"]);
 
@@ -216,7 +215,6 @@ void form(json &EV)
 
 void text(json &EV)
 {
-//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
 	json& sub = val2ref(EV["$sub"]);
 	json& obj = val2ref(EV["$obj"]);
 
@@ -233,10 +231,52 @@ void text(json &EV)
 	}
 }
 
+/*
+void ImGui_InputTextMultiline(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	if (!sub.count("label")) sub["label"] = ""s;
+
+	bool&	visible = sub["visible"].get_ref<bool&>();
+	string&	visible = sub["label"].get_ref<string&>();
+
+	if (visible)
+	{
+		if (obj.is_string())
+			//ImGui::Text(obj.get_ref<string&>().c_str());
+			ImGui::InputTextMultiline("##source", obj.get_ref<string&>().c_str(), obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
+		else
+			//ImGui::Text(obj.dump().c_str());
+			ImGui::InputTextMultiline("##source", obj.get_ref<string&>().c_str(), obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
+	}
+}
+*/
+
+void ImGui_TextUnformatted(json &EV)
+{
+	json& sub = val2ref(EV["$sub"]);
+	json& obj = val2ref(EV["$obj"]);
+
+	if (!sub.is_object()) sub = json::object();
+	if (!sub.count("visible")) sub["visible"] = true;
+	bool&	visible = sub["visible"].get_ref<bool&>();
+
+	if (visible)
+	{
+		if (obj.is_string())
+			ImGui::TextUnformatted(obj.get_ref<string&>().c_str());
+		else
+			ImGui::TextUnformatted(obj.dump().c_str());
+	}
+}
+
 
 void button(json &EV)
 {
-//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
 	json& sub = val2ref(EV["$sub"]);
 	json& obj = val2ref(EV["$obj"]);
 
@@ -261,5 +301,6 @@ __declspec(dllexport) void ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent["imgui"], "viewport"s, viewport, "");
 	Addx86Entity(Ent["imgui"], "form"s, form, "");
 	Addx86Entity(Ent["imgui"], "text"s, text, "");
+	Addx86Entity(Ent["imgui"], "TextUnformatted"s, ImGui_TextUnformatted, "");
 	Addx86Entity(Ent["imgui"], "button"s, button, "");
 }

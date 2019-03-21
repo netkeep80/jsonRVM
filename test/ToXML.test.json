@@ -74,6 +74,7 @@
    ],
    "$rel" : "#/xml",
    "$sub" : {
-      "<>" : "request"
+      "<>" : "request",
+      "class" : "foo"
    }
 }

@@ -11,58 +11,153 @@
          }
       },
       {
-         "$obj" : [ "#/CalcControl" ],
+         "$obj" : [ "#/Calc", "#/DebugCalc" ],
          "$rel" : "#/imgui/viewport",
          "$sub" : {
             "title" : "imgui.rm.dll main_frame"
          }
       }
    ],
-   "CalcControl" : {
-      "button" : {
-         "close" : {
-            "$obj" : {
-               "../$sub/visible" : {
-                  "/" : false
-               }
-            },
-            "$rel" : "#/imgui/button",
-            "$sub" : {
-               "text" : "Close",
-               "//width" : "200",
-               "//height" : "100"
-            }
-         }
-      },
-      "$obj" : [
-         {
-            "$obj" : "#/additional_rm_loaded/imgui.rm.dll",
-            "$rel" : "#/imgui/text",
-            "$sub" : {
-               "visible" : true
-            }
-         },
-         "#/button/close"
-      ],
+   "Calc" : {
+      "$obj" : [ "./ReadOut", "./btnClear", "./btnClearEntry", "./btnSeven" ],
       "$rel" : "#/imgui/form",
       "$sub" : {
          "visible" : true,
          "title" : "Calculator"
-      }
-   },
-   "button" : {
-      "close" : {
-         "$obj" : {
-            "../$sub/visible" : {
-               "/" : false
+      },
+      "ReadOut" : {
+         "$obj" : "./ReadOut/value",
+         "$rel" : "#/imgui/text",
+         "$sub" : {
+            "visible" : true
+         },
+         "value" : "0"
+      },
+      "Accum" : 0.0,
+      "FlagNewNum" : false,
+      "PendingOp" : "",
+      "Clear" : [
+         {
+            "#/Calc/Accum" : {
+               "/" : 0.0
+            },
+            "#/Calc/PendingOp" : {
+               "/" : ""
             }
+         },
+         "#/Calc/ClearEntry"
+      ],
+      "btnClear" : {
+         "$obj" : "#/Calc/Clear",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "C",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "ClearEntry" : [
+         {
+            "#/Calc/ReadOut/value" : {
+               "/" : "0"
+            },
+            "#/Calc/FlagNewNum" : {
+               "/" : true
+            }
+         }
+      ],
+      "btnClearEntry" : {
+         "$obj" : "#/Calc/ClearEntry",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "CE",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "NumPressed" : [
+         {
+            "$obj" : "#/Calc/FlagNewNum",
+            "$rel" : "#/then",
+            "$sub" : {
+               "#/Calc/ReadOut/value" : {
+                  "$obj" : "$obj",
+                  "$rel" : "#/string/="
+               },
+               "#/Calc/FlagNewNum" : {
+                  "/" : false
+               }
+            }
+         },
+         {
+            "$obj" : "#/Calc/FlagNewNum",
+            "$rel" : "#/else",
+            "$sub" : [
+               {
+                  "$obj" : "#/Calc/ReadOut/value",
+                  "$rel" : {
+                     "/is_value_zero" : "#/=="
+                  },
+                  "$sub" : "#/Calc/zero_str"
+               },
+               {
+                  "$obj" : "/is_value_zero",
+                  "$rel" : "#/then",
+                  "$sub" : {
+                     "#/Calc/ReadOut/value" : {
+                        "$obj" : "$obj",
+                        "$rel" : "#/string/="
+                     }
+                  }
+               },
+               {
+                  "$obj" : "/is_value_zero",
+                  "$rel" : "#/else",
+                  "$sub" : {
+                     "#/Calc/ReadOut/value" : {
+                        "$obj" : "$obj",
+                        "$rel" : "#/string/+="
+                     }
+                  }
+               }
+            ]
+         }
+      ],
+      "btnSeven" : {
+         "$obj" : {
+            "$obj" : "./$sub/text",
+            "$rel" : "#/Calc/NumPressed"
          },
          "$rel" : "#/imgui/button",
          "$sub" : {
-            "text" : "Close",
-            "width" : "200",
-            "height" : "100"
+            "text" : "7",
+            "width" : "50",
+            "height" : "40"
          }
+      },
+      "zero_str" : "0"
+   },
+   "DebugCalc" : {
+      "$obj" : [
+         {
+            "/data" : {
+               "$obj" : "#/Calc",
+               "$rel" : "#/json/dump"
+            }
+         },
+         {
+            "$obj" : "/data",
+            "$rel" : "#/imgui/TextUnformatted",
+            "$sub" : {
+               "visible" : true
+            }
+         },
+         "#/json/object"
+      ],
+      "$rel" : "#/imgui/form",
+      "$sub" : {
+         "visible" : true,
+         "title" : "Calc Debug"
       }
    }
 }
