@@ -363,12 +363,9 @@ std::string json2xml(const json &Value)
 	}
 }
 
-void jsonToXML(json &EV)
+void jsonToXML(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	sub = json2xml(obj);
+	ec.sub = json2xml(ec.obj);
 }
 
 
@@ -396,23 +393,23 @@ struct application_xml
 /*
 void	HTTP_METHOD_json(json &EV, const method &mtd)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = jref(EV["$sub"]);
-	ViewEntity(jref(EV["ctx"]), jref(EV["$obj"]), Value);
+	json &ec.val = val2ref(EV[""]);	//	текущее значение json проекции
+	json& ec.sub = jref(EV["$sub"]);
+	ViewEntity(jref(EV["ctx"]), jref(EV["$obj"]), ec.val);
 
-	if (Value.is_object())
+	if (ec.val.is_object())
 	{
 		try
 		{
-			if (!sub.count("URL")) sub["URL"] = "s";
-			if (!sub.count("method")) sub["method"] = ""s;
-			if (!sub.count("UserName")) sub["UserName"] = ""s;
-			if (!sub.count("Password")) sub["Password"] = ""s;
+			if (!ec.sub.count("URL")) ec.sub["URL"] = "s";
+			if (!ec.sub.count("method")) ec.sub["method"] = ""s;
+			if (!ec.sub.count("UserName")) ec.sub["UserName"] = ""s;
+			if (!ec.sub.count("Password")) ec.sub["Password"] = ""s;
 
-			WebAPIURI = utf8_to_wstring(sub["URL"].get<string>());
+			WebAPIURI = utf8_to_wstring(ec.sub["URL"].get<string>());
 
-			if (sub[L"UserName"].as_string() != L"")
-				WebAPIconfig.set_credentials(credentials(sub[L"UserName"].as_string(), sub[L"Password"].as_string()));
+			if (ec.sub[L"UserName"].as_string() != L"")
+				WebAPIconfig.set_credentials(credentials(ec.sub[L"UserName"].as_string(), ec.sub[L"Password"].as_string()));
 
 			if (WebAPIUseBearer) // Bearer
 			{
@@ -423,42 +420,42 @@ void	HTTP_METHOD_json(json &EV, const method &mtd)
 				http_client	client(WebAPIURI);
 				http_request requestObj(methods::POST);
 				requestObj.headers().add(L"Authorization", L"Bearer " + WebAPIAccessToken);
-				requestObj.set_request_uri(sub[L"method"].as_string());
-				if (!obj.is_null()) requestObj.set_body(obj.serialize(), U("application/json"));
+				requestObj.set_request_uri(ec.sub[L"method"].as_string());
+				if (!ec.obj.is_null()) requestObj.set_body(ec.obj.serialize(), U("application/json"));
 				WebAPI_last_task = client.request(requestObj);
 			}
 			else
 			{
 				http_client client(WebAPIURI, WebAPIconfig);
-				if (!obj.is_null())
-					WebAPI_last_task = client.request(mtd, sub[L"method"].as_string(), obj.serialize(), U("application/json"));
+				if (!ec.obj.is_null())
+					WebAPI_last_task = client.request(mtd, ec.sub[L"method"].as_string(), ec.obj.serialize(), U("application/json"));
 				else
-					WebAPI_last_task = client.request(mtd, sub[L"method"].as_string());
+					WebAPI_last_task = client.request(mtd, ec.sub[L"method"].as_string());
 			}
 
-			Value = value::object();
-			Value[L"status_code"] = value(IsAsyncRequestDone());
+			ec.val = value::object();
+			ec.val[L"status_code"] = value(IsAsyncRequestDone());
 
 			if (WebAPIStringAnswer.length())
-				Value[L"result"] = value::parse(WebAPIStringAnswer);
+				ec.val[L"result"] = value::parse(WebAPIStringAnswer);
 			else
-				Value[L"result"] = value();
+				ec.val[L"result"] = value();
 		}
 		catch (const exception& e)
 		{
-			Value = value::object();
-			Value[L"exception"] = value(utf8_to_wstring(e.what()));
+			ec.val = value::object();
+			ec.val[L"exception"] = value(utf8_to_wstring(e.what()));
 		}
 		catch (...)
 		{
-			Value = value::object();
-			Value[L"exception"] = value(L"...");
+			ec.val = value::object();
+			ec.val[L"exception"] = value(L"...");
 		}
 	}
 	else
 	{
-		Value = value::object();
-		Value[L"error"] = value(L"$sub must be object");
+		ec.val = value::object();
+		ec.val[L"error"] = value(L"$sub must be object");
 	}
 }
 */
@@ -475,21 +472,17 @@ authority   = [ userinfo "@" ] host [ ":" port ]
 userinfo    = *( unreserved / pct-encoded / sub-delims / ":" )
 */
 template<typename _convert>
-void  HTTP_METHOD(json &EV, const method &mtd)
+void  HTTP_METHOD(EntContext& ec, const method &mtd)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& obj = val2ref(EV["$obj"]);
-	json& sub = val2ref(EV["$sub"]);
-	
-	if (!obj.is_object())
+	if (!ec.obj.is_object())
 		throw(__FUNCTION__ + ": $sub must be object"s);
 
 	try
 	{
 		uri base_uri;
 		http_client_config	client_config;
-		if (!obj.count("URI")) obj["URI"] = ""s;
-		json& uri = obj["URI"];
+		if (!ec.obj.count("URI")) ec.obj["URI"] = ""s;
+		json& uri = ec.obj["URI"];
 
 		if (uri.is_string()) base_uri = utf8_to_wstring(uri);
 		else if (uri.is_object())
@@ -504,39 +497,39 @@ void  HTTP_METHOD(json &EV, const method &mtd)
 			base_uri = components;
 		}
 
-		if (obj.count("timeout"))
-			client_config.set_timeout(std::chrono::microseconds(obj["timeout"].get<json::number_unsigned_t>()));
+		if (ec.obj.count("timeout"))
+			client_config.set_timeout(std::chrono::microseconds(ec.obj["timeout"].get<json::number_unsigned_t>()));
 
-		if (obj.count("username") && obj.count("password"))
-			client_config.set_credentials(credentials(utf8_to_wstring(obj["username"]), utf8_to_wstring(obj["password"])));
+		if (ec.obj.count("username") && ec.obj.count("password"))
+			client_config.set_credentials(credentials(utf8_to_wstring(ec.obj["username"]), utf8_to_wstring(ec.obj["password"])));
 
 		http_client client(base_uri, client_config);
 		http_request requestObj(mtd);
 
-		if (obj.count("header"))
-			if (obj["header"].is_object())
-				for (auto& it : obj["header"].items())
+		if (ec.obj.count("header"))
+			if (ec.obj["header"].is_object())
+				for (auto& it : ec.obj["header"].items())
 					requestObj.headers().add(utf8_to_wstring(it.key()), utf8_to_wstring(it.value().is_string() ? it.value().get<string>() : it.value().dump()));
 
-		if (obj.count("body"))
+		if (ec.obj.count("body"))
 		{
 			wstring	body;
-			_convert::from_json(obj["body"], body);
+			_convert::from_json(ec.obj["body"], body);
 			requestObj.set_body(body, _convert::content_type());
 		}
 
 		WebAPI_last_task = client.request(requestObj);
-		Value = IsAsyncRequestDone();
-		sub = json::object();
-		sub["header"] = json::object();
-		sub["body"] = json();
+		ec.val = IsAsyncRequestDone();
+		ec.sub = json::object();
+		ec.sub["header"] = json::object();
+		ec.sub["body"] = json();
 
 		if (!WebAPIResponceHeaders.empty())
 			for (auto& it : WebAPIResponceHeaders)
-				sub["header"][wstring_to_utf8(it.first)] = wstring_to_utf8(it.second);
+				ec.sub["header"][wstring_to_utf8(it.first)] = wstring_to_utf8(it.second);
 
 		if (WebAPIStringAnswer.length())
-			_convert::to_json(sub["body"], WebAPIStringAnswer);
+			_convert::to_json(ec.sub["body"], WebAPIStringAnswer);
 	}
 	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
 	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -546,42 +539,42 @@ void  HTTP_METHOD(json &EV, const method &mtd)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void  HTTP_GET_json(json &EV)    { HTTP_METHOD<application_json>(EV, methods::GET); }
-void  HTTP_POST_json(json &EV)   { HTTP_METHOD<application_json>(EV, methods::POST); }
-void  HTTP_PUT_json(json &EV)    { HTTP_METHOD<application_json>(EV, methods::PUT); }
-void  HTTP_DELETE_json(json &EV) { HTTP_METHOD<application_json>(EV, methods::DEL); }
-void  HTTP_GET_xml(json &EV)     { HTTP_METHOD<application_xml>(EV, methods::GET); }
-void  HTTP_POST_xml(json &EV)    { HTTP_METHOD<application_xml>(EV, methods::POST); }
-void  HTTP_PUT_xml(json &EV)     { HTTP_METHOD<application_xml>(EV, methods::PUT); }
-void  HTTP_DELETE_xml(json &EV)  { HTTP_METHOD<application_xml>(EV, methods::DEL); }
+void  HTTP_GET_json(EntContext& ec)    { HTTP_METHOD<application_json>(ec, methods::GET); }
+void  HTTP_POST_json(EntContext& ec)   { HTTP_METHOD<application_json>(ec, methods::POST); }
+void  HTTP_PUT_json(EntContext& ec)    { HTTP_METHOD<application_json>(ec, methods::PUT); }
+void  HTTP_DELETE_json(EntContext& ec) { HTTP_METHOD<application_json>(ec, methods::DEL); }
+void  HTTP_GET_xml(EntContext& ec)     { HTTP_METHOD<application_xml>(ec, methods::GET); }
+void  HTTP_POST_xml(EntContext& ec)    { HTTP_METHOD<application_xml>(ec, methods::POST); }
+void  HTTP_PUT_xml(EntContext& ec)     { HTTP_METHOD<application_xml>(ec, methods::PUT); }
+void  HTTP_DELETE_xml(EntContext& ec)  { HTTP_METHOD<application_xml>(ec, methods::DEL); }
 
 /*
-void json2html(json &EV)
+void json2html(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	json &ec.val = val2ref(EV[""]);	//	текущее значение json проекции
+	json& ec.sub = val2ref(EV["$sub"]);
+	json& ec.obj = val2ref(EV["$obj"]);
 	string	result = "";
 	
-	if (Value.is_object())
+	if (ec.val.is_object())
 	{
-		if (!Value.count("URI")) Value["URI"] = ""s;
+		if (!ec.val.count("URI")) ec.val["URI"] = ""s;
 		
 		for (auto& it : Ent.items())
 		{
 			json	key = it.key();
 			CSPush(key.get<string>());	//	debug
 										//	проецируем в текущем контексте
-			json&	subRef = ReferEntity(EV, key, Value);
-			json&	objRef = ReferEntity(EV, it.value(), Value);
+			json&	subRef = ReferEntity(EV, key, ec.val);
+			json&	objRef = ReferEntity(EV, it.value(), ec.val);
 			ViewEntity(EV, objRef, subRef);
 		}
 
-		sub = result;
+		ec.sub = result;
 	}
 	else
 	{
-		sub = result;
+		ec.sub = result;
 		throw(__FUNCTION__ + ": $sub must be object"s);
 	}
 }

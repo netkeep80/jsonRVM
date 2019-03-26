@@ -77,17 +77,13 @@ static void glfw_error_callback(int error, const char* description)
 
 extern double g_Time;
 
-void viewport(json &EV)
+void viewport(EntContext& ec)
 {
-//	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	if (!ec.sub.count("title")) ec.sub["title"] = ""s;
 
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	if (!sub.count("title")) sub["title"] = ""s;
-
-	bool&	visible = sub["visible"].get_ref<bool&>();
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
 	g_Time = 0.0f;
     // Setup window
@@ -100,7 +96,7 @@ void viewport(json &EV)
 #if __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    GLFWwindow* window = glfwCreateWindow(800, 600, sub["title"].get_ref<string&>().c_str(), NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, ec.sub["title"].get_ref<string&>().c_str(), NULL, NULL);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
     gl3wInit();
@@ -166,7 +162,7 @@ void viewport(json &EV)
         }
 
         // 2. Show another window
-		JSONExec(EV, obj);
+		JSONExec(ec, ec.obj);
 
         // 3. Show the ImGui demo window. Most of the sample code is in ImGui::ShowDemoWindow(). Read its code to learn more about Dear ImGui!
         if (show_demo_window)
@@ -193,104 +189,89 @@ void viewport(json &EV)
 }
 
 
-void form(json &EV)
+void form(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	if (!ec.sub.count("title")) ec.sub["title"] = ""s;
 
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	if (!sub.count("title")) sub["title"] = ""s;
-
-	bool&	visible = sub["visible"].get_ref<bool&>();
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		ImGui::Begin(sub["title"].get_ref<string&>().c_str(), &visible);
-		JSONExec(EV, obj);
+		ImGui::Begin(ec.sub["title"].get_ref<string&>().c_str(), &visible);
+		JSONExec(ec, ec.obj);
 		ImGui::End();
 	}
 }
 
 
-void text(json &EV)
+void text(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	bool&	visible = sub["visible"].get_ref<bool&>();
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		if (obj.is_string())
-			ImGui::Text(obj.get_ref<string&>().c_str());
+		if (ec.obj.is_string())
+			ImGui::Text(ec.obj.get_ref<string&>().c_str());
 		else
-			ImGui::Text(obj.dump().c_str());
+			ImGui::Text(ec.obj.dump().c_str());
 	}
 }
 
 /*
-void ImGui_InputTextMultiline(json &EV)
+void ImGui_InputTextMultiline(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	if (!ec.sub.count("label")) ec.sub["label"] = ""s;
 
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	if (!sub.count("label")) sub["label"] = ""s;
-
-	bool&	visible = sub["visible"].get_ref<bool&>();
-	string&	visible = sub["label"].get_ref<string&>();
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
+	string&	visible = ec.sub["label"].get_ref<string&>();
 
 	if (visible)
 	{
-		if (obj.is_string())
-			//ImGui::Text(obj.get_ref<string&>().c_str());
-			ImGui::InputTextMultiline("##source", obj.get_ref<string&>().c_str(), obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
+		if (ec.obj.is_string())
+			//ImGui::Text(ec.obj.get_ref<string&>().c_str());
+			ImGui::InputTextMultiline("##source", ec.obj.get_ref<string&>().c_str(), ec.obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
 		else
-			//ImGui::Text(obj.dump().c_str());
-			ImGui::InputTextMultiline("##source", obj.get_ref<string&>().c_str(), obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
+			//ImGui::Text(ec.obj.dump().c_str());
+			ImGui::InputTextMultiline("##source", ec.obj.get_ref<string&>().c_str(), ec.obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
 	}
 }
 */
 
-void ImGui_TextUnformatted(json &EV)
+void ImGui_TextUnformatted(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	bool&	visible = sub["visible"].get_ref<bool&>();
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		if (obj.is_string())
-			ImGui::TextUnformatted(obj.get_ref<string&>().c_str());
+		if (ec.obj.is_string())
+			ImGui::TextUnformatted(ec.obj.get_ref<string&>().c_str());
 		else
-			ImGui::TextUnformatted(obj.dump().c_str());
+			ImGui::TextUnformatted(ec.obj.dump().c_str());
 	}
 }
 
 
-void button(json &EV)
+void button(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	if (!ec.sub.count("text")) ec.sub["text"] = ""s;
 
-	if (!sub.is_object()) sub = json::object();
-	if (!sub.count("visible")) sub["visible"] = true;
-	if (!sub.count("text")) sub["text"] = ""s;
-
-	bool&	visible = sub["visible"].get_ref<bool&>();
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
 	if (visible)
 	{
-		ImVec2	size = { get_float(sub, "width"s), get_float(sub, "height"s) };
-		if (ImGui::Button(sub["text"].get_ref<string&>().c_str(), size))
-			JSONExec(EV, obj);	//	исполняем в текущем контексте
+		ImVec2	size = { get_float(ec.sub, "width"s), get_float(ec.sub, "height"s) };
+		if (ImGui::Button(ec.sub["text"].get_ref<string&>().c_str(), size))
+			JSONExec(ec, ec.obj);	//	исполняем в текущем контексте
 	}
 }
 

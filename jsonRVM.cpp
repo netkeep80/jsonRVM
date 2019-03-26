@@ -124,54 +124,49 @@ public:
 
 bool	LoadAndInitDict(const string& LibName, json &Ent)
 {
-	bool	Value = LoadedDLLs.LoadDict(LibName);
-	if (Value) LoadedDLLs[LibName].Init(Ent);
-	return Value;
+	bool	val = LoadedDLLs.LoadDict(LibName);
+	if (val) LoadedDLLs[LibName].Init(Ent);
+	return val;
 }
 
 //////////////////////////	base dictionary  ///////////////////////////////////
 
-void  jsonLoadDLL(json &EV)
+void  jsonLoadDLL(EntContext& ec)
 {
-	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);//	определяем сущность для размещения словаря
-	json& obj = val2ref(EV["$obj"]);//	вычисляем имя бибилиотеки
-
-	if (obj.is_object())
+	if (ec.obj.is_object())
 	{
-		if (obj.count("PathFolder") && obj.count("FileName"))
+		if (ec.obj.count("PathFolder") && ec.obj.count("FileName"))
 		{
-			string	FullFileName = obj["PathFolder"].get<string>() + obj["FileName"].get<string>();
-			if (!sub.is_object()) sub = json::object();
-			Value = LoadAndInitDict(FullFileName, sub);
+			string	FullFileName = ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>();
+			if (!ec.sub.is_object()) ec.sub = json::object();
+			ec.val = LoadAndInitDict(FullFileName, ec.sub);
 			return;
 		}
 	}
 
-	Value = false;
-	throw(__FUNCTION__ + ": $obj must be json object with PathFolder, FileName properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+	ec.val = false;
+	throw(__FUNCTION__ + ": $obj must be json object with PathFolder, FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
 
-void  sleep_ms(json &EV)
+void  sleep_ms(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	Sleep(obj.get<json::number_unsigned_t>());
+	Sleep(ec.obj.get<json::number_unsigned_t>());
 }
 
-void  jsonCopy(json &EV)
+void  jsonCopy(EntContext& ec)
 {	//	полное копированиее json значения объекта в субъект
-	val2ref(EV["$sub"]) = val2ref(EV["$obj"]);
+	ec.sub = ec.obj;
 }
 
-void  jsonView(json &EV)
+void  jsonView(EntContext& ec)
 {	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 	//	проецируем во внешнем контексте
-	json	clone = val2ref(EV[".."]);
-	clone[""] = EV["$sub"];
-	JSONExec(clone, val2ref(EV["$obj"]));
+	json& pval = ec.sub;
+	json& pobj = ec.ctx.obj;
+	json& psub = ec.ctx.sub;
+	json& pent = ec.ctx.ent;
+	JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx, ec.root), ec.obj);
 }
 
 template<typename _T> struct _add
@@ -220,14 +215,14 @@ json diff_operation(const json& a, const json& b)
 template<typename _OP>
 json object_operation(const json& a, const json& b)
 {
-	json obj;
+	json ec.obj;
 
 	for (auto it = a.begin(); it != a.end(); it++)
 	{
 		const string& key = it.key();
-		if (b.count(key)) obj[key] = _OP(it.value(), b[key]);
+		if (b.count(key)) ec.obj[key] = _OP(it.value(), b[key]);
 	}
-	return obj;
+	return ec.obj;
 }
 
 template<typename _OP>
@@ -370,12 +365,9 @@ json operator ^ (const json& a, const json& b)
 	else return json::array({ a, b });
 }
 
-void  jsonXOR(json &EV)
+void  jsonXOR(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	Value = sub ^ obj;
+	ec.val = ec.sub ^ ec.obj;
 }
 
 ////////////////////////////////////////////////////////
@@ -403,7 +395,7 @@ typedef json::number_unsigned_t	ju;
 
 #define OPP_STO(operation,stype,stype_id,otype,otype_id)										\
 	case (uint8_t(json::value_t::stype_id) << sub_field) | uint8_t(json::value_t::otype_id):	\
-	{ Value = (sub.get_ref<stype&>()) operation (obj.get_ref<otype&>()); return; }
+	{ ec.val = (ec.sub.get_ref<stype&>()) operation (ec.obj.get_ref<otype&>()); return; }
 
 #define OPP_ANYTO(operation,type,type_id)														\
 	OPP_STO(operation, jf, number_float,    type, type_id)										\
@@ -416,96 +408,75 @@ typedef json::number_unsigned_t	ju;
 	OPP_ANYTO(operation, ju, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-void  json##name (json &EV)																		\
+void  json##name (EntContext& ec)			\
 {																								\
-	json &Value = val2ref(EV[""]);																\
-	json& sub = val2ref(EV["$sub"]);					\
-	json& obj = val2ref(EV["$obj"]);					\
-	switch( (uint8_t(sub.type()) << sub_field) | uint8_t(obj.type()) )					\
-	{ VM_OPP( operation ) default: Value = json(); }		\
+	switch( (uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()) )							\
+	{ VM_OPP( operation ) default: ec.val = json(); }												\
 }
 
 OP_BODY(Add, +);
 OP_BODY(Substract, -);
 OP_BODY(Mul, *);
 
-void  jsonDiv(json &EV)
+void  jsonDiv(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	if (obj.is_number())
-		if (obj.get<double>() == 0.0)
+	if (ec.obj.is_number())
+		if (ec.obj.get<double>() == 0.0)
 		{
-			Value = json();
+			ec.val = json();
 			return;
 		}
-	switch( (uint8_t(sub.type()) << sub_field) | uint8_t(obj.type()) )
-	{ VM_OPP(/) default: Value = json(); }
+	switch( (uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()) )
+	{ VM_OPP(/) default: ec.val = json(); }
 }
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-void  jsonPower(json &EV)
+void  jsonPower(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (sub.is_number() && obj.is_number())
+	if (ec.sub.is_number() && ec.obj.is_number())
 	{
-		json::number_float_t db = obj.is_number_float() ? obj.get<json::number_float_t>() : json::number_float_t(obj.get<json::number_integer_t>());
+		json::number_float_t db = ec.obj.is_number_float() ? ec.obj.get<json::number_float_t>() : json::number_float_t(ec.obj.get<json::number_integer_t>());
 
-		if (!sub.is_number_float())
+		if (!ec.sub.is_number_float())
 		{	//	result must be integer
-			json::number_float_t da = json::number_float_t(sub.get<json::number_integer_t>());
-			Value = json::number_integer_t(pow(da, db) + .5);
+			json::number_float_t da = json::number_float_t(ec.sub.get<json::number_integer_t>());
+			ec.val = json::number_integer_t(pow(da, db) + .5);
 		}
 		else
 		{	//	result must be double
-			json::number_float_t da = sub.get<json::number_float_t>();
-			Value = json::number_float_t(pow(da, db));
+			json::number_float_t da = ec.sub.get<json::number_float_t>();
+			ec.val = json::number_float_t(pow(da, db));
 		}
 	}
 	else
-		Value = json();
+		ec.val = json();
 }
 
-void  jsonSqrt(json &EV)
+void  jsonSqrt(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (obj.is_number())
-		sub = json::number_float_t(sqrt(obj.get<json::number_float_t>()));
+	if (ec.obj.is_number())
+		ec.sub = json::number_float_t(sqrt(ec.obj.get<json::number_float_t>()));
 	else
-		sub = json();
+		ec.sub = json();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-void  jsonForEachObject(json &EV)
+void  jsonForEachObject(EntContext& ec)
 {	/*
 		Множественный JSONExec для проекции объекта типа array
 	*/
-	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& obj = val2ref(EV["$obj"]);
-	json& sub = val2ref(EV["$sub"]);
-
-	if (obj.is_array())
+	if (ec.obj.is_array())
 	{
-		if (!Value.is_array()) Value = json::array();
-
-		for (size_t i = 0; i < obj.size(); i++)
+		if (!ec.val.is_array()) ec.val = json::array();
+		size_t i = 0;
+		for (auto& it: ec.obj)
 		{
 			try {
-				json& it = obj[i];
-				json& val = Value[i];
-				json  clone = EV;
-				clone["$obj"] = ref2id(it);
-				clone[""] = clone["$sub"] = ref2id(val);
-				JSONExec(clone, sub);
+				json& value = ec.val[i];
+				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.sub); i++;
 			}
 			catch (string& error) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
 			catch (json::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -514,31 +485,22 @@ void  jsonForEachObject(json &EV)
 		}
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonForEachSubject(json &EV)
-{
-	/*
+void  jsonForEachSubject(EntContext& ec)
+{	/*
 		Множественный JSONExec для субъекта типа array
 	*/
-	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& obj = val2ref(EV["$obj"]);
-	json& sub = val2ref(EV["$sub"]);
-
-	if (sub.is_array())
+	if (ec.sub.is_array())
 	{
-		if (!Value.is_array()) Value = json::array();
-
-		for (size_t i = 0; i < sub.size(); i++)
+		if (!ec.val.is_array()) ec.val = json::array();
+		size_t i = 0;
+		for (auto& it : ec.sub)
 		{
 			try {
-				json& it = sub[i];
-				json& val = Value[i];
-				json  clone = EV;
-				clone["$sub"] = ref2id(it);
-				clone[""] = clone["$obj"] = ref2id(val);
-				JSONExec(clone, obj);
+				json& value = ec.val[i];
+				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.obj); i++;
 			}
 			catch (string& error) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
 			catch (json::exception& e) { throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -547,29 +509,23 @@ void  jsonForEachSubject(json &EV)
 		}
 	}
 	else
-		throw(__FUNCTION__ + ": $sub must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonSize(json &EV)
+void  jsonSize(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	sub = obj.size();
+	ec.sub = ec.obj.size();
 }
 
-#define define_json_is_type(json_type)		\
-void  json_is_##json_type(json &EV)			\
-{											\
-	json& sub = val2ref(EV["$sub"]);		\
-	json& obj = val2ref(EV["$obj"]);		\
-	sub = obj.is_##json_type();		\
+#define define_json_is_type(json_type)															\
+void  json_is_##json_type(EntContext& ec)	\
+{																								\
+	ec.sub = ec.obj.is_##json_type();																	\
 }
 
-void  json_is_not_null(json &EV)
+void  json_is_not_null(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	sub = !obj.is_null();
+	ec.sub = !ec.obj.is_null();
 }
 
 define_json_is_type(array)
@@ -584,234 +540,208 @@ define_json_is_type(string)
 define_json_is_type(structured)
 define_json_is_type(discarded)
 
-void  jsonIntegerSequence(json &EV)
+void  jsonIntegerSequence(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (obj.is_object())
+	if (ec.obj.is_object())
 	{
-		json::number_integer_t	from = obj["from"];
-		json::number_integer_t	to = obj["to"];
-		json::number_integer_t	step = obj.count("step") ? obj["step"] : 1;
-		sub = json::array();
+		json::number_integer_t	from = ec.obj["from"];
+		json::number_integer_t	to = ec.obj["to"];
+		json::number_integer_t	step = ec.obj.count("step") ? ec.obj["step"] : 1;
+		ec.sub = json::array();
 
 		for (json::number_integer_t i = from; i <= to; i += step)
-			sub.push_back(i);
+			ec.sub.push_back(i);
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must has 'from', 'to' and 'step' properties!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj must has 'from', 'to' and 'step' properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonUnion(json &EV)
+void  jsonUnion(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (!sub.is_array())
+	if (!ec.sub.is_array())
 	{
-		json	tmp = sub;
-		sub = json::array();
+		json	tmp = ec.sub;
+		ec.sub = json::array();
 		if (!tmp.is_null())
-			sub[0] = tmp;
+			ec.sub[0] = tmp;
 	}
 
-	if (!obj.is_array())
+	if (!ec.obj.is_array())
 	{
-		if (!obj.is_null())
-			sub.push_back(obj);
+		if (!ec.obj.is_null())
+			ec.sub.push_back(ec.obj);
 	}
 	else
-		for (auto& it : obj)
-			sub.push_back(it);
+		for (auto& it : ec.obj)
+			ec.sub.push_back(it);
 
-	Value = sub;
+	ec.val = ec.sub;
 }
 
-void  jsonNull(json &EV) {}
+void  jsonNull(EntContext& ec) {}
 
-void  jsonInt32(json &EV)
+void  jsonInt32(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	switch (obj.type())
+	switch (ec.obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		sub = obj.size();
+		ec.sub = ec.obj.size();
 		break;
 
 	case json::value_t::string:
-		sub = atoi(obj.get<string>().c_str());
+		ec.sub = atoi(ec.obj.get<string>().c_str());
 		break;
 
 	case json::value_t::boolean:
-		if (obj.get<bool>())
-			sub = int(1);
+		if (ec.obj.get<bool>())
+			ec.sub = int(1);
 		else
-			sub = int(0);
+			ec.sub = int(0);
 		break;
 
 	case json::value_t::number_float:
 	case json::value_t::number_integer:
 	case json::value_t::number_unsigned:
-		sub = obj.get<int>();
+		ec.sub = ec.obj.get<int>();
 		break;
 
 	default:
-		sub = int(0);
+		ec.sub = int(0);
 	}
 
-	Value = sub;
+	ec.val = ec.sub;
 }
 
-void  jsonDouble(json &EV)
+void  jsonDouble(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	switch (obj.type())
+	switch (ec.obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		sub = json::number_float_t(obj.size());
+		ec.sub = json::number_float_t(ec.obj.size());
 		break;
 
 	case json::value_t::string:
-		sub = json::number_float_t(std::stod(obj.get_ref<string&>()));
+		ec.sub = json::number_float_t(std::stod(ec.obj.get_ref<string&>()));
 		break;
 
 	case json::value_t::boolean:
-		if (obj.get<bool>())
-			sub = json::number_float_t(1.0);
+		if (ec.obj.get<bool>())
+			ec.sub = json::number_float_t(1.0);
 		else
-			sub = json::number_float_t(0.0);
+			ec.sub = json::number_float_t(0.0);
 		break;
 
 	case json::value_t::number_float:
-		sub = obj;
+		ec.sub = ec.obj;
 		break;
 
 	case json::value_t::number_integer:
-		sub = json::number_float_t(obj.get<json::number_integer_t>());
+		ec.sub = json::number_float_t(ec.obj.get<json::number_integer_t>());
 		break;
 
 	case json::value_t::number_unsigned:
-		sub = json::number_float_t(obj.get<json::number_unsigned_t>());
+		ec.sub = json::number_float_t(ec.obj.get<json::number_unsigned_t>());
 		break;
 
 	default:
-		sub = json::number_float_t(0);
+		ec.sub = json::number_float_t(0);
 	}
 }
 
 
-void  string_string(json &EV)
+void  string_string(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	sub = ""s;
-	string&	result = sub.get_ref<string&>();
+	ec.sub = ""s;
+	string&	result = ec.sub.get_ref<string&>();
 
-	switch (obj.type())
+	switch (ec.obj.type())
 	{
 	case json::value_t::number_float:
-		result = to_string(obj.get<json::number_float_t>());
+		result = to_string(ec.obj.get<json::number_float_t>());
 		break;
 
 	case json::value_t::number_integer:
-		result = to_string(obj.get<json::number_integer_t>());
+		result = to_string(ec.obj.get<json::number_integer_t>());
 		break;
 
 	case json::value_t::number_unsigned:
-		result = to_string(obj.get<json::number_unsigned_t>());
+		result = to_string(ec.obj.get<json::number_unsigned_t>());
 		break;
 
 	case json::value_t::string:
-		result = obj.get_ref<string&>();
+		result = ec.obj.get_ref<string&>();
 		break;
 
 	default:
-		result = obj.dump();
+		result = ec.obj.dump();
 		break;
 	}
 }
 
 
-void  string_add(json &EV)
+void  string_add(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
+	if(!ec.sub.is_string())	ec.sub = ""s;
+	string&	result = ec.sub.get_ref<string&>();
 
-	if(!sub.is_string())	sub = ""s;
-	string&	result = sub.get_ref<string&>();
-
-	switch (obj.type())
+	switch (ec.obj.type())
 	{
 	case json::value_t::number_float:
-		result += to_string(obj.get<json::number_float_t>());
+		result += to_string(ec.obj.get<json::number_float_t>());
 		break;
 
 	case json::value_t::number_integer:
-		result += to_string(obj.get<json::number_integer_t>());
+		result += to_string(ec.obj.get<json::number_integer_t>());
 		break;
 
 	case json::value_t::number_unsigned:
-		result += to_string(obj.get<json::number_unsigned_t>());
+		result += to_string(ec.obj.get<json::number_unsigned_t>());
 		break;
 
 	case json::value_t::string:
-		result += obj.get_ref<string&>();
+		result += ec.obj.get_ref<string&>();
 		break;
 
 	default:
-		result += obj.dump();
+		result += ec.obj.dump();
 		break;
 	}
 }
 
 
-void  string_split(json &EV)
+void  string_split(EntContext& ec)
 {
-	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (obj.is_string() && sub.is_string())
+	if (ec.obj.is_string() && ec.sub.is_string())
 	{
-		const string& delim = obj.get_ref<string&>();
-		string str = sub.get_ref<string&>();
+		const string& delim = ec.obj.get_ref<string&>();
+		string str = ec.sub.get_ref<string&>();
 		size_t prev = 0, pos = 0;
-		Value = json::array();
+		ec.val = json::array();
 
 		do
 		{
 			pos = str.find(delim, prev);
 			if (pos == string::npos) pos = str.length();
-			Value.push_back(str.substr(prev, pos - prev));
+			ec.val.push_back(str.substr(prev, pos - prev));
 			prev = pos + delim.length();
 		} while (pos < str.length() && prev < str.length());
 	}
 	else
-		throw(__FUNCTION__ + ": $obj and $sub must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj and $sub must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  string_join(json &EV)
+void  string_join(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
 	string	result = "";
 	bool	first = true;
 
-	if (obj.is_string() && sub.is_array())
+	if (ec.obj.is_string() && ec.sub.is_array())
 	{
-		string&	splitter = obj.get_ref<string&>();
+		string&	splitter = ec.obj.get_ref<string&>();
 
-		for (auto& it : sub)
+		for (auto& it : ec.sub)
 		{
 			if (first) first = false;
 			else       result += splitter;
@@ -820,7 +750,7 @@ void  string_join(json &EV)
 			{
 			case json::value_t::object:
 			case json::value_t::array:
-				throw(__FUNCTION__ + ": $sub must be array of simple type values!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+				throw(__FUNCTION__ + ": $sub must be array of simple type values!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 
 			case json::value_t::number_float:
 				result += to_string(it.get<json::number_float_t>());
@@ -847,113 +777,92 @@ void  string_join(json &EV)
 			}
 		}
 
-		Value = result;
+		ec.val = result;
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must be string and $sub must be array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj must be string and $sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonGet(json &EV)
+void  jsonGet(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (sub.is_array())
+	if (ec.sub.is_array())
 	{
-		if (obj.is_number())
-			Value = sub[obj.get<size_t>()];
+		if (ec.obj.is_number())
+			ec.val = ec.sub[ec.obj.get<size_t>()];
 		else
-			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
-	else if (sub.is_object())
+	else if (ec.sub.is_object())
 	{
-		if (obj.is_string())
-			Value = sub[obj.get_ref<string&>()];
+		if (ec.obj.is_string())
+			ec.val = ec.sub[ec.obj.get_ref<string&>()];
 		else
-			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": $sub must be array or object!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $sub must be array or object!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonSet(json &EV)
+void  jsonSet(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (sub.is_array())
+	if (ec.sub.is_array())
 	{
-		if (obj.is_number_unsigned())
-			sub[obj.get<size_t>()] = Value;
+		if (ec.obj.is_number_unsigned())
+			ec.sub[ec.obj.get<size_t>()] = ec.val;
 		else
-			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
-	else if (sub.is_object())
+	else if (ec.sub.is_object())
 	{
-		if (obj.is_string())
-			sub[obj.get_ref<string&>()] = Value;
+		if (ec.obj.is_string())
+			ec.sub[ec.obj.get_ref<string&>()] = ec.val;
 		else
-			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
-	else if (sub.is_null())
+	else if (ec.sub.is_null())
 	{
-		if (obj.is_number_unsigned())
-			sub[obj.get<size_t>()] = Value;
-		else if (obj.is_string())
-			sub[obj.get_ref<string&>()] = Value;
+		if (ec.obj.is_number_unsigned())
+			ec.sub[ec.obj.get<size_t>()] = ec.val;
+		else if (ec.obj.is_string())
+			ec.sub[ec.obj.get_ref<string&>()] = ec.val;
 		else
-			throw(__FUNCTION__ + ": $obj must be unsigned number or string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be unsigned number or string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": $sub must be array, object or null!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $sub must be array, object or null!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonErase(json &EV)
+void  jsonErase(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	
-	if (sub.is_object())
+	if (ec.sub.is_object())
 	{
-		if (obj.is_string())
-			sub.erase(obj.get_ref<string&>());
+		if (ec.obj.is_string())
+			ec.sub.erase(ec.obj.get_ref<string&>());
 		else
-			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+			throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	}
 	else
-		throw(__FUNCTION__ + ": $sub must be object!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $sub must be object!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonIsEq(json &EV)
+void  jsonIsEq(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	Value = sub == obj;
+	ec.val = ec.sub == ec.obj;
 }
 
-void  jsonIsNotEq(json &EV)
+void  jsonIsNotEq(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	Value = sub != obj;
+	ec.val = ec.sub != ec.obj;
 }
 
-void  jsonSum(json &EV)
+void  jsonSum(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
 	__int64	isum = 0;
 	double	dsum = 0.0;
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
 
-	if (obj.is_array())
+	if (ec.obj.is_array())
 	{
-		for (auto& it : obj) switch (it.type())
+		for (auto& it : ec.obj) switch (it.type())
 		{
 		case json::value_t::number_float:
 			dsum += it.get<json::number_float_t>();
@@ -971,38 +880,33 @@ void  jsonSum(json &EV)
 			break;
 		}
 
-		if (0.0 == dsum)	sub = json::number_integer_t(isum);
-		else if (0 == isum)	sub = json::number_float_t(dsum);
-		else				sub = json::number_float_t(dsum + json::number_float_t(isum));
+		if (0.0 == dsum)	ec.sub = json::number_integer_t(isum);
+		else if (0 == isum)	ec.sub = json::number_float_t(dsum);
+		else				ec.sub = json::number_float_t(dsum + json::number_float_t(isum));
 		return;
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonWhere(json &EV)
+void  jsonWhere(EntContext& ec)
 {
-	json& Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& obj = val2ref(EV["$obj"]);	//	фильтруемые данные
-	json& sub = val2ref(EV["$sub"]);	//	фильтр для where clause, при исполнении должен возвращать bool
-	Value = json::array();		//	подготовка выходного массива
+	ec.val = json::array();		//	подготовка выходного массива
 	
-	if (obj.is_null()) return;
+	if (ec.obj.is_null()) return;
 
-	if (obj.is_array())
+	if (ec.obj.is_array())
 	{
-		for (size_t i = 0; i < obj.size(); i++)
+		size_t i = 0;
+		for (json&	it : ec.obj)
 		{
 			try {
 				json	boolres;
-				json&	it = obj[i];
-				json	clone = EV;
-				clone["$obj"] = ref2id(it);
-				clone[""] = clone["$sub"] = ref2id(boolres);
-				JSONExec(clone, sub);
+				JSONExec(EntContext(boolres, it, boolres, ec.ent, ec.ctx, ec.root), ec.sub);
 				if (boolres.is_boolean())
 					if (boolres.get<bool>())
-						Value.push_back(it);	//	фильтруем
+						ec.val.push_back(it);	//	фильтруем
+				i++;
 			}
 			catch (string& error)		{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + error); }
 			catch (json::exception& e)	{ throw(__FUNCTION__ + "/["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -1011,74 +915,68 @@ void  jsonWhere(json &EV)
 		}
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		throw(__FUNCTION__ + ": $obj must be json array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  jsonBelow(json &EV)	//	<
+void  jsonBelow(EntContext& ec)	//	<
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (sub.type() == obj.type()) switch (obj.type())
+	if (ec.sub.type() == ec.obj.type()) switch (ec.obj.type())
 	{
 	case json::value_t::array:
 	case json::value_t::object:
-		Value = json(sub.size() < obj.size());
+		ec.val = json(ec.sub.size() < ec.obj.size());
 		return;
 
 	case json::value_t::string:
-		Value = json(sub.get<string>().size() < obj.get<string>().size());
+		ec.val = json(ec.sub.get<string>().size() < ec.obj.get<string>().size());
 		return;
 
 	case json::value_t::boolean:
-		Value = json(int(sub.get<bool>()) < int(obj.get<bool>()));
+		ec.val = json(int(ec.sub.get<bool>()) < int(ec.obj.get<bool>()));
 		return;
 
 	case json::value_t::number_float:
-		Value = json(sub.get<json::number_float_t>() < obj.get<json::number_float_t>());
+		ec.val = json(ec.sub.get<json::number_float_t>() < ec.obj.get<json::number_float_t>());
 		return;
 
 	case json::value_t::number_integer:
-		Value = json(sub.get<json::number_integer_t>() < obj.get<json::number_integer_t>());
+		ec.val = json(ec.sub.get<json::number_integer_t>() < ec.obj.get<json::number_integer_t>());
 		return;
 
 	case json::value_t::number_unsigned:
-		Value = json(sub.get<json::number_unsigned_t>() < obj.get<json::number_unsigned_t>());
+		ec.val = json(ec.sub.get<json::number_unsigned_t>() < ec.obj.get<json::number_unsigned_t>());
 		return;
 
 	default:
-		Value = json();
+		ec.val = json();
 		return;
 	}
 }
 
-void  jsonAnd(json &EV)
+void  jsonAnd(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (sub.is_boolean() && obj.is_boolean())
+	if (ec.sub.is_boolean() && ec.obj.is_boolean())
 	{
-		Value = sub.get<bool>() && obj.get<bool>();
+		ec.val = ec.sub.get<bool>() && ec.obj.get<bool>();
 	}
-	else throw(__FUNCTION__ + ": $obj and $sub must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+	else throw(__FUNCTION__ + ": $obj and $sub must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
-void  IfObjTrueThenExecSub(json &EV)
+void  IfObjTrueThenExecSub(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (!obj.is_boolean())
-		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+	if (!ec.obj.is_boolean())
+		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 
 	try
 	{
-		if (obj.get<bool>())
-			JSONExec(val2ref(EV[".."]), sub);
+		if (ec.obj.get<bool>())
+		{
+			json& pval = ec.ctx.val;
+			json& pobj = ec.ctx.obj;
+			json& psub = ec.ctx.sub;
+			json& pent = ec.ctx.ent;
+			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
+		}
 	}
 	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
 	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -1086,19 +984,21 @@ void  IfObjTrueThenExecSub(json &EV)
 	catch (...)					{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
-void  IfObjFalseThenExecSub(json &EV)
+void  IfObjFalseThenExecSub(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
-	if (!obj.is_boolean())
-		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+	if (!ec.obj.is_boolean())
+		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 
 	try
 	{
-		if (!obj.get<bool>())
-			JSONExec(val2ref(EV[".."]), sub);
+		if (!ec.obj.get<bool>())
+		{
+			json& pval = ec.ctx.val;
+			json& pobj = ec.ctx.obj;
+			json& psub = ec.ctx.sub;
+			json& pent = ec.ctx.ent;
+			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
+		}
 	}
 	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
 	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -1106,160 +1006,173 @@ void  IfObjFalseThenExecSub(json &EV)
 	catch (...)					{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
-void  ExecSubWhileObjTrue(json &EV)
+void  ExecSubWhileObjTrue(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-
 	while (true)
 	{
-		if (!obj.is_boolean())
-			throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + obj.dump() + "\n $sub = " + sub.dump());
+		if (!ec.obj.is_boolean())
+			throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 
-		if (obj.get<bool>())
-			JSONExec(val2ref(EV[".."]), sub);
+		if (ec.obj.get<bool>())
+		{
+			json& pval = ec.ctx.val;
+			json& pobj = ec.ctx.obj;
+			json& psub = ec.ctx.sub;
+			json& pent = ec.ctx.ent;
+			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
+		}
 		else
 			return;
 	}
 }
 
 
-#define define_object_method(object_method)	\
-void  json_call_##object_method(json &EV)	\
-{											\
-	json& sub = val2ref(EV["$sub"]);		\
-	json& obj = val2ref(EV["$obj"]);		\
-	sub = obj.##object_method();	\
+#define define_object_method(object_method)															\
+void  json_call_##object_method(EntContext& ec)	\
+{																									\
+	ec.sub = ec.obj.##object_method();																	\
 }
 
-#define define_static_method(static_method)	\
-void  json_call_##static_method(json &EV)	\
-{											\
-	json& Value = val2ref(EV[""]);		\
-	Value = json::##static_method();		\
+#define define_static_method(static_method)															\
+void  json_call_##static_method(EntContext& ec)	\
+{																									\
+	ec.val = json::##static_method();																	\
 }
 
 define_static_method(array)
 define_static_method(meta)
 define_static_method(object)
 
+void  json_call_null(EntContext& ec)
+{
+	ec.val = json();
+}
+
 #include <iostream>
 
-void  jsonPrint(json &EV)
+void  jsonPrint(EntContext& ec)
 {
-	json& obj = val2ref(EV["$obj"]);
-	cout << obj.dump(1) << endl;
+	cout << ec.obj.dump(1) << endl;
 }
 
 
-void  jsonTAG(json &EV)
+void  jsonTAG(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	
-	if (!sub.is_object())
-		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+	if (!ec.sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + ec.sub.dump());
 
-	string	tag = sub["<>"];
+	string	tag = ec.sub["<>"];
 
-	if (!Value.is_string())
-		Value = ""s;
+	if (!ec.val.is_string())
+		ec.val = ""s;
 
-	string& body = Value.get_ref<string&>();
+	string& body = ec.val.get_ref<string&>();
 	body += "<" + tag;
 
-	for (auto& it : sub.items())
+	for (auto& it : ec.sub.items())
 		if ("<>" != it.key())
 			body += " " + it.key() + "=" + it.value().dump();
 
 	body += ">";
-	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
-	json	clone = EV, objview;
-	clone[""] = ref2id(objview);
-	JSONExec(clone, obj);
+	//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+	json	objview;
+	JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), ec.obj);
 	if (objview.is_string()) body += objview.get_ref<string&>();
 	else                     body += objview.dump();
 	body += "</" + tag + ">";
 }
 
 
-void  jsonXML(json &EV)
+void  jsonXML(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
 	std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
 
-	if (!sub.is_object())
-		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+	if (!ec.sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + ec.sub.dump());
 
-	string	tag = sub["<>"];
+	string	tag = ec.sub["<>"];
 
-	if (!Value.is_string())
-		Value = res;
-	else if(!Value.get_ref<string&>().size())
-		Value = res;
+	if (!ec.val.is_string())
+		ec.val = res;
+	else if(!ec.val.get_ref<string&>().size())
+		ec.val = res;
 
-	string& body = Value.get_ref<string&>();
+	string& body = ec.val.get_ref<string&>();
 	body += "<" + tag;
 
-	for (auto& it : sub.items())
+	for (auto& it : ec.sub.items())
 		if ("<>" != it.key())
 			body += " " + it.key() + "=" + it.value().dump();
 
 	body += ">";
-	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
-	json	clone = EV, objview;
-	clone[""] = ref2id(objview);
-	JSONExec(clone, obj);
+	//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+	json	objview;
+	JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), ec.obj);
 	if (objview.is_string()) body += objview.get_ref<string&>();
 	else                     body += objview.dump();
 	body += "</" + tag + ">";
 }
 
 
-void  jsonHTML(json &EV)
+void  jsonHTML(EntContext& ec)
 {
-	json &Value = val2ref(EV[""]);	//	текущее значение json проекции
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
 	std::string res = "<!DOCTYPE html>"s;
 
-	if (!sub.is_object())
-		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + sub.dump());
+	if (!ec.sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + ec.sub.dump());
 
-	string	tag = sub["<>"];
+	string	tag = ec.sub["<>"];
 
-	if (!Value.is_string())
-		Value = res;
-	else if (!Value.get_ref<string&>().size())
-		Value = res;
+	if (!ec.val.is_string())
+		ec.val = res;
+	else if (!ec.val.get_ref<string&>().size())
+		ec.val = res;
 
-	string& body = Value.get_ref<string&>();
+	string& body = ec.val.get_ref<string&>();
 	body += "<" + tag;
 
-	for (auto& it : sub.items())
+	for (auto& it : ec.sub.items())
 		if ("<>" != it.key())
 			body += " " + it.key() + "=" + it.value().dump();
 
 	body += ">";
-	//	что бы выходной поток xml попадал в тоже значение Value нужно исполнять в текущем контексте EV
-	json	clone = EV, objview;
-	clone[""] = ref2id(objview);
-	JSONExec(clone, obj);
+	//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+	json	objview;
+	JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), ec.obj);
 	if (objview.is_string()) body += objview.get_ref<string&>();
 	else                     body += objview.dump();
 	body += "</" + tag + ">";
 }
 
 
-void  jsonDump(json &EV)
+void  jsonDump(EntContext& ec)
 {
-	json& sub = val2ref(EV["$sub"]);
-	json& obj = val2ref(EV["$obj"]);
-	sub = obj.dump(3);
+	ec.sub = ec.obj.dump(3);
+}
+
+
+__int64 GetClock(void)
+{
+	__int64 t;
+	__asm rdtsc;
+	__asm lea ecx, t;
+	__asm mov[ecx], eax;
+	__asm mov[ecx + 4], edx;
+	return t;
+}
+
+
+__int64 StartTime = 0;
+
+void  jsonStartClock(EntContext& ec)
+{
+	StartTime = GetClock();
+}
+
+void  jsonStopClock(EntContext& ec)
+{
+	__int64 Time = GetClock() - StartTime;
+	cout << "Time left = "s << Time/__int64(1000) << " Ktics" << endl;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1289,6 +1202,7 @@ void  ImportRelationsModel(json &Ent)
 	//	json
 #define map_json_static_method(static_method)	Addx86Entity(Ent["json"], #static_method, json_call_##static_method, ""s );
 	map_json_static_method(array);
+	map_json_static_method(null);
 	map_json_static_method(meta);
 	map_json_static_method(object);
 	Addx86Entity(Ent["json"], "dump"s, jsonDump, ""s);
@@ -1345,4 +1259,8 @@ void  ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent, "tag"s, jsonTAG, ""s);
 	Addx86Entity(Ent, "xml"s, jsonXML, ""s);
 	Addx86Entity(Ent, "html"s, jsonHTML, ""s);
+
+	//	debug
+	Addx86Entity(Ent["debug"]["clock"], "start"s, jsonStartClock, ""s);
+	Addx86Entity(Ent["debug"]["clock"], "stop"s, jsonStopClock, ""s);
 }

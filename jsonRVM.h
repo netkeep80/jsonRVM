@@ -388,17 +388,6 @@ escape-последовательностей, начинающихся с об�
 шестнадцатеричным кодом в кодировке Unicode в виде \uFFFF.
 
 ------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 ------------------------------------------------------------------------------
 		Сокращения принятые в тексте
 
@@ -528,7 +517,7 @@ Null и Array - это не совсем типы, они принципиаль
 1. Проекция в проекции
 2. Сущность в сущности (в полях "$obj", "$rel", "$sub")
 3. Сущность в проекции (в объекте или массиве)
-4. Проекция в сущности (в полях "$obj", "$rel", "$sub", "\")
+4. Проекция в сущности (в полях "$obj", "$rel", "$sub")
 5. Строковая или адресная ссылка на сущность в сущности (в полях "$obj", "$rel", "$sub")
 
 ------------------------------------------------------------------------------
@@ -561,8 +550,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
    "C#View": "this entity C# code view",
    "$obj": "object entity model",
    "$rel": "relation entity model",
-   "$sub": "subject entity model",
-   "/": "this entity json view result cache"
+   "$sub": "subject entity model"
 }
 
 ------------------------------------------------------------------------------
@@ -595,16 +583,6 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 	сущность формирует собственную проекцию,
 	через другую сущность проектор - сущность отношение
 
-------------------------------------------------------------------------------
-		Семантика json значения в поле кэша проекции "/" у json сущности:
-
-1. Number  - число
-2. Boolean - булевый тип = true/false
-3. String  - строка
-4. Object  - карта свойств
-5. Array   - последовательность
-6. Null    - отсутствие значения
-7. Entity  - json проекция содержащая модель сущности
 
 ------------------------------------------------------------------------------
 		Семантика json значений в полях "$sub", "$rel", "$obj" json объекта описывающего сущность:
@@ -668,13 +646,69 @@ $rel/       - контекстно отношение
 #include <string> // string
 #include <vector> // vector
 
+#define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
+#define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
+"CASE string contains wrong characters, or its length is greater than 9");\
+case s_s::str_hash(str, s_s::str_len(str))
+#define DEFAULT  default
+
+namespace s_s
+{
+	typedef unsigned char uchar;
+	typedef unsigned long ullong;
+
+	const uchar MAX_LEN = 4;
+	const ullong N_HASH = static_cast<ullong>(-1);
+
+	constexpr ullong raise_128_to(const uchar power)
+	{
+		return 1ULL << 7 * power;
+	}
+
+	constexpr bool str_is_correct(const char* const str)
+	{
+		return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true);
+	}
+
+	constexpr uchar str_len(const char* const str)
+	{
+		return *str ? (1 + str_len(str + 1)) : 0;
+	}
+
+	constexpr ullong str_hash(const char* const str, const uchar current_len)
+	{
+		return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0;
+	}
+	/*
+		inline ullong str_hash_for_switch(const char* const str)
+		{
+			return (str_is_correct(str) && (str_len(str) <= MAX_LEN)) ? str_hash(str, str_len(str)) : N_HASH;
+		}
+
+		inline ullong str_hash_for_switch(const std::string& str)
+		{
+			return (str_is_correct(str.c_str()) && (str.length() <= MAX_LEN)) ? str_hash(str.c_str(), str.length()) : N_HASH;
+		}
+	*/
+	inline ullong str_hash_for_switch(const char* const str)
+	{
+		return str_hash(str, str_len(str));
+	}
+
+	inline ullong str_hash_for_switch(const std::string& str)
+	{
+		return str_hash(str.c_str(), str.length());
+	}
+}
+
+
+
 namespace nlohmann
 {
 	template<typename = void, typename = void>
 	struct adl_serializer;
 
-	template<template<typename U, typename V, typename... Args> class ObjectType =
-		std::map,
+	template<template<typename U, typename V, typename... Args> class ObjectType = std::map,
 		template<typename U, typename... Args> class ArrayType = std::vector,
 		class StringType = std::string, class BooleanType = bool,
 		class NumberIntegerType = std::int32_t,
@@ -696,7 +730,8 @@ namespace nlohmann
 using namespace std;
 using namespace nlohmann;
 
-const string RVM_version = "1.1.0.2"s;
+
+const string RVM_version = "2.0.0.2"s;
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }
@@ -707,8 +742,24 @@ inline  json&  val2ref(json& ptr_val)
 	else
 		throw(__FUNCTION__ + ": incorrect ptr_val type"s);
 }
-inline  void	JSONExec(json &EV, json &Ent);
-typedef void	(*x86View)(json &Ctx);
+
+
+//	Контекст исполнения сущности, инстанцированная проекция модели сущности
+struct EntContext
+{
+	json& val;				//	локальное адресное пространство
+	json& obj;				//	контекстный объект
+	json& sub;				//	контекстный субъект
+	json& ent;				//	сущность, модель для контекста
+	struct EntContext& ctx;	//	родительский контекст исполнения
+	json& root;				//	корневая сущность, корень адресного пространства
+	EntContext(json& v, json& o, json& s, json& e, EntContext& c, json& r) : val(v), obj(o), sub(s), ent(e), ctx(c), root(r) {}
+	EntContext(json& v, json& o, json& s, json& e, json& r) : val(v), obj(o), sub(s), ent(e), ctx(*this), root(r) {}
+};
+
+
+inline  void	JSONExec(EntContext& ec, json& rel);
+typedef void	(*x86View)(EntContext& ec);
 
 #define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
 __declspec(dllexport) void ImportRelationsModel(json &Ent);
@@ -732,78 +783,108 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 }
 
 
-inline json& ReferEntity(json &EV, json &Ent)
+inline void	ReferProperty(size_t& segment, const string& it)
 {
-	size_t	ctx = ref2id(EV);
-	switch (Ent.type())
+	json&	ref = id2ref(segment);
+	if (ref.is_object())
 	{
-	case json::value_t::string:		//	иерархический путь к json значению
+		segment = ref2id(ref[it]);
+	}
+	else if (ref.is_array())
 	{
-		const string&	String = Ent.get<string>();
-		auto			path = split(String, "/"s, true);
-		size_t			segment = NULL;
-
-		for (auto it : path)
+		segment = ref2id(ref[std::stoul(it)]);
+	}
+	else if (ref.is_null())
+	{
+		try {
+			ref = json::array();
+			segment = ref2id(ref[std::stoul(it)]);
+		}
+		catch (...)	//	это не число
 		{
-			if (NULL == segment)	//	сегмент относительной адресации определён?
+			ref = json::object();
+			segment = ref2id(ref[it]);
+		}
+	}
+	else
+		throw it;
+}
+
+
+inline json& ReferEntity(EntContext& ec, const string& str)
+{
+	EntContext* ctxptr = &ec;
+	size_t	prev = 0, pos = 0, segment = NULL, len = str.length();
+	while (true)
+	{
+		pos = str.find_first_of('/', prev);
+		if (pos == string::npos)
+		{
+			SWITCH(str)
 			{
-				if (".."s == it)
-					ctx = id2ref(ctx)[".."];
-				else if (id2ref(ctx).find(it) != id2ref(ctx).end())
-					segment = id2ref(ctx)[it];
-				else
-					throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
+				CASE("..") :	throw(__FUNCTION__ + ": property '"s + str + "' does not exist!");
+				CASE("#") :		return ctxptr->root;
+				CASE("") :		return ctxptr->val;
+				CASE("$obj") :	return ctxptr->obj;
+				CASE("$sub") :	return ctxptr->sub;
+				CASE(".") :		return ctxptr->ent;
+				DEFAULT:		throw(__FUNCTION__ + ": pronoun '"s + str + "' does not exist in entity context!"s);
 			}
-			else try
-			{
-				json&	ref = id2ref(segment);
-				if (ref.is_array())
-				{
-					segment = ref2id(ref[std::stoul(it)]);
-				}
-				else if (ref.is_object())
-				{
-					segment = ref2id(ref[it]);
-				}
-				else if (ref.is_null())
-				{
-					try {
-						ref = json::array();
-						segment = ref2id(ref[std::stoul(it)]);
-					}
-					catch (...)	//	это не число
-					{
-						ref = json::object();
-						segment = ref2id(ref[it]);
-					}
-				}
-				else
-					throw it;
-			}
-			catch (invalid_argument e)
-			{
-				throw(__FUNCTION__ + ": property '"s + String + "' invalid_argument, " + e.what());
-			}
-			catch (out_of_range e)		{ throw(__FUNCTION__ + ": property '"s + String + "' out_of_range, " + e.what()); }
-			catch (...)					{ throw(__FUNCTION__ + ": property '"s + String + "' does not exist!"); }
 		}
 
-		return id2ref(segment);
+		string it = str.substr(prev, pos - prev);
+		prev = pos + 1;
+
+		SWITCH(it)
+		{
+			CASE(".."):		ctxptr = &ctxptr->ctx;			break;
+			CASE("#"):		segment = ref2id(ctxptr->root);	goto prop;
+			CASE(""):		segment = ref2id(ctxptr->val);	goto prop;
+			CASE("$obj"):	segment = ref2id(ctxptr->obj);	goto prop;
+			CASE("$sub"):	segment = ref2id(ctxptr->sub);	goto prop;
+			CASE("."):		segment = ref2id(ctxptr->ent);	goto prop;
+			DEFAULT:		throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
+		}
+		
+		if (prev >= len) throw(__FUNCTION__ + ": property '"s + str + "' does not exist!");
+	}
+prop:
+	while (prev < len)
+	{
+		pos = str.find_first_of('/', prev);
+		if (pos == string::npos) pos = len;
+		string it = str.substr(prev, pos - prev);
+		prev = pos + 1;
+		try { ReferProperty(segment, it); }
+		catch (invalid_argument e) { throw(__FUNCTION__ + ": property '"s + str + "' invalid_argument, " + e.what()); }
+		catch (out_of_range e) { throw(__FUNCTION__ + ": property '"s + str + "' out_of_range, " + e.what()); }
+		catch (...) { throw(__FUNCTION__ + ": property '"s + str + "' does not exist!"); }
 	}
 
-	//	абсолютный адрес сущности
+	return id2ref(segment);
+}
+
+
+inline json& ReferEntity(EntContext& ec, json& ref)
+{
+	switch (ref.type())
+	{
+	case json::value_t::string:		//	иерархический путь к json значению
+		return ReferEntity(ec, ref.get_ref<string&>());
+
+		//	абсолютный адрес сущности
 	case json::value_t::number_float:
 	case json::value_t::number_integer:
 	case json::value_t::number_unsigned:
-		return id2ref(Ent.get<size_t>());
+		return id2ref(ref.get<size_t>());
 
 		//	местоимение проекции контекстной сущности
 	case json::value_t::null:
-		return val2ref(EV[""]);
+		return ec.val;
 
 		//	если это не адрес то возвращаем значение
 	default:
-		return Ent;
+		return ref;
 	}
 }
 
@@ -811,33 +892,29 @@ inline json& ReferEntity(json &EV, json &Ent)
 //	Исполнение сущности либо json байткода
 //	имеет прототип отличный от других контроллеров и не является контроллером
 //	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-inline void JSONExec(json &EV, json &Ent)
+inline void JSONExec(EntContext& ec, json &rel)
 {
-	switch (Ent.type())
+	switch (rel.type())
 	{
 	//	абсолютный адрес скомпилированного тела сущности
-	case json::value_t::number_unsigned:
+	case json::value_t::number_unsigned: 
 	{
-		try	{
-			((x86View)Ent.get<size_t>())(EV);
-		}
-		catch (string& error)		{ throw("func at "s + Ent.dump() + "/"s + error); }
-		catch (json::exception& e)	{ throw("func at "s + Ent.dump() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("func at "s + Ent.dump() + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("func at "s + Ent.dump() + "/"s + "unknown exception"s); }
+		try	{ ((x86View)rel.get<size_t>())(ec); }
+		catch (string& error)		{ throw("func at "s + rel.dump() + "/"s + error); }
+		catch (json::exception& e)	{ throw("func at "s + rel.dump() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e)	{ throw("func at "s + rel.dump() + "/"s + "std::exception: "s + e.what()); }
+		catch (...)					{ throw("func at "s + rel.dump() + "/"s + "unknown exception"s); }
 		return;
 	}
 
 	//	иерархический путь к json значению
 	case json::value_t::string:
 	{
-		try {
-			JSONExec(EV, ReferEntity(EV, Ent));
-		}
-		catch (string& error)		{ throw("\n exec "s + Ent.get<string>() + "/"s + error); }
-		catch (json::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("\n exec "s + Ent.get<string>() + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("\n exec "s + Ent.get<string>() + "/"s + "unknown exception"s); }
+		try { JSONExec(ec, ReferEntity(ec, rel.get_ref<string&>())); }
+		catch (string& error)		{ throw("\n exec "s + rel.get<string>() + "/"s + error); }
+		catch (json::exception& e)	{ throw("\n exec "s + rel.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e)	{ throw("\n exec "s + rel.get<string>() + "/"s + "std::exception: "s + e.what()); }
+		catch (...)					{ throw("\n exec "s + rel.get<string>() + "/"s + "unknown exception"s); }
 		return;
 	}
 
@@ -845,58 +922,68 @@ inline void JSONExec(json &EV, json &Ent)
 	case json::value_t::array:
 	{
 		int i = 0;
-		for (auto& it : Ent)
+		for (auto& it : rel)
 		{
-			try	{
-				JSONExec(EV, it);
-			}
+			try { JSONExec(ec, it); i++; }
 			catch (string& error) { throw("["s + to_string(i) + "]/"s + error); }
 			catch (json::exception& e) { throw("["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 			catch (std::exception& e) { throw("["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
 			catch (...) { throw("["s + to_string(i) + "]/"s + "unknown exception"s); }
-			i++;
 		}
 		return;
 	}
 
 	case json::value_t::object:
 	{
-		if (Ent.count("/"))	//	это сущность с закэшированной дефолтной json проекцией?
-		{	//	приоритет у закэшированной проекции выше
-			val2ref(EV[""]) = Ent["/"];
-		}
-		else if (Ent.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
+		if (rel.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
 		{
 			try {
-				json EntView;	//	конфигурируем новый контекст - представление модели сущности
-				EntView["#"] = EV["#"];
-				EntView[""] = EV[""];						//	''	- entity view, points to Value
-				EntView["."] = ref2id(Ent);						//	'.'	- entity model
-				EntView[".."] = ref2id(EV);
-				EntView["$obj"] = ref2id(ReferEntity(EV, Ent["$obj"]));
-				EntView["$sub"] = ref2id(ReferEntity(EV, Ent["$sub"]));
-				JSONExec(EntView, ReferEntity(EV, Ent["$rel"]));
+				JSONExec(EntContext(ec.val, ReferEntity(ec, rel["$obj"]), ReferEntity(ec, rel["$sub"]), rel, ec, ec.root), ReferEntity(ec, rel["$rel"]));
 			}
-			catch (string& error)		{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + error); }
-			catch (json::exception& e)	{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw("$rel : "s + Ent["$rel"].dump() + "\n exec "s + "unknown exception"s); }
+			catch (string& error)		{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + error); }
+			catch (json::exception& e)	{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e)	{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
+			catch (...)					{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "unknown exception"s); }
 		}
-		else   //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
+		else//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 		{	//ToDo:	надо переделать на параллельное проецирование
-			for (auto& it : Ent.items())
+			for (auto& it : rel.items())
 			{
-				json	key = it.key();
-				try	{
-					json	clone = EV;
-					clone[""] = ref2id(ReferEntity(EV, key));
-					JSONExec(clone, ReferEntity(EV, it.value()));
-				}
-				catch (string& error)		{ throw("\n view "s + key.get<string>() + " : "s + error); }
-				catch (json::exception& e)	{ throw("\n view "s + key.get<string>() + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-				catch (std::exception& e)	{ throw("\n view "s + key.get<string>() + " : "s + "std::exception: "s + e.what()); }
-				catch (...)					{ throw("\n view "s + key.get<string>() + " : "s + "unknown exception"s); }
+				string&	key = it.key();
+				try	{ JSONExec(EntContext(ReferEntity(ec, key), ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), ReferEntity(ec, it.value())); }
+				catch (string& error)		{ throw("\n view "s + key + " : "s + error); }
+				catch (json::exception& e)	{ throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+				catch (std::exception& e)	{ throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
+				catch (...)					{ throw("\n view "s + key + " : "s + "unknown exception"s); }
 			}
+
+			/*
+			struct callctx
+			{
+				EntContext	ec;
+				string&		key;
+				json&		rel;
+				callctx(EntContext& c, string& k, json& r) : ec(c), key(k), rel(r) {}
+			};
+
+			vector<callctx>	vec;
+			for (auto& it : rel.items())
+			{
+				string&	key = it.key();
+				try { vec.push_back(callctx(EntContext(ReferEntity(ec, key), ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), key, ReferEntity(ec, it.value()))); }
+				catch (string& error) { throw("\n view "s + key + " : "s + error); }
+				catch (json::exception& e) { throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+				catch (std::exception& e) { throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
+				catch (...) { throw("\n view "s + key + " : "s + "unknown exception"s); }
+			}
+
+			parallel_for_each(begin(vec), end(vec), [](callctx& it) {
+				try { JSONExec(it.ec, it.rel); }
+				catch (string& error) { throw("\n view "s + it.key + " : "s + error); }
+				catch (json::exception& e) { throw("\n view "s + it.key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+				catch (std::exception& e) { throw("\n view "s + it.key + " : "s + "std::exception: "s + e.what()); }
+				catch (...) { throw("\n view "s + it.key + " : "s + "unknown exception"s); }
+			});*/
 		}
 		return;
 	}
@@ -904,13 +991,9 @@ inline void JSONExec(json &EV, json &Ent)
 	//	битовая маска для условного проектора ViewEntity
 	case json::value_t::boolean:
 	{
-		if (Ent)
+		if (rel)
 		{
-			try {
-				json	clone = val2ref(EV[".."]);
-				clone[""] = EV["$sub"];
-				JSONExec(clone, val2ref(EV["$obj"]));
-			}
+			try { JSONExec(EntContext(ec.sub, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx.ctx, ec.root), ec.obj); }
 			catch (string& error)		{ throw("\ntrue/"s + error); }
 			catch (json::exception& e)	{ throw("\ntrue/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 			catch (std::exception& e)	{ throw("\ntrue/"s + "std::exception: "s + e.what()); }
@@ -921,7 +1004,7 @@ inline void JSONExec(json &EV, json &Ent)
 
 	case json::value_t::number_float:
 	case json::value_t::number_integer:
-		throw("\n can't exec wrong json numeric type "s + Ent.dump());
+		throw("\n can't exec wrong json numeric type "s + rel.dump());
 
 	//	null - означает отсутствие отношения, т.е. неизменность проекции
 	default:

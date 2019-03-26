@@ -1,0 +1,1 @@
+.\..\Release\jsonRVM.exe http_POST_xml_SMS2.json rvm.dump.json

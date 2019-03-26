@@ -12,7 +12,7 @@
       },
       {
          "$obj" : {
-            "URI" : "http://192.168.8.1/api/webserver/token"
+            "URI" : "http://192.168.8.1/api/webserver/SesTokInfo"
          },
          "$rel" : "#/HTTP/GET/xml",
          "$sub" : "#/Modem/SesTokInfo"
@@ -31,7 +31,11 @@
                   "$rel" : "#/="
                },
                "#/Modem/request/header/__RequestVerificationToken" : {
-                  "$obj" : "#/Modem/SesTokInfo/body/response/token",
+                  "$obj" : "#/Modem/SesTokInfo/body/response/TokInfo",
+                  "$rel" : "#/="
+               },
+               "#/Modem/request/header/Cookie" : {
+                  "$obj" : "#/Modem/SesTokInfo/body/response/SesInfo",
                   "$rel" : "#/="
                },
                "#/Modem/request/body" : {

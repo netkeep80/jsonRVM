@@ -2,7 +2,8 @@
    "$obj" : [
       {
          "$obj" : {
-            "/" : "-1"
+            "$obj" : "#/Index",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -13,7 +14,8 @@
          "$obj" : [
             {
                "$obj" : {
-                  "/" : "89875421631"
+                  "$obj" : "#/Phone",
+                  "$rel" : "#/="
                },
                "$rel" : "#/tag",
                "$sub" : {
@@ -28,7 +30,8 @@
       },
       {
          "$obj" : {
-            "/" : ""
+            "$obj" : "#/Sca",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -37,7 +40,8 @@
       },
       {
          "$obj" : {
-            "/" : "test message from watchdog"
+            "$obj" : "#/Content",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -46,7 +50,8 @@
       },
       {
          "$obj" : {
-            "/" : "3"
+            "$obj" : "#/Length",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -55,7 +60,8 @@
       },
       {
          "$obj" : {
-            "/" : "1"
+            "$obj" : "#/Reserved",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -64,7 +70,8 @@
       },
       {
          "$obj" : {
-            "/" : "2017-12-18 15:01:01"
+            "$obj" : "#/Date",
+            "$rel" : "#/="
          },
          "$rel" : "#/tag",
          "$sub" : {
@@ -74,7 +81,13 @@
    ],
    "$rel" : "#/xml",
    "$sub" : {
-      "<>" : "request",
-      "class" : "foo"
-   }
+      "<>" : "request"
+   },
+"Index" : "-1",
+   "Phone" : "89875421631",
+   "Sca" : "",
+   "Content" : "test message from watchdog",
+   "Length" : "3",
+   "Reserved" : "1",
+   "Date" : "2017-12-18 15:01:01"
 }

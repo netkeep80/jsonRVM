@@ -52,7 +52,7 @@ void	dump_json(string& filename, json& val)
 
 int main(int argc, char* argv[])
 {
-	json	returnValue;
+	json	val;
 	char *fileNameInput = NULL, *fileNameOutput = NULL;
 
 	switch (argc)
@@ -92,12 +92,12 @@ int main(int argc, char* argv[])
 		if (!strcmp(fileNameInputExt, ".dll") || !strcmp(fileNameInputExt, ".DLL"))
 		{
 			string	FullFileName = string(".\\") + fileNameInput;
-			returnValue = json::object();
+			val = json::object();
 			try
 			{
-				if (LoadAndInitDict(FullFileName, returnValue))
+				if (LoadAndInitDict(FullFileName, val))
 				{
-					cout << returnValue.dump(3);
+					cout << val.dump(3);
 					return 0;
 				}
 			}
@@ -119,40 +119,37 @@ int main(int argc, char* argv[])
 
 	if (!strcmp(fileNameInput, "jsonRVM.exe"))
 	{
-		returnValue = json::object();
-		ImportRelationsModel(returnValue);
-		cout << returnValue.dump(3);
+		val = json::object();
+		ImportRelationsModel(val);
+		cout << val.dump(3);
 		return 0;
 	}
 
-	json input_json, rootctx;
+	json root;
 
 	try
 	{
 		std::ifstream in(fileNameInput);
 
 		if (in.good())
-			in >> input_json;
+			in >> root;
 		else
 			cerr << "Can't restore RM json from the " << fileNameInput << " file.\n";
 
 		// добавляем в корневую сущность базовый словарь
-		ImportRelationsModel(input_json);
-
+		ImportRelationsModel(root);
 		//	создаём контекст исполнения
-		rootctx["#"] = ref2id(input_json);
-		rootctx[""] = ref2id(returnValue);
-		rootctx[".."] = ref2id(rootctx);
-		JSONExec(rootctx, input_json);
-		if (fileNameOutput) dump_json(string(fileNameOutput), input_json);
+		EntContext ctx(val, root["$obj"], root["$sub"], root, root);
+		JSONExec(ctx, root);
+		if (fileNameOutput) dump_json(string(fileNameOutput), root);
 
 		try
 		{
-			return returnValue.get<int>();
+			return val.get<int>();
 		}
 		catch (...)
 		{
-			cout << returnValue.dump(3);
+			cout << val.dump(3);
 			return 1;
 		}
 	}
@@ -161,7 +158,7 @@ int main(int argc, char* argv[])
 	catch (std::exception& e)	{ cout << "std::exception: "s + e.what(); }
 	catch (...)					{ cout << "unknown exception"s; }
 
-	if (fileNameOutput) dump_json(string(fileNameOutput), input_json);
+	if (fileNameOutput) dump_json(string(fileNameOutput), root);
 	return 1;
 }
 

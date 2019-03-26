@@ -39,10 +39,12 @@
       "Clear" : [
          {
             "#/Calc/Accum" : {
-               "/" : 0.0
+               "$obj" : "#/Calc/AccumInitVal",
+               "$rel" : "#/="
             },
             "#/Calc/PendingOp" : {
-               "/" : ""
+               "$obj" : "#/Calc/PendingOpInitVal",
+               "$rel" : "#/="
             }
          },
          "#/Calc/ClearEntry"
@@ -59,10 +61,12 @@
       "ClearEntry" : [
          {
             "#/Calc/ReadOut/value" : {
-               "/" : "0"
+               "$obj" : "#/Calc/ReadOutInitValue",
+               "$rel" : "#/="
             },
             "#/Calc/FlagNewNum" : {
-               "/" : true
+               "$obj" : "#/true",
+               "$rel" : "#/="
             }
          }
       ],
@@ -85,7 +89,8 @@
                   "$rel" : "#/string/="
                },
                "#/Calc/FlagNewNum" : {
-                  "/" : false
+                  "$obj" : "#/false",
+                  "$rel" : "#/="
                }
             }
          },
@@ -135,7 +140,10 @@
             "height" : "40"
          }
       },
-      "zero_str" : "0"
+      "zero_str" : "0",
+      "AccumInitVal" : 0.0,
+      "PendingOpInitVal" : "",
+      "ReadOutInitValue" : "0"
    },
    "DebugCalc" : {
       "$obj" : [
@@ -159,5 +167,7 @@
          "visible" : true,
          "title" : "Calc Debug"
       }
-   }
+   },
+   "true" : true,
+   "false" : false
 }
