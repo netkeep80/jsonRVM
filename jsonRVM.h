@@ -731,7 +731,7 @@ using namespace std;
 using namespace nlohmann;
 
 
-const string RVM_version = "2.0.0.2"s;
+const string RVM_version = "2.1.0.3"s;
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }

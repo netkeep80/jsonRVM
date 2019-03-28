@@ -221,27 +221,34 @@ void text(EntContext& ec)
 	}
 }
 
-/*
-void ImGui_InputTextMultiline(EntContext& ec)
+
+void input(EntContext& ec)
 {
+	if (!ec.obj.is_string()) throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 	if (!ec.sub.is_object()) ec.sub = json::object();
 	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
 	if (!ec.sub.count("label")) ec.sub["label"] = ""s;
+	if (!ec.sub.count("readonly")) ec.sub["readonly"] = false;
+	bool&	readonly = ec.sub["readonly"].get_ref<bool&>();
 
 	bool&	visible = ec.sub["visible"].get_ref<bool&>();
-	string&	visible = ec.sub["label"].get_ref<string&>();
+	string&	label = ec.sub["label"].get_ref<string&>();
+
+	string&	text = ec.obj.get_ref<string&>();
+	text.reserve(64);
+	const char* textptr = text.c_str();
 
 	if (visible)
 	{
-		if (ec.obj.is_string())
-			//ImGui::Text(ec.obj.get_ref<string&>().c_str());
-			ImGui::InputTextMultiline("##source", ec.obj.get_ref<string&>().c_str(), ec.obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
-		else
-			//ImGui::Text(ec.obj.dump().c_str());
-			ImGui::InputTextMultiline("##source", ec.obj.get_ref<string&>().c_str(), ec.obj.get_ref<string&>().size(), ImVec2(-1.0f, ImGui::GetTextLineHeight() * 16), ImGuiInputTextFlags_AllowTabInput | (read_only ? ImGuiInputTextFlags_ReadOnly : 0));
+		ImVec2	size = { get_float(ec.sub, "width"s), get_float(ec.sub, "height"s) };
+		//ImGui::PushItemWidth(size.x);
+		//ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+		ImGui::InputTextMultiline(label.c_str(), (char*)textptr, text.size() + 64, size, ImGuiInputTextFlags_AllowTabInput | (readonly ? ImGuiInputTextFlags_ReadOnly : 0));
+		//ImGui::PopStyleVar();
+		//ImGui::PopItemWidth();
 	}
 }
-*/
+
 
 void ImGui_TextUnformatted(EntContext& ec)
 {
@@ -276,12 +283,41 @@ void button(EntContext& ec)
 }
 
 
+void group(EntContext& ec)
+{
+	if (!ec.sub.is_object()) ec.sub = json::object();
+	if (!ec.sub.count("visible")) ec.sub["visible"] = true;
+	if (!ec.sub.count("tooltip")) ec.sub["tooltip"] = ""s;
+
+	bool&	visible = ec.sub["visible"].get_ref<bool&>();
+	string&	tooltip = ec.sub["tooltip"].get_ref<string&>();
+
+	if (visible)
+	{
+		ImGui::BeginGroup();
+		JSONExec(ec, ec.obj);
+		ImGui::EndGroup();
+		if (tooltip.size() && ImGui::IsItemHovered())
+			ImGui::SetTooltip(tooltip.c_str());
+	}
+}
+
+
+void same_line(EntContext& ec)
+{
+	ImGui::SameLine();
+}
+
+
 __declspec(dllexport) void ImportRelationsModel(json &Ent)
 {
 	Ent["imgui"]["RVM_version"] = RVM_version;
 	Addx86Entity(Ent["imgui"], "viewport"s, viewport, "");
 	Addx86Entity(Ent["imgui"], "form"s, form, "");
 	Addx86Entity(Ent["imgui"], "text"s, text, "");
+	Addx86Entity(Ent["imgui"], "input"s, input, "");
 	Addx86Entity(Ent["imgui"], "TextUnformatted"s, ImGui_TextUnformatted, "");
 	Addx86Entity(Ent["imgui"], "button"s, button, "");
+	Addx86Entity(Ent["imgui"], "group"s, group, "");
+	Addx86Entity(Ent["imgui"], "same_line"s, same_line, "");
 }

@@ -711,6 +711,13 @@ void  string_add(EntContext& ec)
 }
 
 
+void  string_find(EntContext& ec)
+{
+	if (!(ec.obj.is_string()&&ec.sub.is_string())) throw(__FUNCTION__ + ": $obj and $sub must be strings!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+	ec.val = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
+}
+
+
 void  string_split(EntContext& ec)
 {
 	if (ec.obj.is_string() && ec.sub.is_string())
@@ -956,10 +963,9 @@ void  jsonBelow(EntContext& ec)	//	<
 void  jsonAnd(EntContext& ec)
 {
 	if (ec.sub.is_boolean() && ec.obj.is_boolean())
-	{
 		ec.val = ec.sub.get<bool>() && ec.obj.get<bool>();
-	}
-	else throw(__FUNCTION__ + ": $obj and $sub must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+	else
+		throw(__FUNCTION__ + ": $obj and $sub must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
 }
 
 void  IfObjTrueThenExecSub(EntContext& ec)
@@ -970,13 +976,7 @@ void  IfObjTrueThenExecSub(EntContext& ec)
 	try
 	{
 		if (ec.obj.get<bool>())
-		{
-			json& pval = ec.ctx.val;
-			json& pobj = ec.ctx.obj;
-			json& psub = ec.ctx.sub;
-			json& pent = ec.ctx.ent;
-			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
-		}
+			JSONExec(ec.ctx, ec.sub);
 	}
 	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
 	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -992,13 +992,7 @@ void  IfObjFalseThenExecSub(EntContext& ec)
 	try
 	{
 		if (!ec.obj.get<bool>())
-		{
-			json& pval = ec.ctx.val;
-			json& pobj = ec.ctx.obj;
-			json& psub = ec.ctx.sub;
-			json& pent = ec.ctx.ent;
-			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
-		}
+			JSONExec(ec.ctx, ec.sub);
 	}
 	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
 	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -1008,35 +1002,101 @@ void  IfObjFalseThenExecSub(EntContext& ec)
 
 void  ExecSubWhileObjTrue(EntContext& ec)
 {
-	while (true)
+	try
 	{
-		if (!ec.obj.is_boolean())
-			throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
-
-		if (ec.obj.get<bool>())
+		while (true)
 		{
-			json& pval = ec.ctx.val;
-			json& pobj = ec.ctx.obj;
-			json& psub = ec.ctx.sub;
-			json& pent = ec.ctx.ent;
-			JSONExec(EntContext(pval, pobj, psub, pent, ec.ctx.ctx, ec.root), ec.sub);
+			if (!ec.obj.is_boolean()) throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+			if (!ec.obj.get<bool>()) return;
+			JSONExec(ec.ctx, ec.sub);
 		}
-		else
-			return;
 	}
+	catch (string& error) { throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...) { throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
+}
+
+void  json_switch_bool(EntContext& ec)
+{
+	if (ec.obj.is_null())
+		return;
+
+	if (!ec.obj.is_boolean())
+		throw(__FUNCTION__ + ": $obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+
+	if (!ec.sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + ec.sub.dump());
+
+	try
+	{
+		if (ec.obj.get<bool>())	JSONExec(ec.ctx, ec.sub["true"]);
+		else	JSONExec(ec.ctx, ec.sub["false"]);
+	}
+	catch (string& error) { throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...) { throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
 }
 
 
-#define define_object_method(object_method)															\
+void  json_switch_number(EntContext& ec)
+{
+	if (ec.obj.is_null())
+		return;
+
+	if (!ec.obj.is_number_unsigned())
+		throw(__FUNCTION__ + ": $obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+
+	if (!ec.sub.is_array())
+		throw(__FUNCTION__ + ": $sub must be json array!\n $sub = "s + ec.sub.dump());
+
+	try
+	{
+		size_t	id = ec.obj.get<size_t>();
+		if (id < ec.sub.size()) JSONExec(ec.ctx, ec.sub[id]);
+	}
+	catch (string& error) { throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...) { throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
+}
+
+
+void  json_switch_string(EntContext& ec)
+{
+	if (ec.obj.is_null())
+		return;
+
+	if (!ec.obj.is_string())
+		throw(__FUNCTION__ + ": $obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+
+	if (!ec.sub.is_object())
+		throw(__FUNCTION__ + ": $sub must be json object!\n $sub = "s + ec.sub.dump());
+
+	try
+	{
+		if(ec.sub.count(ec.obj.get_ref<string&>())) JSONExec(ec.ctx, ec.sub[ec.obj.get_ref<string&>()]);
+		else JSONExec(ec.ctx, ec.sub["default"]);
+	}
+	catch (string& error) { throw("\n "s + __FUNCTION__ + "/"s + error); }
+	catch (json::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
+	catch (...) { throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
+}
+
+
+
+#define define_object_method(object_method)		\
 void  json_call_##object_method(EntContext& ec)	\
-{																									\
-	ec.sub = ec.obj.##object_method();																	\
+{												\
+	ec.sub = ec.obj.##object_method();			\
 }
 
-#define define_static_method(static_method)															\
+#define define_static_method(static_method)		\
 void  json_call_##static_method(EntContext& ec)	\
-{																									\
-	ec.val = json::##static_method();																	\
+{												\
+	ec.val = json::##static_method();			\
 }
 
 define_static_method(array)
@@ -1242,6 +1302,7 @@ void  ImportRelationsModel(json &Ent)
 	//	strings
 	Addx86Entity(Ent["string"], "="s, string_string, ""s);
 	Addx86Entity(Ent["string"], "+="s, string_add, ""s);
+	Addx86Entity(Ent["string"], "find"s, string_find, ""s);
 	Addx86Entity(Ent["string"], "split"s, string_split, ""s);
 	Addx86Entity(Ent["string"], "join"s, string_join, ""s);
 
@@ -1251,6 +1312,9 @@ void  ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent, "then"s, IfObjTrueThenExecSub, ""s);
 	Addx86Entity(Ent, "else"s, IfObjFalseThenExecSub, "");
 	Addx86Entity(Ent, "while"s, ExecSubWhileObjTrue, ""s);
+	Addx86Entity(Ent["switch"], "bool"s, json_switch_bool, ""s);
+	Addx86Entity(Ent["switch"], "number"s, json_switch_number, ""s);
+	Addx86Entity(Ent["switch"], "string"s, json_switch_string, ""s);
 
 	//	display
 	Addx86Entity(Ent, "print"s, jsonPrint, ""s);
