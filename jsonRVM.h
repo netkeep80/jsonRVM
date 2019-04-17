@@ -656,52 +656,15 @@ namespace s_s
 {
 	typedef unsigned char uchar;
 	typedef unsigned long ullong;
-
 	const uchar MAX_LEN = 4;
 	const ullong N_HASH = static_cast<ullong>(-1);
-
-	constexpr ullong raise_128_to(const uchar power)
-	{
-		return 1ULL << 7 * power;
-	}
-
-	constexpr bool str_is_correct(const char* const str)
-	{
-		return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true);
-	}
-
-	constexpr uchar str_len(const char* const str)
-	{
-		return *str ? (1 + str_len(str + 1)) : 0;
-	}
-
-	constexpr ullong str_hash(const char* const str, const uchar current_len)
-	{
-		return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0;
-	}
-	/*
-		inline ullong str_hash_for_switch(const char* const str)
-		{
-			return (str_is_correct(str) && (str_len(str) <= MAX_LEN)) ? str_hash(str, str_len(str)) : N_HASH;
-		}
-
-		inline ullong str_hash_for_switch(const std::string& str)
-		{
-			return (str_is_correct(str.c_str()) && (str.length() <= MAX_LEN)) ? str_hash(str.c_str(), str.length()) : N_HASH;
-		}
-	*/
-	inline ullong str_hash_for_switch(const char* const str)
-	{
-		return str_hash(str, str_len(str));
-	}
-
-	inline ullong str_hash_for_switch(const std::string& str)
-	{
-		return str_hash(str.c_str(), str.length());
-	}
+	constexpr ullong raise_128_to(const uchar power) { return 1ULL << 7 * power; }
+	constexpr bool str_is_correct(const char* const str) { return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true); }
+	constexpr uchar str_len(const char* const str) { return *str ? (1 + str_len(str + 1)) : 0; }
+	constexpr ullong str_hash(const char* const str, const uchar current_len) { return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0; }
+	inline ullong str_hash_for_switch(const char* const str) { return str_hash(str, str_len(str)); }
+	inline ullong str_hash_for_switch(const std::string& str) { return str_hash(str.c_str(), str.length()); }
 }
-
-
 
 namespace nlohmann
 {
@@ -724,25 +687,19 @@ namespace nlohmann
 
 	using json = basic_json<>;
 }
+
 #endif
 #include "./nlohmann/json.hpp"
 
 using namespace std;
 using namespace nlohmann;
 
-
-const string RVM_version = "2.1.0.3"s;
+////////////////////////////// VERSION //////////////////////////////
+const string RVM_version = "2.2.0.4"s;
+////////////////////////////// VERSION //////////////////////////////
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
 inline  json&  id2ref(size_t ptr_val) { return *((json*)ptr_val); }
-inline  json&  val2ref(json& ptr_val)
-{
-	if (ptr_val.is_number_unsigned())
-		return id2ref(ptr_val.get<size_t>());
-	else
-		throw(__FUNCTION__ + ": incorrect ptr_val type"s);
-}
-
 
 //	Контекст исполнения сущности, инстанцированная проекция модели сущности
 struct EntContext
@@ -756,7 +713,6 @@ struct EntContext
 	EntContext(json& v, json& o, json& s, json& e, EntContext& c, json& r) : val(v), obj(o), sub(s), ent(e), ctx(c), root(r) {}
 	EntContext(json& v, json& o, json& s, json& e, json& r) : val(v), obj(o), sub(s), ent(e), ctx(*this), root(r) {}
 };
-
 
 inline  void	JSONExec(EntContext& ec, json& rel);
 typedef void	(*x86View)(EntContext& ec);
@@ -782,7 +738,6 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 	return tokens;
 }
 
-
 inline void	ReferProperty(size_t& segment, const string& it)
 {
 	json&	ref = id2ref(segment);
@@ -807,9 +762,8 @@ inline void	ReferProperty(size_t& segment, const string& it)
 		}
 	}
 	else
-		throw it;
+		throw json({ {__FUNCTION__, it} });
 }
-
 
 inline json& ReferEntity(EntContext& ec, const string& str)
 {
@@ -822,13 +776,13 @@ inline json& ReferEntity(EntContext& ec, const string& str)
 		{
 			SWITCH(str)
 			{
-				CASE("..") :	throw(__FUNCTION__ + ": property '"s + str + "' does not exist!");
-				CASE("#") :		return ctxptr->root;
-				CASE("") :		return ctxptr->val;
-				CASE("$obj") :	return ctxptr->obj;
-				CASE("$sub") :	return ctxptr->sub;
-				CASE(".") :		return ctxptr->ent;
-				DEFAULT:		throw(__FUNCTION__ + ": pronoun '"s + str + "' does not exist in entity context!"s);
+			CASE("..") :	throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} });
+			CASE("#") :		return ctxptr->root;
+			CASE("") :		return ctxptr->val;
+			CASE("$obj") :	return ctxptr->obj;
+			CASE("$sub") :	return ctxptr->sub;
+			CASE(".") :		return ctxptr->ent;
+			DEFAULT:		throw json({ {__FUNCTION__, "pronoun '"s + str + "' does not exist in entity context!"s} });
 			}
 		}
 
@@ -843,10 +797,10 @@ inline json& ReferEntity(EntContext& ec, const string& str)
 			CASE("$obj"):	segment = ref2id(ctxptr->obj);	goto prop;
 			CASE("$sub"):	segment = ref2id(ctxptr->sub);	goto prop;
 			CASE("."):		segment = ref2id(ctxptr->ent);	goto prop;
-			DEFAULT:		throw(__FUNCTION__ + ": pronoun '"s + it + "' does not exist in entity context!"s);
+			DEFAULT:		throw json({ {__FUNCTION__, "pronoun '"s + str + "' does not exist in entity context!"s} });
 		}
 		
-		if (prev >= len) throw(__FUNCTION__ + ": property '"s + str + "' does not exist!");
+		if (prev >= len)	throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} });
 	}
 prop:
 	while (prev < len)
@@ -856,14 +810,14 @@ prop:
 		string it = str.substr(prev, pos - prev);
 		prev = pos + 1;
 		try { ReferProperty(segment, it); }
-		catch (invalid_argument e) { throw(__FUNCTION__ + ": property '"s + str + "' invalid_argument, " + e.what()); }
-		catch (out_of_range e) { throw(__FUNCTION__ + ": property '"s + str + "' out_of_range, " + e.what()); }
-		catch (...) { throw(__FUNCTION__ + ": property '"s + str + "' does not exist!"); }
+		catch (json& j)				{ throw json({ {__FUNCTION__, j} }); }
+		catch (invalid_argument e)	{ throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
+		catch (out_of_range e)		{ throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
+		catch (...)					{ throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
 	}
 
 	return id2ref(segment);
 }
-
 
 inline json& ReferEntity(EntContext& ec, json& ref)
 {
@@ -888,7 +842,6 @@ inline json& ReferEntity(EntContext& ec, json& ref)
 	}
 }
 
-
 //	Исполнение сущности либо json байткода
 //	имеет прототип отличный от других контроллеров и не является контроллером
 //	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
@@ -898,25 +851,24 @@ inline void JSONExec(EntContext& ec, json &rel)
 	{
 	//	абсолютный адрес скомпилированного тела сущности
 	case json::value_t::number_unsigned: 
-	{
-		try	{ ((x86View)rel.get<size_t>())(ec); }
-		catch (string& error)		{ throw("func at "s + rel.dump() + "/"s + error); }
-		catch (json::exception& e)	{ throw("func at "s + rel.dump() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("func at "s + rel.dump() + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("func at "s + rel.dump() + "/"s + "unknown exception"s); }
-		return;
-	}
+		try
+		{
+			((x86View)rel.get<size_t>())(ec);
+			return;
+		}
+		catch (json& j)					{ throw json({ {rel.dump(), j} }); }
+		catch (json::exception& e)		{ throw json({ {rel.dump(), "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }
+		catch (std::exception& e)		{ throw json({ {rel.dump(), "std::exception: "s + e.what()} }); }
+		catch (...)						{ throw json({ {rel.dump(), "unknown exception"s} }); }
 
 	//	иерархический путь к json значению
 	case json::value_t::string:
-	{
-		try { JSONExec(ec, ReferEntity(ec, rel.get_ref<string&>())); }
-		catch (string& error)		{ throw("\n exec "s + rel.get<string>() + "/"s + error); }
-		catch (json::exception& e)	{ throw("\n exec "s + rel.get<string>() + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e)	{ throw("\n exec "s + rel.get<string>() + "/"s + "std::exception: "s + e.what()); }
-		catch (...)					{ throw("\n exec "s + rel.get<string>() + "/"s + "unknown exception"s); }
-		return;
-	}
+		try
+		{
+			JSONExec(ec, ReferEntity(ec, rel.get_ref<string&>()));
+			return;
+		}
+		catch (json& j)					{ throw json({ {rel.get<string>(), j} }); }
 
 	//	лямбда вектор, который управляет последовательным изменением проекции сущности
 	case json::value_t::array:
@@ -924,11 +876,12 @@ inline void JSONExec(EntContext& ec, json &rel)
 		int i = 0;
 		for (auto& it : rel)
 		{
-			try { JSONExec(ec, it); i++; }
-			catch (string& error) { throw("["s + to_string(i) + "]/"s + error); }
-			catch (json::exception& e) { throw("["s + to_string(i) + "]/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e) { throw("["s + to_string(i) + "]/"s + "std::exception: "s + e.what()); }
-			catch (...) { throw("["s + to_string(i) + "]/"s + "unknown exception"s); }
+			try
+			{
+				JSONExec(ec, it);
+				i++;
+			}
+			catch (json& j)				{ throw json({ {"["s + to_string(i) + "]"s, j} }); }
 		}
 		return;
 	}
@@ -938,26 +891,40 @@ inline void JSONExec(EntContext& ec, json &rel)
 		if (rel.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
 		{
 			try {
-				JSONExec(EntContext(ec.val, ReferEntity(ec, rel["$obj"]), ReferEntity(ec, rel["$sub"]), rel, ec, ec.root), ReferEntity(ec, rel["$rel"]));
+				JSONExec(
+					EntContext(
+						ec.val,
+						ReferEntity(ec, rel["$obj"]),
+						ReferEntity(ec, rel["$sub"]),
+						rel,
+						ec,
+						ec.root),
+					ReferEntity(ec, rel["$rel"])
+				);
 			}
-			catch (string& error)		{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + error); }
-			catch (json::exception& e)	{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw("$rel : "s + rel["$rel"].dump() + "\n exec "s + "unknown exception"s); }
+			catch (json& j)				{ throw json({ {"$rel"s, j} }); }	//	rel["$rel"].dump()
 		}
 		else//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
-		{	//ToDo:	надо переделать на параллельное проецирование
+		{
 			for (auto& it : rel.items())
 			{
-				string&	key = it.key();
-				try	{ JSONExec(EntContext(ReferEntity(ec, key), ec.obj, ec.sub, ec.ent, ec.ctx, ec.root), ReferEntity(ec, it.value())); }
-				catch (string& error)		{ throw("\n view "s + key + " : "s + error); }
-				catch (json::exception& e)	{ throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-				catch (std::exception& e)	{ throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
-				catch (...)					{ throw("\n view "s + key + " : "s + "unknown exception"s); }
+				try
+				{
+					JSONExec(
+						EntContext(
+							ReferEntity(ec, it.key()),
+							ec.obj,
+							ec.sub,
+							ec.ent,
+							ec.ctx,
+							ec.root),
+						ReferEntity(ec, it.value())
+					);
+				}
+				catch (json& j)			{ throw json({ {it.key(), j} }); }
 			}
 
-			/*
+			/*ToDo:	надо переделать на параллельное проецирование
 			struct callctx
 			{
 				EntContext	ec;
@@ -990,25 +957,31 @@ inline void JSONExec(EntContext& ec, json &rel)
 
 	//	битовая маска для условного проектора ViewEntity
 	case json::value_t::boolean:
-	{
 		if (rel)
 		{
-			try { JSONExec(EntContext(ec.sub, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx.ctx, ec.root), ec.obj); }
-			catch (string& error)		{ throw("\ntrue/"s + error); }
-			catch (json::exception& e)	{ throw("\ntrue/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e)	{ throw("\ntrue/"s + "std::exception: "s + e.what()); }
-			catch (...)					{ throw("\ntrue/"s + "unknown exception"s); }
+			try
+			{
+				JSONExec(
+					EntContext(
+						ec.sub,
+						ec.ctx.obj,
+						ec.ctx.sub,
+						ec.ctx.ent,
+						ec.ctx.ctx,
+						ec.root),
+					ec.obj
+				);
+			}
+			catch (json& j)				{ throw json({ {"true"s, j} }); }
 		}
 		return;
-	}
 
 	case json::value_t::number_float:
 	case json::value_t::number_integer:
-		throw("\n can't exec wrong json numeric type "s + rel.dump());
+		throw json({ {rel.dump(), "can't exec wrong json numeric type"s} });
 
-	//	null - означает отсутствие отношения, т.е. неизменность проекции
 	default:
-		return;
+		return;	//	null - означает отсутствие отношения, т.е. неизменность проекции
 	}
 }
 
@@ -1022,7 +995,6 @@ inline json&	Addx86Entity(json& Subject, const string& Name, x86View View, const
 }
 
 #pragma warning (disable: 4244)
-
 inline bool get_bool(const json& obj, const string& field)
 {
 	if (obj.count(field))
@@ -1041,7 +1013,6 @@ inline bool get_bool(const json& obj, const string& field)
 
 	return bool();
 }
-
 
 inline float get_float(const json& obj, const string& field)
 {
@@ -1062,7 +1033,6 @@ inline float get_float(const json& obj, const string& field)
 	return float();
 }
 
-
 inline float get_int(const json& obj, const string& field)
 {
 	if (obj.count(field))
@@ -1082,7 +1052,6 @@ inline float get_int(const json& obj, const string& field)
 	return int();
 }
 
-
 inline float get_unsigned(const json& obj, const string& field)
 {
 	if (obj.count(field))
@@ -1101,4 +1070,3 @@ inline float get_unsigned(const json& obj, const string& field)
 
 	return unsigned();
 }
-

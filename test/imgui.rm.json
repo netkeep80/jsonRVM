@@ -245,16 +245,24 @@
                "$obj" : "#/Calc/PendingOp",
                "$rel" : "#/switch/string",
                "$sub" : {
-                  "=" : {
-                     "#/Calc/Accum" : {
-                        "$obj" : "#/Calc/ReadOut/value",
-                        "$rel" : "#/float"
+                  "=" : [
+                     {
+                        "#/Calc/Accum" : {
+                           "$obj" : "#/Calc/ReadOut/value",
+                           "$rel" : "#/float"
+                        }
                      },
-                     "#/Calc/PendingOp" : {
-                        "$obj" : "$obj",
-                        "$rel" : "#/="
+                     {
+                        "#/Calc/ReadOut/value" : {
+                           "$obj" : "#/Calc/Accum",
+                           "$rel" : "#/string/="
+                        },
+                        "#/Calc/PendingOp" : {
+                           "$obj" : "$obj",
+                           "$rel" : "#/="
+                        }
                      }
-                  }
+                  ]
                }
             },
             "false" : [

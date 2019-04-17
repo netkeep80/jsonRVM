@@ -80,7 +80,7 @@ int main(int argc, char* argv[])
 		cout << "usage: jsonRVM.exe [input RM json file [output RM json file]]                 " << endl;
 		cout << "       jsonRVM.exe [input RM DLL file ]                                       " << endl;
 		cout << "       jsonRVM.exe [jsonRVM.exe]                                              " << endl;
-		return 1;
+		return 0;	//	ok
 	}
 
 	size_t fileNameInputLen = strlen(fileNameInput);
@@ -98,22 +98,22 @@ int main(int argc, char* argv[])
 				if (LoadAndInitDict(FullFileName, val))
 				{
 					cout << val.dump(3);
-					return 0;
+					return 0;	//	ok
 				}
 			}
 			catch (string& error)
 			{
-				cout << "Exception: " << error;
+				cerr << "Exception: " << error;
 			}
 			catch (std::exception& e)
 			{
-				cout << "Exception: " << e.what();
+				cerr << "Exception: " << e.what();
 			}
 			catch (...)
 			{
-				cout << "Unknown exception";
+				cerr << "Unknown exception";
 			}
-			return 1;
+			return 1;	//	error
 		}
 	}
 
@@ -122,43 +122,43 @@ int main(int argc, char* argv[])
 		val = json::object();
 		ImportRelationsModel(val);
 		cout << val.dump(3);
-		return 0;
+		return 0;	//	ok
 	}
 
 	json root;
 
 	try
 	{
-		std::ifstream in(fileNameInput);
-
-		if (in.good())
-			in >> root;
-		else
-			cerr << "Can't restore RM json from the " << fileNameInput << " file.\n";
-
-		// добавляем в корневую сущность базовый словарь
-		ImportRelationsModel(root);
-		//	создаём контекст исполнения
-		EntContext ctx(val, root["$obj"], root["$sub"], root, root);
-		JSONExec(ctx, root);
-		if (fileNameOutput) dump_json(string(fileNameOutput), root);
-
 		try
 		{
-			return val.get<int>();
-		}
-		catch (...)
-		{
-			cout << val.dump(3);
-			return 1;
-		}
-	}
-	catch (string& error)		{ cout << "#/"s + error; }
-	catch (json::exception& e)	{ cout << "json::exception: "s + e.what() + ", exception id: "s + to_string(e.id); }
-	catch (std::exception& e)	{ cout << "std::exception: "s + e.what(); }
-	catch (...)					{ cout << "unknown exception"s; }
+			std::ifstream in(fileNameInput);
 
+			if (in.good())
+				in >> root;
+			else
+				throw json("Can't restore RM json from the "s + fileNameInput + " file"s);
+
+			// добавляем в корневую сущность базовый словарь
+			ImportRelationsModel(root);
+			//	создаём контекст исполнения
+			EntContext ctx(val, root["$obj"], root["$sub"], root, root);
+			JSONExec(ctx, root);
+			if (fileNameOutput) dump_json(string(fileNameOutput), root);
+
+			cout << val.dump(3);
+			return 0;	//	ok
+		}
+		catch (json& j) { throw json({ { __FUNCTION__, j } }); }
+		catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+		catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
+		catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+	}
+	catch (json& j)
+	{
+		cerr << j.dump(3);
+	}
+	
 	if (fileNameOutput) dump_json(string(fileNameOutput), root);
-	return 1;
+	return 1;	//	error
 }
 

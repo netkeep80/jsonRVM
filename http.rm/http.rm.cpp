@@ -475,7 +475,7 @@ template<typename _convert>
 void  HTTP_METHOD(EntContext& ec, const method &mtd)
 {
 	if (!ec.obj.is_object())
-		throw(__FUNCTION__ + ": $sub must be object"s);
+		throw json({ { __FUNCTION__, ": $sub must be object"s} });
 
 	try
 	{
@@ -531,10 +531,10 @@ void  HTTP_METHOD(EntContext& ec, const method &mtd)
 		if (WebAPIStringAnswer.length())
 			_convert::to_json(ec.sub["body"], WebAPIStringAnswer);
 	}
-	catch (string& error)		{ throw("\n "s + __FUNCTION__ + "/"s + error); }
-	catch (json::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-	catch (std::exception& e)	{ throw("\n "s + __FUNCTION__ + "/"s + "std::exception: "s + e.what()); }
-	catch (...)	{ throw("\n "s + __FUNCTION__ + "/"s + "unknown exception"s); }
+	catch (json& j) { throw json({ { __FUNCTION__, j } }); }
+	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
+	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

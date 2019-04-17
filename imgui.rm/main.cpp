@@ -196,13 +196,19 @@ void form(EntContext& ec)
 	if (!ec.sub.count("title")) ec.sub["title"] = ""s;
 
 	bool&	visible = ec.sub["visible"].get_ref<bool&>();
-
-	if (visible)
+	try
 	{
-		ImGui::Begin(ec.sub["title"].get_ref<string&>().c_str(), &visible);
-		JSONExec(ec, ec.obj);
-		ImGui::End();
+		if (visible)
+		{
+			ImGui::Begin(ec.sub["title"].get_ref<string&>().c_str(), &visible);
+			JSONExec(ec, ec.obj);
+			ImGui::End();
+		}
 	}
+	catch (json& j) { throw json({ { __FUNCTION__, j } }); }
+	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
+	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
 }
 
 
@@ -274,12 +280,19 @@ void button(EntContext& ec)
 
 	bool&	visible = ec.sub["visible"].get_ref<bool&>();
 
-	if (visible)
+	try
 	{
-		ImVec2	size = { get_float(ec.sub, "width"s), get_float(ec.sub, "height"s) };
-		if (ImGui::Button(ec.sub["text"].get_ref<string&>().c_str(), size))
-			JSONExec(ec, ec.obj);	//	исполняем в текущем контексте
+		if (visible)
+		{
+			ImVec2	size = { get_float(ec.sub, "width"s), get_float(ec.sub, "height"s) };
+			if (ImGui::Button(ec.sub["text"].get_ref<string&>().c_str(), size))
+				JSONExec(ec, ec.obj);	//	исполняем в текущем контексте
+		}
 	}
+	catch (json& j) { throw json({ { __FUNCTION__, j } }); }
+	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
+	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s} }); }
 }
 
 

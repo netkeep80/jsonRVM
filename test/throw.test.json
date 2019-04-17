@@ -1,0 +1,5 @@
+{
+   "$obj" : "#/exception",
+   "$rel" : "#/throw",
+   "exception" : "this is a text of exception"
+}

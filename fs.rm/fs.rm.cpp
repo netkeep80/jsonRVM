@@ -115,10 +115,10 @@ namespace nlohmann
 void  fs_dir_scan(EntContext& ec)
 {
 	if (!ec.obj.is_object())
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	if (!ec.obj.count("PathFolder") || !ec.obj.count("FileNameFormat"))
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileNameFormat properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	string	FileNameFormat = ec.obj["FileNameFormat"];
 	string	PathFolder = ec.obj["PathFolder"];
@@ -150,7 +150,7 @@ void  fs_dir_scan(EntContext& ec)
 void  fs_dir_create(EntContext& ec)
 {
 	if (!ec.obj.is_string())
-		throw(__FUNCTION__ + ": $obj must be json string with PathName!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json string with PathName!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	string	PathName = utf8_to_cp1251(ec.obj);
 	ec.sub = bool(CreateDirectoryA(PathName.c_str(), nullptr));
@@ -159,7 +159,7 @@ void  fs_dir_create(EntContext& ec)
 void  fs_dir_delete(EntContext& ec)
 {
 	if (!ec.obj.is_string())
-		throw(__FUNCTION__ + ": $obj must be json string with PathName!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json string with PathName!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	string	PathName = utf8_to_cp1251(ec.obj);
 	ec.sub = bool(RemoveDirectoryA(PathName.c_str()));
@@ -168,16 +168,16 @@ void  fs_dir_delete(EntContext& ec)
 void  fs_file_load_rm(EntContext& ec)
 {
 	if (!ec.obj.is_object())
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	if (!ec.obj.count("PathFolder") || !ec.obj.count("FileName"))
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	string	PathName = utf8_to_cp1251(ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		throw(__FUNCTION__ + ": Can't load json from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "Can't load json from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	json	rm;
 	in >> rm;
@@ -195,16 +195,16 @@ void  fs_file_load_rm(EntContext& ec)
 void  fs_file_read_json(EntContext& ec)
 {
 	if (!ec.obj.is_object())
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	if (!ec.obj.count("PathFolder") || !ec.obj.count("FileName"))
-		throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	string	PathName = utf8_to_cp1251(ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		throw(__FUNCTION__ + ": Can't load json from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "Can't load json from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 
 	ec.val = true;
 	in >> ec.sub;
@@ -277,11 +277,11 @@ void  jsonFileToStringArray(EntContext& ec)
 				return;
 			}
 
-			throw(__FUNCTION__ + ": Can't load string array from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+			throw json({ { __FUNCTION__, "Can't load string array from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 		}
 	}
 
-	throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+	throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 }
 
 void  jsonStringArrayToFile(EntContext& ec)
@@ -304,13 +304,13 @@ void  jsonStringArrayToFile(EntContext& ec)
 				return;
 			}
 			else
-				throw(__FUNCTION__ + ": Can't create the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+				throw json({ { __FUNCTION__, "Can't create the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 		}
 		else
-			throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+			throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 	}
 	else
-		throw(__FUNCTION__ + ": $obj must be object and $sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+		throw json({ { __FUNCTION__, "$obj must be object and $sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 }
 
 void  fs_file_write_json(EntContext& ec)
@@ -330,12 +330,12 @@ void  fs_file_write_json(EntContext& ec)
 			}
 
 			ec.val = false;
-			throw(__FUNCTION__ + ": Can't open "s + PathName + " file.\n"s);
+			throw json({ { __FUNCTION__, "Can't open "s + PathName + " file.\n"s } });
 		}
 	}
 
 	ec.val = false;
-	throw(__FUNCTION__ + ": $obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump());
+	throw json({ { __FUNCTION__, "$obj must be json object with PathFolder and FileName property!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump() } });
 }
 
 
