@@ -13,14 +13,22 @@
       {
          "$obj" : [
             {
-               "$obj" : {
-                  "$obj" : "#/Phone",
-                  "$rel" : "#/="
-               },
-               "$rel" : "#/tag",
+               "$obj" : "#/Phone",
+               "$rel" : "#/foreachobj",
                "$sub" : {
-                  "<>" : "Phone"
+                  "$obj" : {
+                     "$obj" : "../$obj",
+                     "$rel" : "#/="
+                  },
+                  "$rel" : "#/tag",
+                  "$sub" : {
+                     "<>" : "Phone"
+                  }
                }
+            },
+            {
+               "$obj" : "#/splitter",
+               "$rel" : "#/string/join"
             }
          ],
          "$rel" : "#/tag",
@@ -83,8 +91,9 @@
    "$sub" : {
       "<>" : "request"
    },
-"Index" : "-1",
-   "Phone" : "89875421631",
+   "Index" : "-1",
+   "splitter" : "",
+   "Phone" : [ "89875421631", "89308073650" ],
    "Sca" : "",
    "Content" : "test message from watchdog",
    "Length" : "3",

@@ -108,12 +108,12 @@ public:
 			{
 				(FARPROC &)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
 				if (!it[LibName].Init)
-					throw(LibName + " does't has function "s + IMPORT_RELATIONS_MODEL);
+					throw json({ { __FUNCTION__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL} });
 			}
 			else
 			{
 				it[LibName].Init = nullptr;
-				throw("can't load '" + LibName + "' dictionary"s);
+				throw json({ { __FUNCTION__, "can't load '" + LibName + "' dictionary"s} });
 			}
 		}
 
@@ -1022,16 +1022,22 @@ void  json_switch_number(EntContext& ec)
 	if (ec.obj.is_null())
 		return;
 
-	if (!ec.obj.is_number_unsigned())
-		throw json({ { __FUNCTION__, "$obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+	if ( !(ec.obj.is_number_unsigned() || ec.obj.is_number_integer()) )
+		throw json({ { __FUNCTION__, "$obj must be number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
 
-	if (!ec.sub.is_array())
-		throw json({ { __FUNCTION__, "$sub must be json array!\n $sub = "s + ec.sub.dump()} });
+	if (!ec.sub.is_object())
+		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
 
 	try
 	{
-		size_t	id = ec.obj.get<size_t>();
-		if (id < ec.sub.size()) JSONExec(ec.ctx, ec.sub[id]);
+		string	key;
+		if (ec.obj.is_number_unsigned())
+			key = to_string(ec.obj.get<json::number_unsigned_t>());
+		else if (ec.obj.is_number_integer())
+			key = to_string(ec.obj.get<json::number_integer_t>());
+
+		if (ec.sub.count(key)) JSONExec(ec.ctx, ec.sub[key]);
+		else JSONExec(ec.ctx, ec.sub["default"]);
 	}
 	catch (json& j) { throw json({ { __FUNCTION__, j} }); }
 	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }

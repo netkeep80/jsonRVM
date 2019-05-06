@@ -671,16 +671,17 @@ namespace nlohmann
 	template<typename = void, typename = void>
 	struct adl_serializer;
 
-	template<template<typename U, typename V, typename... Args> class ObjectType = std::map,
+	template<
+		template<typename U, typename V, typename... Args> class ObjectType = std::map,
 		template<typename U, typename... Args> class ArrayType = std::vector,
-		class StringType = std::string, class BooleanType = bool,
+		class StringType = std::string,
+		class BooleanType = bool,
 		class NumberIntegerType = std::int32_t,
 		class NumberUnsignedType = std::uint32_t,
 		class NumberFloatType = float,
 		template<typename U> class AllocatorType = std::allocator,
-		template<typename T, typename SFINAE = void> class JSONSerializer =
-		adl_serializer>
-		class basic_json;
+		template<typename T, typename SFINAE = void> class JSONSerializer =	adl_serializer
+	> class basic_json;
 
 	template<typename BasicJsonType>
 	class json_pointer;
@@ -695,7 +696,7 @@ using namespace std;
 using namespace nlohmann;
 
 ////////////////////////////// VERSION //////////////////////////////
-const string RVM_version = "2.2.0.4"s;
+const string RVM_version = "2.2.1.5"s;
 ////////////////////////////// VERSION //////////////////////////////
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
@@ -772,9 +773,10 @@ inline json& ReferEntity(EntContext& ec, const string& str)
 	while (true)
 	{
 		pos = str.find_first_of('/', prev);
+		string it = str.substr(prev, pos - prev);
 		if (pos == string::npos)
 		{
-			SWITCH(str)
+			SWITCH(it)
 			{
 			CASE("..") :	throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} });
 			CASE("#") :		return ctxptr->root;
@@ -786,7 +788,6 @@ inline json& ReferEntity(EntContext& ec, const string& str)
 			}
 		}
 
-		string it = str.substr(prev, pos - prev);
 		prev = pos + 1;
 
 		SWITCH(it)
