@@ -1080,7 +1080,11 @@ void  json_catch(EntContext& ec)
 	{
 		JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx, ec.root), ec.obj);
 	}
-	catch (json& j) { ec.sub = j; }
+	catch (json& j)
+	{
+		ec.val = j;
+		JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx, ec.root), ec.sub);
+	}
 }
 
 
@@ -1313,7 +1317,7 @@ void  ImportRelationsModel(json &Ent)
 	Addx86Entity(Ent["switch"], "number"s, json_switch_number, ""s);
 	Addx86Entity(Ent["switch"], "string"s, json_switch_string, ""s);
 	Addx86Entity(Ent, "throw"s, json_throw, "");
-	Addx86Entity(Ent, "catch"s, json_catch, "");
+	Addx86Entity(Ent, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
 
 	//	display
 	Addx86Entity(Ent, "print"s, jsonPrint, ""s);

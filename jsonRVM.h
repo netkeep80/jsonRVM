@@ -696,7 +696,7 @@ using namespace std;
 using namespace nlohmann;
 
 ////////////////////////////// VERSION //////////////////////////////
-const string RVM_version = "2.2.1.5"s;
+const string RVM_version = "2.3.1.6"s;
 ////////////////////////////// VERSION //////////////////////////////
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
@@ -857,10 +857,10 @@ inline void JSONExec(EntContext& ec, json &rel)
 			((x86View)rel.get<size_t>())(ec);
 			return;
 		}
-		catch (json& j)					{ throw json({ {rel.dump(), j} }); }
-		catch (json::exception& e)		{ throw json({ {rel.dump(), "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }
-		catch (std::exception& e)		{ throw json({ {rel.dump(), "std::exception: "s + e.what()} }); }
-		catch (...)						{ throw json({ {rel.dump(), "unknown exception"s} }); }
+		catch (json& j)					{ throw j; }
+		catch (json::exception& e)		{ throw json("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e)		{ throw json("std::exception: "s + e.what()); }
+		catch (...)						{ throw json("unknown exception"s); }
 
 	//	иерархический путь к json значению
 	case json::value_t::string:
