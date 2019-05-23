@@ -1,1 +1,1 @@
-.\..\Release\jsonRVM.exe imgui.rm.json rvm.dump.json
+.\..\Release\jsonRVM.exe imgui.rm.json

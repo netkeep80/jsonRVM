@@ -1,1 +1,1 @@
-.\..\Release\jsonRVM.exe fs.rm.test.json rvm.dump.json
+.\..\Release\jsonRVM.exe fs.rm.test.json

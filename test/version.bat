@@ -1,1 +1,1 @@
-.\..\Release\jsonRVM.exe version.json rvm.dump.json
+.\..\Release\jsonRVM.exe version.json

@@ -53,12 +53,12 @@ void	dump_json(string& filename, json& val)
 int main(int argc, char* argv[])
 {
 	json	val;
-	char *fileNameInput = NULL, *fileNameOutput = NULL;
+	char *fileNameInput = NULL, *entryPoint = NULL;
 
 	switch (argc)
 	{
 	case 3:
-		fileNameOutput = argv[2];
+		entryPoint = argv[2];
 	case 2:
 		fileNameInput = argv[1];
 		break;
@@ -77,8 +77,9 @@ int main(int argc, char* argv[])
 		cout << "Licensed under the MIT License <http://opensource.org/licenses/MIT>.          " << endl;
 		cout << "Copyright (c) 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
 		cout << "                                                                              " << endl;
-		cout << "usage: jsonRVM.exe [input RM json file [output RM json file]]                 " << endl;
-		cout << "       jsonRVM.exe [input RM DLL file ]                                       " << endl;
+		cout << "Usage:                                                                        " << endl;
+		cout << "       jsonRVM.exe [relation_model.json] <main_entry_point>                   " << endl;
+		cout << "       jsonRVM.exe [relation_model_library.dll]                               " << endl;
 		cout << "       jsonRVM.exe [jsonRVM.exe]                                              " << endl;
 		return 0;	//	ok
 	}
@@ -141,9 +142,9 @@ int main(int argc, char* argv[])
 			// добавляем в корневую сущность базовый словарь
 			ImportRelationsModel(root);
 			//	создаём контекст исполнения
-			EntContext ctx(val, root["$obj"], root["$sub"], root, root);
-			JSONExec(ctx, root);
-			if (fileNameOutput) dump_json(string(fileNameOutput), root);
+			EntContext ctx(val, root, root, root, root);
+			if (entryPoint) JSONExec(ctx, json(entryPoint));
+			else JSONExec(ctx, root);
 
 			cout << val.dump(3);
 			return 0;	//	ok
@@ -156,9 +157,9 @@ int main(int argc, char* argv[])
 	catch (json& j)
 	{
 		cerr << j.dump(3);
+		dump_json("rvm.dump.json"s, root);
 	}
 	
-	if (fileNameOutput) dump_json(string(fileNameOutput), root);
 	return 1;	//	error
 }
 
