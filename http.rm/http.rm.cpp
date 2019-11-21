@@ -11,7 +11,6 @@ using namespace utility;
 using namespace pplx;
 //using namespace web;
 using namespace web::details;
-//using namespace web::json;
 using namespace web::http;
 using namespace web::http::oauth2;
 using namespace web::http::oauth2::experimental;
@@ -487,14 +486,22 @@ void  HTTP_METHOD(EntContext& ec, const method &mtd)
 		if (uri.is_string()) base_uri = utf8_to_wstring(uri);
 		else if (uri.is_object())
 		{
-			uri_components components;
+			/*uri_components components;
 			if (uri.count("scheme"))	components.m_scheme = utf8_to_wstring(uri["scheme"]);
 			if (uri.count("host"))		components.m_host = utf8_to_wstring(uri["host"]);
 			if (uri.count("user_info"))	components.m_user_info = utf8_to_wstring(uri["user_info"]);
 			if (uri.count("path"))		components.m_path = utf8_to_wstring(uri["path"]);
 			if (uri.count("query"))		components.m_query = utf8_to_wstring(uri["query"]);
-			if (uri.count("fragment"))	components.m_fragment = utf8_to_wstring(uri["fragment"]);
-			base_uri = components;
+			if (uri.count("fragment"))	components.m_fragment = utf8_to_wstring(uri["fragment"]);*/
+
+			uri_builder components;
+			if (uri.count("scheme"))	components.set_scheme( utf8_to_wstring(uri["scheme"]));
+			if (uri.count("host"))		components.set_host( utf8_to_wstring(uri["host"]));
+			if (uri.count("user_info"))	components.set_user_info( utf8_to_wstring(uri["user_info"]));
+			if (uri.count("path"))		components.set_path( utf8_to_wstring(uri["path"]));
+			if (uri.count("query"))		components.set_query( utf8_to_wstring(uri["query"]));
+			if (uri.count("fragment"))	components.set_fragment( utf8_to_wstring(uri["fragment"]));
+			base_uri = components.to_uri();
 		}
 
 		if (ec.obj.count("timeout"))
