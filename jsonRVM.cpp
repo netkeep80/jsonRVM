@@ -474,7 +474,7 @@ void  jsonForEachObject(EntContext& ec)
 				json& value = ec.val[i];
 				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.sub); i++;
 			}
-			catch (json& j) { throw json({ { __FUNCTION__, {"/["s + to_string(i) + "]/"s, j }} }); }
+			catch (json& j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
 		}
 	}
 	else
@@ -495,7 +495,7 @@ void  jsonForEachSubject(EntContext& ec)
 				json& value = ec.val[i];
 				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.obj); i++;
 			}
-			catch (json& j) { throw json({ { __FUNCTION__, {"/["s + to_string(i) + "]/"s, j }} }); }
+			catch (json & j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
 		}
 	}
 	else
@@ -905,7 +905,7 @@ void  jsonWhere(EntContext& ec)
 						ec.val.push_back(it);	//	фильтруем
 				i++;
 			}
-			catch (json& j) { throw json({ { __FUNCTION__, {"/["s + to_string(i) + "]/"s, j }} }); }
+			catch (json & j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
 		}
 	}
 	else
