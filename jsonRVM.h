@@ -755,7 +755,7 @@ using namespace std;
 using namespace nlohmann;
 
 ////////////////////////////// VERSION //////////////////////////////
-const string RVM_version = "2.4.3.51"s;
+const string RVM_version = "2.5.0.52"s;
 ////////////////////////////// VERSION //////////////////////////////
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
@@ -803,6 +803,18 @@ vector<_T> split(const _T& str, const _T& delim, bool find_empty = false)
 		prev = pos + delim.length();
 	} while (pos < str.length() && prev < str.length());
 	return tokens;
+}
+
+inline void throw_json(const EntContext& ec, const string& function, const json& error)
+{
+	json	j;
+	j["__FUNCTION__"] = function;
+	j["exception"] = error;
+	j["EntContext"]["./"] = ec.ent;
+	j["EntContext"]["$sub/"] = ec.sub;
+	j["EntContext"]["$obj/"] = ec.obj;
+	j["EntContext"]["/"] = ec.val;
+	throw j;
 }
 
 inline void	ReferProperty(size_t& segment, const string& it)

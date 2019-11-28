@@ -205,10 +205,10 @@ void form(EntContext& ec)
 			ImGui::End();
 		}
 	}
-	catch (json& j) { throw json({ { __FUNCTION__, j } }); }
-	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
-	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
-	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+	catch (json & j) { throw json({ { __FUNCTION__, j } }); }
+	catch (json::exception & e) { throw_json(ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception & e) { throw_json(ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json(ec, __FUNCTION__, "unknown exception"s); }
 }
 
 
@@ -289,10 +289,10 @@ void button(EntContext& ec)
 				JSONExec(ec, ec.obj);	//	исполняем в текущем контексте
 		}
 	}
-	catch (json& j) { throw json({ { __FUNCTION__, j } }); }
-	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
-	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
-	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s} }); }
+	catch (json & j) { throw json({ { __FUNCTION__, j } }); }
+	catch (json::exception & e) { throw_json(ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception & e) { throw_json(ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json(ec, __FUNCTION__, "unknown exception"s); }
 }
 
 

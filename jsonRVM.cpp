@@ -133,19 +133,26 @@ bool	LoadAndInitDict(const string& LibName, json &Ent)
 
 void  jsonLoadDLL(EntContext& ec)
 {
-	if (ec.obj.is_object())
+	try
 	{
-		if (ec.obj.count("PathFolder") && ec.obj.count("FileName"))
+		if (ec.obj.is_object())
 		{
-			string	FullFileName = ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>();
-			if (!ec.sub.is_object()) ec.sub = json::object();
-			ec.val = LoadAndInitDict(FullFileName, ec.sub);
-			return;
+			if (ec.obj.count("PathFolder") && ec.obj.count("FileName"))
+			{
+				string	FullFileName = ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>();
+				if (!ec.sub.is_object()) ec.sub = json::object();
+				ec.val = LoadAndInitDict(FullFileName, ec.sub);
+				return;
+			}
 		}
 	}
+	catch (json & j) { throw_json(ec, __FUNCTION__, j); }
+	catch (json::exception & e) { throw_json(ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception & e) { throw_json(ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json(ec, __FUNCTION__, "unknown exception"s); }
 
 	ec.val = false;
-	throw json({ { __FUNCTION__, "$obj must be json object with PathFolder, FileName properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+	throw_json(ec, __FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
 }
 
 
@@ -474,11 +481,11 @@ void  jsonForEachObject(EntContext& ec)
 				json& value = ec.val[i];
 				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.sub); i++;
 			}
-			catch (json& j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
+			catch (json& j) { throw_json( ec, __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
 		}
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be array!"s );
 }
 
 void  jsonForEachSubject(EntContext& ec)
@@ -495,11 +502,11 @@ void  jsonForEachSubject(EntContext& ec)
 				json& value = ec.val[i];
 				JSONExec(EntContext(value, it, value, ec.ent, ec.ctx, ec.root), ec.obj); i++;
 			}
-			catch (json & j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
+			catch (json & j) { throw_json( ec, __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
 		}
 	}
 	else
-		throw json({ { __FUNCTION__, "$sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be array!"s );
 }
 
 void  jsonSize(EntContext& ec)
@@ -543,7 +550,7 @@ void  jsonIntegerSequence(EntContext& ec)
 			ec.sub.push_back(i);
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj must has 'from', 'to' and 'step' properties!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must has 'from', 'to' and 'step' properties!"s );
 }
 
 void  jsonUnion(EntContext& ec)
@@ -703,7 +710,7 @@ void  string_add(EntContext& ec)
 
 void  string_find(EntContext& ec)
 {
-	if (!(ec.obj.is_string() && ec.sub.is_string())) throw json({ { __FUNCTION__, "$obj and $sub must be strings!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+	if (!(ec.obj.is_string() && ec.sub.is_string())) throw_json( ec, __FUNCTION__, "$obj and $sub must be strings!"s );
 	ec.val = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
 }
 
@@ -726,7 +733,7 @@ void  string_split(EntContext& ec)
 		} while (pos < str.length() && prev < str.length());
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj and $sub must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj and $sub must be string!"s );
 }
 
 void  string_join(EntContext& ec)
@@ -747,7 +754,7 @@ void  string_join(EntContext& ec)
 			{
 			case json::value_t::object:
 			case json::value_t::array:
-				throw json({ { __FUNCTION__, "$sub must be array of simple type values!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+				throw_json( ec, __FUNCTION__, "$sub must be array of simple type values!"s );
 
 			case json::value_t::number_float:
 				result += to_string(it.get<json::number_float_t>());
@@ -777,7 +784,7 @@ void  string_join(EntContext& ec)
 		ec.val = result;
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj must be string and $sub must be array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be string and $sub must be array!"s );
 }
 
 void  jsonGet(EntContext& ec)
@@ -787,17 +794,17 @@ void  jsonGet(EntContext& ec)
 		if (ec.obj.is_number())
 			ec.val = ec.sub[ec.obj.get<size_t>()];
 		else
-			throw json({ { __FUNCTION__, "$obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be unsigned number!"s );
 	}
 	else if (ec.sub.is_object())
 	{
 		if (ec.obj.is_string())
 			ec.val = ec.sub[ec.obj.get_ref<string&>()];
 		else
-			throw json({ { __FUNCTION__, "$obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be string!"s );
 	}
 	else
-		throw json({ { __FUNCTION__, "$sub must be array or object!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be array or object!"s );
 }
 
 void  jsonSet(EntContext& ec)
@@ -807,14 +814,14 @@ void  jsonSet(EntContext& ec)
 		if (ec.obj.is_number_unsigned())
 			ec.sub[ec.obj.get<size_t>()] = ec.val;
 		else
-			throw json({ { __FUNCTION__, "$obj must be unsigned number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be unsigned number!"s );
 	}
 	else if (ec.sub.is_object())
 	{
 		if (ec.obj.is_string())
 			ec.sub[ec.obj.get_ref<string&>()] = ec.val;
 		else
-			throw json({ { __FUNCTION__, "$obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be string!"s );
 	}
 	else if (ec.sub.is_null())
 	{
@@ -823,10 +830,10 @@ void  jsonSet(EntContext& ec)
 		else if (ec.obj.is_string())
 			ec.sub[ec.obj.get_ref<string&>()] = ec.val;
 		else
-			throw json({ { __FUNCTION__, "$obj must be unsigned number or string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be unsigned number or string!"s );
 	}
 	else
-		throw json({ { __FUNCTION__, "$sub must be array, object or null!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be array, object or null!"s );
 }
 
 void  jsonErase(EntContext& ec)
@@ -836,10 +843,10 @@ void  jsonErase(EntContext& ec)
 		if (ec.obj.is_string())
 			ec.sub.erase(ec.obj.get_ref<string&>());
 		else
-			throw json({ { __FUNCTION__, "$obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+			throw_json( ec, __FUNCTION__, "$obj must be string!"s );
 	}
 	else
-		throw json({ { __FUNCTION__, "$sub must be object!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be object!"s );
 }
 
 void  jsonIsEq(EntContext& ec)
@@ -883,7 +890,7 @@ void  jsonSum(EntContext& ec)
 		return;
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj must be json array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be json array!"s );
 }
 
 void  jsonWhere(EntContext& ec)
@@ -905,11 +912,11 @@ void  jsonWhere(EntContext& ec)
 						ec.val.push_back(it);	//	фильтруем
 				i++;
 			}
-			catch (json & j) { throw json({ { __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })} }); }
+			catch (json & j) { throw_json( ec, __FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
 		}
 	}
 	else
-		throw json({ { __FUNCTION__, "$obj must be json array!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be json array!"s );
 }
 
 void  jsonBelow(EntContext& ec)	//	<
@@ -952,13 +959,13 @@ void  jsonAnd(EntContext& ec)
 	if (ec.sub.is_boolean() && ec.obj.is_boolean())
 		ec.val = ec.sub.get<bool>() && ec.obj.get<bool>();
 	else
-		throw json({ { __FUNCTION__, "$obj and $sub must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj and $sub must be boolean!"s );
 }
 
 void  IfObjTrueThenExecSub(EntContext& ec)
 {
 	if (!ec.obj.is_boolean())
-		throw json({ { __FUNCTION__, "$obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be boolean!"s );
 
 	try
 	{
@@ -971,7 +978,7 @@ void  IfObjTrueThenExecSub(EntContext& ec)
 void  IfObjFalseThenExecSub(EntContext& ec)
 {
 	if (!ec.obj.is_boolean())
-		throw json({ { __FUNCTION__, "$obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be boolean!"s );
 
 	try
 	{
@@ -985,7 +992,7 @@ void  ExecSubWhileObjTrue(EntContext& ec)
 {
 	while (true)
 	{
-		if (!ec.obj.is_boolean()) throw json({ { __FUNCTION__, "$obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		if (!ec.obj.is_boolean()) throw_json( ec, __FUNCTION__, "$obj must be boolean!"s );
 		if (!ec.obj.get<bool>()) return;
 		try
 		{
@@ -1001,10 +1008,10 @@ void  json_switch_bool(EntContext& ec)
 		return;
 
 	if (!ec.obj.is_boolean())
-		throw json({ { __FUNCTION__, "$obj must be boolean!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be boolean!"s );
 
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	try
 	{
@@ -1012,9 +1019,9 @@ void  json_switch_bool(EntContext& ec)
 		else	JSONExec(ec.ctx, ec.sub["false"]);
 	}
 	catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }
-	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what()} }); }
-	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s} }); }
+	catch (json::exception& e) { throw_json( ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw_json( ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json( ec, __FUNCTION__, "unknown exception"s); }
 }
 
 void  json_switch_number(EntContext& ec)
@@ -1023,10 +1030,10 @@ void  json_switch_number(EntContext& ec)
 		return;
 
 	if ( !(ec.obj.is_number_unsigned() || ec.obj.is_number_integer()) )
-		throw json({ { __FUNCTION__, "$obj must be number!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be number!"s );
 
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	try
 	{
@@ -1040,9 +1047,9 @@ void  json_switch_number(EntContext& ec)
 		else JSONExec(ec.ctx, ec.sub["default"]);
 	}
 	catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }
-	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what()} }); }
-	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s} }); }
+	catch (json::exception& e) { throw_json( ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw_json( ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json( ec, __FUNCTION__, "unknown exception"s); }
 }
 
 
@@ -1052,10 +1059,10 @@ void  json_switch_string(EntContext& ec)
 		return;
 
 	if (!ec.obj.is_string())
-		throw json({ { __FUNCTION__, "$obj must be string!\n $obj = "s + ec.obj.dump() + "\n $sub = " + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$obj must be string!"s );
 
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	try
 	{
@@ -1063,9 +1070,9 @@ void  json_switch_string(EntContext& ec)
 		else JSONExec(ec.ctx, ec.sub["default"]);
 	}
 	catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-	catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)} }); }
-	catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what()} }); }
-	catch (...) { throw json({ { __FUNCTION__, "unknown exception"s} }); }
+	catch (json::exception& e) { throw_json( ec, __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+	catch (std::exception& e) { throw_json( ec, __FUNCTION__, "std::exception: "s + e.what()); }
+	catch (...) { throw_json( ec, __FUNCTION__, "unknown exception"s); }
 }
 
 
@@ -1120,7 +1127,7 @@ void  jsonPrint(EntContext& ec)
 void  jsonTAG(EntContext& ec)
 {
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	string	tag = ec.sub["<>"];
 
@@ -1149,7 +1156,7 @@ void  jsonXML(EntContext& ec)
 	std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
 
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	string	tag = ec.sub["<>"];
 
@@ -1180,7 +1187,7 @@ void  jsonHTML(EntContext& ec)
 	std::string res = "<!DOCTYPE html>"s;
 
 	if (!ec.sub.is_object())
-		throw json({ { __FUNCTION__, "$sub must be json object!\n $sub = "s + ec.sub.dump()} });
+		throw_json( ec, __FUNCTION__, "$sub must be json object!"s );
 
 	string	tag = ec.sub["<>"];
 
