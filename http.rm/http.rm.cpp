@@ -367,6 +367,46 @@ void jsonToXML(EntContext& ec)
 	ec.sub = json2xml(ec.obj);
 }
 
+struct application_x_www_form_urlencoded
+{
+	static wstring content_type() { return L"application/x-www-form-urlencoded"; }
+	static void to_json(json& j, const wstring& data) { j = json::parse(wstring_to_utf8(data)); }
+	static void from_json(const json& j, wstring& data)
+	{
+		switch (j.type())
+		{
+		case json::value_t::string:		//	строка с параметрами запроса
+			data = utf8_to_wstring(j.get<string>());
+			return;
+
+			//	объект с параметрами запроса
+		case json::value_t::object:
+			data = utf8_to_wstring(""s);
+
+			for (auto& it : j.items())
+			{
+				if (data.length() == 0)
+				{
+					if(it.value().type() == json::value_t::string)
+						data += utf8_to_wstring(it.key() + "="s + it.value().get<string>());
+					else
+						data += utf8_to_wstring(it.key() + "="s + it.value().dump());
+				}
+				else
+				{
+					if (it.value().type() == json::value_t::string)
+						data += utf8_to_wstring("&"s + it.key() + "="s + it.value().get<string>());
+					else
+						data += utf8_to_wstring("&"s + it.key() + "="s + it.value().dump());
+				}
+			}
+			return;
+
+		default:
+			throw json("Body of request must be string or object!");
+		}
+	}
+};
 
 struct application_json
 {
@@ -486,14 +526,6 @@ void  HTTP_METHOD(EntContext& ec, const method &mtd)
 		if (uri.is_string()) base_uri = utf8_to_wstring(uri);
 		else if (uri.is_object())
 		{
-			/*uri_components components;
-			if (uri.count("scheme"))	components.m_scheme = utf8_to_wstring(uri["scheme"]);
-			if (uri.count("host"))		components.m_host = utf8_to_wstring(uri["host"]);
-			if (uri.count("user_info"))	components.m_user_info = utf8_to_wstring(uri["user_info"]);
-			if (uri.count("path"))		components.m_path = utf8_to_wstring(uri["path"]);
-			if (uri.count("query"))		components.m_query = utf8_to_wstring(uri["query"]);
-			if (uri.count("fragment"))	components.m_fragment = utf8_to_wstring(uri["fragment"]);*/
-
 			uri_builder components;
 			if (uri.count("scheme"))	components.set_scheme( utf8_to_wstring(uri["scheme"]));
 			if (uri.count("host"))		components.set_host( utf8_to_wstring(uri["host"]));
@@ -546,6 +578,10 @@ void  HTTP_METHOD(EntContext& ec, const method &mtd)
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void  HTTP_GET_urlencoded(EntContext& ec)    { HTTP_METHOD<application_x_www_form_urlencoded>(ec, methods::GET); }
+void  HTTP_POST_urlencoded(EntContext& ec)   { HTTP_METHOD<application_x_www_form_urlencoded>(ec, methods::POST); }
+void  HTTP_PUT_urlencoded(EntContext& ec)    { HTTP_METHOD<application_x_www_form_urlencoded>(ec, methods::PUT); }
+void  HTTP_DELETE_urlencoded(EntContext& ec) { HTTP_METHOD<application_x_www_form_urlencoded>(ec, methods::DEL); }
 void  HTTP_GET_json(EntContext& ec)    { HTTP_METHOD<application_json>(ec, methods::GET); }
 void  HTTP_POST_json(EntContext& ec)   { HTTP_METHOD<application_json>(ec, methods::POST); }
 void  HTTP_PUT_json(EntContext& ec)    { HTTP_METHOD<application_json>(ec, methods::PUT); }
@@ -591,6 +627,10 @@ __declspec(dllexport) void ImportRelationsModel(json &Ent)
 {
 	Ent["HTTP"]["RVM_version"] = RVM_version;
 	Addx86Entity(Ent, "ToXML"s, jsonToXML, "");
+	Addx86Entity(Ent["HTTP"]["GET"], "urlencoded"s, HTTP_GET_urlencoded, "");
+	Addx86Entity(Ent["HTTP"]["POST"], "urlencoded"s, HTTP_POST_urlencoded, "");
+	Addx86Entity(Ent["HTTP"]["PUT"], "urlencoded"s, HTTP_PUT_urlencoded, "");
+	Addx86Entity(Ent["HTTP"]["DEL"], "urlencoded"s, HTTP_DELETE_urlencoded, "");
 	Addx86Entity(Ent["HTTP"]["GET"], "json"s, HTTP_GET_json,    "");
 	Addx86Entity(Ent["HTTP"]["POST"],"json"s, HTTP_POST_json,   "");
 	Addx86Entity(Ent["HTTP"]["PUT"], "json"s, HTTP_PUT_json,    "");
