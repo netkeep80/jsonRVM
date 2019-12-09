@@ -755,7 +755,7 @@ using namespace std;
 using namespace nlohmann;
 
 ////////////////////////////// VERSION //////////////////////////////
-const string RVM_version = "2.5.0.52"s;
+const string RVM_version = "2.5.1.53"s;
 ////////////////////////////// VERSION //////////////////////////////
 
 inline  size_t ref2id(json& ref_val)  { return (size_t)&ref_val; }
@@ -830,15 +830,18 @@ inline void	ReferProperty(size_t& segment, const string& it)
 	}
 	else if (ref.is_null())
 	{
-		try {
-			ref = json::array();
-			segment = ref2id(ref[std::stoul(it)]);
-		}
-		catch (...)	//	это не число
-		{
-			ref = json::object();
+		int& _Errno_ref = errno; // Nonzero cost, pay it once
+		const char* _Ptr = it.c_str();
+		char* _Eptr;
+		_Errno_ref = 0;
+		unsigned index = strtoul(_Ptr, &_Eptr, 10);
+
+		if (_Errno_ref == ERANGE) throw json({ {__FUNCTION__, it} });
+
+		if (_Ptr == _Eptr)
 			segment = ref2id(ref[it]);
-		}
+		else
+			segment = ref2id(ref[index]);
 	}
 	else
 		throw json({ {__FUNCTION__, it} });
@@ -981,7 +984,7 @@ inline void JSONExec(EntContext& ec, json &rel)
 					ReferEntity(ec, rel["$rel"])
 				);
 			}
-			catch (json& j)				{ throw json({ {"$rel"s, j} }); }	//	rel["$rel"].dump()
+			catch (json& j)				{ throw json({ {"$rel"s, j} }); }
 		}
 		else//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 		{
