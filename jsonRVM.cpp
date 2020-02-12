@@ -1247,6 +1247,7 @@ void  jsonStopClock(EntContext& ec)
 
 void  ImportRelationsModel(json &Ent)
 {
+	import_help(Ent);
 	Ent["RVM_version"] = RVM_version;
 	Addx86Entity(Ent["RVM"]["load"], "dll"s, jsonLoadDLL, "загружает словарь сущностей из dll");
 	Addx86Entity(Ent["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);

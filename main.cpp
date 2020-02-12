@@ -53,7 +53,8 @@ void	dump_json(string& filename, json& val)
 int main(int argc, char* argv[])
 {
 	json	val;
-	char *fileNameInput = NULL, *entryPoint = NULL;
+	char	*fileNameInput = NULL,
+			*entryPoint = NULL;	//	вторым аргументом должна идти текущая проекция сущности, т.е. её состояние, содержимое локального адресного пространства
 
 	switch (argc)
 	{
@@ -127,6 +128,7 @@ int main(int argc, char* argv[])
 	}
 
 	json root;
+	//unordered_map<json*, x86View> dict;
 
 	try
 	{
