@@ -313,6 +313,8 @@ context_entity_value = $sub->$rel( context_entity_value, $obj );
 
 */
 #pragma once
+
+/*
 #ifndef NLOHMANN_JSON_FWD_HPP
 #define NLOHMANN_JSON_FWD_HPP
 
@@ -322,29 +324,6 @@ context_entity_value = $sub->$rel( context_entity_value, $obj );
 #include <memory> // allocator
 #include <string> // string
 #include <vector> // vector
-
-////////////////////////////////////////////////////////////////////////////////
-//	https://habr.com/ru/post/166201/
-#define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
-#define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
-"CASE string contains wrong characters, or its length is greater than 9");\
-case s_s::str_hash(str, s_s::str_len(str))
-#define DEFAULT  default
-
-namespace s_s
-{
-	typedef unsigned char uchar;
-	typedef unsigned long ullong;
-	const uchar MAX_LEN = 4;
-	const ullong N_HASH = static_cast<ullong>(-1);
-	constexpr ullong raise_128_to(const uchar power) { return 1ULL << 7 * power; }
-	constexpr bool str_is_correct(const char* const str) { return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true); }
-	constexpr uchar str_len(const char* const str) { return *str ? (1 + str_len(str + 1)) : 0; }
-	constexpr ullong str_hash(const char* const str, const uchar current_len) { return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0; }
-	inline ullong str_hash_for_switch(const char* const str) { return str_hash(str, str_len(str)); }
-	inline ullong str_hash_for_switch(const std::string& str) { return str_hash(str.c_str(), str.length()); }
-}
-////////////////////////////////////////////////////////////////////////////////
 
 //	32 bit datatypes for x68 build
 namespace nlohmann
@@ -371,10 +350,35 @@ namespace nlohmann
 }
 
 #endif
+*/
 #include "./nlohmann/json.hpp"
 
 using namespace std;
 using namespace nlohmann;
+
+////////////////////////////////////////////////////////////////////////////////
+//	https://habr.com/ru/post/166201/
+#define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
+#define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
+"CASE string contains wrong characters, or its length is greater than 9");\
+case s_s::str_hash(str, s_s::str_len(str))
+#define DEFAULT  default
+
+namespace s_s
+{
+	typedef unsigned char uchar;
+	typedef unsigned long ullong;
+	const uchar MAX_LEN = 4;
+	const ullong N_HASH = static_cast<ullong>(-1);
+	constexpr ullong raise_128_to(const uchar power) { return 1ULL << 7 * power; }
+	constexpr bool str_is_correct(const char* const str) { return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true); }
+	constexpr uchar str_len(const char* const str) { return *str ? (1 + str_len(str + 1)) : 0; }
+	constexpr ullong str_hash(const char* const str, const uchar current_len) { return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0; }
+	inline ullong str_hash_for_switch(const char* const str) { return str_hash(str, str_len(str)); }
+	inline ullong str_hash_for_switch(const std::string& str) { return str_hash(str.c_str(), str.length()); }
+}
+////////////////////////////////////////////////////////////////////////////////
+
 
 inline void	import_help(json& j)
 {
@@ -801,7 +805,7 @@ inline void	import_help(json& j)
 }
 
 ////////////////////////////// VERSION //////////////////////////////
-const string RVM_version = "2.5.1.54"s;
+const string RVM_version = "2.6.0.55"s;
 ////////////////////////////// VERSION //////////////////////////////
 
 
@@ -843,7 +847,10 @@ struct EntContext
 
 inline  void	JSONExec(EntContext& ec, json& rel);
 
-#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+//	32 bit
+//#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_NHIMVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
+//	64 bit
+#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@@YAXAAV?$basic_json@Vmap@std@@Vvector@2@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@_N_J_KNVallocator@2@Uadl_serializer@nlohmann@@@nlohmann@@@Z"
 __declspec(dllexport) void ImportRelationsModel(json &Ent);
 typedef void (*InitDict)(json &Ent);
 static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
