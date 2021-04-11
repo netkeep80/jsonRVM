@@ -1,0 +1,12 @@
+{
+   "$rel" : [
+      {
+         "$obj" : "RVM_version",
+         "$rel" : "=",
+         "$sub" : "$val/RVM_version"
+      },
+      {
+         "$val/meta" : "json/meta"
+      }
+   ]
+}

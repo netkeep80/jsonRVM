@@ -1,0 +1,6 @@
+{
+   "$sub" : "vasya_pupkin.json",
+   "$obj" : "petya_petrov.json",
+   "$rel" : "ruble.json",
+   "date" : "13.02.2021"
+}

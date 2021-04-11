@@ -1,0 +1,102 @@
+{
+   "$obj" : [
+      {
+         "$obj" : {
+            "$obj" : "$ent/Index",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Index"
+         }
+      },
+      {
+         "$obj" : [
+            {
+               "$obj" : "$up1ent/Phone",
+               "$rel" : "foreachobj",
+               "$sub" : {
+                "$obj": {
+                  "$obj": "$up1obj",
+                  "$rel": "="
+                },
+                  "$rel" : "tag",
+                  "$sub" : {
+                     "<>" : "Phone"
+                  }
+               }
+            },
+          {
+            "$obj": "$up1ent/splitter",
+            "$rel": "string/join"
+          }
+         ],
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Phones"
+         }
+      },
+      {
+         "$obj" : {
+            "$obj" : "$ent/Sca",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Sca"
+         }
+      },
+      {
+         "$obj" : {
+            "$obj" : "$ent/Content",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Content"
+         }
+      },
+      {
+         "$obj" : {
+            "$obj" : "$ent/Length",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Length"
+         }
+      },
+      {
+         "$obj" : {
+            "$obj" : "$ent/Reserved",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Reserved"
+         }
+      },
+      {
+         "$obj" : {
+            "$obj" : "$ent/Date",
+            "$rel" : "="
+         },
+         "$rel" : "tag",
+         "$sub" : {
+            "<>" : "Date"
+         }
+      }
+   ],
+   "$rel" : "xml",
+   "$sub" : {
+      "<>" : "request"
+   },
+   "Index" : "-1",
+   "splitter" : "",
+   "Phone" : [ "89875421631", "89308073650" ],
+   "Sca" : "",
+   "Content" : "test message from watchdog",
+   "Length" : "3",
+   "Reserved" : "1",
+   "Date" : "2017-12-18 15:01:01"
+}

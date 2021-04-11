@@ -1,0 +1,37 @@
+{
+   "$rel" : [
+      {
+         "test" : "get ent1 ",
+         "$obj" : "ent1/id",
+         "$rel" : "=",
+         "$sub" : "$val/ent1/id"
+      },
+      {
+         "test" : "get ent2",
+         "$obj" : "ent2/id",
+         "$rel" : "=",
+         "$sub" : "$val/ent2/id"
+      },
+      {
+         "test" : "set ent3",
+         "$obj" : "$ent/ent3",
+         "$rel" : "add_entity",
+         "$sub" : "$val/ent3/id"
+      },
+      {
+         "$obj" : "$val/ent3/id",
+         "$rel" : "=",
+         "$sub" : "$ent/$rel/4/$obj"
+      },
+      {
+         "test" : "get ent3",
+         "$obj" : null,
+         "$rel" : "=",
+         "$sub" : "$val/ent3/val"
+      }
+   ],
+   "ent3" : {
+      "id" : "ent3",
+      "description" : "test entity"
+   }
+}

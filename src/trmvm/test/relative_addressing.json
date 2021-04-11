@@ -1,0 +1,232 @@
+{
+   "id" : "$up3ent/id",
+   "$obj" : {
+      "id" : "$up3ent/$obj"
+   },
+   "$rel" : [
+      {
+         "test" : "$up3ent",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up3ent/id",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up3ent/id"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up3sub",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up3sub",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up3sub"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up3obj",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up3obj",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up3obj"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up3val",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : {
+                     "id" : "$up3val/id"
+                  },
+                  "$rel" : "=",
+                  "$sub" : "$up3val/$up3val"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up2ent",
+         "id" : "$up2ent/id",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up2ent/id",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up2ent/id"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up2sub",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up2sub",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up2sub"
+               }
+            }
+         },
+         "$sub" : {
+            "id" : "$up2ent/$sub"
+         }
+      },
+      {
+         "test" : "$up2obj",
+         "$obj" : {
+            "id" : "$up2ent/$obj"
+         },
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up2obj",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up2obj"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up2val",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : {
+                     "id" : "$up2val/id"
+                  },
+                  "$rel" : "=",
+                  "$sub" : "$up2val/$up2val"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up1ent",
+         "$rel" : {
+            "id" : "$up1ent/id",
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up1ent/id",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up1ent/id"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up1sub",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up1sub",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up1sub"
+               }
+            },
+            "$sub" : {
+               "id" : "$up1ent/$sub"
+            }
+         }
+      },
+      {
+         "test" : "$up1obj",
+         "$rel" : {
+            "$obj" : {
+               "id" : "$up1ent/$obj"
+            },
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$up1obj",
+                  "$rel" : "=",
+                  "$sub" : "$val/$up1obj"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$up1val",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : {
+                     "id" : "$up1val/id"
+                  },
+                  "$rel" : "=",
+                  "$sub" : "$up1val/$up1val"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$ent",
+         "$rel" : {
+            "$rel" : {
+               "id" : "$ent/id",
+               "$rel" : {
+                  "$obj" : "$ent/id",
+                  "$rel" : "=",
+                  "$sub" : "$val/$ent/id"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$sub",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : "$sub",
+                  "$rel" : "=",
+                  "$sub" : "$val/$sub"
+               },
+               "$sub" : {
+                  "id" : "$ent/$sub"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$obj",
+         "$rel" : {
+            "$rel" : {
+               "$obj" : {
+                  "id" : "$ent/$obj"
+               },
+               "$rel" : {
+                  "$obj" : "$obj",
+                  "$rel" : "=",
+                  "$sub" : "$val/$obj"
+               }
+            }
+         }
+      },
+      {
+         "test" : "$val",
+         "$rel" : {
+            "$rel" : {
+               "$rel" : {
+                  "$obj" : {
+                     "id" : "$val/id"
+                  },
+                  "$rel" : "=",
+                  "$sub" : "$val/$val"
+               }
+            }
+         }
+      }
+   ],
+   "$sub" : {
+      "id" : "$up3ent/$sub"
+   }
+}

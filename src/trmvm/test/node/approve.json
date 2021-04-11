@@ -1,0 +1,6 @@
+{
+   "$sub" : "paymant.json",
+   "$obj" : "koop1.json",
+   "$rel" : "approve_operation.json",
+   "date" : "15.02.2021"
+}

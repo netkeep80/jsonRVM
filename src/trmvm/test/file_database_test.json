@@ -1,0 +1,9 @@
+{
+   "$rel" : [
+      "version.json/$rel/1",
+      {
+         "$obj" : "version.json/$rel/0",
+         "$rel" : "add_entity"
+      }
+   ]
+}
