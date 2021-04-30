@@ -1,0 +1,8 @@
+{
+   "$obj" : [ null, 2, false, "4", {} ],
+   "$rel" : "where",
+   "$sub" : {
+      "$obj" : "$obj",
+      "$rel" : "is_string"
+   }
+}

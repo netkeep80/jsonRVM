@@ -144,6 +144,36 @@ TEST_CASE("testing call version.json") {
     catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
 }
 
+
+TEST_CASE("testing base entity 'where'") {
+
+    file_database_t	db(".\\");
+    jsonRVM<file_database_t, base_vocabulary> root(&db);
+    json    val;
+    char* fileNameInput = "where_test.json";
+
+    try
+    {
+        std::ifstream in(fileNameInput);
+        REQUIRE(in.good());
+        in >> root[fileNameInput];
+
+        EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
+        root.JSONExec(ctx, root[fileNameInput]);
+        cout << val.dump(2) << endl;
+        CHECK(val[0].get_ref<string&>() == "4"s);
+    }
+    catch (json& j) { throw json({ { __FUNCTION__, j } }); }
+    catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+    catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
+    catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+
+    /*
+    * надо ещё написать кейсы на невалидный $obj (когда его тип не array)
+    * надо ещё написать кейсы на невалидный $sub
+    */
+}
+
 /*
 int factorial(const int number) {
     return number < 1 ? 1 : number <= 1 ? number : factorial(number - 1) * number;
