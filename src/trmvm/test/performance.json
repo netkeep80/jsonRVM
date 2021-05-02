@@ -1,0 +1,26 @@
+{
+   "$rel" : [
+      {
+         "$obj" : "#/MeasProcessed",
+         "$rel" : "size",
+         "$sub" : "$ent/return_code_ok"
+      },
+      "debug/clock/start",
+      "#/CalculateMeanValues",
+      "#/CalculateTotalValues",
+      "#/PrepareFullReport",
+      "#/SaveFullReport2",
+      "#/SaveShortReport2",
+      "debug/clock/stop",
+      {
+         "$obj" : "$val/Report",
+         "$rel" : "=",
+         "$sub" : "$val"
+      },
+      {
+         "$obj" : "$ent/return_code_ok",
+         "$rel" : "="
+      }
+   ],
+   "return_code_ok" : 0
+}
