@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 		cout << "          c                                                                   " << endl;
 		cout << "       v__|__m                                                                " << endl;
 		cout << "     m   _|_   v                                                              " << endl;
-		cout << "  c__|__/_|_\\__|__c  jsonRVM [Version " << RVM_version << "]                 " << endl;
+		cout << "  c__|__/_|_\\__|__c  trmvm [Version " << RVM_version << "]                   " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
 		cout << "     v    |    m     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;
@@ -85,9 +85,8 @@ int main(int argc, char* argv[])
 		cout << "Copyright (c) 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
 		cout << "                                                                              " << endl;
 		cout << "Usage:                                                                        " << endl;
-		cout << "       jsonRVM.exe [relation_model.json] <main_entry_point>                   " << endl;
-		cout << "       jsonRVM.exe [relation_model_library.dll]                               " << endl;
-		cout << "       jsonRVM.exe [jsonRVM.exe]                                              " << endl;
+		cout << "       trmvm.exe [relation_model.json] <main_entry_point>                     " << endl;
+		cout << "       trmvm.exe [relation_model_library.dll]                                 " << endl;
 		return 0;	//	ok
 	}
 
@@ -106,6 +105,9 @@ int main(int argc, char* argv[])
 
 	try
 	{
+		//	создаём контекст исполнения
+		EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
+
 		try
 		{
 			std::ifstream in(fileNameInput);
@@ -114,26 +116,23 @@ int main(int argc, char* argv[])
 				in >> root[fileNameInput];
 			else
 				throw json("Can't restore RM json from the "s + fileNameInput + " file"s);
-			 
-			//	создаём контекст исполнения
-			EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
+			 	
 			if (entryPoint) root.JSONExec(ctx, json(entryPoint));
 			else root.JSONExec(ctx, root[fileNameInput]);
 
 			cout << val.dump(2);
 
-			//dump_json("rvm.dump.json"s, root);
 			return 0;	//	ok
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j } }); }
-		catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
-		catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
-		catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+		catch (json& j) { ctx.throw_json(__FUNCTION__, j ); }
+		catch (json::exception& e) { ctx.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) ); }
+		catch (std::exception& e) { ctx.throw_json(__FUNCTION__, "std::exception: "s + e.what() ); }
+		catch (...) { ctx.throw_json(__FUNCTION__, "unknown exception"s ); }
 	}
 	catch (json& j)
 	{
 		cerr << j.dump(2);
-		dump_json("rvm.dump.json"s, root);
+		dump_json("trmvm.dump.json"s, root);
 	}
 	
 	return 1;	//	error

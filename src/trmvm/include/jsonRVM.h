@@ -197,7 +197,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
 Субъект вмещает в себя явление сущности объекта.
 
 Результат исполнения сущности это проекция в триаде MVC, но т.к. МО это самокомпилирующийся иерархический многослойный MVC,
-то субъект у сущности это родительский View вмещающий проекцию данной сущности.
+то субъект у сущности это родительский view вмещающий проекцию данной сущности.
 Таким образом результат проецирования сущности сохраняется в поле "", значение которого состоит из отдельных
 проекций агрегируемых сущностей. Следовательно если объект json имеет признак того, что это сущность,
 то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "$obj", "$rel", "$sub", "/".
@@ -208,7 +208,7 @@ https://books.google.ru/books?id=VfcX9wJEH3YC&pg=PT42&redir_esc=y&hl=ru#v=onepag
    "id": "this entity english name",
    "RusView": "русское название этой сущности",
    "jsView": "this entity java script view",
-   "C#View": "this entity C# code view",
+   "C#view": "this entity C# code view",
    "$obj": "object entity model",
    "$rel": "relation entity model",
    "$sub": "subject entity model"
@@ -847,15 +847,21 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		}
 	};
 
+	using jsonptr = json*;
 
 	template<class database_impl_t, template<class rvm_impl_t> class ...vocabulary_t>
-	class jsonRVM final: protected database_api<database_impl_t>, public json, protected vocabulary_t<jsonRVM<database_impl_t, vocabulary_t...>>...
+	class jsonRVM final :
+		protected database_api<database_impl_t>,
+		public json,
+		public map<jsonptr, void (*)(jsonRVM<database_impl_t, vocabulary_t...>& rvm, EntContext& ec)>,
+		protected vocabulary_t<jsonRVM<database_impl_t, vocabulary_t...>>...
 	{
 	public:
 		using this_t = jsonRVM<database_impl_t, vocabulary_t...>;
 		using x86View = void (*)(this_t & rvm, EntContext & ec);
 		using db_interface = database_api<database_impl_t>;
 		friend db_interface;
+		using x86_view_map_t = map<jsonptr, void (*)(jsonRVM<database_impl_t, vocabulary_t...>& rvm, EntContext& ec)>;
 
 	private:
 		static void  base_add_entity(this_t& rvm, EntContext& ec)
@@ -866,11 +872,12 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		}
 
 	public:
-		jsonRVM(database_impl_t* db) : json(json::object()), vocabulary_t<this_t>(*this)...
+		jsonRVM(database_impl_t* db)
+			: json(json::object()), vocabulary_t<this_t>(*this)...
 		{
 			db_interface::link(db);
 			//	database_api
-			Addx86Entity(*this, "add_entity"s, base_add_entity, ""s);
+			Addx86Entity(*this, *this, "add_entity"s, base_add_entity, ""s);
 		}
 
 		void	ReferProperty(json*& segment, const string& it)
@@ -892,18 +899,13 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				_Errno_ref = 0;
 				unsigned index = strtoul(_Ptr, &_Eptr, 10);
 
-				if (_Errno_ref == ERANGE) throw json({ {__FUNCTION__, it} });
+				if (_Errno_ref == ERANGE)
+					throw json({ {__FUNCTION__, it} });
 
 				if (_Ptr == _Eptr)
-				{
-					//ref = json::object();
 					segment = &ref[it];
-				}
 				else
-				{
-					//ref = json::array();
 					segment = &ref[index];
-				}
 			}
 			else
 				throw json({ {__FUNCTION__, it} });
@@ -981,15 +983,6 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 			case json::value_t::string:		//	иерархический путь к json значению
 				return ReferEntity(ec, ref.get_ref<string&>());
 
-				//	абсолютный адрес сущности
-				//	переделать на значение, потому что:
-				//	1. это безопаснее
-				//	2. это будет быстрее
-			case json::value_t::number_float:
-			case json::value_t::number_integer:
-			case json::value_t::number_unsigned:
-				return id2ref(ref.get<size_t>());
-
 				//	местоимение проекции контекстной сущности
 			case json::value_t::null:
 				return ec.val;
@@ -1005,29 +998,24 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
 		void JSONExec(EntContext& ec, json& rel)
 		{
-			//auto it = ec.dict->find(&rel);
+			x86_view_map_t& dict = *this;
+			auto it = dict.find(&rel);
 
-			//if (it != ec.dict->end())	//	это скомпилированная сущность?
-			//{
-			//	it->second(ec);
-			//}
-			//else 
-			switch (rel.type())
+			if (it != dict.end())	//	это скомпилированная сущность?
 			{
-				//	абсолютный адрес скомпилированного тела сущности
-				//	переделать на выброс исключения
-			case json::value_t::number_unsigned:
 				try
 				{
-					auto	x86view = reinterpret_cast<x86View>(rel.get<size_t>());
+					auto x86view = it->second;
 					(*x86view)(*this, ec);
 					return;
 				}
-				catch (json & j) { throw j; }
-				catch (json::exception & e) { throw json("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-				catch (std::exception & e) { throw json("std::exception: "s + e.what()); }
+				catch (json& j) { throw j; }
+				catch (json::exception& e) { throw json("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+				catch (std::exception& e) { throw json("std::exception: "s + e.what()); }
 				catch (...) { throw json("unknown exception"s); }
-
+			}
+			else switch (rel.type())
+			{
 				//	иерархический путь к json значению
 			case json::value_t::string:
 				try
@@ -1140,6 +1128,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				}
 				return;
 
+			case json::value_t::number_unsigned:
 			case json::value_t::number_float:
 			case json::value_t::number_integer:
 				throw json({ {rel.dump(), "can't exec wrong json numeric type"s} });
@@ -1152,12 +1141,13 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 
 	//	добавление сущности с закэшированной x86 проекцией
 	template<typename rvm_impl_t>
-	json& Addx86Entity(json& Subject, const string& Name, void (*View)(rvm_impl_t&, EntContext&), const string& Description)
+	json& Addx86Entity(rvm_impl_t& rvm, json& entity, const string& name, void (*view)(rvm_impl_t&, EntContext&), const string& description)
 	{
-		Subject[Name] = reinterpret_cast<size_t>(View);
-		Subject["help"][Name] = json::object();
-		Subject["help"][Name]["description"] = Description;
-		return Subject["help"][Name];
+		entity[name] = json::object();
+		entity[name]["name"] = name;
+		entity[name]["description"] = description;
+		rvm[&(entity[name])] = view;
+		return entity[name];
 	}
 
 

@@ -216,13 +216,13 @@ namespace rm
 		}
 
 		static void  jsonCopy(rvm_impl_t& rvm, EntContext& ec)
-		{	//	полное копированиее json значения объекта в субъект
+		{	//	РїРѕР»РЅРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµРµ json Р·РЅР°С‡РµРЅРёСЏ РѕР±СЉРµРєС‚Р° РІ СЃСѓР±СЉРµРєС‚
 			ec.sub = ec.obj;
 		}
 
 		static void  jsonView(rvm_impl_t& rvm, EntContext& ec)
-		{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-			//	проецируем во внешнем контексте
+		{	//	РєРѕРЅС‚РµРєСЃС‚ EV РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє СЃСѓС‰РЅРѕСЃС‚Рё РІРЅСѓС‚СЂРё РєРѕС‚РѕСЂРѕР№ РёРґС‘С‚ РїСЂРѕРµС†РёСЂРѕРІР°РЅРёРµ РѕР±СЉРµРєС‚Р° РІ СЃСѓР±СЉРµРєС‚
+			//	РїСЂРѕРµС†РёСЂСѓРµРј РІРѕ РІРЅРµС€РЅРµРј РєРѕРЅС‚РµРєСЃС‚Рµ
 			rvm.JSONExec(EntContext(ec.sub, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
 		}
 
@@ -329,7 +329,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 
 		static void  jsonForEachObject(rvm_impl_t& rvm, EntContext& ec)
 		{	/*
-				Множественный JSONExec для проекции объекта типа array
+				РњРЅРѕР¶РµСЃС‚РІРµРЅРЅС‹Р№ JSONExec РґР»СЏ РїСЂРѕРµРєС†РёРё РѕР±СЉРµРєС‚Р° С‚РёРїР° array
 			*/
 			if (ec.obj.is_array())
 			{
@@ -350,7 +350,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 
 		static void  jsonForEachSubject(rvm_impl_t& rvm, EntContext& ec)
 		{	/*
-				Множественный JSONExec для субъекта типа array
+				РњРЅРѕР¶РµСЃС‚РІРµРЅРЅС‹Р№ JSONExec РґР»СЏ СЃСѓР±СЉРµРєС‚Р° С‚РёРїР° array
 			*/
 			if (ec.sub.is_array())
 			{
@@ -636,7 +636,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 						result += it.dump();
 						break;
 
-					default:	//	null не печатаем
+					default:	//	null РЅРµ РїРµС‡Р°С‚Р°РµРј
 						break;
 					}
 				}
@@ -755,7 +755,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 
 		static void  jsonWhere(rvm_impl_t& rvm, EntContext& ec)
 		{
-			ec.val = json::array();		//	подготовка выходного массива
+			ec.val = json::array();		//	РїРѕРґРіРѕС‚РѕРІРєР° РІС‹С…РѕРґРЅРѕРіРѕ РјР°СЃСЃРёРІР°
 
 			if (ec.obj.is_null()) return;
 
@@ -769,7 +769,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 						rvm.JSONExec(EntContext(boolres, it, boolres, ec.ent, ec.ctx), ec.sub);
 						if (boolres.is_boolean())
 							if (boolres.get<bool>())
-								ec.val.push_back(it);	//	фильтруем
+								ec.val.push_back(it);	//	С„РёР»СЊС‚СЂСѓРµРј
 						i++;
 					}
 					catch (json & j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
@@ -941,8 +941,8 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 
 		static void  json_catch(rvm_impl_t& rvm, EntContext& ec)
 		{
-			//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-			//	проецируем во внешнем контексте
+			//	РєРѕРЅС‚РµРєСЃС‚ EV РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє СЃСѓС‰РЅРѕСЃС‚Рё РІРЅСѓС‚СЂРё РєРѕС‚РѕСЂРѕР№ РёРґС‘С‚ РїСЂРѕРµС†РёСЂРѕРІР°РЅРёРµ РѕР±СЉРµРєС‚Р° РІ СЃСѓР±СЉРµРєС‚
+			//	РїСЂРѕРµС†РёСЂСѓРµРј РІРѕ РІРЅРµС€РЅРµРј РєРѕРЅС‚РµРєСЃС‚Рµ
 			try
 			{
 				rvm.JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
@@ -1000,7 +1000,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 					body += " " + it.key() + "=" + it.value().dump();
 
 			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+			//	С‡С‚Рѕ Р±С‹ РІС‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє xml РїРѕРїР°РґР°Р» РІ С‚РѕР¶Рµ Р·РЅР°С‡РµРЅРёРµ ec.val РЅСѓР¶РЅРѕ РёСЃРїРѕР»РЅСЏС‚СЊ РІ С‚РµРєСѓС‰РµРј РєРѕРЅС‚РµРєСЃС‚Рµ EV
 			json	objview;
 			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 			if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1031,7 +1031,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 					body += " " + it.key() + "=" + it.value().dump();
 
 			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+			//	С‡С‚Рѕ Р±С‹ РІС‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє xml РїРѕРїР°РґР°Р» РІ С‚РѕР¶Рµ Р·РЅР°С‡РµРЅРёРµ ec.val РЅСѓР¶РЅРѕ РёСЃРїРѕР»РЅСЏС‚СЊ РІ С‚РµРєСѓС‰РµРј РєРѕРЅС‚РµРєСЃС‚Рµ EV
 			json	objview;
 			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 			if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1062,7 +1062,7 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 					body += " " + it.key() + "=" + it.value().dump();
 
 			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+			//	С‡С‚Рѕ Р±С‹ РІС‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє xml РїРѕРїР°РґР°Р» РІ С‚РѕР¶Рµ Р·РЅР°С‡РµРЅРёРµ ec.val РЅСѓР¶РЅРѕ РёСЃРїРѕР»РЅСЏС‚СЊ РІ С‚РµРєСѓС‰РµРј РєРѕРЅС‚РµРєСЃС‚Рµ EV
 			json	objview;
 			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 			if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1076,17 +1076,37 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 			ec.sub = ec.obj.dump(3);
 		}
 
-		static inline long long StartTime{ 0 };
+		/*
+		using nanoseconds  = duration<long long, nano>;
+    using microseconds = duration<long long, micro>;
+    using milliseconds = duration<long long, milli>;
+    using seconds      = duration<long long>;
+    using minutes      = duration<int, ratio<60>>;
+    using hours        = duration<int, ratio<3600>>;
+		*/
 
-		static void  jsonStartClock(rvm_impl_t& rvm, EntContext& ec)
-		{
-			StartTime = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		static void steady_clock_nanoseconds(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
 		}
 
-		static void  jsonStopClock(rvm_impl_t& rvm, EntContext& ec)
-		{
-			long long Time = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count() - StartTime;
-			cout << "Time left = "s << Time << " us" << endl;
+		static void steady_clock_microseconds(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		}
+
+		static void steady_clock_milliseconds(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		}
+
+		static void steady_clock_seconds(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		}
+
+		static void steady_clock_minutes(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::minutes>(chrono::steady_clock::now().time_since_epoch()).count();
+		}
+
+		static void steady_clock_hours(rvm_impl_t& rvm, EntContext& ec) {
+			ec.val = chrono::duration_cast<chrono::hours>(chrono::steady_clock::now().time_since_epoch()).count();
 		}
 
 	public:
@@ -1094,11 +1114,11 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 		{
 			import_help(rvm);
 			rvm["RVM_version"] = RVM_version;
-			Addx86Entity(rvm["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
-			Addx86Entity(rvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
-			Addx86Entity(rvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
+			Addx86Entity(rvm, rvm["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+			Addx86Entity(rvm, rvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+			Addx86Entity(rvm, rvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 
-#define map_json_is_type(json_type)	Addx86Entity(rvm, "is_"s + #json_type, json_is_##json_type, ""s );
+#define map_json_is_type(json_type)	Addx86Entity(rvm, rvm, "is_"s + #json_type, json_is_##json_type, ""s );
 			map_json_is_type(array);
 			map_json_is_type(boolean);
 			map_json_is_type(number_float);
@@ -1113,75 +1133,80 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 			map_json_is_type(discarded);
 
 			//	json
-#define map_json_static_method(static_method)	Addx86Entity(rvm["json"], #static_method, json_call_##static_method, ""s );
+#define map_json_static_method(static_method)	Addx86Entity(rvm, rvm["json"], #static_method, json_call_##static_method, ""s );
 			map_json_static_method(array);
 			map_json_static_method(null);
 			map_json_static_method(meta);
 			map_json_static_method(object);
-			Addx86Entity(rvm["json"], "dump"s, jsonDump, ""s);
+
+			Addx86Entity(rvm, rvm["json"], "dump"s, jsonDump, ""s);
 
 			//	convert
-			Addx86Entity(rvm, "integer"s, jsonInt32, ""s);
-			Addx86Entity(rvm, "int"s, jsonInt32, ""s);
-			Addx86Entity(rvm, "float"s, jsonDouble, ""s);
-			Addx86Entity(rvm, "double"s, jsonDouble, ""s);
-			Addx86Entity(rvm, "null"s, jsonNull, ""s);
+			Addx86Entity(rvm, rvm, "integer"s, jsonInt32, ""s);
+			Addx86Entity(rvm, rvm, "int"s, jsonInt32, ""s);
+			Addx86Entity(rvm, rvm, "float"s, jsonDouble, ""s);
+			Addx86Entity(rvm, rvm, "double"s, jsonDouble, ""s);
+			Addx86Entity(rvm, rvm, "null"s, jsonNull, ""s);
 
 			//	data operations
-			Addx86Entity(rvm, "where"s, jsonWhere, ""s);
-			Addx86Entity(rvm, "union"s, jsonUnion, ""s);
-			Addx86Entity(rvm, "size"s, jsonSize, ""s);
-			Addx86Entity(rvm, "get"s, jsonGet, ""s);
-			Addx86Entity(rvm, "set"s, jsonSet, ""s);
-			Addx86Entity(rvm, "erase"s, jsonErase, "Удаляет элемент элементы, которые соответствуют заданному ключу."s);
-			Addx86Entity(rvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
+			Addx86Entity(rvm, rvm, "where"s, jsonWhere, ""s);
+			Addx86Entity(rvm, rvm, "union"s, jsonUnion, ""s);
+			Addx86Entity(rvm, rvm, "size"s, jsonSize, ""s);
+			Addx86Entity(rvm, rvm, "get"s, jsonGet, ""s);
+			Addx86Entity(rvm, rvm, "set"s, jsonSet, ""s);
+			Addx86Entity(rvm, rvm, "erase"s, jsonErase, "РЈРґР°Р»СЏРµС‚ СЌР»РµРјРµРЅС‚С‹, РєРѕС‚РѕСЂС‹Рµ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ Р·Р°РґР°РЅРЅРѕРјСѓ РєР»СЋС‡Сѓ."s);
+			Addx86Entity(rvm, rvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
 
 			//	math
-			Addx86Entity(rvm, "*"s, jsonMul, ""s);
-			Addx86Entity(rvm, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
-			Addx86Entity(rvm, "+", jsonAdd, ""s);
-			Addx86Entity(rvm, "-", jsonSubstract, ""s);
-			Addx86Entity(rvm, "pow"s, jsonPower, ""s);
-			Addx86Entity(rvm, "sqrt"s, jsonSqrt, ""s);
-			Addx86Entity(rvm, "sum"s, jsonSum, ""s);
+			Addx86Entity(rvm, rvm, "*"s, jsonMul, ""s);
+			Addx86Entity(rvm, rvm, ":"s, jsonDiv, "СЃСѓР±СЉРµРєС‚ РґРµР»РёРјРѕРµ, РѕР±СЉРµРєС‚ РґРµР»РёС‚РµР»СЊ"s);
+			Addx86Entity(rvm, rvm, "+", jsonAdd, ""s);
+			Addx86Entity(rvm, rvm, "-", jsonSubstract, ""s);
+			Addx86Entity(rvm, rvm, "pow"s, jsonPower, ""s);
+			Addx86Entity(rvm, rvm, "sqrt"s, jsonSqrt, ""s);
+			Addx86Entity(rvm, rvm, "sum"s, jsonSum, ""s);
 
 			//	logic
-			Addx86Entity(rvm, "^"s, jsonXOR, ""s);
-			Addx86Entity(rvm, "=="s, jsonIsEq, ""s);
-			Addx86Entity(rvm, "!="s, jsonIsNotEq, ""s);
-			Addx86Entity(rvm, "<"s, jsonBelow, ""s);
-			Addx86Entity(rvm, "&&"s, jsonAnd, ""s);
+			Addx86Entity(rvm, rvm, "^"s, jsonXOR, ""s);
+			Addx86Entity(rvm, rvm, "=="s, jsonIsEq, ""s);
+			Addx86Entity(rvm, rvm, "!="s, jsonIsNotEq, ""s);
+			Addx86Entity(rvm, rvm, "<"s, jsonBelow, ""s);
+			Addx86Entity(rvm, rvm, "&&"s, jsonAnd, ""s);
 
 			//	strings
-			Addx86Entity(rvm["string"], "="s, string_string, ""s);
-			Addx86Entity(rvm["string"], "+="s, string_add, ""s);
-			Addx86Entity(rvm["string"], "find"s, string_find, ""s);
-			Addx86Entity(rvm["string"], "split"s, string_split, ""s);
-			Addx86Entity(rvm["string"], "join"s, string_join, ""s);
+			Addx86Entity(rvm, rvm["string"], "="s, string_string, ""s);
+			Addx86Entity(rvm, rvm["string"], "+="s, string_add, ""s);
+			Addx86Entity(rvm, rvm["string"], "find"s, string_find, ""s);
+			Addx86Entity(rvm, rvm["string"], "split"s, string_split, ""s);
+			Addx86Entity(rvm, rvm["string"], "join"s, string_join, ""s);
 
 			//	control
-			Addx86Entity(rvm, "foreachobj"s, jsonForEachObject, ""s);
-			Addx86Entity(rvm, "foreachsub"s, jsonForEachSubject, ""s);
-			Addx86Entity(rvm, "then"s, IfObjTrueThenExecSub, ""s);
-			Addx86Entity(rvm, "else"s, IfObjFalseThenExecSub, "");
-			Addx86Entity(rvm, "while"s, ExecSubWhileObjTrue, ""s);
-			Addx86Entity(rvm["switch"], "bool"s, json_switch_bool, ""s);
-			Addx86Entity(rvm["switch"], "number"s, json_switch_number, ""s);
-			Addx86Entity(rvm["switch"], "string"s, json_switch_string, ""s);
-			Addx86Entity(rvm, "throw"s, json_throw, "");
-			Addx86Entity(rvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
+			Addx86Entity(rvm, rvm, "foreachobj"s, jsonForEachObject, ""s);
+			Addx86Entity(rvm, rvm, "foreachsub"s, jsonForEachSubject, ""s);
+			Addx86Entity(rvm, rvm, "then"s, IfObjTrueThenExecSub, ""s);
+			Addx86Entity(rvm, rvm, "else"s, IfObjFalseThenExecSub, "");
+			Addx86Entity(rvm, rvm, "while"s, ExecSubWhileObjTrue, ""s);
+			Addx86Entity(rvm, rvm["switch"], "bool"s, json_switch_bool, ""s);
+			Addx86Entity(rvm, rvm["switch"], "number"s, json_switch_number, ""s);
+			Addx86Entity(rvm, rvm["switch"], "string"s, json_switch_string, ""s);
+			Addx86Entity(rvm, rvm, "throw"s, json_throw, "");
+			Addx86Entity(rvm, rvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
 
 			//	display
-			Addx86Entity(rvm, "print"s, jsonPrint, ""s);
+			Addx86Entity(rvm, rvm, "print"s, jsonPrint, ""s);
 
 			//	browser
-			Addx86Entity(rvm, "tag"s, jsonTAG, ""s);
-			Addx86Entity(rvm, "xml"s, jsonXML, ""s);
-			Addx86Entity(rvm, "html"s, jsonHTML, ""s);
+			Addx86Entity(rvm, rvm, "tag"s, jsonTAG, ""s);
+			Addx86Entity(rvm, rvm, "xml"s, jsonXML, ""s);
+			Addx86Entity(rvm, rvm, "html"s, jsonHTML, ""s);
 
-			//	debug
-			Addx86Entity(rvm["debug"]["clock"], "start"s, jsonStartClock, ""s);
-			Addx86Entity(rvm["debug"]["clock"], "stop"s, jsonStopClock, ""s);
+			//	steady clock
+			Addx86Entity(rvm, rvm["steady_clock"], "nanoseconds"s, steady_clock_nanoseconds, "Sets $val to time since epoch in nanoseconds"s);
+			Addx86Entity(rvm, rvm["steady_clock"], "microseconds"s, steady_clock_microseconds, "Sets $val to time since epoch in microseconds"s);
+			Addx86Entity(rvm, rvm["steady_clock"], "milliseconds"s, steady_clock_milliseconds, "Sets $val to time since epoch in milliseconds"s);
+			Addx86Entity(rvm, rvm["steady_clock"], "seconds"s, steady_clock_seconds, "Sets $val to time since epoch in seconds"s);
+			Addx86Entity(rvm, rvm["steady_clock"], "minutes"s, steady_clock_minutes, "Sets $val to time since epoch in minutes"s);
+			Addx86Entity(rvm, rvm["steady_clock"], "hours"s, steady_clock_hours, "Sets $val to time since epoch in hours"s);
 		}
 
 	};
