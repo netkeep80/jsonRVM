@@ -3,10 +3,10 @@
       {
          "$obj" : "#/MeasProcessed",
          "$rel" : "size",
-         "$sub" : "$ent/result/meas_count"
+         "$sub" : "/result/meas_count"
       },
       {
-         "$ent/start_time" : "steady_clock/microseconds"
+         "/start_time" : "steady_clock/microseconds"
       },
       "#/CalculateMeanValues",
       "#/CalculateTotalValues",
@@ -14,22 +14,22 @@
       "#/SaveFullReport2",
       "#/SaveShortReport2",
       {
-         "$ent/end_time" : "steady_clock/microseconds"
+         "/end_time" : "steady_clock/microseconds"
       },
       {
-         "$ent/result/test_duration" : {
-            "$obj" : "$ent/start_time",
+         "/result/test_duration" : {
+            "$obj" : "/start_time",
             "$rel" : "-",
-            "$sub" : "$ent/end_time"
+            "$sub" : "/end_time"
          }
       },
       {
          "$obj" : "$val/Report",
          "$rel" : "=",
-         "$sub" : "$ent/result/report"
+         "$sub" : "/result/report"
       },
       {
-         "$obj" : "$ent/result",
+         "$obj" : "/result",
          "$rel" : "=",
          "$sub" : "$val"
       }

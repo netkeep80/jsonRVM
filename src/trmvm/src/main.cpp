@@ -106,19 +106,19 @@ int main(int argc, char* argv[])
 	try
 	{
 		//	создаём контекст исполнения
-		EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
+		EntContext ctx(val, root[""], root[""], root[""]);
 
 		try
 		{
 			std::ifstream in(fileNameInput);
 
 			if (in.good())
-				in >> root[fileNameInput];
+				in >> root[""];
 			else
 				throw json("Can't restore RM json from the "s + fileNameInput + " file"s);
 			 	
 			if (entryPoint) root.JSONExec(ctx, json(entryPoint));
-			else root.JSONExec(ctx, root[fileNameInput]);
+			else root.JSONExec(ctx, root[""]);
 
 			cout << val.dump(2);
 

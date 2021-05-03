@@ -76,9 +76,9 @@ TEST_CASE("absolute addressing in rmodel") {
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[fileNameInput];
-    EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
-    root.JSONExec(ctx, root[fileNameInput]);
+    in >> root[""];
+    EntContext ctx(val, root[""], root[""], root[""]);
+    root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     
     CHECK(val["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -95,9 +95,9 @@ TEST_CASE("relative addressing in rmodel") {
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[fileNameInput];
-    EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
-    root.JSONExec(ctx, root[fileNameInput]);
+    in >> root[""];
+    EntContext ctx(val, root[""], root[""], root[""]);
+    root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     
     CHECK(val["$up3ent"]["id"].get_ref<string&>() == "$up3ent/id"s);
@@ -132,10 +132,10 @@ TEST_CASE("testing call version.json") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[fileNameInput];
+        in >> root[""];
         
-        EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
-        root.JSONExec(ctx, root[fileNameInput]);
+        EntContext ctx(val, root[""], root[""], root[""]);
+        root.JSONExec(ctx, root[""]);
         CHECK(val["RVM_version"].get_ref<string&>() == "0.1.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
@@ -156,10 +156,10 @@ TEST_CASE("testing base entity 'where'") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[fileNameInput];
+        in >> root[""];
 
-        EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
-        root.JSONExec(ctx, root[fileNameInput]);
+        EntContext ctx(val, root[""], root[""], root[""]);
+        root.JSONExec(ctx, root[""]);
         cout << val.dump(2) << endl;
         CHECK(val[0].get_ref<string&>() == "4"s);
     }
@@ -184,10 +184,10 @@ TEST_CASE("performance test") {
 
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[fileNameInput];
+    in >> root[""];
 
-    EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
-    root.JSONExec(ctx, root[fileNameInput]);
+    EntContext ctx(val, root[""], root[""], root[""]);
+    root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     CHECK(val["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
     CHECK(val["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
