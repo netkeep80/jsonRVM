@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		//	создаём контекст исполнения
-		EntContext ctx(val, root[""], root[""], root[""]);
+		EntContext ctx(val, root[""]);
 
 		try
 		{

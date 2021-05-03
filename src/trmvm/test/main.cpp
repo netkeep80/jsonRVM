@@ -77,7 +77,7 @@ TEST_CASE("absolute addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext ctx(val, root[""], root[""], root[""]);
+    EntContext ctx(val, root[""]);
     root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     
@@ -96,7 +96,7 @@ TEST_CASE("relative addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext ctx(val, root[""], root[""], root[""]);
+    EntContext ctx(val, root[""]);
     root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     
@@ -134,7 +134,7 @@ TEST_CASE("testing call version.json") {
         REQUIRE(in.good());
         in >> root[""];
         
-        EntContext ctx(val, root[""], root[""], root[""]);
+        EntContext ctx(val, root[""]);
         root.JSONExec(ctx, root[""]);
         CHECK(val["RVM_version"].get_ref<string&>() == "0.1.0"s);
     }
@@ -158,7 +158,7 @@ TEST_CASE("testing base entity 'where'") {
         REQUIRE(in.good());
         in >> root[""];
 
-        EntContext ctx(val, root[""], root[""], root[""]);
+        EntContext ctx(val, root[""]);
         root.JSONExec(ctx, root[""]);
         cout << val.dump(2) << endl;
         CHECK(val[0].get_ref<string&>() == "4"s);
@@ -186,7 +186,7 @@ TEST_CASE("performance test") {
     REQUIRE(in.good());
     in >> root[""];
 
-    EntContext ctx(val, root[""], root[""], root[""]);
+    EntContext ctx(val, root[""]);
     root.JSONExec(ctx, root[""]);
     cout << val.dump(2) << endl;
     CHECK(val["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);

@@ -830,8 +830,8 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 			: val(v), obj(o), sub(s), ent(e), ctx(c)
 		{}
 
-		EntContext(json& v, json& o, json& s, json& e)
-			: val(v), obj(o), sub(s), ent(e), ctx(*this)
+		EntContext(json& v, json& e)
+			: val(v), obj(v), sub(v), ent(e), ctx(*this)
 		{}
 
 		void throw_json(const string& function, const json& error)
