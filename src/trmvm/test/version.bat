@@ -1,0 +1,1 @@
+..\..\..\build\src\trmvm\Release\trmvm.exe version.json 2>err.json
