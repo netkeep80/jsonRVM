@@ -3,24 +3,35 @@
       {
          "$obj" : "#/MeasProcessed",
          "$rel" : "size",
-         "$sub" : "$ent/return_code_ok"
+         "$sub" : "$ent/result/meas_count"
       },
-      "debug/clock/start",
+      {
+         "$ent/start_time" : "steady_clock/microseconds"
+      },
       "#/CalculateMeanValues",
       "#/CalculateTotalValues",
       "#/PrepareFullReport",
       "#/SaveFullReport2",
       "#/SaveShortReport2",
-      "debug/clock/stop",
+      {
+         "$ent/end_time" : "steady_clock/microseconds"
+      },
+      {
+         "$ent/result/test_duration" : {
+            "$obj" : "$ent/start_time",
+            "$rel" : "-",
+            "$sub" : "$ent/end_time"
+         }
+      },
       {
          "$obj" : "$val/Report",
          "$rel" : "=",
-         "$sub" : "$val"
+         "$sub" : "$ent/result/report"
       },
       {
-         "$obj" : "$ent/return_code_ok",
-         "$rel" : "="
+         "$obj" : "$ent/result",
+         "$rel" : "=",
+         "$sub" : "$val"
       }
-   ],
-   "return_code_ok" : 0
+   ]
 }

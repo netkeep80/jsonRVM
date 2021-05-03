@@ -69,7 +69,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 ////////////////////////////////////////////////////////////////////////////////
 
 TEST_CASE("absolute addressing in rmodel") {
-
+    MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM<test_database_t, base_vocabulary> root(&db);
     json    val;
@@ -88,7 +88,7 @@ TEST_CASE("absolute addressing in rmodel") {
 
 
 TEST_CASE("relative addressing in rmodel") {
-
+    MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM<test_database_t, base_vocabulary> root(&db);
     json    val;
@@ -122,7 +122,7 @@ TEST_CASE("relative addressing in rmodel") {
 }
 
 TEST_CASE("testing call version.json") {
-
+    MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM<file_database_t, base_vocabulary> root(&db);
     json    val;
@@ -146,7 +146,7 @@ TEST_CASE("testing call version.json") {
 
 
 TEST_CASE("testing base entity 'where'") {
-
+    MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM<file_database_t, base_vocabulary> root(&db);
     json    val;
@@ -172,6 +172,30 @@ TEST_CASE("testing base entity 'where'") {
     * надо ещё написать кейсы на невалидный $obj (когда его тип не array)
     * надо ещё написать кейсы на невалидный $sub
     */
+}
+
+
+TEST_CASE("performance test") {
+    MESSAGE("result:");
+    file_database_t	db(".\\");
+    jsonRVM<file_database_t, base_vocabulary> root(&db);
+    json    val;
+    char* fileNameInput = "performance.json";
+
+    std::ifstream in(fileNameInput);
+    REQUIRE(in.good());
+    in >> root[fileNameInput];
+
+    EntContext ctx(val, root[fileNameInput], root[fileNameInput], root[fileNameInput]);
+    root.JSONExec(ctx, root[fileNameInput]);
+    cout << val.dump(2) << endl;
+    CHECK(val["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
+    CHECK(val["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
+    CHECK(val["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);
+    CHECK(val["report"][3].get_ref<string&>() == "param1;-10.724466;22.198186;0.294701;99.562044;685"s);
+    CHECK(val["report"][4].get_ref<string&>() == "param7;56.969527;49.532709;0.580730;99.640934;557"s);
+    CHECK(val["report"][5].get_ref<string&>() == "param12;;;;0.000000;688"s);
+    CHECK(val["report"][6].get_ref<string&>() == "param9;-7.835917;2.119798;0.470438;99.273256;688"s);
 }
 
 /*
