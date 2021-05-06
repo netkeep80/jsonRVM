@@ -41,11 +41,11 @@ SOFTWARE.
 
 using namespace rm;
 
-void	dump_json(string& filename, json& val)
+void	dump_json(string& filename, json& res)
 {
 	std::ofstream out(filename);
 	if (out.good())
-		out << val.dump();
+		out << res.dump();
 	else
 		cerr << "Can't store object in the " << filename << " file.\n";
 }
@@ -53,7 +53,7 @@ void	dump_json(string& filename, json& val)
 
 int main(int argc, char* argv[])
 {
-	json	val;
+	json	res;
 	char	*fileNameInput = NULL,
 			*entryPoint = NULL;	//	вторым аргументом должна идти текущая проекция сущности, т.е. её состояние, содержимое локального адресного пространства
 
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
 	try
 	{
 		//	создаём контекст исполнения
-		EntContext ctx(val, root[""]);
+		EntContext ctx(res, root[""]);
 
 		try
 		{
@@ -111,7 +111,7 @@ int main(int argc, char* argv[])
 			if (entryPoint) root.JSONExec(ctx, json(entryPoint));
 			else root.JSONExec(ctx, root[""]);
 
-			cout << val.dump(2);
+			cout << res.dump(2);
 
 			return 0;	//	ok
 		}

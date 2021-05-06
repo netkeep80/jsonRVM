@@ -43,11 +43,11 @@ namespace rm
 
         virtual void	get_entity(json& ent, const string& ent_id) override
         {
-            auto val = __rm.find(ent_id);
-			if (val == __rm.end())
+            auto res = __rm.find(ent_id);
+			if (res == __rm.end())
                 throw runtime_error(__FUNCTION__ + ": Can't find entity "s + ent_id);
 
-            ent = json::parse((*val).second);
+            ent = json::parse((*res).second);
         }
 
         virtual void	add_entity(const json& ent, string& ent_id) override
@@ -72,18 +72,18 @@ TEST_CASE("absolute addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM root(&db);
-    json    val;
+    json    res;
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext ctx(val, root[""]);
+    EntContext ctx(res, root[""]);
     root.JSONExec(ctx, root[""]);
-    cout << val.dump(2) << endl;
+    cout << res.dump(2) << endl;
     
-    CHECK(val["ent1"]["id"].get_ref<string&>() == "ent1"s);
-    CHECK(val["ent2"]["id"].get_ref<string&>() == "ent2"s);
-    CHECK(val["ent3"]["val"]["id"].get_ref<string&>() == "ent3"s);
+    CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
+    CHECK(res["ent2"]["id"].get_ref<string&>() == "ent2"s);
+    CHECK(res["ent3"]["val"]["id"].get_ref<string&>() == "ent3"s);
 }
 
 
@@ -91,41 +91,41 @@ TEST_CASE("relative addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM root(&db);
-    json    val;
+    json    res;
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext ctx(val, root[""]);
+    EntContext ctx(res, root[""]);
     root.JSONExec(ctx, root[""]);
-    cout << val.dump(2) << endl;
+    cout << res.dump(2) << endl;
     
-    CHECK(val["$up3ent"]["id"].get_ref<string&>() == "$up3ent/id"s);
-    CHECK(val["$up3sub"]["id"].get_ref<string&>() == "$up3ent/$sub"s);
-    CHECK(val["$up3obj"]["id"].get_ref<string&>() == "$up3ent/$obj"s);
-    CHECK(val["$up3val"]["id"].get_ref<string&>() == "$up3val/id"s);
+    CHECK(res["$up3ent"]["id"].get_ref<string&>() == "$up3ent/id"s);
+    CHECK(res["$up3sub"]["id"].get_ref<string&>() == "$up3ent/$sub"s);
+    CHECK(res["$up3obj"]["id"].get_ref<string&>() == "$up3ent/$obj"s);
+    CHECK(res["$up3res"]["id"].get_ref<string&>() == "$up3res/id"s);
 
-    CHECK(val["$up2ent"]["id"].get_ref<string&>() == "$up2ent/id"s);
-    CHECK(val["$up2sub"]["id"].get_ref<string&>() == "$up2ent/$sub"s);
-    CHECK(val["$up2obj"]["id"].get_ref<string&>() == "$up2ent/$obj"s);
-    CHECK(val["$up2val"]["id"].get_ref<string&>() == "$up2val/id"s);
+    CHECK(res["$up2ent"]["id"].get_ref<string&>() == "$up2ent/id"s);
+    CHECK(res["$up2sub"]["id"].get_ref<string&>() == "$up2ent/$sub"s);
+    CHECK(res["$up2obj"]["id"].get_ref<string&>() == "$up2ent/$obj"s);
+    CHECK(res["$up2res"]["id"].get_ref<string&>() == "$up2res/id"s);
 
-    CHECK(val["$up1ent"]["id"].get_ref<string&>() == "$up1ent/id"s);
-    CHECK(val["$up1sub"]["id"].get_ref<string&>() == "$up1ent/$sub"s);
-    CHECK(val["$up1obj"]["id"].get_ref<string&>() == "$up1ent/$obj"s);
-    CHECK(val["$up1val"]["id"].get_ref<string&>() == "$up1val/id"s);
+    CHECK(res["$up1ent"]["id"].get_ref<string&>() == "$up1ent/id"s);
+    CHECK(res["$up1sub"]["id"].get_ref<string&>() == "$up1ent/$sub"s);
+    CHECK(res["$up1obj"]["id"].get_ref<string&>() == "$up1ent/$obj"s);
+    CHECK(res["$up1res"]["id"].get_ref<string&>() == "$up1res/id"s);
 
-    CHECK(val["$ent"]["id"].get_ref<string&>() == "$ent/id"s);
-    CHECK(val["$sub"]["id"].get_ref<string&>() == "$ent/$sub"s);
-    CHECK(val["$obj"]["id"].get_ref<string&>() == "$ent/$obj"s);
-    CHECK(val["$val"]["id"].get_ref<string&>() == "$val/id"s);
+    CHECK(res["$ent"]["id"].get_ref<string&>() == "$ent/id"s);
+    CHECK(res["$sub"]["id"].get_ref<string&>() == "$ent/$sub"s);
+    CHECK(res["$obj"]["id"].get_ref<string&>() == "$ent/$obj"s);
+    CHECK(res["$res"]["id"].get_ref<string&>() == "$res/id"s);
 }
 
 TEST_CASE("testing call version.json") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
-    json    val;
+    json    res;
     char *fileNameInput = "version.json";
 
     try
@@ -134,9 +134,9 @@ TEST_CASE("testing call version.json") {
         REQUIRE(in.good());
         in >> root[""];
         
-        EntContext ctx(val, root[""]);
+        EntContext ctx(res, root[""]);
         root.JSONExec(ctx, root[""]);
-        CHECK(val["RVM_version"].get_ref<string&>() == "0.1.0"s);
+        CHECK(res["RVM_version"].get_ref<string&>() == "0.1.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
     catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
@@ -149,7 +149,7 @@ TEST_CASE("testing base entity 'where'") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
-    json    val;
+    json    res;
     char* fileNameInput = "where_test.json";
 
     try
@@ -158,10 +158,10 @@ TEST_CASE("testing base entity 'where'") {
         REQUIRE(in.good());
         in >> root[""];
 
-        EntContext ctx(val, root[""]);
+        EntContext ctx(res, root[""]);
         root.JSONExec(ctx, root[""]);
-        cout << val.dump(2) << endl;
-        CHECK(val[0].get_ref<string&>() == "4"s);
+        cout << res.dump(2) << endl;
+        CHECK(res[0].get_ref<string&>() == "4"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
     catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
@@ -179,23 +179,23 @@ TEST_CASE("performance test") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
-    json    val;
+    json    res;
     char* fileNameInput = "performance.json";
 
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
 
-    EntContext ctx(val, root[""]);
+    EntContext ctx(res, root[""]);
     root.JSONExec(ctx, root[""]);
-    cout << val.dump(2) << endl;
-    CHECK(val["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
-    CHECK(val["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
-    CHECK(val["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);
-    CHECK(val["report"][3].get_ref<string&>() == "param1;-10.724466;22.198186;0.294701;99.562044;685"s);
-    CHECK(val["report"][4].get_ref<string&>() == "param7;56.969527;49.532709;0.580730;99.640934;557"s);
-    CHECK(val["report"][5].get_ref<string&>() == "param12;;;;0.000000;688"s);
-    CHECK(val["report"][6].get_ref<string&>() == "param9;-7.835917;2.119798;0.470438;99.273256;688"s);
+    cout << res.dump(2) << endl;
+    CHECK(res["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
+    CHECK(res["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
+    CHECK(res["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);
+    CHECK(res["report"][3].get_ref<string&>() == "param1;-10.724466;22.198186;0.294701;99.562044;685"s);
+    CHECK(res["report"][4].get_ref<string&>() == "param7;56.969527;49.532709;0.580730;99.640934;557"s);
+    CHECK(res["report"][5].get_ref<string&>() == "param12;;;;0.000000;688"s);
+    CHECK(res["report"][6].get_ref<string&>() == "param9;-7.835917;2.119798;0.470438;99.273256;688"s);
 }
 
 /*

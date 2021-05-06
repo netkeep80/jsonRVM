@@ -24,14 +24,14 @@
          }
       },
       {
-         "$obj" : "$val/Report",
+         "$obj" : "$res/Report",
          "$rel" : "=",
          "$sub" : "/result/report"
       },
       {
          "$obj" : "/result",
          "$rel" : "=",
-         "$sub" : "$val"
+         "$sub" : "$res"
       }
    ]
 }

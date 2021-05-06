@@ -818,18 +818,18 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct EntContext
 	{
-		json& val;			//	локальное адресное пространство
+		json& res;			//	локальное адресное пространство
 		json& obj;			//	контекстный объект
 		json& sub;			//	контекстный субъект
 		json& ent;			//	сущность, модель для контекста
 		EntContext& ctx;	//	родительский контекст исполнения
 
 		EntContext(json& v, json& o, json& s, json& e, EntContext& c)
-			: val(v), obj(o), sub(s), ent(e), ctx(c)
+			: res(v), obj(o), sub(s), ent(e), ctx(c)
 		{}
 
 		EntContext(json& v, json& e)
-			: val(v), obj(v), sub(v), ent(e), ctx(*this)
+			: res(v), obj(v), sub(v), ent(e), ctx(*this)
 		{}
 
 		void throw_json(const string& function, const json& error)
@@ -840,7 +840,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 			j["EntContext"]["$ent/"] = ent;
 			j["EntContext"]["$sub/"] = sub;
 			j["EntContext"]["$obj/"] = obj;
-			j["EntContext"]["$val/"] = val;
+			j["EntContext"]["$res/"] = res;
 			throw j;
 		}
 	};
@@ -925,25 +925,25 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				CASE("$up3ent") : segment = &ec.ctx.ctx.ctx.ent;	break;
 				CASE("$up3sub") : segment = &ec.ctx.ctx.ctx.sub;	break;
 				CASE("$up3obj") : segment = &ec.ctx.ctx.ctx.obj;	break;
-				CASE("$up3val") : segment = &ec.ctx.ctx.ctx.val;	break;
+				CASE("$up3res") : segment = &ec.ctx.ctx.ctx.res;	break;
 				CASE("$up2ent") : segment = &ec.ctx.ctx.ent;	break;
 				CASE("$up2sub") : segment = &ec.ctx.ctx.sub;	break;
 				CASE("$up2obj") : segment = &ec.ctx.ctx.obj;	break;
-				CASE("$up2val") : segment = &ec.ctx.ctx.val;	break;
+				CASE("$up2res") : segment = &ec.ctx.ctx.res;	break;
 				CASE("$up1ent") : segment = &ec.ctx.ent;	break;
 				CASE("$up1sub") : segment = &ec.ctx.sub;	break;
 				CASE("$up1obj") : segment = &ec.ctx.obj;	break;
-				CASE("$up1val") : segment = &ec.ctx.val;	break;
+				CASE("$up1res") : segment = &ec.ctx.res;	break;
 				CASE("$ent") : segment = &ec.ent;	break;
 				CASE("$sub") : segment = &ec.sub;	break;
 				CASE("$obj") : segment = &ec.obj;	break;
-				CASE("$val") : segment = &ec.val;	break;
+				CASE("$res") : segment = &ec.res;	break;
 
 			DEFAULT:
 				json& ref = *segment;
 				if (!ref.is_object()) ref = json::object();
-				auto val = ref.find(it);
-				if (val == ref.end())
+				auto res = ref.find(it);
+				if (res == ref.end())
 				{
 					try { this->get_entity(ref[it], it); }
 					catch (json & j) { throw json({ {__FUNCTION__, j} }); }
@@ -951,11 +951,11 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 					catch (out_of_range e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
 					catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
 
-					val = ref.find(it);
-					if (val == ref.end())
+					res = ref.find(it);
+					if (res == ref.end())
 						throw json({ {__FUNCTION__, "entity '"s + it + "' does not exist in relations model!"s} });
 				}
-				segment = &val.value();
+				segment = &res.value();
 			}
 
 			while (prev < len)
@@ -983,7 +983,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 
 				//	местоимение проекции контекстной сущности
 			case json::value_t::null:
-				return ec.val;
+				return ec.res;
 
 				//	если это не адрес то возвращаем значение
 			default:
@@ -1045,7 +1045,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 					try {
 						JSONExec(
 							EntContext(
-								ec.val,
+								ec.res,
 								ReferEntity(ec, rel["$obj"]),
 								ReferEntity(ec, rel["$sub"]),
 								rel,
