@@ -814,8 +814,6 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 	const string RVM_version = "0.1.0"s;
 	////////////////////////////// VERSION //////////////////////////////
 
-	inline  json& id2ref(size_t ptr_val) { return *((json*)ptr_val); }
-
 
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct EntContext
@@ -847,24 +845,21 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		}
 	};
 
-	using jsonptr = json*;
+	class jsonRVM;
+	//	64 bit
+	#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@rm@@YAXAEAVjsonRVM@1@@Z"
+	__declspec(dllexport) void ImportRelationsModel(jsonRVM& rvm);
 
-	template<class database_impl_t, template<class rvm_impl_t> class ...vocabulary_t>
-	class jsonRVM final :
-		protected database_api<database_impl_t>,
-		public json,
-		public map<jsonptr, void (*)(jsonRVM<database_impl_t, vocabulary_t...>& rvm, EntContext& ec)>,
-		protected vocabulary_t<jsonRVM<database_impl_t, vocabulary_t...>>...
+	using x86View = void (*)(jsonRVM& rvm, EntContext& ec);
+	using x86_view_map_t = map<json*, x86View>;
+
+//#include <unordered_map>
+	//using x86_view_map_t = unordered_map<json*, x86View>;
+	
+	class jsonRVM : protected database_api, public json, public x86_view_map_t
 	{
-	public:
-		using this_t = jsonRVM<database_impl_t, vocabulary_t...>;
-		using x86View = void (*)(this_t & rvm, EntContext & ec);
-		using db_interface = database_api<database_impl_t>;
-		friend db_interface;
-		using x86_view_map_t = map<jsonptr, void (*)(jsonRVM<database_impl_t, vocabulary_t...>& rvm, EntContext& ec)>;
-
 	private:
-		static void  base_add_entity(this_t& rvm, EntContext& ec)
+		static void  base_add_entity(jsonRVM& rvm, EntContext& ec)
 		{
 			string	ent_id = "";
 			rvm.add_entity(ec.obj, ent_id);
@@ -872,17 +867,20 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		}
 
 	public:
-		jsonRVM(database_impl_t* db)
-			: json(json::object()), vocabulary_t<this_t>(*this)...
+		jsonRVM(database_api* db = nullptr)
+			: json(json::object())
 		{
-			db_interface::link(db);
+			database_api::link(db);
+			//	base vocabulary
+			ImportRelationsModel(*this);
 			//	database_api
-			Addx86Entity(*this, *this, "add_entity"s, base_add_entity, ""s);
+			AddBaseEntity(*this, "add_entity"s, base_add_entity, ""s);
 		}
 
 		void	ReferProperty(json*& segment, const string& it)
 		{
 			json& ref = *segment;
+
 			if (ref.is_object())
 			{
 				segment = &ref[it];
@@ -1016,17 +1014,17 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 			}
 			else switch (rel.type())
 			{
-				//	иерархический путь к json значению
-			case json::value_t::string:
+			case json::value_t::string:	//	иерархический путь к json значению
+			{
 				try
 				{
 					JSONExec(ec, ReferEntity(ec, rel.get_ref<string&>()));
 					return;
 				}
-				catch (json & j) { throw json({ {rel.get<string>(), j} }); }
+				catch (json& j) { throw json({ {rel.get<string>(), j} }); }
 
-				//	лямбда вектор, который управляет последовательным изменением проекции сущности
-			case json::value_t::array:
+			}
+			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
 			{
 				int i = 0;
 				for (auto& it : rel)
@@ -1040,7 +1038,6 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				}
 				return;
 			}
-
 			case json::value_t::object:
 			{
 				if (rel.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
@@ -1107,9 +1104,8 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				}
 				return;
 			}
-
-			//	битовая маска для условного проектора ViewEntity
-			case json::value_t::boolean:
+			case json::value_t::boolean:	//	битовая маска для условного проектора ViewEntity
+			{
 				if (rel)
 				{
 					try
@@ -1124,10 +1120,10 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 							ec.obj
 						);
 					}
-					catch (json & j) { throw json({ {"true"s, j} }); }
+					catch (json& j) { throw json({ {"true"s, j} }); }
 				}
 				return;
-
+			}
 			case json::value_t::number_unsigned:
 			case json::value_t::number_float:
 			case json::value_t::number_integer:
@@ -1137,94 +1133,15 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				return;	//	null - означает отсутствие отношения, т.е. неизменность проекции
 			}
 		}
+
+		//	добавление сущности с закэшированной x86 проекцией
+		json& AddBaseEntity(json& entity, const string& name, x86View view, const string& description)
+		{
+			entity[name] = json::object();
+			entity[name]["name"] = name;
+			entity[name]["description"] = description;
+			(*this)[&(entity[name])] = view;
+			return entity[name];
+		}
 	};
-
-	//	добавление сущности с закэшированной x86 проекцией
-	template<typename rvm_impl_t>
-	json& Addx86Entity(rvm_impl_t& rvm, json& entity, const string& name, void (*view)(rvm_impl_t&, EntContext&), const string& description)
-	{
-		entity[name] = json::object();
-		entity[name]["name"] = name;
-		entity[name]["description"] = description;
-		rvm[&(entity[name])] = view;
-		return entity[name];
-	}
-
-
-#pragma warning (disable: 4244)
-	inline bool get_bool(const json& obj, const string& field)
-	{
-		if (obj.count(field))
-		{
-			const json& val = obj[field];
-			switch (val.type())
-			{
-			case json::value_t::number_float:   return bool(val.get<json::number_float_t>() != 0.0);
-			case json::value_t::number_integer: return bool(val.get<json::number_integer_t>() != 0);
-			case json::value_t::number_unsigned:return bool(val.get<json::number_unsigned_t>() != 0);
-			case json::value_t::boolean:        return bool(val.get<json::boolean_t>());
-			case json::value_t::string:         return bool(val.get_ref<const json::string_t&>() != ""s && val.get_ref<const json::string_t&>() != "false"s);
-			default: break;
-			}
-		}
-
-		return bool();
-	}
-
-	inline float get_float(const json& obj, const string& field)
-	{
-		if (obj.count(field))
-		{
-			const json& val = obj[field];
-			switch (val.type())
-			{
-			case json::value_t::number_float:   return float(val.get<json::number_float_t>());
-			case json::value_t::number_integer: return float(val.get<json::number_integer_t>());
-			case json::value_t::number_unsigned:return float(val.get<json::number_unsigned_t>());
-			case json::value_t::boolean:        return float(val.get<json::boolean_t>() ? 1.0 : 0.0);
-			case json::value_t::string:         return float(std::stod(val.get_ref<const json::string_t&>()));
-			default: break;
-			}
-		}
-
-		return float();
-	}
-
-	inline float get_int(const json& obj, const string& field)
-	{
-		if (obj.count(field))
-		{
-			const json& val = obj[field];
-			switch (val.type())
-			{
-			case json::value_t::number_float:   return int(val.get<json::number_float_t>());
-			case json::value_t::number_integer: return int(val.get<json::number_integer_t>());
-			case json::value_t::number_unsigned:return int(val.get<json::number_unsigned_t>());
-			case json::value_t::boolean:        return int(val.get<json::boolean_t>() ? 1 : 0);
-			case json::value_t::string:         return int(std::stoi(val.get_ref<const json::string_t&>()));
-			default: break;
-			}
-		}
-
-		return int();
-	}
-
-	inline float get_unsigned(const json& obj, const string& field)
-	{
-		if (obj.count(field))
-		{
-			const json& val = obj[field];
-			switch (val.type())
-			{
-			case json::value_t::number_float:   return unsigned(val.get<json::number_float_t>());
-			case json::value_t::number_integer: return unsigned(val.get<json::number_integer_t>());
-			case json::value_t::number_unsigned:return unsigned(val.get<json::number_unsigned_t>());
-			case json::value_t::boolean:        return unsigned(val.get<json::boolean_t>() ? 1 : 0);
-			case json::value_t::string:         return unsigned(std::stoul(val.get_ref<const json::string_t&>()));
-			default: break;
-			}
-		}
-
-		return unsigned();
-	}
 }

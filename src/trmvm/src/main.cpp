@@ -32,11 +32,6 @@ SOFTWARE.
 */
 // main.cpp: определяет точку входа для консольного приложения.
 //
-#include <SDKDDKVer.h>
-#include <stdio.h>
-#include <tchar.h>
-#include <Windows.h>
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -90,19 +85,15 @@ int main(int argc, char* argv[])
 		return 0;	//	ok
 	}
 
-	/*
-	if (!strcmp(fileNameInput, "jsonRVM.exe"))
+	if (!strcmp(fileNameInput, "trmvm.exe"))
 	{
-		val = json::object();
-		ImportRelationsModel(val);
-		cout << val.dump(3);
+		cout << jsonRVM().dump(3);
 		return 0;	//	ok
 	}
-	*/
 
 	file_database_t	db(".\\");
-	jsonRVM<file_database_t, base_vocabulary> root(&db);
-
+	jsonRVM root(&db);
+	
 	try
 	{
 		//	создаём контекст исполнения

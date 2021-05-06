@@ -6,6 +6,8 @@
 
 namespace rm
 {
+	using namespace std;
+
 	template<typename type_t>
 	struct _add
 	{
@@ -206,50 +208,46 @@ namespace rm
 		else return json::array({ a, b });
 	}
 
-	template<typename rvm_impl_t>
-	class base_vocabulary
+	void  sleep_ms(jsonRVM& rvm, EntContext& ec)
 	{
+		Sleep(ec.obj.get<json::number_unsigned_t>());
+	}
 
-		static void  sleep_ms(rvm_impl_t& rvm, EntContext& ec)
-		{
-			Sleep(ec.obj.get<json::number_unsigned_t>());
-		}
+	void  jsonCopy(jsonRVM& rvm, EntContext& ec)
+	{	//	полное копированиее json значения объекта в субъект
+		ec.sub = ec.obj;
+	}
 
-		static void  jsonCopy(rvm_impl_t& rvm, EntContext& ec)
-		{	//	полное копированиее json значения объекта в субъект
-			ec.sub = ec.obj;
-		}
+	void  jsonView(jsonRVM& rvm, EntContext& ec)
+	{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
+		//	проецируем во внешнем контексте
+		rvm.JSONExec(EntContext(ec.sub, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
+	}
 
-		static void  jsonView(rvm_impl_t& rvm, EntContext& ec)
-		{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-			//	проецируем во внешнем контексте
-			rvm.JSONExec(EntContext(ec.sub, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
-		}
+	void  jsonXOR(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.val = ec.sub ^ ec.obj;
+	}
 
-		static void  jsonXOR(rvm_impl_t& rvm, EntContext& ec)
-		{
-			ec.val = ec.sub ^ ec.obj;
-		}
+	////////////////////////////////////////////////////////
+	/*
+	enum class value_t : std::uint8_t
+	{
+		null,             ///< null value
+		object,           ///< object (unordered set of name/value pairs)
+		array,            ///< array (ordered collection of values)
+		string,           ///< string value
+		boolean,          ///< boolean value
+		number_integer,   ///< number value (signed integer)
+		number_unsigned,  ///< number value (unsigned integer)
+		number_float,     ///< number value (floating-point)
+		discarded         ///< discarded by the the parser callback function
+	};
+	*/
 
-		////////////////////////////////////////////////////////
-		/*
-		enum class value_t : std::uint8_t
-		{
-			null,             ///< null value
-			object,           ///< object (unordered set of name/value pairs)
-			array,            ///< array (ordered collection of values)
-			string,           ///< string value
-			boolean,          ///< boolean value
-			number_integer,   ///< number value (signed integer)
-			number_unsigned,  ///< number value (unsigned integer)
-			number_float,     ///< number value (floating-point)
-			discarded         ///< discarded by the the parser callback function
-		};
-		*/
-
-		typedef json::number_float_t	jf;
-		typedef json::number_integer_t	ji;
-		typedef json::number_unsigned_t	ju;
+	typedef json::number_float_t	jf;
+	typedef json::number_integer_t	ji;
+	typedef json::number_unsigned_t	ju;
 
 #define     sub_field       4
 #define     obj_field       4
@@ -269,123 +267,123 @@ namespace rm
 	OPP_ANYTO(operation, ju, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
+void  json##name (jsonRVM& rvm, EntContext& ec)			\
 {																								\
 	switch( (uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()) )							\
 	{ VM_OPP( operation ) default: ec.val = json(); }												\
 }
 
-		OP_BODY(Add, +);
-		OP_BODY(Substract, -);
-		OP_BODY(Mul, *);
+	OP_BODY(Add, +);
+	OP_BODY(Substract, -);
+	OP_BODY(Mul, *);
 
-		static void  jsonDiv(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.obj.is_number())
-				if (ec.obj.get<double>() == 0.0)
-				{
-					ec.val = json();
-					return;
-				}
-			switch ((uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()))
+	void  jsonDiv(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_number())
+			if (ec.obj.get<double>() == 0.0)
 			{
-			VM_OPP(/ ) default: ec.val = json();
-			}
-		}
-
-
-		//////////////////////////////////////////////////////////////////////////////////////////////
-		static void  jsonPower(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.sub.is_number() && ec.obj.is_number())
-			{
-				json::number_float_t db = ec.obj.is_number_float() ? ec.obj.get<json::number_float_t>() : json::number_float_t(ec.obj.get<json::number_integer_t>());
-
-				if (!ec.sub.is_number_float())
-				{	//	result must be integer
-					json::number_float_t da = json::number_float_t(ec.sub.get<json::number_integer_t>());
-					ec.val = json::number_integer_t(pow(da, db) + .5);
-				}
-				else
-				{	//	result must be double
-					json::number_float_t da = ec.sub.get<json::number_float_t>();
-					ec.val = json::number_float_t(pow(da, db));
-				}
-			}
-			else
 				ec.val = json();
-		}
-
-		static void  jsonSqrt(rvm_impl_t& rvm, EntContext& ec)
+				return;
+			}
+		switch ((uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()))
 		{
-			if (ec.obj.is_number())
-				ec.sub = json::number_float_t(sqrt(ec.obj.get<json::number_float_t>()));
-			else
-				ec.sub = json();
+		VM_OPP(/ ) default: ec.val = json();
 		}
+	}
 
-		////////////////////////////////////////////////////////////////////////////////////
 
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	void  jsonPower(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.sub.is_number() && ec.obj.is_number())
+		{
+			json::number_float_t db = ec.obj.is_number_float() ? ec.obj.get<json::number_float_t>() : json::number_float_t(ec.obj.get<json::number_integer_t>());
 
-		static void  jsonForEachObject(rvm_impl_t& rvm, EntContext& ec)
-		{	/*
-				Множественный JSONExec для проекции объекта типа array
-			*/
-			if (ec.obj.is_array())
-			{
-				if (!ec.val.is_array()) ec.val = json::array();
-				size_t i = 0;
-				for (auto& it : ec.obj)
-				{
-					try {
-						json& value = ec.val[i];
-						rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.sub); i++;
-					}
-					catch (json & j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
-				}
+			if (!ec.sub.is_number_float())
+			{	//	result must be integer
+				json::number_float_t da = json::number_float_t(ec.sub.get<json::number_integer_t>());
+				ec.val = json::number_integer_t(pow(da, db) + .5);
 			}
 			else
-				ec.throw_json(__FUNCTION__, "$obj must be array!"s);
-		}
-
-		static void  jsonForEachSubject(rvm_impl_t& rvm, EntContext& ec)
-		{	/*
-				Множественный JSONExec для субъекта типа array
-			*/
-			if (ec.sub.is_array())
-			{
-				if (!ec.val.is_array()) ec.val = json::array();
-				size_t i = 0;
-				for (auto& it : ec.sub)
-				{
-					try {
-						json& value = ec.val[i];
-						rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.obj); i++;
-					}
-					catch (json & j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
-				}
+			{	//	result must be double
+				json::number_float_t da = ec.sub.get<json::number_float_t>();
+				ec.val = json::number_float_t(pow(da, db));
 			}
-			else
-				ec.throw_json(__FUNCTION__, "$sub must be array!"s);
 		}
+		else
+			ec.val = json();
+	}
 
-		static void  jsonSize(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonSqrt(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_number())
+			ec.sub = json::number_float_t(sqrt(ec.obj.get<json::number_float_t>()));
+		else
+			ec.sub = json();
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+
+	void  jsonForEachObject(jsonRVM& rvm, EntContext& ec)
+	{	/*
+			Множественный JSONExec для проекции объекта типа array
+		*/
+		if (ec.obj.is_array())
 		{
-			ec.sub = ec.obj.size();
+			if (!ec.val.is_array()) ec.val = json::array();
+			size_t i = 0;
+			for (auto& it : ec.obj)
+			{
+				try {
+					json& value = ec.val[i];
+					rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.sub); i++;
+				}
+				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
+			}
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj must be array!"s);
+	}
 
-#define define_json_is_type(json_type)										\
-		static void  json_is_##json_type(rvm_impl_t& rvm, EntContext& ec)	\
-		{																	\
-			ec.sub = ec.obj.is_##json_type();								\
-		}
-
-		static void  json_is_not_null(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonForEachSubject(jsonRVM& rvm, EntContext& ec)
+	{	/*
+			Множественный JSONExec для субъекта типа array
+		*/
+		if (ec.sub.is_array())
 		{
-			ec.sub = !ec.obj.is_null();
+			if (!ec.val.is_array()) ec.val = json::array();
+			size_t i = 0;
+			for (auto& it : ec.sub)
+			{
+				try {
+					json& value = ec.val[i];
+					rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.obj); i++;
+				}
+				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
+			}
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$sub must be array!"s);
+	}
 
-		define_json_is_type(array)
+	void  jsonSize(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.sub = ec.obj.size();
+	}
+
+#define define_json_is_type(json_type)							\
+	void  json_is_##json_type(jsonRVM& rvm, EntContext& ec)		\
+	{															\
+		ec.sub = ec.obj.is_##json_type();						\
+	}
+
+	void  json_is_not_null(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.sub = !ec.obj.is_null();
+	}
+
+	define_json_is_type(array)
 		define_json_is_type(boolean)
 		define_json_is_type(number_float)
 		define_json_is_type(number_integer)
@@ -397,818 +395,804 @@ static void  json##name (rvm_impl_t& rvm, EntContext& ec)			\
 		define_json_is_type(structured)
 		define_json_is_type(discarded)
 
-		static void  jsonIntegerSequence(rvm_impl_t& rvm, EntContext& ec)
+		void  jsonIntegerSequence(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_object())
 		{
-			if (ec.obj.is_object())
-			{
-				json::number_integer_t	from = ec.obj["from"];
-				json::number_integer_t	to = ec.obj["to"];
-				json::number_integer_t	step = ec.obj.count("step") ? ec.obj["step"] : 1;
-				ec.sub = json::array();
+			json::number_integer_t	from = ec.obj["from"];
+			json::number_integer_t	to = ec.obj["to"];
+			json::number_integer_t	step = ec.obj.count("step") ? ec.obj["step"] : 1;
+			ec.sub = json::array();
 
-				for (json::number_integer_t i = from; i <= to; i += step)
-					ec.sub.push_back(i);
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$obj must has 'from', 'to' and 'step' properties!"s);
+			for (json::number_integer_t i = from; i <= to; i += step)
+				ec.sub.push_back(i);
+		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj must has 'from', 'to' and 'step' properties!"s);
+	}
+
+	void  jsonUnion(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!ec.sub.is_array())
+		{
+			json	tmp = ec.sub;
+			ec.sub = json::array();
+			if (!tmp.is_null())
+				ec.sub[0] = tmp;
 		}
 
-		static void  jsonUnion(rvm_impl_t& rvm, EntContext& ec)
+		if (!ec.obj.is_array())
 		{
-			if (!ec.sub.is_array())
-			{
-				json	tmp = ec.sub;
-				ec.sub = json::array();
-				if (!tmp.is_null())
-					ec.sub[0] = tmp;
-			}
-
-			if (!ec.obj.is_array())
-			{
-				if (!ec.obj.is_null())
-					ec.sub.push_back(ec.obj);
-			}
-			else
-				for (auto& it : ec.obj)
-					ec.sub.push_back(it);
-
-			ec.val = ec.sub;
+			if (!ec.obj.is_null())
+				ec.sub.push_back(ec.obj);
 		}
+		else
+			for (auto& it : ec.obj)
+				ec.sub.push_back(it);
 
-		static void  jsonNull(rvm_impl_t& rvm, EntContext& ec) {}
+		ec.val = ec.sub;
+	}
 
-		static void  jsonInt32(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonNull(jsonRVM& rvm, EntContext& ec) {}
+
+	void  jsonInt32(jsonRVM& rvm, EntContext& ec)
+	{
+		switch (ec.obj.type())
 		{
-			switch (ec.obj.type())
-			{
-			case json::value_t::array:
-			case json::value_t::object:
-				ec.sub = ec.obj.size();
-				break;
+		case json::value_t::array:
+		case json::value_t::object:
+			ec.sub = ec.obj.size();
+			break;
 
-			case json::value_t::string:
-				ec.sub = atoi(ec.obj.get<string>().c_str());
-				break;
+		case json::value_t::string:
+			ec.sub = atoi(ec.obj.get<string>().c_str());
+			break;
 
-			case json::value_t::boolean:
-				if (ec.obj.get<bool>())
-					ec.sub = int(1);
-				else
-					ec.sub = int(0);
-				break;
-
-			case json::value_t::number_float:
-			case json::value_t::number_integer:
-			case json::value_t::number_unsigned:
-				ec.sub = ec.obj.get<int>();
-				break;
-
-			default:
+		case json::value_t::boolean:
+			if (ec.obj.get<bool>())
+				ec.sub = int(1);
+			else
 				ec.sub = int(0);
-			}
+			break;
 
-			ec.val = ec.sub;
+		case json::value_t::number_float:
+		case json::value_t::number_integer:
+		case json::value_t::number_unsigned:
+			ec.sub = ec.obj.get<int>();
+			break;
+
+		default:
+			ec.sub = int(0);
 		}
 
-		static void  jsonDouble(rvm_impl_t& rvm, EntContext& ec)
+		ec.val = ec.sub;
+	}
+
+	void  jsonDouble(jsonRVM& rvm, EntContext& ec)
+	{
+		switch (ec.obj.type())
 		{
-			switch (ec.obj.type())
+		case json::value_t::array:
+		case json::value_t::object:
+			ec.sub = json::number_float_t(ec.obj.size());
+			break;
+
+		case json::value_t::string:
+			ec.sub = json::number_float_t(std::stod(ec.obj.get_ref<string&>()));
+			break;
+
+		case json::value_t::boolean:
+			if (ec.obj.get<bool>())
+				ec.sub = json::number_float_t(1.0);
+			else
+				ec.sub = json::number_float_t(0.0);
+			break;
+
+		case json::value_t::number_float:
+			ec.sub = ec.obj;
+			break;
+
+		case json::value_t::number_integer:
+			ec.sub = json::number_float_t(ec.obj.get<json::number_integer_t>());
+			break;
+
+		case json::value_t::number_unsigned:
+			ec.sub = json::number_float_t(ec.obj.get<json::number_unsigned_t>());
+			break;
+
+		default:
+			ec.sub = json::number_float_t(0);
+		}
+	}
+
+
+	void  string_string(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.sub = ""s;
+		string& result = ec.sub.get_ref<string&>();
+
+		switch (ec.obj.type())
+		{
+		case json::value_t::number_float:
+			result = to_string(ec.obj.get<json::number_float_t>());
+			break;
+
+		case json::value_t::number_integer:
+			result = to_string(ec.obj.get<json::number_integer_t>());
+			break;
+
+		case json::value_t::number_unsigned:
+			result = to_string(ec.obj.get<json::number_unsigned_t>());
+			break;
+
+		case json::value_t::string:
+			result = ec.obj.get_ref<string&>();
+			break;
+
+		default:
+			result = ec.obj.dump();
+			break;
+		}
+	}
+
+
+	void  string_add(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!ec.sub.is_string())	ec.sub = ""s;
+		string& result = ec.sub.get_ref<string&>();
+
+		switch (ec.obj.type())
+		{
+		case json::value_t::number_float:
+			result += to_string(ec.obj.get<json::number_float_t>());
+			break;
+
+		case json::value_t::number_integer:
+			result += to_string(ec.obj.get<json::number_integer_t>());
+			break;
+
+		case json::value_t::number_unsigned:
+			result += to_string(ec.obj.get<json::number_unsigned_t>());
+			break;
+
+		case json::value_t::string:
+			result += ec.obj.get_ref<string&>();
+			break;
+
+		default:
+			result += ec.obj.dump();
+			break;
+		}
+	}
+
+
+	void  string_find(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!(ec.obj.is_string() && ec.sub.is_string())) ec.throw_json(__FUNCTION__, "$obj and $sub must be strings!"s);
+		ec.val = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
+	}
+
+
+	void  string_split(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_string() && ec.sub.is_string())
+		{
+			const string& delim = ec.obj.get_ref<string&>();
+			string str = ec.sub.get_ref<string&>();
+			size_t prev = 0, pos = 0;
+			ec.val = json::array();
+
+			do
 			{
-			case json::value_t::array:
-			case json::value_t::object:
-				ec.sub = json::number_float_t(ec.obj.size());
-				break;
-
-			case json::value_t::string:
-				ec.sub = json::number_float_t(std::stod(ec.obj.get_ref<string&>()));
-				break;
-
-			case json::value_t::boolean:
-				if (ec.obj.get<bool>())
-					ec.sub = json::number_float_t(1.0);
-				else
-					ec.sub = json::number_float_t(0.0);
-				break;
-
-			case json::value_t::number_float:
-				ec.sub = ec.obj;
-				break;
-
-			case json::value_t::number_integer:
-				ec.sub = json::number_float_t(ec.obj.get<json::number_integer_t>());
-				break;
-
-			case json::value_t::number_unsigned:
-				ec.sub = json::number_float_t(ec.obj.get<json::number_unsigned_t>());
-				break;
-
-			default:
-				ec.sub = json::number_float_t(0);
-			}
+				pos = str.find(delim, prev);
+				if (pos == string::npos) pos = str.length();
+				ec.val.push_back(str.substr(prev, pos - prev));
+				prev = pos + delim.length();
+			} while (pos < str.length() && prev < str.length());
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj and $sub must be string!"s);
+	}
 
+	void  string_join(jsonRVM& rvm, EntContext& ec)
+	{
+		string	result = "";
+		bool	first = true;
 
-		static void  string_string(rvm_impl_t& rvm, EntContext& ec)
+		if (ec.obj.is_string() && ec.sub.is_array())
 		{
-			ec.sub = ""s;
-			string& result = ec.sub.get_ref<string&>();
+			string& splitter = ec.obj.get_ref<string&>();
 
-			switch (ec.obj.type())
+			for (auto& it : ec.sub)
 			{
-			case json::value_t::number_float:
-				result = to_string(ec.obj.get<json::number_float_t>());
-				break;
+				if (first) first = false;
+				else       result += splitter;
 
-			case json::value_t::number_integer:
-				result = to_string(ec.obj.get<json::number_integer_t>());
-				break;
-
-			case json::value_t::number_unsigned:
-				result = to_string(ec.obj.get<json::number_unsigned_t>());
-				break;
-
-			case json::value_t::string:
-				result = ec.obj.get_ref<string&>();
-				break;
-
-			default:
-				result = ec.obj.dump();
-				break;
-			}
-		}
-
-
-		static void  string_add(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (!ec.sub.is_string())	ec.sub = ""s;
-			string& result = ec.sub.get_ref<string&>();
-
-			switch (ec.obj.type())
-			{
-			case json::value_t::number_float:
-				result += to_string(ec.obj.get<json::number_float_t>());
-				break;
-
-			case json::value_t::number_integer:
-				result += to_string(ec.obj.get<json::number_integer_t>());
-				break;
-
-			case json::value_t::number_unsigned:
-				result += to_string(ec.obj.get<json::number_unsigned_t>());
-				break;
-
-			case json::value_t::string:
-				result += ec.obj.get_ref<string&>();
-				break;
-
-			default:
-				result += ec.obj.dump();
-				break;
-			}
-		}
-
-
-		static void  string_find(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (!(ec.obj.is_string() && ec.sub.is_string())) ec.throw_json(__FUNCTION__, "$obj and $sub must be strings!"s);
-			ec.val = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
-		}
-
-
-		static void  string_split(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.obj.is_string() && ec.sub.is_string())
-			{
-				const string& delim = ec.obj.get_ref<string&>();
-				string str = ec.sub.get_ref<string&>();
-				size_t prev = 0, pos = 0;
-				ec.val = json::array();
-
-				do
+				switch (it.type())
 				{
-					pos = str.find(delim, prev);
-					if (pos == string::npos) pos = str.length();
-					ec.val.push_back(str.substr(prev, pos - prev));
-					prev = pos + delim.length();
-				} while (pos < str.length() && prev < str.length());
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$obj and $sub must be string!"s);
-		}
+				case json::value_t::object:
+				case json::value_t::array:
+					ec.throw_json(__FUNCTION__, "$sub must be array of simple type values!"s);
 
-		static void  string_join(rvm_impl_t& rvm, EntContext& ec)
-		{
-			string	result = "";
-			bool	first = true;
-
-			if (ec.obj.is_string() && ec.sub.is_array())
-			{
-				string& splitter = ec.obj.get_ref<string&>();
-
-				for (auto& it : ec.sub)
-				{
-					if (first) first = false;
-					else       result += splitter;
-
-					switch (it.type())
-					{
-					case json::value_t::object:
-					case json::value_t::array:
-						ec.throw_json(__FUNCTION__, "$sub must be array of simple type values!"s);
-
-					case json::value_t::number_float:
-						result += to_string(it.get<json::number_float_t>());
-						break;
-
-					case json::value_t::number_integer:
-						result += to_string(it.get<json::number_integer_t>());
-						break;
-
-					case json::value_t::number_unsigned:
-						result += to_string(it.get<json::number_unsigned_t>());
-						break;
-
-					case json::value_t::string:
-						result += it.get_ref<string&>();
-						break;
-
-					case json::value_t::boolean:
-						result += it.dump();
-						break;
-
-					default:	//	null не печатаем
-						break;
-					}
-				}
-
-				ec.val = result;
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$obj must be string and $sub must be array!"s);
-		}
-
-		static void  jsonGet(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.sub.is_array())
-			{
-				if (ec.obj.is_number())
-					ec.val = ec.sub[ec.obj.get<size_t>()];
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
-			}
-			else if (ec.sub.is_object())
-			{
-				if (ec.obj.is_string())
-					ec.val = ec.sub[ec.obj.get_ref<string&>()];
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be string!"s);
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$sub must be array or object!"s);
-		}
-
-		static void  jsonSet(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.sub.is_array())
-			{
-				if (ec.obj.is_number_unsigned())
-					ec.sub[ec.obj.get<size_t>()] = ec.val;
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
-			}
-			else if (ec.sub.is_object())
-			{
-				if (ec.obj.is_string())
-					ec.sub[ec.obj.get_ref<string&>()] = ec.val;
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be string!"s);
-			}
-			else if (ec.sub.is_null())
-			{
-				if (ec.obj.is_number_unsigned())
-					ec.sub[ec.obj.get<size_t>()] = ec.val;
-				else if (ec.obj.is_string())
-					ec.sub[ec.obj.get_ref<string&>()] = ec.val;
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be unsigned number or string!"s);
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$sub must be array, object or null!"s);
-		}
-
-		static void  jsonErase(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (ec.sub.is_object())
-			{
-				if (ec.obj.is_string())
-					ec.sub.erase(ec.obj.get_ref<string&>());
-				else
-					ec.throw_json(__FUNCTION__, "$obj must be string!"s);
-			}
-			else
-				ec.throw_json(__FUNCTION__, "$sub must be object!"s);
-		}
-
-		static void  jsonIsEq(rvm_impl_t& rvm, EntContext& ec)
-		{
-			ec.val = ec.sub == ec.obj;
-		}
-
-		static void  jsonIsNotEq(rvm_impl_t& rvm, EntContext& ec)
-		{
-			ec.val = ec.sub != ec.obj;
-		}
-
-		static void  jsonSum(rvm_impl_t& rvm, EntContext& ec)
-		{
-			__int64	isum = 0;
-			double	dsum = 0.0;
-
-			if (ec.obj.is_array())
-			{
-				for (auto& it : ec.obj) switch (it.type())
-				{
 				case json::value_t::number_float:
-					dsum += it.get<json::number_float_t>();
+					result += to_string(it.get<json::number_float_t>());
 					break;
 
 				case json::value_t::number_integer:
-					isum += it.get<json::number_integer_t>();
+					result += to_string(it.get<json::number_integer_t>());
 					break;
 
 				case json::value_t::number_unsigned:
-					isum += it.get<json::number_unsigned_t>();
+					result += to_string(it.get<json::number_unsigned_t>());
 					break;
 
-				default:
+				case json::value_t::string:
+					result += it.get_ref<string&>();
+					break;
+
+				case json::value_t::boolean:
+					result += it.dump();
+					break;
+
+				default:	//	null не печатаем
 					break;
 				}
-
-				if (0.0 == dsum)	ec.sub = json::number_integer_t(isum);
-				else if (0 == isum)	ec.sub = json::number_float_t(dsum);
-				else				ec.sub = json::number_float_t(dsum + json::number_float_t(isum));
-				return;
 			}
-			else
-				ec.throw_json(__FUNCTION__, "$obj must be json array!"s);
+
+			ec.val = result;
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj must be string and $sub must be array!"s);
+	}
 
-		static void  jsonWhere(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonGet(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.sub.is_array())
 		{
-			ec.val = json::array();		//	подготовка выходного массива
-
-			if (ec.obj.is_null()) return;
-
-			if (ec.obj.is_array())
-			{
-				size_t i = 0;
-				for (json& it : ec.obj)
-				{
-					try {
-						json	boolres;
-						rvm.JSONExec(EntContext(boolres, it, boolres, ec.ent, ec.ctx), ec.sub);
-						if (boolres.is_boolean())
-							if (boolres.get<bool>())
-								ec.val.push_back(it);	//	фильтруем
-						i++;
-					}
-					catch (json & j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
-				}
-			}
+			if (ec.obj.is_number())
+				ec.val = ec.sub[ec.obj.get<size_t>()];
 			else
-				ec.throw_json(__FUNCTION__, "$obj must be json array!"s);
+				ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
 		}
-
-		static void  jsonBelow(rvm_impl_t& rvm, EntContext& ec)	//	<
+		else if (ec.sub.is_object())
 		{
-			if (ec.sub.type() == ec.obj.type()) switch (ec.obj.type())
+			if (ec.obj.is_string())
+				ec.val = ec.sub[ec.obj.get_ref<string&>()];
+			else
+				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
+		}
+		else
+			ec.throw_json(__FUNCTION__, "$sub must be array or object!"s);
+	}
+
+	void  jsonSet(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.sub.is_array())
+		{
+			if (ec.obj.is_number_unsigned())
+				ec.sub[ec.obj.get<size_t>()] = ec.val;
+			else
+				ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
+		}
+		else if (ec.sub.is_object())
+		{
+			if (ec.obj.is_string())
+				ec.sub[ec.obj.get_ref<string&>()] = ec.val;
+			else
+				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
+		}
+		else if (ec.sub.is_null())
+		{
+			if (ec.obj.is_number_unsigned())
+				ec.sub[ec.obj.get<size_t>()] = ec.val;
+			else if (ec.obj.is_string())
+				ec.sub[ec.obj.get_ref<string&>()] = ec.val;
+			else
+				ec.throw_json(__FUNCTION__, "$obj must be unsigned number or string!"s);
+		}
+		else
+			ec.throw_json(__FUNCTION__, "$sub must be array, object or null!"s);
+	}
+
+	void  jsonErase(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.sub.is_object())
+		{
+			if (ec.obj.is_string())
+				ec.sub.erase(ec.obj.get_ref<string&>());
+			else
+				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
+		}
+		else
+			ec.throw_json(__FUNCTION__, "$sub must be object!"s);
+	}
+
+	void  jsonIsEq(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.val = ec.sub == ec.obj;
+	}
+
+	void  jsonIsNotEq(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.val = ec.sub != ec.obj;
+	}
+
+	void  jsonSum(jsonRVM& rvm, EntContext& ec)
+	{
+		__int64	isum = 0;
+		double	dsum = 0.0;
+
+		if (ec.obj.is_array())
+		{
+			for (auto& it : ec.obj) switch (it.type())
 			{
-			case json::value_t::array:
-			case json::value_t::object:
-				ec.val = json(ec.sub.size() < ec.obj.size());
-				return;
-
-			case json::value_t::string:
-				ec.val = json(ec.sub.get<string>().size() < ec.obj.get<string>().size());
-				return;
-
-			case json::value_t::boolean:
-				ec.val = json(int(ec.sub.get<bool>()) < int(ec.obj.get<bool>()));
-				return;
-
 			case json::value_t::number_float:
-				ec.val = json(ec.sub.get<json::number_float_t>() < ec.obj.get<json::number_float_t>());
-				return;
+				dsum += it.get<json::number_float_t>();
+				break;
 
 			case json::value_t::number_integer:
-				ec.val = json(ec.sub.get<json::number_integer_t>() < ec.obj.get<json::number_integer_t>());
-				return;
+				isum += it.get<json::number_integer_t>();
+				break;
 
 			case json::value_t::number_unsigned:
-				ec.val = json(ec.sub.get<json::number_unsigned_t>() < ec.obj.get<json::number_unsigned_t>());
-				return;
+				isum += it.get<json::number_unsigned_t>();
+				break;
 
 			default:
-				ec.val = json();
-				return;
+				break;
 			}
+
+			if (0.0 == dsum)	ec.sub = json::number_integer_t(isum);
+			else if (0 == isum)	ec.sub = json::number_float_t(dsum);
+			else				ec.sub = json::number_float_t(dsum + json::number_float_t(isum));
+			return;
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj must be json array!"s);
+	}
 
-		static void  jsonAnd(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonWhere(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.val = json::array();		//	подготовка выходного массива
+
+		if (ec.obj.is_null()) return;
+
+		if (ec.obj.is_array())
 		{
-			if (ec.sub.is_boolean() && ec.obj.is_boolean())
-				ec.val = ec.sub.get<bool>() && ec.obj.get<bool>();
-			else
-				ec.throw_json(__FUNCTION__, "$obj and $sub must be boolean!"s);
-		}
-
-		static void  IfObjTrueThenExecSub(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (!ec.obj.is_boolean())
-				ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
-
-			try
+			size_t i = 0;
+			for (json& it : ec.obj)
 			{
-				if (ec.obj.get<bool>())
-					rvm.JSONExec(ec.ctx, ec.sub);
-			}
-			catch (json & j) { throw json({ { __FUNCTION__, j} }); }
-		}
-
-		static void  IfObjFalseThenExecSub(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (!ec.obj.is_boolean())
-				ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
-
-			try
-			{
-				if (!ec.obj.get<bool>())
-					rvm.JSONExec(ec.ctx, ec.sub);
-			}
-			catch (json & j) { throw json({ { __FUNCTION__, j} }); }
-		}
-
-		static void  ExecSubWhileObjTrue(rvm_impl_t& rvm, EntContext& ec)
-		{
-			while (true)
-			{
-				if (!ec.obj.is_boolean()) ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
-				if (!ec.obj.get<bool>()) return;
-				try
-				{
-					rvm.JSONExec(ec.ctx, ec.sub);
+				try {
+					json	boolres;
+					rvm.JSONExec(EntContext(boolres, it, boolres, ec.ent, ec.ctx), ec.sub);
+					if (boolres.is_boolean())
+						if (boolres.get<bool>())
+							ec.val.push_back(it);	//	фильтруем
+					i++;
 				}
-				catch (json & j) { throw json({ { __FUNCTION__, j} }); }
+				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
 		}
+		else
+			ec.throw_json(__FUNCTION__, "$obj must be json array!"s);
+	}
 
-		static void  json_switch_bool(rvm_impl_t& rvm, EntContext& ec)
+	void  jsonBelow(jsonRVM& rvm, EntContext& ec)	//	<
+	{
+		if (ec.sub.type() == ec.obj.type()) switch (ec.obj.type())
 		{
-			if (ec.obj.is_null())
-				return;
+		case json::value_t::array:
+		case json::value_t::object:
+			ec.val = json(ec.sub.size() < ec.obj.size());
+			return;
 
-			if (!ec.obj.is_boolean())
-				ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+		case json::value_t::string:
+			ec.val = json(ec.sub.get<string>().size() < ec.obj.get<string>().size());
+			return;
 
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+		case json::value_t::boolean:
+			ec.val = json(int(ec.sub.get<bool>()) < int(ec.obj.get<bool>()));
+			return;
 
+		case json::value_t::number_float:
+			ec.val = json(ec.sub.get<json::number_float_t>() < ec.obj.get<json::number_float_t>());
+			return;
+
+		case json::value_t::number_integer:
+			ec.val = json(ec.sub.get<json::number_integer_t>() < ec.obj.get<json::number_integer_t>());
+			return;
+
+		case json::value_t::number_unsigned:
+			ec.val = json(ec.sub.get<json::number_unsigned_t>() < ec.obj.get<json::number_unsigned_t>());
+			return;
+
+		default:
+			ec.val = json();
+			return;
+		}
+	}
+
+	void  jsonAnd(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.sub.is_boolean() && ec.obj.is_boolean())
+			ec.val = ec.sub.get<bool>() && ec.obj.get<bool>();
+		else
+			ec.throw_json(__FUNCTION__, "$obj and $sub must be boolean!"s);
+	}
+
+	void  IfObjTrueThenExecSub(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!ec.obj.is_boolean())
+			ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+
+		try
+		{
+			if (ec.obj.get<bool>())
+				rvm.JSONExec(ec.ctx, ec.sub);
+		}
+		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+	}
+
+	void  IfObjFalseThenExecSub(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!ec.obj.is_boolean())
+			ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+
+		try
+		{
+			if (!ec.obj.get<bool>())
+				rvm.JSONExec(ec.ctx, ec.sub);
+		}
+		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+	}
+
+	void  ExecSubWhileObjTrue(jsonRVM& rvm, EntContext& ec)
+	{
+		while (true)
+		{
+			if (!ec.obj.is_boolean()) ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+			if (!ec.obj.get<bool>()) return;
 			try
 			{
-				if (ec.obj.get<bool>())	rvm.JSONExec(ec.ctx, ec.sub["true"]);
-				else	rvm.JSONExec(ec.ctx, ec.sub["false"]);
+				rvm.JSONExec(ec.ctx, ec.sub);
 			}
-			catch (json & j) { throw json({ { __FUNCTION__, j} }); }
-			catch (json::exception & e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception & e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-			catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+			catch (json& j) { throw json({ { __FUNCTION__, j} }); }
 		}
+	}
 
-		static void  json_switch_number(rvm_impl_t& rvm, EntContext& ec)
+	void  json_switch_bool(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_null())
+			return;
+
+		if (!ec.obj.is_boolean())
+			ec.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+
+		try
 		{
-			if (ec.obj.is_null())
-				return;
-
-			if (!(ec.obj.is_number_unsigned() || ec.obj.is_number_integer()))
-				ec.throw_json(__FUNCTION__, "$obj must be number!"s);
-
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
-
-			try
-			{
-				string	key;
-				if (ec.obj.is_number_unsigned())
-					key = to_string(ec.obj.get<json::number_unsigned_t>());
-				else if (ec.obj.is_number_integer())
-					key = to_string(ec.obj.get<json::number_integer_t>());
-
-				if (ec.sub.count(key)) rvm.JSONExec(ec.ctx, ec.sub[key]);
-				else rvm.JSONExec(ec.ctx, ec.sub["default"]);
-			}
-			catch (json & j) { throw json({ { __FUNCTION__, j} }); }
-			catch (json::exception & e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception & e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-			catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+			if (ec.obj.get<bool>())	rvm.JSONExec(ec.ctx, ec.sub["true"]);
+			else	rvm.JSONExec(ec.ctx, ec.sub["false"]);
 		}
+		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+	}
 
+	void  json_switch_number(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_null())
+			return;
 
-		static void  json_switch_string(rvm_impl_t& rvm, EntContext& ec)
+		if (!(ec.obj.is_number_unsigned() || ec.obj.is_number_integer()))
+			ec.throw_json(__FUNCTION__, "$obj must be number!"s);
+
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+
+		try
 		{
-			if (ec.obj.is_null())
-				return;
+			string	key;
+			if (ec.obj.is_number_unsigned())
+				key = to_string(ec.obj.get<json::number_unsigned_t>());
+			else if (ec.obj.is_number_integer())
+				key = to_string(ec.obj.get<json::number_integer_t>());
 
-			if (!ec.obj.is_string())
-				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
-
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
-
-			try
-			{
-				if (ec.sub.count(ec.obj.get_ref<string&>())) rvm.JSONExec(ec.ctx, ec.sub[ec.obj.get_ref<string&>()]);
-				else rvm.JSONExec(ec.ctx, ec.sub["default"]);
-			}
-			catch (json & j) { throw json({ { __FUNCTION__, j} }); }
-			catch (json::exception & e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception & e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-			catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+			if (ec.sub.count(key)) rvm.JSONExec(ec.ctx, ec.sub[key]);
+			else rvm.JSONExec(ec.ctx, ec.sub["default"]);
 		}
+		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+	}
 
 
-		static void  json_throw(rvm_impl_t& rvm, EntContext& ec) { throw ec.obj; }
+	void  json_switch_string(jsonRVM& rvm, EntContext& ec)
+	{
+		if (ec.obj.is_null())
+			return;
 
+		if (!ec.obj.is_string())
+			ec.throw_json(__FUNCTION__, "$obj must be string!"s);
 
-		static void  json_catch(rvm_impl_t& rvm, EntContext& ec)
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+
+		try
 		{
-			//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
-			//	проецируем во внешнем контексте
-			try
-			{
-				rvm.JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
-			}
-			catch (json & j)
-			{
-				ec.val = j;
-				rvm.JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.sub);
-			}
+			if (ec.sub.count(ec.obj.get_ref<string&>())) rvm.JSONExec(ec.ctx, ec.sub[ec.obj.get_ref<string&>()]);
+			else rvm.JSONExec(ec.ctx, ec.sub["default"]);
 		}
+		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+	}
+
+
+	void  json_throw(jsonRVM& rvm, EntContext& ec) { throw ec.obj; }
+
+
+	void  json_catch(jsonRVM& rvm, EntContext& ec)
+	{
+		//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
+		//	проецируем во внешнем контексте
+		try
+		{
+			rvm.JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
+		}
+		catch (json& j)
+		{
+			ec.val = j;
+			rvm.JSONExec(EntContext(ec.val, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.sub);
+		}
+	}
 
 
 #define define_object_method(object_method)										\
-		static void  json_call_##object_method(rvm_impl_t& rvm, EntContext& ec)	\
+		void  json_call_##object_method(jsonRVM& rvm, EntContext& ec)	\
 		{																		\
 			ec.sub = ec.obj.##object_method();									\
 		}
 
 #define define_static_method(static_method)										\
-		static void  json_call_##static_method(rvm_impl_t& rvm, EntContext& ec)	\
+		void  json_call_##static_method(jsonRVM& rvm, EntContext& ec)	\
 		{																		\
 			ec.val = json::##static_method();									\
 		}
 
-		define_static_method(array)
+	define_static_method(array)
 		define_static_method(meta)
 		define_static_method(object)
 
-		static void  json_call_null(rvm_impl_t& rvm, EntContext& ec)
-		{
-			ec.val = json();
-		}
+		void  json_call_null(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.val = json();
+	}
 
-		static void  jsonPrint(rvm_impl_t& rvm, EntContext& ec)
-		{
-			cout << ec.obj.dump(1) << endl;
-		}
-
-
-		static void  jsonTAG(rvm_impl_t& rvm, EntContext& ec)
-		{
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
-
-			string	tag = ec.sub["<>"];
-
-			if (!ec.val.is_string())
-				ec.val = ""s;
-
-			string& body = ec.val.get_ref<string&>();
-			body += "<" + tag;
-
-			for (auto& it : ec.sub.items())
-				if ("<>" != it.key())
-					body += " " + it.key() + "=" + it.value().dump();
-
-			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
-			json	objview;
-			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
-			if (objview.is_string()) body += objview.get_ref<string&>();
-			else                     body += objview.dump();
-			body += "</" + tag + ">";
-		}
+	void  jsonPrint(jsonRVM& rvm, EntContext& ec)
+	{
+		cout << ec.obj.dump(1) << endl;
+	}
 
 
-		static void  jsonXML(rvm_impl_t& rvm, EntContext& ec)
-		{
-			std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
+	void  jsonTAG(jsonRVM& rvm, EntContext& ec)
+	{
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
 
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+		string	tag = ec.sub["<>"];
 
-			string	tag = ec.sub["<>"];
+		if (!ec.val.is_string())
+			ec.val = ""s;
 
-			if (!ec.val.is_string())
-				ec.val = res;
-			else if (!ec.val.get_ref<string&>().size())
-				ec.val = res;
+		string& body = ec.val.get_ref<string&>();
+		body += "<" + tag;
 
-			string& body = ec.val.get_ref<string&>();
-			body += "<" + tag;
+		for (auto& it : ec.sub.items())
+			if ("<>" != it.key())
+				body += " " + it.key() + "=" + it.value().dump();
 
-			for (auto& it : ec.sub.items())
-				if ("<>" != it.key())
-					body += " " + it.key() + "=" + it.value().dump();
-
-			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
-			json	objview;
-			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
-			if (objview.is_string()) body += objview.get_ref<string&>();
-			else                     body += objview.dump();
-			body += "</" + tag + ">";
-		}
+		body += ">";
+		//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+		json	objview;
+		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
+		if (objview.is_string()) body += objview.get_ref<string&>();
+		else                     body += objview.dump();
+		body += "</" + tag + ">";
+	}
 
 
-		static void  jsonHTML(rvm_impl_t& rvm, EntContext& ec)
-		{
-			std::string res = "<!DOCTYPE html>"s;
+	void  jsonXML(jsonRVM& rvm, EntContext& ec)
+	{
+		std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
 
-			if (!ec.sub.is_object())
-				ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
 
-			string	tag = ec.sub["<>"];
+		string	tag = ec.sub["<>"];
 
-			if (!ec.val.is_string())
-				ec.val = res;
-			else if (!ec.val.get_ref<string&>().size())
-				ec.val = res;
+		if (!ec.val.is_string())
+			ec.val = res;
+		else if (!ec.val.get_ref<string&>().size())
+			ec.val = res;
 
-			string& body = ec.val.get_ref<string&>();
-			body += "<" + tag;
+		string& body = ec.val.get_ref<string&>();
+		body += "<" + tag;
 
-			for (auto& it : ec.sub.items())
-				if ("<>" != it.key())
-					body += " " + it.key() + "=" + it.value().dump();
+		for (auto& it : ec.sub.items())
+			if ("<>" != it.key())
+				body += " " + it.key() + "=" + it.value().dump();
 
-			body += ">";
-			//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
-			json	objview;
-			rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
-			if (objview.is_string()) body += objview.get_ref<string&>();
-			else                     body += objview.dump();
-			body += "</" + tag + ">";
-		}
+		body += ">";
+		//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+		json	objview;
+		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
+		if (objview.is_string()) body += objview.get_ref<string&>();
+		else                     body += objview.dump();
+		body += "</" + tag + ">";
+	}
 
 
-		static void  jsonDump(rvm_impl_t& rvm, EntContext& ec)
-		{
-			ec.sub = ec.obj.dump(3);
-		}
+	void  jsonHTML(jsonRVM& rvm, EntContext& ec)
+	{
+		std::string res = "<!DOCTYPE html>"s;
 
-		/*
-		using nanoseconds  = duration<long long, nano>;
-    using microseconds = duration<long long, micro>;
-    using milliseconds = duration<long long, milli>;
-    using seconds      = duration<long long>;
-    using minutes      = duration<int, ratio<60>>;
-    using hours        = duration<int, ratio<3600>>;
-		*/
+		if (!ec.sub.is_object())
+			ec.throw_json(__FUNCTION__, "$sub must be json object!"s);
 
-		static void steady_clock_nanoseconds(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+		string	tag = ec.sub["<>"];
 
-		static void steady_clock_microseconds(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+		if (!ec.val.is_string())
+			ec.val = res;
+		else if (!ec.val.get_ref<string&>().size())
+			ec.val = res;
 
-		static void steady_clock_milliseconds(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+		string& body = ec.val.get_ref<string&>();
+		body += "<" + tag;
 
-		static void steady_clock_seconds(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+		for (auto& it : ec.sub.items())
+			if ("<>" != it.key())
+				body += " " + it.key() + "=" + it.value().dump();
 
-		static void steady_clock_minutes(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::minutes>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+		body += ">";
+		//	что бы выходной поток xml попадал в тоже значение ec.val нужно исполнять в текущем контексте EV
+		json	objview;
+		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
+		if (objview.is_string()) body += objview.get_ref<string&>();
+		else                     body += objview.dump();
+		body += "</" + tag + ">";
+	}
 
-		static void steady_clock_hours(rvm_impl_t& rvm, EntContext& ec) {
-			ec.val = chrono::duration_cast<chrono::hours>(chrono::steady_clock::now().time_since_epoch()).count();
-		}
+	void  jsonDump(jsonRVM& rvm, EntContext& ec)
+	{
+		ec.sub = ec.obj.dump(3);
+	}
 
-	public:
-		base_vocabulary(rvm_impl_t& rvm)
-		{
-			import_help(rvm);
-			rvm["RVM_version"] = RVM_version;
-			Addx86Entity(rvm, rvm["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
-			Addx86Entity(rvm, rvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
-			Addx86Entity(rvm, rvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
+	void steady_clock_nanoseconds(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-#define map_json_is_type(json_type)	Addx86Entity(rvm, rvm, "is_"s + #json_type, json_is_##json_type, ""s );
-			map_json_is_type(array);
-			map_json_is_type(boolean);
-			map_json_is_type(number_float);
-			map_json_is_type(number_integer);
-			map_json_is_type(number_unsigned);
-			map_json_is_type(null);
-			map_json_is_type(not_null);
-			map_json_is_type(number);
-			map_json_is_type(object);
-			map_json_is_type(string);
-			map_json_is_type(structured);
-			map_json_is_type(discarded);
+	void steady_clock_microseconds(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-			//	json
-#define map_json_static_method(static_method)	Addx86Entity(rvm, rvm["json"], #static_method, json_call_##static_method, ""s );
-			map_json_static_method(array);
-			map_json_static_method(null);
-			map_json_static_method(meta);
-			map_json_static_method(object);
+	void steady_clock_milliseconds(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-			Addx86Entity(rvm, rvm["json"], "dump"s, jsonDump, ""s);
+	void steady_clock_seconds(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-			//	convert
-			Addx86Entity(rvm, rvm, "integer"s, jsonInt32, ""s);
-			Addx86Entity(rvm, rvm, "int"s, jsonInt32, ""s);
-			Addx86Entity(rvm, rvm, "float"s, jsonDouble, ""s);
-			Addx86Entity(rvm, rvm, "double"s, jsonDouble, ""s);
-			Addx86Entity(rvm, rvm, "null"s, jsonNull, ""s);
+	void steady_clock_minutes(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::minutes>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-			//	data operations
-			Addx86Entity(rvm, rvm, "where"s, jsonWhere, ""s);
-			Addx86Entity(rvm, rvm, "union"s, jsonUnion, ""s);
-			Addx86Entity(rvm, rvm, "size"s, jsonSize, ""s);
-			Addx86Entity(rvm, rvm, "get"s, jsonGet, ""s);
-			Addx86Entity(rvm, rvm, "set"s, jsonSet, ""s);
-			Addx86Entity(rvm, rvm, "erase"s, jsonErase, "Удаляет элементы, которые соответствуют заданному ключу."s);
-			Addx86Entity(rvm, rvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
+	void steady_clock_hours(jsonRVM& rvm, EntContext& ec) {
+		ec.val = chrono::duration_cast<chrono::hours>(chrono::steady_clock::now().time_since_epoch()).count();
+	}
 
-			//	math
-			Addx86Entity(rvm, rvm, "*"s, jsonMul, ""s);
-			Addx86Entity(rvm, rvm, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
-			Addx86Entity(rvm, rvm, "+", jsonAdd, ""s);
-			Addx86Entity(rvm, rvm, "-", jsonSubstract, ""s);
-			Addx86Entity(rvm, rvm, "pow"s, jsonPower, ""s);
-			Addx86Entity(rvm, rvm, "sqrt"s, jsonSqrt, ""s);
-			Addx86Entity(rvm, rvm, "sum"s, jsonSum, ""s);
+	void ImportRelationsModel(jsonRVM& rvm)
+	{
+		import_help(rvm);
+		rvm["RVM_version"] = RVM_version;
+		rvm.AddBaseEntity(rvm["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+		rvm.AddBaseEntity(rvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+		rvm.AddBaseEntity(rvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 
-			//	logic
-			Addx86Entity(rvm, rvm, "^"s, jsonXOR, ""s);
-			Addx86Entity(rvm, rvm, "=="s, jsonIsEq, ""s);
-			Addx86Entity(rvm, rvm, "!="s, jsonIsNotEq, ""s);
-			Addx86Entity(rvm, rvm, "<"s, jsonBelow, ""s);
-			Addx86Entity(rvm, rvm, "&&"s, jsonAnd, ""s);
+#define map_json_is_type(json_type)	rvm.AddBaseEntity( rvm, "is_"s + #json_type, json_is_##json_type, ""s );
+		map_json_is_type(array);
+		map_json_is_type(boolean);
+		map_json_is_type(number_float);
+		map_json_is_type(number_integer);
+		map_json_is_type(number_unsigned);
+		map_json_is_type(null);
+		map_json_is_type(not_null);
+		map_json_is_type(number);
+		map_json_is_type(object);
+		map_json_is_type(string);
+		map_json_is_type(structured);
+		map_json_is_type(discarded);
 
-			//	strings
-			Addx86Entity(rvm, rvm["string"], "="s, string_string, ""s);
-			Addx86Entity(rvm, rvm["string"], "+="s, string_add, ""s);
-			Addx86Entity(rvm, rvm["string"], "find"s, string_find, ""s);
-			Addx86Entity(rvm, rvm["string"], "split"s, string_split, ""s);
-			Addx86Entity(rvm, rvm["string"], "join"s, string_join, ""s);
+		//	json
+#define map_json_static_method(static_method)	rvm.AddBaseEntity( rvm["json"], #static_method, json_call_##static_method, ""s );
+		map_json_static_method(array);
+		map_json_static_method(null);
+		map_json_static_method(meta);
+		map_json_static_method(object);
 
-			//	control
-			Addx86Entity(rvm, rvm, "foreachobj"s, jsonForEachObject, ""s);
-			Addx86Entity(rvm, rvm, "foreachsub"s, jsonForEachSubject, ""s);
-			Addx86Entity(rvm, rvm, "then"s, IfObjTrueThenExecSub, ""s);
-			Addx86Entity(rvm, rvm, "else"s, IfObjFalseThenExecSub, "");
-			Addx86Entity(rvm, rvm, "while"s, ExecSubWhileObjTrue, ""s);
-			Addx86Entity(rvm, rvm["switch"], "bool"s, json_switch_bool, ""s);
-			Addx86Entity(rvm, rvm["switch"], "number"s, json_switch_number, ""s);
-			Addx86Entity(rvm, rvm["switch"], "string"s, json_switch_string, ""s);
-			Addx86Entity(rvm, rvm, "throw"s, json_throw, "");
-			Addx86Entity(rvm, rvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
+		rvm.AddBaseEntity(rvm["json"], "dump"s, jsonDump, ""s);
 
-			//	display
-			Addx86Entity(rvm, rvm, "print"s, jsonPrint, ""s);
+		//	convert
+		rvm.AddBaseEntity(rvm, "integer"s, jsonInt32, ""s);
+		rvm.AddBaseEntity(rvm, "int"s, jsonInt32, ""s);
+		rvm.AddBaseEntity(rvm, "float"s, jsonDouble, ""s);
+		rvm.AddBaseEntity(rvm, "double"s, jsonDouble, ""s);
+		rvm.AddBaseEntity(rvm, "null"s, jsonNull, ""s);
 
-			//	browser
-			Addx86Entity(rvm, rvm, "tag"s, jsonTAG, ""s);
-			Addx86Entity(rvm, rvm, "xml"s, jsonXML, ""s);
-			Addx86Entity(rvm, rvm, "html"s, jsonHTML, ""s);
+		//	data operations
+		rvm.AddBaseEntity(rvm, "where"s, jsonWhere, ""s);
+		rvm.AddBaseEntity(rvm, "union"s, jsonUnion, ""s);
+		rvm.AddBaseEntity(rvm, "size"s, jsonSize, ""s);
+		rvm.AddBaseEntity(rvm, "get"s, jsonGet, ""s);
+		rvm.AddBaseEntity(rvm, "set"s, jsonSet, ""s);
+		rvm.AddBaseEntity(rvm, "erase"s, jsonErase, "Удаляет элементы, которые соответствуют заданному ключу."s);
+		rvm.AddBaseEntity(rvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
 
-			//	steady clock
-			Addx86Entity(rvm, rvm["steady_clock"], "nanoseconds"s, steady_clock_nanoseconds, "Sets $val to time since epoch in nanoseconds"s);
-			Addx86Entity(rvm, rvm["steady_clock"], "microseconds"s, steady_clock_microseconds, "Sets $val to time since epoch in microseconds"s);
-			Addx86Entity(rvm, rvm["steady_clock"], "milliseconds"s, steady_clock_milliseconds, "Sets $val to time since epoch in milliseconds"s);
-			Addx86Entity(rvm, rvm["steady_clock"], "seconds"s, steady_clock_seconds, "Sets $val to time since epoch in seconds"s);
-			Addx86Entity(rvm, rvm["steady_clock"], "minutes"s, steady_clock_minutes, "Sets $val to time since epoch in minutes"s);
-			Addx86Entity(rvm, rvm["steady_clock"], "hours"s, steady_clock_hours, "Sets $val to time since epoch in hours"s);
-		}
+		//	math
+		rvm.AddBaseEntity(rvm, "*"s, jsonMul, ""s);
+		rvm.AddBaseEntity(rvm, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
+		rvm.AddBaseEntity(rvm, "+", jsonAdd, ""s);
+		rvm.AddBaseEntity(rvm, "-", jsonSubstract, ""s);
+		rvm.AddBaseEntity(rvm, "pow"s, jsonPower, ""s);
+		rvm.AddBaseEntity(rvm, "sqrt"s, jsonSqrt, ""s);
+		rvm.AddBaseEntity(rvm, "sum"s, jsonSum, ""s);
 
-	};
+		//	logic
+		rvm.AddBaseEntity(rvm, "^"s, jsonXOR, ""s);
+		rvm.AddBaseEntity(rvm, "=="s, jsonIsEq, ""s);
+		rvm.AddBaseEntity(rvm, "!="s, jsonIsNotEq, ""s);
+		rvm.AddBaseEntity(rvm, "<"s, jsonBelow, ""s);
+		rvm.AddBaseEntity(rvm, "&&"s, jsonAnd, ""s);
 
+		//	strings
+		rvm.AddBaseEntity(rvm["string"], "="s, string_string, ""s);
+		rvm.AddBaseEntity(rvm["string"], "+="s, string_add, ""s);
+		rvm.AddBaseEntity(rvm["string"], "find"s, string_find, ""s);
+		rvm.AddBaseEntity(rvm["string"], "split"s, string_split, ""s);
+		rvm.AddBaseEntity(rvm["string"], "join"s, string_join, ""s);
+
+		//	control
+		rvm.AddBaseEntity(rvm, "foreachobj"s, jsonForEachObject, ""s);
+		rvm.AddBaseEntity(rvm, "foreachsub"s, jsonForEachSubject, ""s);
+		rvm.AddBaseEntity(rvm, "then"s, IfObjTrueThenExecSub, ""s);
+		rvm.AddBaseEntity(rvm, "else"s, IfObjFalseThenExecSub, "");
+		rvm.AddBaseEntity(rvm, "while"s, ExecSubWhileObjTrue, ""s);
+		rvm.AddBaseEntity(rvm["switch"], "bool"s, json_switch_bool, ""s);
+		rvm.AddBaseEntity(rvm["switch"], "number"s, json_switch_number, ""s);
+		rvm.AddBaseEntity(rvm["switch"], "string"s, json_switch_string, ""s);
+		rvm.AddBaseEntity(rvm, "throw"s, json_throw, "");
+		rvm.AddBaseEntity(rvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
+
+		//	display
+		rvm.AddBaseEntity(rvm, "print"s, jsonPrint, ""s);
+
+		//	browser
+		rvm.AddBaseEntity(rvm, "tag"s, jsonTAG, ""s);
+		rvm.AddBaseEntity(rvm, "xml"s, jsonXML, ""s);
+		rvm.AddBaseEntity(rvm, "html"s, jsonHTML, ""s);
+
+		//	steady clock
+		rvm.AddBaseEntity(rvm["steady_clock"], "nanoseconds"s, steady_clock_nanoseconds, "Sets $val to time since epoch in nanoseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "microseconds"s, steady_clock_microseconds, "Sets $val to time since epoch in microseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "milliseconds"s, steady_clock_milliseconds, "Sets $val to time since epoch in milliseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "seconds"s, steady_clock_seconds, "Sets $val to time since epoch in seconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "minutes"s, steady_clock_minutes, "Sets $val to time since epoch in minutes"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "hours"s, steady_clock_hours, "Sets $val to time since epoch in hours"s);
+	}
 }

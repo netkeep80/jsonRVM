@@ -16,7 +16,7 @@ using namespace rm;
 
 namespace rm
 {
-    class test_database_t : public database_api<test_database_t>
+    class test_database_t : public database_api
     {
         test_database_t* __this{ nullptr };
         string PathFolder;
@@ -41,7 +41,7 @@ namespace rm
             count++;
         }
 
-        void	get_entity(json& ent, const string& ent_id)
+        virtual void	get_entity(json& ent, const string& ent_id) override
         {
             auto val = __rm.find(ent_id);
 			if (val == __rm.end())
@@ -50,14 +50,14 @@ namespace rm
             ent = json::parse((*val).second);
         }
 
-        void	add_entity(const json& ent, string& ent_id)
+        virtual void	add_entity(const json& ent, string& ent_id) override
         {
             ent_id = "ent"s + to_string(reinterpret_cast<size_t>(&ent));
             __rm[ent_id] = ent.dump();
             count++;
         }
 
-        void	query_entity(json& ent, const json& query)
+        virtual void	query_entity(json& ent, const json& query) override
         {
             cout << __FUNCTION__ << endl;
         }
@@ -71,7 +71,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 TEST_CASE("absolute addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
-    jsonRVM<test_database_t, base_vocabulary> root(&db);
+    jsonRVM root(&db);
     json    val;
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
@@ -90,7 +90,7 @@ TEST_CASE("absolute addressing in rmodel") {
 TEST_CASE("relative addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
-    jsonRVM<test_database_t, base_vocabulary> root(&db);
+    jsonRVM root(&db);
     json    val;
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
@@ -124,7 +124,7 @@ TEST_CASE("relative addressing in rmodel") {
 TEST_CASE("testing call version.json") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM<file_database_t, base_vocabulary> root(&db);
+    jsonRVM root(&db);
     json    val;
     char *fileNameInput = "version.json";
 
@@ -148,7 +148,7 @@ TEST_CASE("testing call version.json") {
 TEST_CASE("testing base entity 'where'") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM<file_database_t, base_vocabulary> root(&db);
+    jsonRVM root(&db);
     json    val;
     char* fileNameInput = "where_test.json";
 
@@ -178,7 +178,7 @@ TEST_CASE("testing base entity 'where'") {
 TEST_CASE("performance test") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM<file_database_t, base_vocabulary> root(&db);
+    jsonRVM root(&db);
     json    val;
     char* fileNameInput = "performance.json";
 

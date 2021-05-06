@@ -54,7 +54,7 @@ namespace rm
 	inline string utf8_to_oem(const string& data) { return wstring_to_oem(_to_wstring<CP_UTF8>(data)); }
 
 
-	class file_database_t : public database_api<file_database_t>
+	class file_database_t : public database_api
 	{
 		string PathFolder;
 	public:
@@ -62,7 +62,7 @@ namespace rm
 			: PathFolder(path)
 		{}
 
-		void	get_entity(json& ent, const string& ent_id)
+		virtual void	get_entity(json& ent, const string& ent_id) override
 		{
 			string	PathName = PathFolder + utf8_to_cp1251(ent_id);
 			std::ifstream in(PathName.c_str());
@@ -73,7 +73,7 @@ namespace rm
 			in >> ent;
 		}
 
-		void	add_entity(const json& ent, string& ent_id)
+		virtual void	add_entity(const json& ent, string& ent_id)
 		{
 			ent_id = to_string(reinterpret_cast<size_t>(&ent)) + ".json";
 
@@ -86,7 +86,7 @@ namespace rm
 			out << ent;
 		}
 
-		void	query_entity(json& ent, const json& query)
+		virtual void	query_entity(json& ent, const json& query)
 		{
 			cout << __FUNCTION__ << endl;
 		}
