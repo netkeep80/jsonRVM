@@ -1,1 +1,1 @@
-..\..\..\build\src\trmvm\Release\trmvm.exe performance.json 2>err.json 1>result.json
+..\..\..\build\src\trmvm\Release\trmvm.exe performance.json 2>err.json

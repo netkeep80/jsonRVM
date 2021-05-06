@@ -314,44 +314,6 @@ context_entity_value = $sub->$rel( context_entity_value, $obj );
 */
 #pragma once
 #include "database_api.h"
-
-/*
-#ifndef NLOHMANN_JSON_FWD_HPP
-#define NLOHMANN_JSON_FWD_HPP
-
-#include <cstdint> // int64_t, uint64_t
-#include <map> // map
-#include <unordered_map> // map
-#include <memory> // allocator
-#include <string> // string
-#include <vector> // vector
-
-//	32 bit datatypes for x68 build
-namespace nlohmann
-{
-	template<typename = void, typename = void>
-	struct adl_serializer;
-
-	template<
-		template<typename U, typename V, typename... Args> class ObjectType		=	std::map,
-		template<typename U, typename... Args> class ArrayType					=	std::vector,
-		class StringType														=	std::string,
-		class BooleanType														=	bool,
-		class NumberIntegerType													=	std::int32_t,
-		class NumberUnsignedType												=	std::uint32_t,
-		class NumberFloatType													=	float,
-		template<typename U> class AllocatorType								=	std::allocator,
-		template<typename T, typename SFINAE = void> class JSONSerializer		=	adl_serializer
-	> class basic_json;
-
-	template<typename BasicJsonType>
-	class json_pointer;
-
-	using json = basic_json<>;
-}
-
-#endif
-*/
 #include "json.hpp"
 
 namespace rm
@@ -825,12 +787,10 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		EntContext& ctx;	//	родительский контекст исполнения
 
 		EntContext(json& v, json& o, json& s, json& e, EntContext& c)
-			: res(v), obj(o), sub(s), ent(e), ctx(c)
-		{}
+			: res(v), obj(o), sub(s), ent(e), ctx(c) {}
 
 		EntContext(json& v, json& e)
-			: res(v), obj(v), sub(v), ent(e), ctx(*this)
-		{}
+			: res(v), obj(v), sub(v), ent(e), ctx(*this) {}
 
 		void throw_json(const string& function, const json& error)
 		{
@@ -852,9 +812,6 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 
 	using x86View = void (*)(jsonRVM& rvm, EntContext& ec);
 	using x86_view_map_t = map<json*, x86View>;
-
-//#include <unordered_map>
-	//using x86_view_map_t = unordered_map<json*, x86View>;
 	
 	class jsonRVM : protected database_api, public json, public x86_view_map_t
 	{
@@ -877,19 +834,21 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 			AddBaseEntity(*this, "add_entity"s, base_add_entity, ""s);
 		}
 
-		void	ReferProperty(json*& segment, const string& it)
+		static void	ReferProperty(json*& segment, const string& it)
 		{
 			json& ref = *segment;
 
-			if (ref.is_object())
+			switch (ref.type())
 			{
+			case json::value_t::object:
 				segment = &ref[it];
-			}
-			else if (ref.is_array())
-			{
+				return;
+
+			case json::value_t::array:
 				segment = &ref[std::stoul(it)];
-			}
-			else if (ref.is_null())
+				return;
+				
+			case json::value_t::null:
 			{
 				int& _Errno_ref = errno; // Nonzero cost, pay it once
 				const char* _Ptr = it.c_str();
@@ -904,9 +863,13 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 					segment = &ref[it];
 				else
 					segment = &ref[index];
+
+				return;
 			}
-			else
+
+			default:
 				throw json({ {__FUNCTION__, it} });
+			}
 		}
 
 		json& ReferEntity(EntContext& ec, const string& str)
@@ -941,8 +904,9 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 
 			DEFAULT:
 				json& ref = *segment;
-				if (!ref.is_object()) ref = json::object();
+				assert(!ref.is_object());
 				auto res = ref.find(it);
+
 				if (res == ref.end())
 				{
 					try { this->get_entity(ref[it], it); }
@@ -978,15 +942,13 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 		{
 			switch (ref.type())
 			{
-			case json::value_t::string:		//	иерархический путь к json значению
+			case json::value_t::string:	//	иерархический путь к json значению
 				return ReferEntity(ec, ref.get_ref<string&>());
 
-				//	местоимение проекции контекстной сущности
-			case json::value_t::null:
+			case json::value_t::null:	//	местоимение проекции контекстной сущности
 				return ec.res;
 
-				//	если это не адрес то возвращаем значение
-			default:
+			default:					//	если это не адрес то возвращаем значение
 				return ref;
 			}
 		}
@@ -1022,8 +984,8 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 					return;
 				}
 				catch (json& j) { throw json({ {rel.get<string>(), j} }); }
-
 			}
+
 			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
 			{
 				int i = 0;
@@ -1038,6 +1000,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				}
 				return;
 			}
+
 			case json::value_t::object:
 			{
 				if (rel.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
@@ -1055,7 +1018,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
 				}
-				else//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
+				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
 					for (auto& it : rel.items())
 					{
@@ -1104,33 +1067,13 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 				}
 				return;
 			}
-			case json::value_t::boolean:	//	битовая маска для условного проектора ViewEntity
-			{
-				if (rel)
-				{
-					try
-					{
-						JSONExec(
-							EntContext(
-								ec.sub,
-								ec.ctx.obj,
-								ec.ctx.sub,
-								ec.ctx.ent,
-								ec.ctx.ctx),
-							ec.obj
-						);
-					}
-					catch (json& j) { throw json({ {"true"s, j} }); }
-				}
-				return;
-			}
-			case json::value_t::number_unsigned:
-			case json::value_t::number_float:
-			case json::value_t::number_integer:
-				throw json({ {rel.dump(), "can't exec wrong json numeric type"s} });
 
-			default:
-				return;	//	null - означает отсутствие отношения, т.е. неизменность проекции
+			case json::value_t::null:	//	null - означает отсутствие отношения, т.е. неизменность проекции
+				return;
+
+			default:	//	остальные простые типы есть результат исполнения отношения
+				ec.res = rel;
+				return;
 			}
 		}
 
