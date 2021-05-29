@@ -1,0 +1,55 @@
+{
+   "arg" : ".\\testfolder",
+   "time_to_sleep" : 1000,
+   "$rel" : [
+      {
+         "#/additional_rm_loaded/fs.rm.dll" : {
+            "$obj" : {
+               "PathFolder" : ".\\",
+               "FileName" : "fs.rm.dll"
+            },
+            "$rel" : "#/RVM/load/dll",
+            "$sub" : "#"
+         }
+      },
+      {
+         "/fs/dir/1/delete" : {
+            "$obj" : "#/arg",
+            "$rel" : "#/fs/dir/delete"
+         }
+      },
+      {
+         "$obj" : "#/time_to_sleep",
+         "$rel" : "#/RVM/sleep/ms"
+      },
+      {
+         "/fs/dir/2/create" : {
+            "$obj" : "#/arg",
+            "$rel" : "#/fs/dir/create"
+         }
+      },
+      {
+         "$obj" : "#/time_to_sleep",
+         "$rel" : "#/RVM/sleep/ms"
+      },
+      {
+         "/fs/dir/3/create" : {
+            "$obj" : "#/arg",
+            "$rel" : "#/fs/dir/create"
+         }
+      },
+      {
+         "$obj" : "#/time_to_sleep",
+         "$rel" : "#/RVM/sleep/ms"
+      },
+      {
+         "/fs/dir/4/delete" : {
+            "$obj" : "#/arg",
+            "$rel" : "#/fs/dir/delete"
+         }
+      },
+      {
+         "/meta" : "#/json/meta"
+      }
+   ]
+}

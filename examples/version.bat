@@ -1,0 +1,1 @@
+.\..\Release\jsonRVM.exe version.json > err.json

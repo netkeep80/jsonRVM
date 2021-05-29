@@ -1,0 +1,601 @@
+{
+   "$rel" : [
+      {
+         "#/additional_rm_loaded/imgui.rm.dll" : {
+            "$obj" : {
+               "PathFolder" : ".\\",
+               "FileName" : "imgui.rm.dll"
+            },
+            "$rel" : "#/RVM/load/dll",
+            "$sub" : "#"
+         }
+      },
+      {
+         "$obj" : [ "#/Calc", "#/DebugCalc" ],
+         "$rel" : "#/imgui/viewport",
+         "$sub" : {
+            "title" : "imgui.rm.dll main_frame"
+         }
+      }
+   ],
+   "Calc" : {
+      "$obj" : [
+         {
+            "$obj" : [
+               ".././ReadOut",
+               ".././btnSeven",
+               "#/imgui/same_line",
+               ".././btnEight",
+               "#/imgui/same_line",
+               ".././btnNine",
+               ".././btnFour",
+               "#/imgui/same_line",
+               ".././btnFive",
+               "#/imgui/same_line",
+               ".././btnSix",
+               ".././btnOne",
+               "#/imgui/same_line",
+               ".././btnTwo",
+               "#/imgui/same_line",
+               ".././btnThree",
+               ".././btnZero",
+               "#/imgui/same_line",
+               ".././btnDecimal"
+            ],
+            "$rel" : "#/imgui/group",
+            "$sub" : {
+               "visible" : true
+            }
+         },
+         "#/imgui/same_line",
+         {
+            "$obj" : [
+               ".././btnClear",
+               "#/imgui/same_line",
+               ".././btnClearEntry",
+               ".././btnNeg",
+               "#/imgui/same_line",
+               ".././btnPercent",
+               ".././btnPlus",
+               "#/imgui/same_line",
+               ".././btnMinus",
+               ".././btnMultiply",
+               "#/imgui/same_line",
+               ".././btnDivide",
+               ".././btnEquals"
+            ],
+            "$rel" : "#/imgui/group",
+            "$sub" : {
+               "visible" : true
+            }
+         }
+      ],
+      "$rel" : "#/imgui/form",
+      "$sub" : {
+         "visible" : true,
+         "title" : "Calculator"
+      },
+      "ReadOut" : {
+         "$obj" : ".././ReadOut/value",
+         "$rel" : "#/imgui/input",
+         "$sub" : {
+            "visible" : true,
+            "readonly" : true,
+            "width" : 166,
+            "height" : 40
+         },
+         "value" : "0"
+      },
+      "Accum" : 0.0,
+      "FlagNewNum" : false,
+      "PendingOp" : "",
+      "Clear" : [
+         {
+            "#/Calc/Accum" : {
+               "$obj" : "#/Calc/AccumInitVal",
+               "$rel" : "#/="
+            },
+            "#/Calc/PendingOp" : {
+               "$obj" : "#/Calc/PendingOpInitVal",
+               "$rel" : "#/="
+            }
+         },
+         "#/Calc/ClearEntry"
+      ],
+      "btnClear" : {
+         "$obj" : "#/Calc/Clear",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "C",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "ClearEntry" : [
+         {
+            "#/Calc/ReadOut/value" : {
+               "$obj" : "#/Calc/ReadOutInitValue",
+               "$rel" : "#/="
+            },
+            "#/Calc/FlagNewNum" : {
+               "$obj" : "#/true",
+               "$rel" : "#/="
+            }
+         }
+      ],
+      "btnClearEntry" : {
+         "$obj" : "#/Calc/ClearEntry",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "CE",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "Neg" : {
+         "minus_one" : -1,
+         "$rel" : [
+            {
+               "$obj" : "#/Calc/ReadOut/value",
+               "$rel" : "#/float"
+            },
+            {
+               "$obj" : "./minus_one",
+               "$rel" : "#/*"
+            },
+            {
+               "$rel" : "#/string/=",
+               "$sub" : "#/Calc/ReadOut/value"
+            }
+         ]
+      },
+      "btnNeg" : {
+         "$obj" : "#/Calc/Neg",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "+/-",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "Percent" : {
+         "handred" : 100,
+         "$rel" : [
+            {
+               "$obj" : "#/Calc/ReadOut/value",
+               "$rel" : "#/float"
+            },
+            {
+               "$obj" : "./handred",
+               "$rel" : "#/:"
+            },
+            {
+               "$obj" : "#/Calc/Accum",
+               "$rel" : "#/*"
+            },
+            {
+               "$rel" : "#/string/=",
+               "$sub" : "#/Calc/ReadOut/value"
+            }
+         ]
+      },
+      "btnPercent" : {
+         "$obj" : "#/Calc/Percent",
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "%",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "NumPressed" : {
+         "$obj" : "#/Calc/FlagNewNum",
+         "$rel" : "#/switch/bool",
+         "$sub" : {
+            "true" : {
+               "#/Calc/ReadOut/value" : {
+                  "$obj" : "$obj",
+                  "$rel" : "#/string/="
+               },
+               "#/Calc/FlagNewNum" : {
+                  "$obj" : "#/false",
+                  "$rel" : "#/="
+               }
+            },
+            "false" : [
+               {
+                  "/Readout" : {
+                     "$obj" : "#/Calc/ReadOut/value",
+                     "$rel" : "#/float"
+                  }
+               },
+               {
+                  "$obj" : "/Readout",
+                  "$rel" : {
+                     "/is_value_zero" : "#/=="
+                  },
+                  "$sub" : "#/Calc/AccumInitVal"
+               },
+               {
+                  "$obj" : "/is_value_zero",
+                  "$rel" : "#/switch/bool",
+                  "$sub" : {
+                     "true" : {
+                        "#/Calc/ReadOut/value" : {
+                           "$obj" : "$obj",
+                           "$rel" : "#/string/="
+                        }
+                     },
+                     "false" : {
+                        "#/Calc/ReadOut/value" : {
+                           "$obj" : "$obj",
+                           "$rel" : "#/string/+="
+                        }
+                     }
+                  }
+               }
+            ]
+         }
+      },
+      "Operation" : {
+         "$obj" : "#/Calc/FlagNewNum",
+         "$rel" : "#/switch/bool",
+         "$sub" : {
+            "true" : {
+               "$obj" : "#/Calc/PendingOp",
+               "$rel" : "#/switch/string",
+               "$sub" : {
+                  "=" : [
+                     {
+                        "#/Calc/Accum" : {
+                           "$obj" : "#/Calc/ReadOut/value",
+                           "$rel" : "#/float"
+                        }
+                     },
+                     {
+                        "#/Calc/ReadOut/value" : {
+                           "$obj" : "#/Calc/Accum",
+                           "$rel" : "#/string/="
+                        },
+                        "#/Calc/PendingOp" : {
+                           "$obj" : "$obj",
+                           "$rel" : "#/="
+                        }
+                     }
+                  ]
+               }
+            },
+            "false" : [
+               {
+                  "#/Calc/FlagNewNum" : {
+                     "$obj" : "#/true",
+                     "$rel" : "#/="
+                  },
+                  "/Readout" : {
+                     "$obj" : "#/Calc/ReadOut/value",
+                     "$rel" : "#/float"
+                  }
+               },
+               {
+                  "$obj" : "#/Calc/PendingOp",
+                  "$rel" : "#/switch/string",
+                  "$sub" : {
+                     "+" : {
+                        "$obj" : "/Readout",
+                        "$rel" : {
+                           "#/Calc/Accum" : "#/+"
+                        },
+                        "$sub" : "#/Calc/Accum"
+                     },
+                     "-" : {
+                        "$obj" : "/Readout",
+                        "$rel" : {
+                           "#/Calc/Accum" : "#/-"
+                        },
+                        "$sub" : "#/Calc/Accum"
+                     },
+                     "\\" : {
+                        "$obj" : "/Readout",
+                        "$rel" : {
+                           "#/Calc/Accum" : "#/:"
+                        },
+                        "$sub" : "#/Calc/Accum"
+                     },
+                     "*" : {
+                        "$obj" : "/Readout",
+                        "$rel" : {
+                           "#/Calc/Accum" : "#/*"
+                        },
+                        "$sub" : "#/Calc/Accum"
+                     },
+                     "default" : {
+                        "$obj" : "/Readout",
+                        "$rel" : "#/=",
+                        "$sub" : "#/Calc/Accum"
+                     }
+                  }
+               },
+               {
+                  "#/Calc/ReadOut/value" : {
+                     "$obj" : "#/Calc/Accum",
+                     "$rel" : "#/string/="
+                  },
+                  "#/Calc/PendingOp" : {
+                     "$obj" : "$obj",
+                     "$rel" : "#/="
+                  }
+               }
+            ]
+         }
+      },
+      "btnPlus" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Operation"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "+",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnMinus" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Operation"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "-",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnMultiply" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Operation"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "*",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnDivide" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Operation"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "/",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnEquals" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Operation"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "=",
+            "height" : "40",
+            "width" : "108"
+         }
+      },
+      "btnSeven" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "7",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnEight" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "8",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnNine" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "9",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnFour" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "4",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnFive" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "5",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnSix" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "6",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnOne" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "1",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnTwo" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "2",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnThree" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "3",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "btnZero" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/NumPressed"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : "0",
+            "width" : "108",
+            "height" : "40"
+         }
+      },
+      "Decimal" : {
+         "init_val" : "0.",
+         "dot" : ".",
+         "minus_one" : -1,
+         "$rel" : {
+            "$obj" : "#/Calc/FlagNewNum",
+            "$rel" : "#/switch/bool",
+            "$sub" : {
+               "true" : {
+                  "#/Calc/ReadOut/value" : {
+                     "$obj" : "./init_val",
+                     "$rel" : "#/string/="
+                  },
+                  "#/Calc/FlagNewNum" : {
+                     "$obj" : "#/false",
+                     "$rel" : "#/="
+                  }
+               },
+               "false" : [
+                  {
+                     "$obj" : "#/Calc/ReadOut/value",
+                     "$rel" : {
+                        "/index_of_dot" : "#/string/find"
+                     },
+                     "$sub" : "./dot"
+                  },
+                  {
+                     "$obj" : "/index_of_dot",
+                     "$rel" : {
+                        "/is_value_minus_one" : "#/=="
+                     },
+                     "$sub" : "./minus_one"
+                  },
+                  {
+                     "$obj" : "/is_value_minus_one",
+                     "$rel" : "#/then",
+                     "$sub" : {
+                        "#/Calc/ReadOut/value" : {
+                           "$obj" : "./dot",
+                           "$rel" : "#/string/+="
+                        }
+                     }
+                  }
+               ]
+            }
+         }
+      },
+      "btnDecimal" : {
+         "$obj" : {
+            "$obj" : "$sub/text",
+            "$rel" : "#/Calc/Decimal"
+         },
+         "$rel" : "#/imgui/button",
+         "$sub" : {
+            "text" : ".",
+            "width" : "50",
+            "height" : "40"
+         }
+      },
+      "zero_str" : "0",
+      "AccumInitVal" : 0.0,
+      "PendingOpInitVal" : "",
+      "ReadOutInitValue" : "0"
+   },
+   "DebugCalc" : {
+      "$obj" : [
+         "#/json/object",
+         {
+            "/data" : {
+               "$obj" : "#",
+               "$rel" : "#/json/dump"
+            }
+         },
+         {
+            "$obj" : "/data",
+            "$rel" : "#/imgui/TextUnformatted",
+            "$sub" : {
+               "visible" : true
+            }
+         },
+         "#/json/object"
+      ],
+      "$rel" : "#/imgui/form",
+      "$sub" : {
+         "visible" : true,
+         "title" : "Calc Debug"
+      }
+   },
+   "true" : true,
+   "false" : false
+}

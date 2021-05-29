@@ -1,0 +1,13 @@
+{
+   "exception" : "this is a text of exception",
+   "message" : "exception catched",
+   "$obj" : {
+      "$rel" : "#/throw",
+      "$obj" : "#/exception"
+   },
+   "$rel" : "#/catch",
+   "$sub" : {
+      "$obj" : "#/message",
+      "$rel" : "#/print"
+   }
+}

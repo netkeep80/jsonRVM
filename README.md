@@ -1,10 +1,12 @@
+<p align="center"><img src="doc/set_view.jpg"></p>
+
 # json Relations (Model) Virtual Machine
-            c
-         v__|__m
-       m   _|_   v     Fractal
-    c__|__/_|_\__|__c  Triune
+            R
+         S__|__O
+       O   _|_   S     Fractal
+    R__|__/_|_\__|__R  Triune
        |  \_|_/  |     Entity
-       v    |    m     
+       S    |    O     
           __|__
          /  |  \
         /___|___\
@@ -14,3 +16,5 @@
 jsonRVM using the following third-party tools. Thanks a lot!
 
 - [**JSON for Modern C++**](https://github.com/nlohmann/json) for load/exec/unload json view of Relations Model
+- [**The fastest reature-rich C++ single-header testing framework**](https://github.com/onqtam/doctest) for unit testing of Relations (Model) Virtual Machine
+

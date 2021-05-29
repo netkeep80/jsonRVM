@@ -1,0 +1,5 @@
+{
+	"str" : "Hello world",
+	"$obj" : "/str",
+	"$rel" : "="
+}

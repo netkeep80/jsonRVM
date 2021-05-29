@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 
 # Project name
-project(CoopLKI)
+project(rm)
 
 # Включить поддержку тестирования:
 enable_testing()
@@ -24,9 +24,10 @@ enable_testing()
 #	endif()
 #endif()
 
-#set(LIBRARY_NAME cpplib)
 
 set(CMAKE_PROJECT_VERSION 0.1.0 )
+
+include_directories(third_party/doctest)
 
 #include(FetchContent)
 
@@ -37,8 +38,54 @@ set(CMAKE_PROJECT_VERSION 0.1.0 )
 #FetchContent_Populate(abseil)
 #message(STATUS "abseil is available in " ${abseil_SOURCE_DIR})
 
+message( "--------" )
+message( "CMAKE_SYSTEM: ${CMAKE_SYSTEM}" )
+message( "CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}" )
+message( "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}" )
+message( "Current revision is ${CMAKE_PROJECT_VERSION}" )
+message( "CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}" )
+message( "CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR}" )
+message( "--------" )
 
 # Subdirectories to build
-add_subdirectory(src)
+add_subdirectory(modules)
+
+option( ENABLE_TEST "Enable integration test target build" OFF )
+
+if( ENABLE_TESTS )
+    add_subdirectory( tests )
+endif()
 
 #ExternalProject_Add( )
+
+# Modern template commands
+
+# Adding build-requirements
+#target_include_directories( ${TARGET_NAME} PRIVATE <include-search-dir>... )
+#target_compile_definitions( ${TARGET_NAME} PRIVATE <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} PRIVATE <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} PRIVATE <feature>... )
+#target_sources( ${TARGET_NAME} PRIVATE <source-file>... )
+#target_link_libraries( ${TARGET_NAME} PRIVATE <dependency>... )
+#target_link_options( ${TARGET_NAME} PRIVATE <linker-option>... )
+#target_link_directories( ${TARGET_NAME} PRIVATE <linker-search-dir>... )
+
+# Adding usage-requirements
+#target_include_directories( ${TARGET_NAME} INTERFACE <include-search-dir>... )
+#target_compile_definitions( ${TARGET_NAME} INTERFACE <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} INTERFACE <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} INTERFACE <feature>... )
+#target_sources( ${TARGET_NAME} INTERFACE <source-file>... )
+#target_link_libraries( ${TARGET_NAME} INTERFACE <dependency>... )
+#target_link_options( ${TARGET_NAME} INTERFACE <linker-option>... )
+#target_link_directories( ${TARGET_NAME} INTERFACE <linker-search-dir>... )
+
+# Adding build- and usage-requirements
+#target_include_directories( ${TARGET_NAME} PUBLIC <include-search-dir>... )
+#target_compile_definitions( ${TARGET_NAME} PUBLIC <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} PUBLIC <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} PUBLIC <feature>... )
+#target_sources( ${TARGET_NAME} PUBLIC <source-file>... )
+#target_link_libraries( ${TARGET_NAME} PUBLIC <dependency>... )
+#target_link_options( ${TARGET_NAME} PUBLIC <linker-option>... )
+#target_link_directories( ${TARGET_NAME} PUBLIC <linker-search-dir>... )
