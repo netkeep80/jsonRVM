@@ -2,7 +2,6 @@
 //
 #include <iostream>
 #include <fstream>
-//#include <string>
 #include "windows.h"
 #include "fs.rm.h"
 #include "jsonRVM.h"

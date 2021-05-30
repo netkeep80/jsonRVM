@@ -1,0 +1,43 @@
+@startuml
+
+
+cloud "," {
+}
+
+cloud ",a,b,c,d,e" {
+cloud ",a,b,c,d" {
+cloud ",a,b,c" {
+cloud ",a,b" {
+cloud ",a" {
+    cloud void {
+    }
+    cloud "a" {
+    }
+    void <-l- "a" : ","
+}
+
+
+    cloud "b" {
+    }
+    ",a" <-l- "b" : ","
+}
+
+
+    cloud "c" {
+    }
+    ",a,b" <- "c" : ","
+}
+
+
+    cloud "d" {
+    }
+    ",a,b,c" <- "d" : ","
+}
+
+
+    cloud "e" {
+    }
+    ",a,b,c,d" <- "e" : ","
+}
+
+@enduml

@@ -1,9 +1,9 @@
-/*        r
-	   s__|__o
-	 o   _|_   s
-  r__|__/_|_\__|__r  jsonRVM
+/*        R
+	   S__|__O
+	 O   _|_   S
+  R__|__/_|_\__|__R  jsonRVM
 	 |  \_|_/  |     json Relations (Model) Virtual Machine
-	 s    |    o     https://github.com/netkeep80/jsonRVM
+	 S    |    O     https://github.com/netkeep80/jsonRVM
 		__|__
 	   /  |  \
 	  /___|___\
@@ -348,7 +348,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 	inline void	import_help(json& j)
 	{
-		j["/Help/RModel/Abbreviation"_json_pointer] = R"(
+		j["/Help/RM/Dictionary"_json_pointer] = R"(
 		Сокращения принятые в тексте
 
 		СОП - сущностно ориентированное программирование
@@ -361,7 +361,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 		////////////////////////////////////////////////////////////////////////////////
 
-		j["/Help/RModel/Introduction"_json_pointer] = R"(
+		j["/Help/RM/Introduction"_json_pointer] = R"(
 	В основе существующих методологий программирования лежат две базовые концепции,
 это объект(структура) и метод(функция).
 
@@ -690,7 +690,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 
 		////////////////////////////////////////////////////////////////////////////////
 
-		j["/Help/wiki/MHMVC"_json_pointer] = R"(
+		j["/Help/RM/MHMVC"_json_pointer] = R"(
 		MHMVC(Multilayered Hierarchical Model - View - Controller), т.е.Многослойный
 		Иерархический Модель – Вид – Контроллер.В данной концепции иерархия представлений
 		одного слоя может служить в качестве иерархии модели для следующего слоя и наоборот,
@@ -774,7 +774,7 @@ https://en.wikipedia.org/wiki/Associative_model_of_data
 	}
 
 	////////////////////////////// VERSION //////////////////////////////
-	const string RVM_version = "0.1.0"s;
+	const string RVM_version = "3.0.0"s;
 	////////////////////////////// VERSION //////////////////////////////
 
 

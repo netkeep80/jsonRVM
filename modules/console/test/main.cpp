@@ -136,7 +136,7 @@ TEST_CASE("testing call version.json") {
         
         EntContext ctx(res, root[""]);
         root.JSONExec(ctx, root[""]);
-        CHECK(res["RVM_version"].get_ref<string&>() == "0.1.0"s);
+        CHECK(res["RVM_version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
     catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }

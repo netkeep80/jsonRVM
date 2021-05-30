@@ -1,12 +1,12 @@
-/*        c
-       v__|__m
-     m   _|_   v
-  c__|__/_|_\__|__c  jsonRVM
-     |  \_|_/  |     json Relations (Model) Virtual Machine
-     v    |    m     https://github.com/netkeep80/jsonRVM
-        __|__
-       /  |  \
-      /___|___\
+/*        R
+	   S__|__O
+	 O   _|_   S
+  R__|__/_|_\__|__R  jsonRVM
+	 |  \_|_/  |     json Relations (Model) Virtual Machine
+	 S    |    O     https://github.com/netkeep80/jsonRVM
+		__|__
+	   /  |  \
+	  /___|___\
 Fractal Triune Entity
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -65,12 +65,12 @@ int main(int argc, char* argv[])
 		fileNameInput = argv[1];
 		break;
 	default:
-		cout << "          c                                                                   " << endl;
-		cout << "       v__|__m                                                                " << endl;
-		cout << "     m   _|_   v                                                              " << endl;
-		cout << "  c__|__/_|_\\__|__c  rmvm [Version " << RVM_version << "]                    " << endl;
+		cout << "          R                                                                   " << endl;
+		cout << "       S__|__O                                                                " << endl;
+		cout << "     O   _|_   S                                                              " << endl;
+		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << RVM_version << "]                    " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
-		cout << "     v    |    m     https://github.com/netkeep80/jsonRVM                     " << endl;
+		cout << "     S    |    O     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;
 		cout << "       /  |  \\                                                               " << endl;
 		cout << "      /___|___\\                                                              " << endl;
