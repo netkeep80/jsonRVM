@@ -1,0 +1,128 @@
+# Require CMAKE 3.20 or higher
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
+message( "Configuring: ${CMAKE_CURRENT_SOURCE_DIR}")
+
+#cmake info
+message( "------------------------------------------------" )
+message( "CMAKE_SYSTEM: ${CMAKE_SYSTEM}" )
+message( "CMAKE_SYSTEM_NAME: ${CMAKE_SYSTEM_NAME}" )
+message( "CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}" )
+message( "Current revision is ${CMAKE_PROJECT_VERSION}" )
+message( "CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}" )
+message( "CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR}" )
+message( "------------------------------------------------" )
+
+# Enable testing support with ctest
+enable_testing()
+
+# declaring project version with semver compiliance
+set(CMAKE_PROJECT_VERSION X.Y.Z )
+
+# Project name
+project( <project-name>
+         VERSION ${CMAKE_PROJECT_VERSION}
+         DESCRIPTION "some project description"
+         LANGUAGES CXX )
+
+# Build for C++17 if we can
+set( CMAKE_CXX_STANDARD 17 )
+set( CMAKE_CXX_STANDARD_REQUIRED ON )
+set( CMAKE_CXX_EXTENSIONS OFF )
+
+# name template
+set( TARGET_NAME <target-name> )
+
+# Name of executable
+add_executable( ${TARGET_NAME} )
+#or
+# Name of library file
+add_library( ${TARGET_NAME} SHARED )
+add_definitions(-D${PROJECT_NAME}_EXPORTS)
+
+# Adding build-requirements
+target_include_directories( ${TARGET_NAME} PRIVATE
+    "${THIRD_PARTY_SOURCE_DIR}/test"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include" )
+#target_compile_definitions( ${TARGET_NAME} PRIVATE <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} PRIVATE <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} PRIVATE <feature>... )
+target_sources( ${TARGET_NAME} PRIVATE
+    "${THIRD_PARTY_SOURCE_DIR}/include/test.h"
+    "${COMMON_SOURCE_DIR}/include/interface.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/database_api.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
+#target_link_libraries( ${TARGET_NAME} PRIVATE <dependency>... )
+#target_link_options( ${TARGET_NAME} PRIVATE <linker-option>... )
+#target_link_directories( ${TARGET_NAME} PRIVATE <linker-search-dir>... )
+
+# Adding usage-requirements
+#target_include_directories( ${TARGET_NAME} INTERFACE <include-search-dir>... )
+#target_compile_definitions( ${TARGET_NAME} INTERFACE <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} INTERFACE <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} INTERFACE <feature>... )
+target_sources( ${TARGET_NAME} INTERFACE
+    "${COMMON_SOURCE_DIR}/include/libraryAPI.h" )
+#target_link_libraries( ${TARGET_NAME} INTERFACE <dependency>... )
+#target_link_options( ${TARGET_NAME} INTERFACE <linker-option>... )
+#target_link_directories( ${TARGET_NAME} INTERFACE <linker-search-dir>... )
+
+# Adding build- and usage-requirements
+target_include_directories( ${TARGET_NAME} PUBLIC
+    "${CMAKE_CURRENT_SOURCE_DIR}/include" )
+#target_compile_definitions( ${TARGET_NAME} PUBLIC <macro-definitions>... )
+#target_compile_options( ${TARGET_NAME} PUBLIC <compiler-option>... )
+#target_compile_features( ${TARGET_NAME} PUBLIC <feature>... )
+target_sources( ${TARGET_NAME} PUBLIC
+    "${COMMON_SOURCE_DIR}/include/library.h" )
+#target_link_libraries( ${TARGET_NAME} PUBLIC <dependency>... )
+#target_link_options( ${TARGET_NAME} PUBLIC <linker-option>... )
+#target_link_directories( ${TARGET_NAME} PUBLIC <linker-search-dir>... )
+
+if( WIN32 )
+    #unicode support
+    add_definitions(-DUNICODE -D_UNICODE)
+endif()
+
+
+#--------------------  sutup ctest  --------------------
+set(MULTIPLY_TIMEOUT 10)
+set(CTEST_OUTPUT_ON_FAILURE 1)
+
+add_test( NAME FirstTest COMMAND ${PROJECT_NAME}
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+#add_test(SecondTest ${PROJECT_NAME} -54 -785)
+
+# setup test behaviour
+set_tests_properties(FirstTest
+	PROPERTIES TIMEOUT ${MULTIPLY_TIMEOUT})
+
+#set_tests_properties(SecondTest PROPERTIES
+#PASS_REGULAR_EXPRESSION "The result is: 42390"
+#FAIL_REGULAR_EXPRESSION "Error!")
+
+
+#--------------------  process subprojects recursively  --------------------
+#declare usefull source directories
+set( THIRD_PARTY_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party" )
+set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/common" )
+set( CONSOLE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/console" )
+set( LIBRARY_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/library" )
+
+#setup default options
+option( ENABLE_CONSOLE "Enable console application target build" ON )
+option( ENABLE_TEST "Enable unit test target build" OFF )
+option( ENABLE_LIBRARY "Enable library target build" ON )
+
+if( ENABLE_CONSOLE )
+    add_subdirectory( console )
+endif()
+
+if( ENABLE_TEST )
+    add_subdirectory( test )
+endif()
+
+if( ENABLE_LIBRARY )
+    add_subdirectory( library )
+endif()

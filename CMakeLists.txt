@@ -1,6 +1,6 @@
 # Require CMAKE 3.20 or higher
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-message( "Process: ${CMAKE_CURRENT_SOURCE_DIR}")
+message( "Configuring: ${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Project name
 project(rm)
