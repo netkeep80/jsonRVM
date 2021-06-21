@@ -16,43 +16,22 @@ add_executable( ${TARGET_NAME} )
 
 # Adding build-requirements
 target_include_directories( ${TARGET_NAME} PRIVATE
+    "${DOC_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
     "${COMMON_SOURCE_DIR}/include"
     "${COMMON_SOURCE_DIR}/include/nlohmann" )
-#target_compile_definitions( ${TARGET_NAME} PRIVATE <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} PRIVATE <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} PRIVATE <feature>... )
+
 target_sources( ${TARGET_NAME} PRIVATE
+    "${DOC_SOURCE_DIR}/Introduction.md"
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
     "${COMMON_SOURCE_DIR}/include/jsonRVM.h"
     "${COMMON_SOURCE_DIR}/include/interface.h"
     "${COMMON_SOURCE_DIR}/include/database_api.h"
+    "${COMMON_SOURCE_DIR}/include/string_utils.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/base.rm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/file_database.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/dll.rm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
-#target_link_libraries( ${TARGET_NAME} PRIVATE <dependency>... )
-#target_link_options( ${TARGET_NAME} PRIVATE <linker-option>... )
-#target_link_directories( ${TARGET_NAME} PRIVATE <linker-search-dir>... )
-
-# Adding usage-requirements
-#target_include_directories( ${TARGET_NAME} INTERFACE <include-search-dir>... )
-#target_compile_definitions( ${TARGET_NAME} INTERFACE <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} INTERFACE <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} INTERFACE <feature>... )
-#target_sources( ${TARGET_NAME} INTERFACE <source-file>... )
-#target_link_libraries( ${TARGET_NAME} INTERFACE <dependency>... )
-#target_link_options( ${TARGET_NAME} INTERFACE <linker-option>... )
-#target_link_directories( ${TARGET_NAME} INTERFACE <linker-search-dir>... )
-
-# Adding build- and usage-requirements
-#target_include_directories( ${TARGET_NAME} PUBLIC <include-search-dir>... )
-#target_compile_definitions( ${TARGET_NAME} PUBLIC <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} PUBLIC <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} PUBLIC <feature>... )
-#target_sources( ${TARGET_NAME} PUBLIC "${COMMON_INCLUDE}/jsonRVM.h" )
-#target_link_libraries( ${TARGET_NAME} PUBLIC <dependency>... )
-#target_link_options( ${TARGET_NAME} PUBLIC <linker-option>... )
-#target_link_directories( ${TARGET_NAME} PUBLIC <linker-search-dir>... )
 
 if( WIN32 )
     add_definitions(-DUNICODE -D_UNICODE)

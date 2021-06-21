@@ -20,8 +20,9 @@ message( "CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR}" )
 message( "------------------------------------------------" )
 
 #--------------------  process subdirectories  --------------------
-set( MODULES_SOURCE_DIR "${CMAKE_SOURCE_DIR}/modules" )
-set( THIRD_PARTY_SOURCE_DIR "${CMAKE_SOURCE_DIR}/third_party" )
+set( MODULES_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/modules" )
+set( THIRD_PARTY_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party" )
+set( DOC_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/doc" )
 
 add_subdirectory(modules)
 
@@ -30,35 +31,3 @@ option( ENABLE_TEST "Enable integration test target build" OFF )
 if( ENABLE_TESTS )
     add_subdirectory( tests )
 endif()
-
-# Modern template commands
-
-# Adding build-requirements
-#target_include_directories( ${TARGET_NAME} PRIVATE <include-search-dir>... )
-#target_compile_definitions( ${TARGET_NAME} PRIVATE <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} PRIVATE <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} PRIVATE <feature>... )
-#target_sources( ${TARGET_NAME} PRIVATE <source-file>... )
-#target_link_libraries( ${TARGET_NAME} PRIVATE <dependency>... )
-#target_link_options( ${TARGET_NAME} PRIVATE <linker-option>... )
-#target_link_directories( ${TARGET_NAME} PRIVATE <linker-search-dir>... )
-
-# Adding usage-requirements
-#target_include_directories( ${TARGET_NAME} INTERFACE <include-search-dir>... )
-#target_compile_definitions( ${TARGET_NAME} INTERFACE <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} INTERFACE <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} INTERFACE <feature>... )
-#target_sources( ${TARGET_NAME} INTERFACE <source-file>... )
-#target_link_libraries( ${TARGET_NAME} INTERFACE <dependency>... )
-#target_link_options( ${TARGET_NAME} INTERFACE <linker-option>... )
-#target_link_directories( ${TARGET_NAME} INTERFACE <linker-search-dir>... )
-
-# Adding build- and usage-requirements
-#target_include_directories( ${TARGET_NAME} PUBLIC <include-search-dir>... )
-#target_compile_definitions( ${TARGET_NAME} PUBLIC <macro-definitions>... )
-#target_compile_options( ${TARGET_NAME} PUBLIC <compiler-option>... )
-#target_compile_features( ${TARGET_NAME} PUBLIC <feature>... )
-#target_sources( ${TARGET_NAME} PUBLIC <source-file>... )
-#target_link_libraries( ${TARGET_NAME} PUBLIC <dependency>... )
-#target_link_options( ${TARGET_NAME} PUBLIC <linker-option>... )
-#target_link_directories( ${TARGET_NAME} PUBLIC <linker-search-dir>... )

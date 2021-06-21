@@ -37,6 +37,7 @@ SOFTWARE.
 #include <string>
 #include "jsonRVM.h"
 #include "base.rm.h"
+#include "dll.rm.h"
 #include "file_database.h"
 
 using namespace rm;
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
 {
 	json	res;
 	char	*fileNameInput = NULL,
-			*entryPoint = NULL;	//	������ ���������� ������ ���� ������� �������� ��������, �.�. � ���������, ���������� ���������� ��������� ������������
+			*entryPoint = NULL;
 
 	switch (argc)
 	{
@@ -68,7 +69,7 @@ int main(int argc, char* argv[])
 		cout << "          R                                                                   " << endl;
 		cout << "       S__|__O                                                                " << endl;
 		cout << "     O   _|_   S                                                              " << endl;
-		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << RVM_version << "]                    " << endl;
+		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << rmvm_version << "]                    " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
 		cout << "     S    |    O     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;
@@ -82,17 +83,55 @@ int main(int argc, char* argv[])
 		cout << "Usage:                                                                        " << endl;
 		cout << "       rmvm.exe [relation_model.json] <main_entry_point>                      " << endl;
 		cout << "       rmvm.exe [relation_model_library.dll]                                  " << endl;
-		return 0;	//	ok
-	}
-
-	if (!strcmp(fileNameInput, "rmvm.exe"))
-	{
-		cout << jsonRVM().dump(3);
+		cout << "       rmvm.exe [rmvm.exe]                                                    " << endl;
 		return 0;	//	ok
 	}
 
 	file_database_t	db(".\\");
 	jsonRVM root(&db);
+
+	size_t fileNameInputLen = strlen(fileNameInput);
+
+	if (fileNameInputLen > 4)
+	{
+		char* fileNameInputExt = &fileNameInput[fileNameInputLen - 4];
+
+		if (!strcmp(fileNameInputExt, ".dll") || !strcmp(fileNameInputExt, ".DLL"))
+		{
+			string	FullFileName = string(".\\") + fileNameInput;
+
+			try
+			{
+				cout << "{ \"version\" : \"" << LoadAndInitDict(FullFileName, root) << "\",";
+				cout << "\"" << fileNameInput << "\" : " << root.dump(3);
+				cout << "}";
+				return 0;	//	ok
+			}
+			catch (string& error)
+			{
+				cerr << "Exception: " << error;
+			}
+			catch (std::exception& e)
+			{
+				cerr << "Exception: " << e.what();
+			}
+			catch (...)
+			{
+				cerr << "Unknown exception";
+			}
+			return 1;	//	error
+		}
+	}
+
+	//	base vocabulary
+	ImportRelationsModel(root);
+	ImportLoadDLLEntity(root);
+
+	if (!strcmp(fileNameInput, "rmvm.exe"))
+	{
+		cout << root.dump(3);
+		return 0;	//	ok
+	}
 	
 	try
 	{

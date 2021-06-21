@@ -1,57 +1,45 @@
-// fs.rm.cpp : Defines the exported functions for the DLL application.
-//
+/*        R
+	   S__|__O
+	 O   _|_   S
+  R__|__/_|_\__|__R  jsonRVM
+	 |  \_|_/  |     json Relations (Model) Virtual Machine
+	 S    |    O     https://github.com/netkeep80/jsonRVM
+		__|__
+	   /  |  \
+	  /___|___\
+Fractal Triune Entity
+
+Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+#pragma once
 #include <iostream>
 #include <fstream>
 #include "windows.h"
 #include "fs.rm.h"
+#include "string_utils.h"
 #include "jsonRVM.h"
 
 #define MAX_NAME	1024
 using namespace rm;
-
-template<UINT CodePage>
-wstring	_to_wstring(const string &data)
-{
-	size_t			nLengthW = data.length() + 1;
-	wchar_t*	str = new wchar_t[nLengthW];
-	memset(str, 0, nLengthW * sizeof(wchar_t));
-	MultiByteToWideChar(CodePage, 0, data.c_str(), -1, str, (int)nLengthW);
-	wstring	res(str);
-	delete[] str;
-	return res;
-}
-
-template<UINT CodePage>
-string	wstring_to_(const wstring &data)
-{
-	size_t	size = data.length();
-	if (size)
-	{
-		char*		str = new char[2 * size + 1];	//	for russian utf8 string case
-		memset(str, 0, 2 * size + 1);
-		WideCharToMultiByte(CodePage, 0, data.c_str(), -1, str, 2 * (int)size + 1, NULL, NULL);
-		string		res(str);
-		delete[] str;
-		return res;
-	}
-	else
-		return string();
-}
-
-inline wstring cp1251_to_wstring(const string &data) { return _to_wstring<CP_ACP>(data); }
-inline wstring oem_to_wstring(const string &data) { return _to_wstring<CP_OEMCP>(data); }
-inline wstring utf8_to_wstring(const string &data) { return _to_wstring<CP_UTF8>(data); }
-inline string  wstring_to_cp1251(const wstring &data) { return wstring_to_<CP_ACP>(data); }
-inline string  wstring_to_oem(const wstring &data) { return wstring_to_<CP_OEMCP>(data); }
-inline string  wstring_to_utf8(const wstring &data) { return wstring_to_<CP_UTF8>(data); }
-
-inline string cp1251_to_oem(const string &data) { return wstring_to_oem(_to_wstring<CP_ACP>(data)); }
-inline string cp1251_to_utf8(const string &data) { return wstring_to_utf8(_to_wstring<CP_ACP>(data)); }
-inline string oem_to_cp1251(const string &data) { return wstring_to_cp1251(_to_wstring<CP_OEMCP>(data)); }
-inline string oem_to_utf8(const string &data) { return wstring_to_utf8(_to_wstring<CP_OEMCP>(data)); }
-inline string utf8_to_cp1251(const string &data) { return wstring_to_cp1251(_to_wstring<CP_UTF8>(data)); }
-inline string utf8_to_oem(const string &data) { return wstring_to_oem(_to_wstring<CP_UTF8>(data)); }
-
 
 #define FROM_JSON_FIELD(jname,sname) if (jsonValue.count(#jname)) data.##sname = jsonValue[#jname];
 
@@ -423,25 +411,40 @@ void  jsonToFiles(jsonRVM& rvm, EntContext& ec)
 	}
 }
 
+
+void	rmvm_dump(jsonRVM& rvm, EntContext& ec)
+{
+	string filename = "rmvm.dump.json";
+	std::ofstream out(filename);
+	if (out.good())
+		out << rvm.dump();
+	else
+		cerr << "Can't store rmvm dump in the " << filename << " file.\n";
+}
+
+
 namespace rm
 {
-
-	FSRM_API void  ImportRelationsModel(jsonRVM& rvm)
+	
+	FSRM_API const string&	ImportRelationsModel(jsonRVM& rvm)
 	{
-		rvm["fs"]["RVM_version"] = RVM_version;
-		rvm.AddBaseEntity(rvm["fs"]["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
-		rvm.AddBaseEntity(rvm["fs"]["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
-		rvm.AddBaseEntity(rvm["fs"]["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
+		rvm.AddBaseEntity(rvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
+		rvm.AddBaseEntity(rvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
+		rvm.AddBaseEntity(rvm["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
 
-		rvm.AddBaseEntity(rvm["fs"]["file"]["load"], "rm"s, fs_file_load_rm, ""s);
+		rvm.AddBaseEntity(rvm["file"]["load"], "rm"s, fs_file_load_rm, "Loads rm from json"s);
 
-		rvm.AddBaseEntity(rvm["fs"]["file"]["read"], "json"s, fs_file_read_json, ""s);
-		rvm.AddBaseEntity(rvm["fs"]["file"]["read"], "string"s, jsonFileToString, ""s);
-		rvm.AddBaseEntity(rvm["fs"]["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
+		rvm.AddBaseEntity(rvm["file"]["read"], "json"s, fs_file_read_json, "Reads json file and parse it"s);
+		rvm.AddBaseEntity(rvm["file"]["read"], "string"s, jsonFileToString, ""s);
+		rvm.AddBaseEntity(rvm["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
 
-		rvm.AddBaseEntity(rvm["fs"]["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
-		rvm.AddBaseEntity(rvm["fs"]["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
-		rvm.AddBaseEntity(rvm["fs"]["files"]["write"], "json"s, jsonToFiles, ""s);
+		rvm.AddBaseEntity(rvm["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
+		rvm.AddBaseEntity(rvm["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
+		rvm.AddBaseEntity(rvm["files"]["write"], "json"s, jsonToFiles, ""s);
+
+		rvm.AddBaseEntity(rvm["rmvm"], "dump"s, rmvm_dump, "Dump rmvm current state"s);
+
+		return rmvm_version;
 	}
-
+	
 }

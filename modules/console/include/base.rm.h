@@ -1,3 +1,35 @@
+/*        R
+	   S__|__O
+	 O   _|_   S
+  R__|__/_|_\__|__R  jsonRVM
+	 |  \_|_/  |     json Relations (Model) Virtual Machine
+	 S    |    O     https://github.com/netkeep80/jsonRVM
+		__|__
+	   /  |  \
+	  /___|___\
+Fractal Triune Entity
+
+Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 #pragma once
 #include <iostream>
 #include <chrono>
@@ -1097,11 +1129,11 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		ec.res = chrono::duration_cast<chrono::hours>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
-	void ImportRelationsModel(jsonRVM& rvm)
+	const string&	ImportRelationsModel(jsonRVM& rvm)
 	{
 		import_help(rvm);
-		rvm["RVM_version"] = RVM_version;
-		rvm.AddBaseEntity(rvm["RVM"]["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+		rvm["rmvm"]["version"] = rmvm_version;
+		rvm.AddBaseEntity(rvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 		rvm.AddBaseEntity(rvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 		rvm.AddBaseEntity(rvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 
@@ -1194,5 +1226,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		rvm.AddBaseEntity(rvm["steady_clock"], "seconds"s, steady_clock_seconds, "Sets $res to time since epoch in seconds"s);
 		rvm.AddBaseEntity(rvm["steady_clock"], "minutes"s, steady_clock_minutes, "Sets $res to time since epoch in minutes"s);
 		rvm.AddBaseEntity(rvm["steady_clock"], "hours"s, steady_clock_hours, "Sets $res to time since epoch in hours"s);
+
+		return rmvm_version;
 	}
 }

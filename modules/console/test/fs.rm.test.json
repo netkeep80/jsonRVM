@@ -3,53 +3,50 @@
    "time_to_sleep" : 1000,
    "$rel" : [
       {
-         "#/additional_rm_loaded/fs.rm.dll" : {
+         "/additional_rm_loaded/fs.rm.dll" : {
             "$obj" : {
                "PathFolder" : ".\\",
                "FileName" : "fs.rm.dll"
             },
-            "$rel" : "#/RVM/load/dll",
-            "$sub" : "#"
+            "$rel" : "rmvm/load/dll"
          }
       },
       {
-         "/fs/dir/1/delete" : {
-            "$obj" : "#/arg",
-            "$rel" : "#/fs/dir/delete"
+         "$res/dir/test1/delete" : {
+            "$obj" : "/arg",
+            "$rel" : "dir/delete"
          }
       },
       {
-         "$obj" : "#/time_to_sleep",
-         "$rel" : "#/RVM/sleep/ms"
+         "$obj" : "/time_to_sleep",
+         "$rel" : "sleep/ms"
       },
       {
-         "/fs/dir/2/create" : {
-            "$obj" : "#/arg",
-            "$rel" : "#/fs/dir/create"
+         "$res/dir/test2/create" : {
+            "$obj" : "/arg",
+            "$rel" : "dir/create"
          }
       },
       {
-         "$obj" : "#/time_to_sleep",
-         "$rel" : "#/RVM/sleep/ms"
+         "$obj" : "/time_to_sleep",
+         "$rel" : "sleep/ms"
       },
       {
-         "/fs/dir/3/create" : {
-            "$obj" : "#/arg",
-            "$rel" : "#/fs/dir/create"
+         "$res/dir/test3/create" : {
+            "$obj" : "/arg",
+            "$rel" : "dir/create"
          }
       },
       {
-         "$obj" : "#/time_to_sleep",
-         "$rel" : "#/RVM/sleep/ms"
+         "$obj" : "/time_to_sleep",
+         "$rel" : "sleep/ms"
       },
       {
-         "/fs/dir/4/delete" : {
-            "$obj" : "#/arg",
-            "$rel" : "#/fs/dir/delete"
+         "$res/dir/test4/delete" : {
+            "$obj" : "/arg",
+            "$rel" : "dir/delete"
          }
       },
-      {
-         "/meta" : "#/json/meta"
-      }
+      "rmvm/dump"
    ]
 }

@@ -1,9 +1,9 @@
 {
    "$rel" : [
       {
-         "$obj" : "RVM_version",
+         "$obj" : "rmvm/version",
          "$rel" : "=",
-         "$sub" : "$res/RVM_version"
+         "$sub" : "$res/rmvm/version"
       },
       {
          "$res/meta" : "json/meta"

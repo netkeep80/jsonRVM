@@ -72,6 +72,8 @@ TEST_CASE("absolute addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM root(&db);
+    //	base vocabulary
+    ImportRelationsModel(root);
     json    res;
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
@@ -91,6 +93,8 @@ TEST_CASE("relative addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
     jsonRVM root(&db);
+    //	base vocabulary
+    ImportRelationsModel(root);
     json    res;
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
@@ -125,6 +129,8 @@ TEST_CASE("testing call version.json") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
+    //	base vocabulary
+    ImportRelationsModel(root);
     json    res;
     char *fileNameInput = "version.json";
 
@@ -136,7 +142,7 @@ TEST_CASE("testing call version.json") {
         
         EntContext ctx(res, root[""]);
         root.JSONExec(ctx, root[""]);
-        CHECK(res["RVM_version"].get_ref<string&>() == "3.0.0"s);
+        CHECK(res["rmvm"]["version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
     catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
@@ -149,6 +155,8 @@ TEST_CASE("testing base entity 'where'") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
+    //	base vocabulary
+    ImportRelationsModel(root);
     json    res;
     char* fileNameInput = "where_test.json";
 
@@ -179,6 +187,8 @@ TEST_CASE("performance test") {
     MESSAGE("result:");
     file_database_t	db(".\\");
     jsonRVM root(&db);
+    //	base vocabulary
+    ImportRelationsModel(root);
     json    res;
     char* fileNameInput = "performance.json";
 
