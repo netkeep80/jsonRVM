@@ -1,47 +1,46 @@
 {
    "$rel" : [
       {
-         "#/additional_rm_loaded/http.rm.dll" : {
+         "/additional_rm_loaded/http.rm.dll" : {
             "$obj" : {
-               "PathFolder" : ".\\",
+               "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
                "FileName" : "http.rm.dll"
             },
-            "$rel" : "#/RVM/load/dll",
-            "$sub" : "#"
+            "$rel" : "rmvm/load/dll"
          }
       },
       {
          "$obj" : {
             "URI" : "http://192.168.8.1/api/webserver/token"
          },
-         "$rel" : "#/HTTP/GET/xml",
-         "$sub" : "#/Modem/SesTokInfo"
+         "$rel" : "http/GET/xml",
+         "$sub" : "/Modem/SesTokInfo"
       },
       {
-         "$obj" : "#/HTTP/CODE_OK",
-         "$rel" : "#/=="
+         "$obj" : "/HTTP/CODE_OK",
+         "$rel" : "=="
       },
       {
-         "$rel" : "#/then",
+         "$rel" : "then",
          "$sub" : [
             {
-               "#/Modem/request" : "#/json/object",
-               "#/Modem/request/URI" : {
-                  "$obj" : "#/Modem/SendSMS/URI",
-                  "$rel" : "#/="
+               "/Modem/request" : "/json/object",
+               "/Modem/request/URI" : {
+                  "$obj" : "/Modem/SendSMS/URI",
+                  "$rel" : "="
                },
-               "#/Modem/request/header/__RequestVerificationToken" : {
-                  "$obj" : "#/Modem/SesTokInfo/body/response/token",
-                  "$rel" : "#/="
+               "/Modem/request/header/__RequestVerificationToken" : {
+                  "$obj" : "/Modem/SesTokInfo/body/response/token",
+                  "$rel" : "="
                },
-               "#/Modem/request/body" : {
+               "/Modem/request/body" : {
                   "$obj" : [
                      {
                         "$obj" : {
-                           "$obj" : "#/Index",
-                           "$rel" : "#/="
+                           "$obj" : "/Index",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Index"
                         }
@@ -50,80 +49,80 @@
                         "$obj" : [
                            {
                               "$obj" : {
-                                 "$obj" : "#/Phone",
-                                 "$rel" : "#/="
+                                 "$obj" : "/Phone",
+                                 "$rel" : "="
                               },
-                              "$rel" : "#/tag",
+                              "$rel" : "tag",
                               "$sub" : {
                                  "<>" : "Phone"
                               }
                            }
                         ],
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Phones"
                         }
                      },
                      {
                         "$obj" : {
-                           "$obj" : "#/Sca",
-                           "$rel" : "#/="
+                           "$obj" : "/Sca",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Sca"
                         }
                      },
                      {
                         "$obj" : {
-                           "$obj" : "#/Content",
-                           "$rel" : "#/="
+                           "$obj" : "/Content",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Content"
                         }
                      },
                      {
                         "$obj" : {
-                           "$obj" : "#/Length",
-                           "$rel" : "#/="
+                           "$obj" : "/Length",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Length"
                         }
                      },
                      {
                         "$obj" : {
-                           "$obj" : "#/Reserved",
-                           "$rel" : "#/="
+                           "$obj" : "/Reserved",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Reserved"
                         }
                      },
                      {
                         "$obj" : {
-                           "$obj" : "#/Date",
-                           "$rel" : "#/="
+                           "$obj" : "/Date",
+                           "$rel" : "="
                         },
-                        "$rel" : "#/tag",
+                        "$rel" : "tag",
                         "$sub" : {
                            "<>" : "Date"
                         }
                      }
                   ],
-                  "$rel" : "#/xml",
+                  "$rel" : "xml",
                   "$sub" : {
                      "<>" : "request"
                   }
                }
             },
             {
-               "$obj" : "#/Modem/request",
-               "$rel" : "#/HTTP/POST/xml"
+               "$obj" : "/Modem/request",
+               "$rel" : "http/POST/xml"
             }
          ]
       }
@@ -139,7 +138,7 @@
    "Index" : "-1",
    "Phone" : "89875421631",
    "Sca" : "",
-   "Content" : "test message from watchdog",
+   "Content" : "test message from jsonRVM",
    "Length" : "3",
    "Reserved" : "1",
    "Date" : "2017-12-18 15:01:01"

@@ -17,3 +17,4 @@ jsonRVM using the following third-party tools. Thanks a lot!
 
 - [**JSON for Modern C++**](https://github.com/nlohmann/json) for load/exec/unload json view of Relations Model
 - [**The fastest reature-rich C++ single-header testing framework**](https://github.com/onqtam/doctest) for unit testing of Relations (Model) Virtual Machine
+- [**A C++11 single-file header-only cross platform HTTP/HTTPS library**](https://github.com/yhirose/cpp-httplib) for writing http base vocabulary for Relations (Model) Virtual Machine

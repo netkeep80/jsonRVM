@@ -1,0 +1,21 @@
+{
+   "$rel" : [
+      {
+         "/additional_rm_loaded/http.rm.dll" : {
+            "$obj" : {
+               "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
+               "FileName" : "http.rm.dll"
+            },
+            "$rel" : "rmvm/load/dll"
+         }
+      },
+      {
+         "$res/test1" : {
+            "$obj" : {
+               "URI" : "http://192.168.8.1/api/webserver/token"
+            },
+            "$rel" : "http/GET/xml"
+         }
+      }
+   ]
+}

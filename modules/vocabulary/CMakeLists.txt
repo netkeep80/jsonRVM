@@ -7,7 +7,7 @@ project( vocabulary VERSION ${CMAKE_PROJECT_VERSION} LANGUAGES CXX )
 
 #--------------------  process subdirectories  --------------------
 option( ENABLE_FS "Enable file system base vocabulary target build" ON )
-option( ENABLE_HTTP "Enable http base vocabulary target build" OFF )
+option( ENABLE_HTTP "Enable http base vocabulary target build" ON )
 option( ENABLE_IMGUI "Enable ImGui base vocabulary target build" OFF )
 
 if( ENABLE_FS )

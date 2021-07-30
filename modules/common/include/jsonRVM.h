@@ -746,11 +746,11 @@ case s_s::str_hash(str, s_s::str_len(str))
 		json& ent;			//	сущность, модель для контекста
 		EntContext& ctx;	//	родительский контекст исполнения
 
-		EntContext(json& v, json& o, json& s, json& e, EntContext& c)
-			: res(v), obj(o), sub(s), ent(e), ctx(c) {}
+		EntContext(json& Res, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
+			: res(Res), obj(Obj), sub(Sub), ent(Ent), ctx(Ctx) {}
 
-		EntContext(json& v, json& e)
-			: res(v), obj(v), sub(v), ent(e), ctx(*this) {}
+		EntContext(json& Res, json& Ent)
+			: res(Res), obj(Res), sub(Res), ent(Ent), ctx(*this) {}
 
 		void throw_json(const string& function, const json& error)
 		{
@@ -965,7 +965,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 			case json::value_t::object:
 			{
-				if (rel.count("$rel"))	//	это сущность, которую надо исполнить в новом контексте?
+				if (rel.count("$rel")) //	это сущность, которую надо исполнить в новом контексте?
 				{
 					try {
 						JSONExec(

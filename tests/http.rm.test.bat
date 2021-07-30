@@ -1,0 +1,1 @@
+..\build\modules\console\Release\rmvm.exe http.rm.test.json

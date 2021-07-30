@@ -4,6 +4,7 @@ Release
 Debug
 packages
 .vs
+rmvm.dump.json
 rvm.dump.json
 *.vcxproj.user
 imgui.ini
