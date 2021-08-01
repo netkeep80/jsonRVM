@@ -1,4 +1,5 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
+#include "http.rm.h"
 #include "windows.h"
 #include <iostream>
 

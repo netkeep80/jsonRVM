@@ -25,7 +25,7 @@ target_include_directories( ${TARGET_NAME} PRIVATE
 target_sources( ${TARGET_NAME} PRIVATE
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
     "${THIRD_PARTY_SOURCE_DIR}/cpp-httplib/httplib.h"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/http.rm.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include/http.rm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/dllmain.cpp" )
 
 # Adding build- and usage-requirements
@@ -42,7 +42,9 @@ if( WIN32 )
 endif()
 
 #--------------------  process subdirectories  --------------------
-option( ENABLE_HTTP_TEST "Enable test target build" OFF )
+set( HTTP_SOURCE_DIR "${VOCABULARY_SOURCE_DIR}/http" )
+
+option( ENABLE_HTTP_TEST "Enable test target build" ON )
 
 if( ENABLE_HTTP_TEST )
     add_subdirectory( test )
