@@ -55,21 +55,18 @@ void	dump_json(string& filename, json& res)
 int main(int argc, char* argv[])
 {
 	json	res;
-	char	*fileNameInput = NULL,
-			*entryPoint = NULL;
+	char	*entry_point = NULL;
 
 	switch (argc)
 	{
-	case 3:
-		entryPoint = argv[2];
 	case 2:
-		fileNameInput = argv[1];
+		entry_point = argv[1];
 		break;
 	default:
 		cout << "          R                                                                   " << endl;
 		cout << "       S__|__O                                                                " << endl;
 		cout << "     O   _|_   S                                                              " << endl;
-		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << rmvm_version << "]                    " << endl;
+		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << rmvm_version << "]                   " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
 		cout << "     S    |    O     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;
@@ -78,10 +75,10 @@ int main(int argc, char* argv[])
 		cout << "Fractal Triune Entity                                                         " << endl;
 		cout << "                                                                              " << endl;
 		cout << "Licensed under the MIT License <http://opensource.org/licenses/MIT>.          " << endl;
-		cout << "Copyright (c) 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
+		cout << "Copyright (c) 2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
 		cout << "                                                                              " << endl;
 		cout << "Usage:                                                                        " << endl;
-		cout << "       rmvm.exe [relation_model.json] <main_entry_point>                      " << endl;
+		cout << "       rmvm.exe [entry_point]                                                 " << endl;
 		cout << "       rmvm.exe [relation_model_library.dll]                                  " << endl;
 		cout << "       rmvm.exe [rmvm.exe]                                                    " << endl;
 		return 0;	//	ok
@@ -90,20 +87,20 @@ int main(int argc, char* argv[])
 	file_database_t	db(".\\");
 	vm root(&db);
 
-	size_t fileNameInputLen = strlen(fileNameInput);
+	size_t fileNameInputLen = strlen(entry_point);
 
 	if (fileNameInputLen > 4)
 	{
-		char* fileNameInputExt = &fileNameInput[fileNameInputLen - 4];
+		char* fileNameInputExt = &entry_point[fileNameInputLen - 4];
 
 		if (!strcmp(fileNameInputExt, ".dll") || !strcmp(fileNameInputExt, ".DLL"))
 		{
-			string	FullFileName = string(".\\") + fileNameInput;
+			string	FullFileName = string(".\\") + entry_point;
 
 			try
 			{
 				cout << "{ \"version\" : \"" << LoadAndInitDict(FullFileName, root) << "\",";
-				cout << "\"" << fileNameInput << "\" : " << root.dump(3);
+				cout << "\"" << entry_point << "\" : " << root.dump(3);
 				cout << "}";
 				return 0;	//	ok
 			}
@@ -127,7 +124,7 @@ int main(int argc, char* argv[])
 	ImportRelationsModel(root);
 	ImportLoadDLLEntity(root);
 
-	if (!strcmp(fileNameInput, "rmvm.exe"))
+	if (!strcmp(entry_point, "rmvm.exe"))
 	{
 		cout << root.dump(3);
 		return 0;	//	ok
@@ -135,7 +132,7 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		cout << root.exec(res, json(fileNameInput)).dump(2);
+		cout << root.exec(res, json(entry_point)).dump(2);
 		return 0;	//	ok
 	}
 	catch (json& j)
