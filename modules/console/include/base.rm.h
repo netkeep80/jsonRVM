@@ -1107,7 +1107,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 
 	template<class duration>
 	void steady_clock_(vm& rmvm, vm_ctx& $) {
-		$.its = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		$.its = chrono::duration_cast<duration>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
 	const string&	ImportRelationsModel(vm& rmvm)

@@ -1,41 +1,42 @@
-{
-   "$rel" : [
-      {
-         "$obj" : "#/MeasProcessed",
-         "$rel" : "size",
-         "$sub" : "$its/result/meas_count"
-      },
-      {
-         "$its/start_time" : "steady_clock/microseconds"
-      },
-      {
-         "$its/tmp" : [
-            "#/CalculateMeanValues",
-            "#/CalculateTotalValues",
-            "#/PrepareFullReport",
-            "#/SaveFullReport2",
-            "#/SaveShortReport2"
-         ]
-      },
-      {
-         "$its/end_time" : "steady_clock/microseconds"
-      },
-      {
+[
+   {
+      "$obj" : "#/MeasProcessed",
+      "$rel" : "size",
+      "$sub" : "$its/result/meas_count"
+   },
+   {
+      "$its/start_time" : "steady_clock/microseconds"
+   },
+   {
+      "$its/tmp" : [
+         "#/CalculateMeanValues",
+         "#/CalculateTotalValues",
+         "#/PrepareFullReport",
+         "#/SaveFullReport2",
+         "#/SaveShortReport2"
+      ]
+   },
+   {
+      "$its/end_time" : "steady_clock/microseconds"
+   },
+   {
+      "$obj" : "$its",
+      "$rel" : {
          "$its/result/test_duration" : {
-            "$obj" : "$its/start_time",
+            "$obj" : "$obj/start_time",
             "$rel" : "-",
-            "$sub" : "$its/end_time"
+            "$sub" : "$obj/end_time"
          }
-      },
-      {
-         "$obj" : "$its/tmp/Report",
-         "$rel" : "=",
-         "$sub" : "$its/result/report"
-      },
-      {
-         "$obj" : "$its/result",
-         "$rel" : "=",
-         "$sub" : "$its"
       }
-   ]
-}
+   },
+   {
+      "$obj" : "$its/tmp/Report",
+      "$rel" : "=",
+      "$sub" : "$its/result/report"
+   },
+   {
+      "$obj" : "$its/result",
+      "$rel" : "=",
+      "$sub" : "$its"
+   }
+]

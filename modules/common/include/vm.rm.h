@@ -865,7 +865,6 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 			SWITCH(it)
 			{
-				//todo: refactor to n of $ that means ctx level
 				CASE("$$$$ent") : jptr = &$.$.$.$.ent;	break;
 				CASE("$$$$sub") : jptr = &$.$.$.$.sub;	break;
 				CASE("$$$$obj") : jptr = &$.$.$.$.obj;	break;
@@ -891,7 +890,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				if (res == ref.end())
 				{
 					try { this->get_entity(ref[it], it); }
-					catch (json & j) { throw json({ {__FUNCTION__, j} }); }
+					catch (json& j) { throw json({ {__FUNCTION__, j} }); }
 					catch (invalid_argument e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
 					catch (out_of_range e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
 					catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
@@ -910,7 +909,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				string it = str.substr(prev, pos - prev);
 				prev = pos + 1;
 				try { ref_in_json(jptr, it); }
-				catch (json & j) { throw json({ {__FUNCTION__, j} }); }
+				catch (json& j) { throw json({ {__FUNCTION__, j} }); }
 				catch (invalid_argument e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
 				catch (out_of_range e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
 				catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
@@ -1079,7 +1078,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 		{
 			entity[name] = json::object();
 			entity[name]["description"] = description;
-			(*this)[&(entity[name])] = view;
+			static_cast<binary_view_map_t&>(*this)[&(entity[name])] = view;
 			return entity[name];
 		}
 	};
