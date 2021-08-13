@@ -279,12 +279,31 @@ namespace rm
 
 	struct methods
 	{
-		static inline char* HEAD = "HEAD";
-		static inline char* GET = "GET";
-		static inline char* POST = "POST";
-		static inline char* PUT = "PUT";
-		static inline char* DEL = "DEL";
-		static inline char* PATCH = "PATCH";
+		struct GET
+		{
+			static inline char* name = "GET";
+			static void add(Server& svr, const char* pattern, Server::Handler handler) { svr.Get(pattern, handler); }
+		};
+		struct POST
+		{
+			static inline char* name = "POST";
+			static void add(Server& svr, const char* pattern, Server::Handler handler) { svr.Post(pattern, handler); }
+		};
+		struct PUT
+		{
+			static inline char* name = "PUT";
+			static void add(Server& svr, const char* pattern, Server::Handler handler) { svr.Put(pattern, handler); }
+		};
+		struct DEL
+		{
+			static inline char* name = "DEL";
+			static void add(Server& svr, const char* pattern, Server::Handler handler) { svr.Delete(pattern, handler); }
+		};
+		struct PATCH
+		{
+			static inline char* name = "PATCH";
+			static void add(Server& svr, const char* pattern, Server::Handler handler) { svr.Patch(pattern, handler); }
+		};
 	};
 
 	/*
@@ -530,16 +549,243 @@ namespace rm
 	}
 
 
+	inline std::string http_dump_headers(const Headers& headers) {
+		std::string s;
+		char buf[BUFSIZ];
+
+		for (auto it = headers.begin(); it != headers.end(); ++it) {
+			const auto& x = *it;
+			snprintf(buf, sizeof(buf), "%s: %s\n", x.first.c_str(), x.second.c_str());
+			s += buf;
+		}
+
+		return s;
+	}
+
+
+	inline std::string http_log(const Request& req, const Response& res) {
+		std::string s;
+		char buf[BUFSIZ];
+
+		s += "================================\n";
+
+		snprintf(buf, sizeof(buf), "%s %s %s", req.method.c_str(),
+			req.version.c_str(), req.path.c_str());
+		s += buf;
+
+		std::string query;
+		for (auto it = req.params.begin(); it != req.params.end(); ++it) {
+			const auto& x = *it;
+			snprintf(buf, sizeof(buf), "%c%s=%s",
+				(it == req.params.begin()) ? '?' : '&', x.first.c_str(),
+				x.second.c_str());
+			query += buf;
+		}
+		snprintf(buf, sizeof(buf), "%s\n", query.c_str());
+		s += buf;
+
+		s += http_dump_headers(req.headers);
+
+		s += "--------------------------------\n";
+
+		snprintf(buf, sizeof(buf), "%d %s\n", res.status, res.version.c_str());
+		s += buf;
+		s += http_dump_headers(res.headers);
+		s += "\n";
+
+		if (!res.body.empty()) { s += res.body; }
+
+		s += "\n";
+
+		return s;
+	}
+
+
+	inline unsigned get_unsigned(const json& obj, const string& field, unsigned default = unsigned())
+	{
+		if (obj.count(field))
+		{
+			const json& val = obj[field];
+			switch (val.type())
+			{
+			case json::value_t::number_float:   return unsigned(val.get<json::number_float_t>());
+			case json::value_t::number_integer: return unsigned(val.get<json::number_integer_t>());
+			case json::value_t::number_unsigned:return unsigned(val.get<json::number_unsigned_t>());
+			case json::value_t::boolean:        return unsigned(val.get<json::boolean_t>() ? 1 : 0);
+			case json::value_t::string:         return unsigned(std::stoul(val.get_ref<const json::string_t&>()));
+			default: break;
+			}
+		}
+
+		return default;
+	}
+
+	template<typename method>
+	void	http_add_methods(jsonRVM& rvm, EntContext& ec, Server& svr, json& api)
+	{
+		if (!api.is_object())
+			ec.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
+
+		for (auto& http_method : api.items())
+		{
+			if (!http_method.value().is_object())
+				ec.throw_json(__FUNCTION__, ": $obj/GET/"s + http_method.key() + " must be object"s);
+
+			method::add(svr, http_method.key().c_str(), [&, http_method](const Request& req, Response& res)
+				{
+					json	its, &ent = http_method.value()["$ent"];
+					using _convert = application_json;
+
+					if (req.body.length())
+						_convert::to_json(its, req.body);
+
+					try
+					{
+						rvm.exec(its, ent);
+						res.status = 200;
+					}
+					catch (json& j)
+					{
+						its = j;
+						res.status = 400;
+					}					
+					
+					res.set_content(its.dump(2).c_str(), "application/json");
+				}
+			);
+		}
+	}
+
+
+	inline void  http_service(jsonRVM& rvm, EntContext& ec)
+	{
+		//typename _convert;
+		method mtd;
+
+		if (!ec.obj.is_object())
+			ec.throw_json(__FUNCTION__, ": $obj must be object"s);
+
+		string	host = "0.0.0.0"s;
+
+		if (ec.obj.count("host"))
+		{
+			if (!ec.obj["host"].is_string())
+				ec.throw_json(__FUNCTION__, ": $obj/host must be string"s);
+
+			host = ec.obj["host"].get<json::string_t>();
+		}
+
+		unsigned port = get_unsigned(ec.obj, "port", 80);
+
+		try
+		{
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+			SSLServer svr(SERVER_CERT_FILE, SERVER_PRIVATE_KEY_FILE);
+#else
+			Server svr;
+#endif
+
+			if (!svr.is_valid()) {
+				printf("server has an error...\n");
+				return;
+			}
+
+			svr.Get("/", [=](const Request& /*req*/, Response& res) {
+				const char* fmt = R"(
+	          R
+	       S__|__O
+	     O   _|_   S
+	  R__|__/_|_\__|__R  rmvm [Version %s]
+	     |  \_|_/  |     json Relations (Model) Virtual Machine
+	     S    |    O     https://github.com/netkeep80/jsonRVM
+	        __|__
+	       /  |  \
+	      /___|___\
+	Fractal Triune Entity
+
+	Licensed under the MIT License <http://opensource.org/licenses/MIT>.
+	Copyright (c) 2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+				)";
+				char buf[BUFSIZ];
+				snprintf(buf, sizeof(buf), fmt, rmvm_version.c_str());
+				res.set_content(buf, "text/plain");
+				});
+
+			svr.Get("/stop",
+				[&](const Request& /*req*/, Response& /*res*/) { svr.stop(); });
+
+			svr.set_logger([](const Request& req, const Response& res) {
+				printf("%s", http_log(req, res).c_str());
+				});
+
+			if (ec.obj.count(methods::GET::name))
+				http_add_methods<methods::GET>(rvm, ec, svr, ec.obj[methods::GET::name]);
+
+			if (ec.obj.count(methods::POST::name))
+				http_add_methods<methods::POST>(rvm, ec, svr, ec.obj[methods::POST::name]);
+
+			if (ec.obj.count(methods::PUT::name))
+				http_add_methods<methods::PUT>(rvm, ec, svr, ec.obj[methods::PUT::name]);
+
+			if (ec.obj.count(methods::DEL::name))
+				http_add_methods<methods::DEL>(rvm, ec, svr, ec.obj[methods::DEL::name]);
+
+			if (ec.obj.count(methods::PATCH::name))
+				http_add_methods<methods::PATCH>(rvm, ec, svr, ec.obj[methods::PATCH::name]);
+
+			svr.listen(host.c_str(), port);
+			
+			/*
+			if (ec.obj.count("header"))
+				if (ec.obj["header"].is_object())
+					for (auto& it : ec.obj["header"].items())
+						requestObj.set_header(it.key().c_str(), it.value().is_string() ? it.value().get_ref<string&>().c_str() : it.value().dump().c_str());
+
+			if (ec.obj.count("body"))
+				_convert::from_json(ec.obj["body"], requestObj.body);
+
+			if (auto res = cli.send(requestObj))
+			{
+				ec.res = res->status;
+				ec.sub = json::object();
+				ec.sub["base_uri"] = base_uri;
+				ec.sub["uri_path"] = uri_path;
+				ec.sub["header"] = json::object();
+				ec.sub["body"] = json();
+				if (res->body.length())
+					_convert::to_json(ec.sub["body"], res->body);
+
+				if (!res->headers.empty())
+					for (auto& it : res->headers)
+						ec.sub["header"][it.first] = it.second;
+			}
+			else
+			{
+				throw json("error code: "s + to_string(static_cast<std::underlying_type<Error>::type>(res.error())));
+#ifdef CPPHTTPLIB_OPENSSL_SUPPORT
+				auto result = cli.get_openssl_verify_result();
+				if (result)
+					throw json("verify error: "s + X509_verify_cert_error_string(result));;
+#endif
+			}*/
+
+		}
+		catch (json& j) { ec.throw_json(__FUNCTION__, j); }
+		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+	}
+
+
 #define add_http_entity(method, converter_type)																					\
 	rvm.AddBaseEntity(																											\
-		rvm["http"][ #method ],																									\
+		rvm["http"][ methods::##method::name ],																									\
 		string(#converter_type),																								\
-		HTTP_METHOD<application_##converter_type, methods::##method>,															\
-		"Calls http webapi "s + #method + " method with "s + application_##converter_type::content_type<string>() + " content_type"s		\
+		HTTP_METHOD<application_##converter_type, methods::##method::name>,															\
+		"Calls http webapi "s + methods::##method::name + " method with "s + application_##converter_type::content_type<string>() + " content_type"s		\
 	);
 
 #define add_http_entites(converter_type)	\
-	add_http_entity(HEAD, converter_type);	\
 	add_http_entity(GET, converter_type);	\
 	add_http_entity(POST, converter_type);	\
 	add_http_entity(PUT, converter_type);	\
@@ -554,6 +800,8 @@ namespace rm
 		add_http_entites(urlencoded);
 		add_http_entites(json);
 		add_http_entites(xml);
+
+		rvm.AddBaseEntity(rvm["http"], "service"s, http_service, "");
 
 		return rmvm_version;
 	}

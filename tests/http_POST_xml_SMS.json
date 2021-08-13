@@ -1,7 +1,7 @@
 {
    "$rel" : [
       {
-         "/additional_rm_loaded/http.rm.dll" : {
+         "$ent/additional_rm_loaded/http.rm.dll" : {
             "$obj" : {
                "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
                "FileName" : "http.rm.dll"
@@ -14,30 +14,30 @@
             "URI" : "http://192.168.8.1/api/webserver/token"
          },
          "$rel" : "http/GET/xml",
-         "$sub" : "/Modem/SesTokInfo"
+         "$sub" : "$ent/Modem/SesTokInfo"
       },
       {
-         "$obj" : "/HTTP/CODE_OK",
+         "$obj" : "$ent/HTTP/CODE_OK",
          "$rel" : "=="
       },
       {
          "$rel" : "then",
          "$sub" : [
             {
-               "/Modem/request" : "/json/object",
-               "/Modem/request/URI" : {
-                  "$obj" : "/Modem/SendSMS/URI",
+               "$ent/Modem/request" : "json/object",
+               "$ent/Modem/request/URI" : {
+                  "$obj" : "$ent/Modem/SendSMS/URI",
                   "$rel" : "="
                },
-               "/Modem/request/header/__RequestVerificationToken" : {
-                  "$obj" : "/Modem/SesTokInfo/body/response/token",
+               "$ent/Modem/request/header/__RequestVerificationToken" : {
+                  "$obj" : "$ent/Modem/SesTokInfo/body/response/token",
                   "$rel" : "="
                },
-               "/Modem/request/body" : {
+               "$ent/Modem/request/body" : {
                   "$obj" : [
                      {
                         "$obj" : {
-                           "$obj" : "/Index",
+                           "$obj" : "$ent/Index",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -49,7 +49,7 @@
                         "$obj" : [
                            {
                               "$obj" : {
-                                 "$obj" : "/Phone",
+                                 "$obj" : "$ent/Phone",
                                  "$rel" : "="
                               },
                               "$rel" : "tag",
@@ -65,7 +65,7 @@
                      },
                      {
                         "$obj" : {
-                           "$obj" : "/Sca",
+                           "$obj" : "$ent/Sca",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -75,7 +75,7 @@
                      },
                      {
                         "$obj" : {
-                           "$obj" : "/Content",
+                           "$obj" : "$ent/Content",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -85,7 +85,7 @@
                      },
                      {
                         "$obj" : {
-                           "$obj" : "/Length",
+                           "$obj" : "$ent/Length",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -95,7 +95,7 @@
                      },
                      {
                         "$obj" : {
-                           "$obj" : "/Reserved",
+                           "$obj" : "$ent/Reserved",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -105,7 +105,7 @@
                      },
                      {
                         "$obj" : {
-                           "$obj" : "/Date",
+                           "$obj" : "$ent/Date",
                            "$rel" : "="
                         },
                         "$rel" : "tag",
@@ -121,7 +121,7 @@
                }
             },
             {
-               "$obj" : "/Modem/request",
+               "$obj" : "$ent/Modem/request",
                "$rel" : "http/POST/xml"
             }
          ]

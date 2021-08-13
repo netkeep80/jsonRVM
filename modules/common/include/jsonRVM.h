@@ -736,14 +736,31 @@ case s_s::str_hash(str, s_s::str_len(str))
 	const string rmvm_version = "3.0.0"s;
 	////////////////////////////// VERSION //////////////////////////////
 
+	/*
+			Mapping OOP to EOP:
+
+		(&result ? result : *this) = this->class::method( &args ? args : *this );
+		----------------------------------------------------------------
+	                                 ||
+									 ||
+									 ||
+									\||/
+									 \/
+        --------------------------------------------------------
+		(&$sub ? $sub : $res) = $res->$ent::$rel( &$obj ? $obj : $res );
+	*/
 
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct EntContext
 	{
-		json& res;			//	локальное адресное пространство
-		json& obj;			//	контекстный объект
+		//todo: rename res to its
+		json& res;			//	entity local address space
+		//todo: make obj readonly
+		json& obj;			//	контекстный объект	//	arguments
 		json& sub;			//	контекстный субъект
+		//todo: make ent readonly
 		json& ent;			//	сущность, модель для контекста
+		//todo: rename to $
 		EntContext& ctx;	//	родительский контекст исполнения
 
 		EntContext(json& Res, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
@@ -751,6 +768,9 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 		EntContext(json& Res, json& Ent)
 			: res(Res), obj(Res), sub(Res), ent(Ent), ctx(*this) {}
+
+		EntContext(json& Ent)
+			: res(Ent), obj(Ent), sub(Ent), ent(Ent), ctx(*this) {}
 
 		void throw_json(const string& function, const json& error)
 		{
@@ -847,6 +867,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 			SWITCH(it)
 			{
+				//todo: refactor to n of $ that means ctx level
 				CASE("$up3ent") : segment = &ec.ctx.ctx.ctx.ent;	break;
 				CASE("$up3sub") : segment = &ec.ctx.ctx.ctx.sub;	break;
 				CASE("$up3obj") : segment = &ec.ctx.ctx.ctx.obj;	break;
@@ -915,9 +936,25 @@ case s_s::str_hash(str, s_s::str_len(str))
 			}
 		}
 
+		//todo: json& ent -> json const& ent
+		json& exec(json& its, json& ent)
+		{
+			EntContext ctx(its);
+			try
+			{
+				JSONExec(ctx, ent);
+				return its;
+			}
+			catch (json& j) { ctx.throw_json(__FUNCTION__, j); }
+			catch (json::exception& e) { ctx.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { ctx.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+			catch (...) { ctx.throw_json(__FUNCTION__, "unknown exception"s); }
+		}
+
 		//	Исполнение сущности либо json байткода
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
+		//todo: json& rel -> json const& rel
 		void JSONExec(EntContext& ec, json& rel)
 		{
 			x86_view_map_t& dict = *this;
@@ -1040,7 +1077,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 		}
 
 		//	добавление сущности с закэшированной x86 проекцией
-		json& AddBaseEntity(json& entity, const string& name, x86View view, const string& description)
+		json& AddBaseEntity(json& entity, const string& name, const x86View view, const string& description)
 		{
 			entity[name] = json::object();
 			entity[name]["description"] = description;

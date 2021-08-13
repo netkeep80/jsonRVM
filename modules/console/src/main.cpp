@@ -135,29 +135,8 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		//	������ �������� ����������
-		EntContext ctx(res, root[""]);
-
-		try
-		{
-			std::ifstream in(fileNameInput);
-
-			if (in.good())
-				in >> root[""];
-			else
-				throw json("Can't restore RM json from the "s + fileNameInput + " file"s);
-			 	
-			if (entryPoint) root.JSONExec(ctx, json(entryPoint));
-			else root.JSONExec(ctx, root[""]);
-
-			cout << res.dump(2);
-
-			return 0;	//	ok
-		}
-		catch (json& j) { ctx.throw_json(__FUNCTION__, j ); }
-		catch (json::exception& e) { ctx.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) ); }
-		catch (std::exception& e) { ctx.throw_json(__FUNCTION__, "std::exception: "s + e.what() ); }
-		catch (...) { ctx.throw_json(__FUNCTION__, "unknown exception"s ); }
+		cout << root.exec(res, json(fileNameInput)).dump(2);
+		return 0;	//	ok
 	}
 	catch (json& j)
 	{

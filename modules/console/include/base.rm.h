@@ -1105,28 +1105,9 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		ec.sub = ec.obj.dump(3);
 	}
 
-	void steady_clock_nanoseconds(jsonRVM& rvm, EntContext& ec) {
+	template<class duration>
+	void steady_clock_(jsonRVM& rvm, EntContext& ec) {
 		ec.res = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
-
-	void steady_clock_microseconds(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::microseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
-
-	void steady_clock_milliseconds(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
-
-	void steady_clock_seconds(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::seconds>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
-
-	void steady_clock_minutes(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::minutes>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
-
-	void steady_clock_hours(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::hours>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
 	const string&	ImportRelationsModel(jsonRVM& rvm)
@@ -1220,12 +1201,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		rvm.AddBaseEntity(rvm, "html"s, jsonHTML, ""s);
 
 		//	steady clock
-		rvm.AddBaseEntity(rvm["steady_clock"], "nanoseconds"s, steady_clock_nanoseconds, "Sets $res to time since epoch in nanoseconds"s);
-		rvm.AddBaseEntity(rvm["steady_clock"], "microseconds"s, steady_clock_microseconds, "Sets $res to time since epoch in microseconds"s);
-		rvm.AddBaseEntity(rvm["steady_clock"], "milliseconds"s, steady_clock_milliseconds, "Sets $res to time since epoch in milliseconds"s);
-		rvm.AddBaseEntity(rvm["steady_clock"], "seconds"s, steady_clock_seconds, "Sets $res to time since epoch in seconds"s);
-		rvm.AddBaseEntity(rvm["steady_clock"], "minutes"s, steady_clock_minutes, "Sets $res to time since epoch in minutes"s);
-		rvm.AddBaseEntity(rvm["steady_clock"], "hours"s, steady_clock_hours, "Sets $res to time since epoch in hours"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "nanoseconds"s, steady_clock_<chrono::nanoseconds>, "Sets $res to time since epoch in nanoseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "microseconds"s, steady_clock_<chrono::microseconds>, "Sets $res to time since epoch in microseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "milliseconds"s, steady_clock_<chrono::milliseconds>, "Sets $res to time since epoch in milliseconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "seconds"s, steady_clock_<chrono::seconds>, "Sets $res to time since epoch in seconds"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "minutes"s, steady_clock_<chrono::minutes>, "Sets $res to time since epoch in minutes"s);
+		rvm.AddBaseEntity(rvm["steady_clock"], "hours"s, steady_clock_<chrono::hours>, "Sets $res to time since epoch in hours"s);
 
 		return rmvm_version;
 	}

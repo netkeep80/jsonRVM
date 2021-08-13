@@ -1,0 +1,47 @@
+{
+   "$rel" : [
+      {
+         "$ent/additional_rm_loaded/http.rm.dll" : {
+            "$obj" : {
+               "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
+               "PathFolder2" : ".\\..\\build\\modules\\vocabulary\\http\\Debug\\",
+               "FileName" : "http.rm.dll"
+            },
+            "$rel" : "rmvm/load/dll"
+         }
+      },
+      {
+         "$res/test1" : {
+            "$obj" : {
+               "host" : "0.0.0.0",
+               "port" : 80,
+               "GET" : {
+                  "/view" : {
+                     "$ent" : "view",
+                     "content_type" : "application/json"
+                  },
+                  "/throw" : {
+                     "$ent" : "throw.test.json",
+                     "content_type" : "application/json"
+                  },
+                  "/post_sms" : {
+                     "$ent" : "http_POST_xml_SMS.json",
+                     "content_type" : "application/json"
+                  }
+               },
+               "POST" : {
+                  "/view" : {
+                     "$ent" : "view",
+                     "content_type" : "application/json"
+                  },
+                  "/post_sms" : {
+                     "$ent" : "http_POST_xml_SMS.json",
+                     "content_type" : "application/json"
+                  }
+               }
+            },
+            "$rel" : "http/service"
+         }
+      }
+   ]
+}
