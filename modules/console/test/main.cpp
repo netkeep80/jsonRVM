@@ -71,7 +71,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 TEST_CASE("absolute addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
-    jsonRVM root(&db);
+    vm root(&db);
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;
@@ -92,7 +92,7 @@ TEST_CASE("absolute addressing in rmodel") {
 TEST_CASE("relative addressing in rmodel") {
     MESSAGE("result:");
     test_database_t	db(".\\");
-    jsonRVM root(&db);
+    vm root(&db);
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;
@@ -128,7 +128,7 @@ TEST_CASE("relative addressing in rmodel") {
 TEST_CASE("testing call version.json") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM root(&db);
+    vm root(&db);
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;
@@ -154,7 +154,7 @@ TEST_CASE("testing call version.json") {
 TEST_CASE("testing base entity 'where'") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM root(&db);
+    vm root(&db);
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;
@@ -186,7 +186,7 @@ TEST_CASE("testing base entity 'where'") {
 TEST_CASE("performance test") {
     MESSAGE("result:");
     file_database_t	db(".\\");
-    jsonRVM root(&db);
+    vm root(&db);
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;

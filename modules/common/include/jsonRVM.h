@@ -785,30 +785,30 @@ case s_s::str_hash(str, s_s::str_len(str))
 		}
 	};
 
-	class jsonRVM;
+	class vm;
 	//	64 bit
 #ifdef WIN32
 	#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVjsonRVM@1@@Z"
-	__declspec(dllexport) const string& ImportRelationsModel(jsonRVM& rmvm);
-	typedef const string& (*InitDict)(jsonRVM& rmvm);
+	__declspec(dllexport) const string& ImportRelationsModel(vm& rmvm);
+	typedef const string& (*InitDict)(vm& rmvm);
 	static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
 #endif
 
-	using x86View = void (*)(jsonRVM& rmvm, EntContext& ec);
+	using x86View = void (*)(vm& rmvm, EntContext& $);
 	using x86_view_map_t = map<json*, x86View>;
 	
-	class jsonRVM : protected database_api, public json, public x86_view_map_t
+	class vm : protected database_api, public json, public x86_view_map_t
 	{
 	private:
-		static void  base_add_entity(jsonRVM& rmvm, EntContext& ec)
+		static void  base_add_entity(vm& rmvm, EntContext& $)
 		{
 			string	ent_id = "";
-			rmvm.add_entity(ec.obj, ent_id);
-			ec.sub = ent_id;
+			rmvm.add_entity($.obj, ent_id);
+			$.sub = ent_id;
 		}
 
 	public:
-		jsonRVM(database_api* db = nullptr)
+		vm(database_api* db = nullptr)
 			: json(json::object())
 		{
 			database_api::link(db);
@@ -921,15 +921,15 @@ case s_s::str_hash(str, s_s::str_len(str))
 			return *segment;
 		}
 
-		json& ReferEntity(EntContext& ec, json& ref)
+		json& ReferEntity(EntContext& $, json& ref)
 		{
 			switch (ref.type())
 			{
 			case json::value_t::string:	//	иерархический путь к json значению
-				return ReferEntity(ec, ref.get_ref<const string&>());
+				return ReferEntity($, ref.get_ref<const string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
-				return ec.its;
+				return $.its;
 
 			default:					//	если это не адрес то возвращаем значение
 				return ref;
@@ -1039,17 +1039,17 @@ case s_s::str_hash(str, s_s::str_len(str))
 					/*ToDo:	надо переделать на параллельное проецирование
 					struct callctx
 					{
-						EntContext	ec;
+						EntContext	$;
 						string&		key;
 						json&		rel;
-						callctx(EntContext& c, string& k, json& r) : ec(c), key(k), rel(r) {}
+						callctx(EntContext& c, string& k, json& r) : $(c), key(k), rel(r) {}
 					};
 
 					vector<callctx>	vec;
 					for (auto& it : rel.items())
 					{
 						string&	key = it.key();
-						try { vec.push_back(callctx(EntContext(ReferEntity(ec, key), ec.obj, ec.sub, ec.ent, ec.ctx), key, ReferEntity(ec, it.value()))); }
+						try { vec.push_back(callctx(EntContext(ReferEntity($, key), $.obj, $.sub, $.ent, $.ctx), key, ReferEntity($, it.value()))); }
 						catch (string& error) { throw("\n view "s + key + " : "s + error); }
 						catch (json::exception& e) { throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 						catch (std::exception& e) { throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
@@ -1057,7 +1057,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 					}
 
 					parallel_for_each(begin(vec), end(vec), [](callctx& it) {
-						try { JSONExec(it.ec, it.rel); }
+						try { JSONExec(it.$, it.rel); }
 						catch (string& error) { throw("\n view "s + it.key + " : "s + error); }
 						catch (json::exception& e) { throw("\n view "s + it.key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 						catch (std::exception& e) { throw("\n view "s + it.key + " : "s + "std::exception: "s + e.what()); }

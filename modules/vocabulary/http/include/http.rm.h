@@ -186,9 +186,9 @@ namespace rm
 	}
 
 
-	void jsonToXML(jsonRVM& rmvm, EntContext& ec)
+	void jsonToXML(vm& rmvm, EntContext& $)
 	{
-		ec.sub = json2xml(ec.obj);
+		$.sub = json2xml($.obj);
 	}
 
 
@@ -408,16 +408,16 @@ namespace rm
 #define CA_CERT_FILE "./ca-bundle.crt"
 
 	template<typename _convert, const method& mtd>
-	void  HTTP_METHOD(jsonRVM& rmvm, EntContext& ec)
+	void  HTTP_METHOD(vm& rmvm, EntContext& $)
 	{
-		if (!ec.obj.is_object())
-			ec.throw_json(__FUNCTION__, ": $obj must be object"s);
+		if (!$.obj.is_object())
+			$.throw_json(__FUNCTION__, ": $obj must be object"s);
 
 		try
 		{
 			string base_uri, uri_path;
-			if (!ec.obj.count("URI")) ec.obj["URI"] = ""s;
-			json& uri = ec.obj["URI"];
+			if (!$.obj.count("URI")) $.obj["URI"] = ""s;
+			json& uri = $.obj["URI"];
 
 			if (uri.is_string())
 			{
@@ -475,17 +475,17 @@ namespace rm
 					uri_path += "#" + uri["fragment"];
 			}
 
-			if (ec.obj.count("timeout"))
+			if ($.obj.count("timeout"))
 			{
-				//client_config.set_timeout(std::chrono::microseconds(ec.obj["timeout"].get<json::number_unsigned_t>()));
+				//client_config.set_timeout(std::chrono::microseconds($.obj["timeout"].get<json::number_unsigned_t>()));
 				//cli.set_connection_timeout(0, 300000); // 300 milliseconds
 				//cli.set_read_timeout(5, 0); // 5 seconds
 				//cli.set_write_timeout(5, 0); // 5 seconds
 			}
 
-			if (ec.obj.count("username") && ec.obj.count("password"))
+			if ($.obj.count("username") && $.obj.count("password"))
 			{
-				//client_config.set_credentials(credentials(utf8_to_wstring(ec.obj["username"]), utf8_to_wstring(ec.obj["password"])));
+				//client_config.set_credentials(credentials(utf8_to_wstring($.obj["username"]), utf8_to_wstring($.obj["password"])));
 				// Basic Authentication
 				//cli.set_basic_auth("user", "pass");
 				// Digest Authentication
@@ -509,28 +509,28 @@ namespace rm
 			requestObj.path = uri_path;
 			requestObj.progress = std::move(progress);
 
-			if (ec.obj.count("header"))
-				if (ec.obj["header"].is_object())
-					for (auto& it : ec.obj["header"].items())
+			if ($.obj.count("header"))
+				if ($.obj["header"].is_object())
+					for (auto& it : $.obj["header"].items())
 						requestObj.set_header(it.key().c_str(), it.value().is_string() ? it.value().get_ref<string&>().c_str() : it.value().dump().c_str());
 
-			if (ec.obj.count("body"))
-				_convert::from_json(ec.obj["body"], requestObj.body);
+			if ($.obj.count("body"))
+				_convert::from_json($.obj["body"], requestObj.body);
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.its = res->status;
-				ec.sub = json::object();
-				ec.sub["base_uri"] = base_uri;
-				ec.sub["uri_path"] = uri_path;
-				ec.sub["header"] = json::object();
-				ec.sub["body"] = json();
+				$.its = res->status;
+				$.sub = json::object();
+				$.sub["base_uri"] = base_uri;
+				$.sub["uri_path"] = uri_path;
+				$.sub["header"] = json::object();
+				$.sub["body"] = json();
 				if (res->body.length())
-					_convert::to_json(ec.sub["body"], res->body);
+					_convert::to_json($.sub["body"], res->body);
 
 				if (!res->headers.empty())
 					for (auto& it : res->headers)
-						ec.sub["header"][it.first] = it.second;
+						$.sub["header"][it.first] = it.second;
 			}
 			else
 			{
@@ -542,10 +542,10 @@ namespace rm
 #endif
 			}
 		}
-		catch (json& j) { ec.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__FUNCTION__, j); }
+		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
 	}
 
 
@@ -621,15 +621,15 @@ namespace rm
 	}
 
 	template<typename method>
-	void	http_add_methods(jsonRVM& rmvm, EntContext& ec, Server& svr, json& api)
+	void	http_add_methods(vm& rmvm, EntContext& $, Server& svr, json& api)
 	{
 		if (!api.is_object())
-			ec.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
+			$.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
 
 		for (auto& http_method : api.items())
 		{
 			if (!http_method.value().is_object())
-				ec.throw_json(__FUNCTION__, ": $obj/GET/"s + http_method.key() + " must be object"s);
+				$.throw_json(__FUNCTION__, ": $obj/GET/"s + http_method.key() + " must be object"s);
 
 			method::add(svr, http_method.key().c_str(), [&, http_method](const Request& req, Response& res)
 				{
@@ -657,25 +657,25 @@ namespace rm
 	}
 
 
-	inline void  http_service(jsonRVM& rmvm, EntContext& ec)
+	inline void  http_service(vm& rmvm, EntContext& $)
 	{
 		//typename _convert;
 		method mtd;
 
-		if (!ec.obj.is_object())
-			ec.throw_json(__FUNCTION__, ": $obj must be object"s);
+		if (!$.obj.is_object())
+			$.throw_json(__FUNCTION__, ": $obj must be object"s);
 
 		string	host = "0.0.0.0"s;
 
-		if (ec.obj.count("host"))
+		if ($.obj.count("host"))
 		{
-			if (!ec.obj["host"].is_string())
-				ec.throw_json(__FUNCTION__, ": $obj/host must be string"s);
+			if (!$.obj["host"].is_string())
+				$.throw_json(__FUNCTION__, ": $obj/host must be string"s);
 
-			host = ec.obj["host"].get<json::string_t>();
+			host = $.obj["host"].get<json::string_t>();
 		}
 
-		unsigned port = get_unsigned(ec.obj, "port", 80);
+		unsigned port = get_unsigned($.obj, "port", 80);
 
 		try
 		{
@@ -718,46 +718,46 @@ namespace rm
 				printf("%s", http_log(req, res).c_str());
 				});
 
-			if (ec.obj.count(methods::GET::name))
-				http_add_methods<methods::GET>(rmvm, ec, svr, ec.obj[methods::GET::name]);
+			if ($.obj.count(methods::GET::name))
+				http_add_methods<methods::GET>(rmvm, $, svr, $.obj[methods::GET::name]);
 
-			if (ec.obj.count(methods::POST::name))
-				http_add_methods<methods::POST>(rmvm, ec, svr, ec.obj[methods::POST::name]);
+			if ($.obj.count(methods::POST::name))
+				http_add_methods<methods::POST>(rmvm, $, svr, $.obj[methods::POST::name]);
 
-			if (ec.obj.count(methods::PUT::name))
-				http_add_methods<methods::PUT>(rmvm, ec, svr, ec.obj[methods::PUT::name]);
+			if ($.obj.count(methods::PUT::name))
+				http_add_methods<methods::PUT>(rmvm, $, svr, $.obj[methods::PUT::name]);
 
-			if (ec.obj.count(methods::DEL::name))
-				http_add_methods<methods::DEL>(rmvm, ec, svr, ec.obj[methods::DEL::name]);
+			if ($.obj.count(methods::DEL::name))
+				http_add_methods<methods::DEL>(rmvm, $, svr, $.obj[methods::DEL::name]);
 
-			if (ec.obj.count(methods::PATCH::name))
-				http_add_methods<methods::PATCH>(rmvm, ec, svr, ec.obj[methods::PATCH::name]);
+			if ($.obj.count(methods::PATCH::name))
+				http_add_methods<methods::PATCH>(rmvm, $, svr, $.obj[methods::PATCH::name]);
 
 			svr.listen(host.c_str(), port);
 			
 			/*
-			if (ec.obj.count("header"))
-				if (ec.obj["header"].is_object())
-					for (auto& it : ec.obj["header"].items())
+			if ($.obj.count("header"))
+				if ($.obj["header"].is_object())
+					for (auto& it : $.obj["header"].items())
 						requestObj.set_header(it.key().c_str(), it.value().is_string() ? it.value().get_ref<string&>().c_str() : it.value().dump().c_str());
 
-			if (ec.obj.count("body"))
-				_convert::from_json(ec.obj["body"], requestObj.body);
+			if ($.obj.count("body"))
+				_convert::from_json($.obj["body"], requestObj.body);
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.its = res->status;
-				ec.sub = json::object();
-				ec.sub["base_uri"] = base_uri;
-				ec.sub["uri_path"] = uri_path;
-				ec.sub["header"] = json::object();
-				ec.sub["body"] = json();
+				$.its = res->status;
+				$.sub = json::object();
+				$.sub["base_uri"] = base_uri;
+				$.sub["uri_path"] = uri_path;
+				$.sub["header"] = json::object();
+				$.sub["body"] = json();
 				if (res->body.length())
-					_convert::to_json(ec.sub["body"], res->body);
+					_convert::to_json($.sub["body"], res->body);
 
 				if (!res->headers.empty())
 					for (auto& it : res->headers)
-						ec.sub["header"][it.first] = it.second;
+						$.sub["header"][it.first] = it.second;
 			}
 			else
 			{
@@ -770,10 +770,10 @@ namespace rm
 			}*/
 
 		}
-		catch (json& j) { ec.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__FUNCTION__, j); }
+		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
 	}
 
 
@@ -792,7 +792,7 @@ namespace rm
 	add_http_entity(DEL, converter_type);	\
 	add_http_entity(PATCH, converter_type);
 
-	const string& ImportRelationsModel(jsonRVM& rmvm)
+	const string& ImportRelationsModel(vm& rmvm)
 	{
 		rmvm.AddBaseEntity(rmvm, "ToXML"s, jsonToXML, "");
 		//	rmvm.AddBaseEntity(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");

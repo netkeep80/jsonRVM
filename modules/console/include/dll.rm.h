@@ -87,7 +87,7 @@ namespace rm
 	} LoadedDLLs;
 
 
-	const string&	LoadAndInitDict(const string& LibName, jsonRVM& Ent)
+	const string&	LoadAndInitDict(const string& LibName, vm& Ent)
 	{
 		LoadedDLLs.LoadDict(LibName);
 		return LoadedDLLs[LibName].Init(Ent);
@@ -95,32 +95,32 @@ namespace rm
 
 	//////////////////////////	base dictionary  ///////////////////////////////////
 
-	void  jsonLoadDLL(jsonRVM& rmvm, EntContext& ec)
+	void  jsonLoadDLL(vm& rmvm, EntContext& $)
 	{
 		try
 		{
-			if (ec.obj.is_object())
+			if ($.obj.is_object())
 			{
-				if (ec.obj.count("PathFolder") && ec.obj.count("FileName"))
+				if ($.obj.count("PathFolder") && $.obj.count("FileName"))
 				{
-					string	FullFileName = ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>();
-					ec.sub = LoadAndInitDict(FullFileName, rmvm);
+					string	FullFileName = $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>();
+					$.sub = LoadAndInitDict(FullFileName, rmvm);
 					return;
 				}
 			}
 		}
-		catch (json& j) { ec.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { ec.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__FUNCTION__, j); }
+		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
 
-		ec.its = false;
-		ec.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
+		$.its = false;
+		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	const string&  ImportLoadDLLEntity(jsonRVM& rmvm)
+	const string&  ImportLoadDLLEntity(vm& rmvm)
 	{
 		json&	ent = rmvm.AddBaseEntity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
 		ent["$obj"] = json::object();

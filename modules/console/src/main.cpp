@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
 	}
 
 	file_database_t	db(".\\");
-	jsonRVM root(&db);
+	vm root(&db);
 
 	size_t fileNameInputLen = strlen(fileNameInput);
 

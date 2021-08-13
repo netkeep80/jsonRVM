@@ -134,7 +134,7 @@ TEST_CASE("Test http://localhost:8080/hi") {
 	thread _thread(server);
 	_thread.detach();
 
-	jsonRVM root;
+	vm root;
 	//	base vocabulary
 	ImportRelationsModel(root);
 
