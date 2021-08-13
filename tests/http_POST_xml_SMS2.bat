@@ -1,1 +1,1 @@
-..\build\modules\console\Release\rmvm.exe http_POST_xml_SMS.json
+..\build\modules\console\Release\rmvm.exe http_POST_xml_SMS

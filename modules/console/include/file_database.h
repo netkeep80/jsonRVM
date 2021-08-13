@@ -52,7 +52,7 @@ namespace rm
 
 		virtual void	get_entity(json& ent, const string& ent_id) override
 		{
-			string	PathName = PathFolder + utf8_to_cp1251(ent_id);
+			string	PathName = PathFolder + utf8_to_cp1251(ent_id) + ".json";
 			std::ifstream in(PathName.c_str());
 
 			if (!in.good())

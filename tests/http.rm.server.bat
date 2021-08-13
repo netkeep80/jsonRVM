@@ -1,1 +1,1 @@
-..\build\modules\console\Release\rmvm.exe http.rm.server.json
+..\build\modules\console\Release\rmvm.exe http.rm.server

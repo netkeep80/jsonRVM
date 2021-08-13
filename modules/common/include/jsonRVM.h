@@ -926,7 +926,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 			switch (ref.type())
 			{
 			case json::value_t::string:	//	иерархический путь к json значению
-				return ReferEntity(ec, ref.get_ref<string&>());
+				return ReferEntity(ec, ref.get_ref<const string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
 				return ec.$its;
@@ -943,12 +943,12 @@ case s_s::str_hash(str, s_s::str_len(str))
 			try
 			{
 				JSONExec(ctx, ent);
-				return its;
 			}
 			catch (json& j) { ctx.throw_json(__FUNCTION__, j); }
 			catch (json::exception& e) { ctx.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 			catch (std::exception& e) { ctx.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
 			catch (...) { ctx.throw_json(__FUNCTION__, "unknown exception"s); }
+			return its;
 		}
 
 		//	Исполнение сущности либо json байткода

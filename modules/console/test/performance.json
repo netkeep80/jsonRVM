@@ -3,33 +3,37 @@
       {
          "$obj" : "#/MeasProcessed",
          "$rel" : "size",
-         "$sub" : "/result/meas_count"
+         "$sub" : "$its/result/meas_count"
       },
       {
-         "/start_time" : "steady_clock/microseconds"
-      },
-      "#/CalculateMeanValues",
-      "#/CalculateTotalValues",
-      "#/PrepareFullReport",
-      "#/SaveFullReport2",
-      "#/SaveShortReport2",
-      {
-         "/end_time" : "steady_clock/microseconds"
+         "$its/start_time" : "steady_clock/microseconds"
       },
       {
-         "/result/test_duration" : {
-            "$obj" : "/start_time",
+         "$its/tmp" : [
+            "#/CalculateMeanValues",
+            "#/CalculateTotalValues",
+            "#/PrepareFullReport",
+            "#/SaveFullReport2",
+            "#/SaveShortReport2"
+         ]
+      },
+      {
+         "$its/end_time" : "steady_clock/microseconds"
+      },
+      {
+         "$its/result/test_duration" : {
+            "$obj" : "$its/start_time",
             "$rel" : "-",
-            "$sub" : "/end_time"
+            "$sub" : "$its/end_time"
          }
       },
       {
-         "$obj" : "$its/Report",
+         "$obj" : "$its/tmp/Report",
          "$rel" : "=",
-         "$sub" : "/result/report"
+         "$sub" : "$its/result/report"
       },
       {
-         "$obj" : "/result",
+         "$obj" : "$its/result",
          "$rel" : "=",
          "$sub" : "$its"
       }

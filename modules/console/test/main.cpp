@@ -190,15 +190,7 @@ TEST_CASE("performance test") {
     //	base vocabulary
     ImportRelationsModel(root);
     json    res;
-    char* fileNameInput = "performance.json";
-
-    std::ifstream in(fileNameInput);
-    REQUIRE(in.good());
-    in >> root[""];
-
-    EntContext ctx(res, root[""]);
-    root.JSONExec(ctx, root[""]);
-    cout << res.dump(2) << endl;
+    cout << root.exec(res, json("performance")).dump(2);
     CHECK(res["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
     CHECK(res["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
     CHECK(res["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);
