@@ -100,7 +100,7 @@ namespace nlohmann
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void  fs_dir_scan(vm& rmvm, EntContext& $)
+void  fs_dir_scan(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
@@ -135,7 +135,7 @@ void  fs_dir_scan(vm& rmvm, EntContext& $)
 
 }
 
-void  fs_dir_create(vm& rmvm, EntContext& $)
+void  fs_dir_create(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_string())
 		$.throw_json(__FUNCTION__, "$obj must be json string with PathName!" );
@@ -144,7 +144,7 @@ void  fs_dir_create(vm& rmvm, EntContext& $)
 	$.sub = bool(CreateDirectoryA(PathName.c_str(), nullptr));
 }
 
-void  fs_dir_delete(vm& rmvm, EntContext& $)
+void  fs_dir_delete(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_string())
 		$.throw_json(__FUNCTION__, "$obj must be json string with PathName!" );
@@ -153,7 +153,7 @@ void  fs_dir_delete(vm& rmvm, EntContext& $)
 	$.sub = bool(RemoveDirectoryA(PathName.c_str()));
 }
 
-void  fs_file_load_rm(vm& rmvm, EntContext& $)
+void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
@@ -180,7 +180,7 @@ void  fs_file_load_rm(vm& rmvm, EntContext& $)
 		$.its = false;
 }
 
-void  fs_file_read_json(vm& rmvm, EntContext& $)
+void  fs_file_read_json(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
@@ -201,7 +201,7 @@ void  fs_file_read_json(vm& rmvm, EntContext& $)
 
 }
 
-void  jsonFileToString(vm& rmvm, EntContext& $)
+void  jsonFileToString(vm& rmvm, vm_ctx& $)
 {
 	$.sub = json();
 
@@ -230,7 +230,7 @@ void  jsonFileToString(vm& rmvm, EntContext& $)
 	$.its = false;
 }
 
-void  jsonFileToStringArray(vm& rmvm, EntContext& $)
+void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
 {
 	if ($.obj.is_object())
 	{
@@ -272,7 +272,7 @@ void  jsonFileToStringArray(vm& rmvm, EntContext& $)
 	$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
-void  jsonStringArrayToFile(vm& rmvm, EntContext& $)
+void  jsonStringArrayToFile(vm& rmvm, vm_ctx& $)
 {
 	if ($.obj.is_object() && $.sub.is_array())
 	{
@@ -301,7 +301,7 @@ void  jsonStringArrayToFile(vm& rmvm, EntContext& $)
 		$.throw_json(__FUNCTION__, "$obj must be object and $sub must be array!" );
 }
 
-void  fs_file_write_json(vm& rmvm, EntContext& $)
+void  fs_file_write_json(vm& rmvm, vm_ctx& $)
 {
 	if ($.obj.is_object())
 	{
@@ -327,7 +327,7 @@ void  fs_file_write_json(vm& rmvm, EntContext& $)
 }
 
 
-void  jsonToFiles(vm& rmvm, EntContext& $)
+void  jsonToFiles(vm& rmvm, vm_ctx& $)
 {
 	$.its = json::array();
 
@@ -412,7 +412,7 @@ void  jsonToFiles(vm& rmvm, EntContext& $)
 }
 
 
-void	rmvm_dump(vm& rmvm, EntContext& $)
+void	rmvm_dump(vm& rmvm, vm_ctx& $)
 {
 	string filename = "rmvm.dump.json";
 	std::ofstream out(filename);
@@ -428,21 +428,21 @@ namespace rm
 	
 	FSRM_API const string&	ImportRelationsModel(vm& rmvm)
 	{
-		rmvm.AddBaseEntity(rmvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
-		rmvm.AddBaseEntity(rmvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
-		rmvm.AddBaseEntity(rmvm["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
+		rmvm.add_binary_view(rmvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
+		rmvm.add_binary_view(rmvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
+		rmvm.add_binary_view(rmvm["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
 
-		rmvm.AddBaseEntity(rmvm["file"]["load"], "rm"s, fs_file_load_rm, "Loads rm from json"s);
+		rmvm.add_binary_view(rmvm["file"]["load"], "rm"s, fs_file_load_rm, "Loads rm from json"s);
 
-		rmvm.AddBaseEntity(rmvm["file"]["read"], "json"s, fs_file_read_json, "Reads json file and parse it"s);
-		rmvm.AddBaseEntity(rmvm["file"]["read"], "string"s, jsonFileToString, ""s);
-		rmvm.AddBaseEntity(rmvm["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
+		rmvm.add_binary_view(rmvm["file"]["read"], "json"s, fs_file_read_json, "Reads json file and parse it"s);
+		rmvm.add_binary_view(rmvm["file"]["read"], "string"s, jsonFileToString, ""s);
+		rmvm.add_binary_view(rmvm["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
 
-		rmvm.AddBaseEntity(rmvm["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
-		rmvm.AddBaseEntity(rmvm["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
-		rmvm.AddBaseEntity(rmvm["files"]["write"], "json"s, jsonToFiles, ""s);
+		rmvm.add_binary_view(rmvm["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
+		rmvm.add_binary_view(rmvm["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
+		rmvm.add_binary_view(rmvm["files"]["write"], "json"s, jsonToFiles, ""s);
 
-		rmvm.AddBaseEntity(rmvm["rmvm"], "dump"s, rmvm_dump, "Dump rmvm current state"s);
+		rmvm.add_binary_view(rmvm["rmvm"], "dump"s, rmvm_dump, "Dump rmvm current state"s);
 
 		return rmvm_version;
 	}

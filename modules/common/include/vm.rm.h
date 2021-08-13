@@ -751,25 +751,23 @@ case s_s::str_hash(str, s_s::str_len(str))
 	*/
 
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
-	struct EntContext
+	struct vm_ctx
 	{
-		//todo: rename res to its
 		json& its;			//	entity local address space
 		//todo: make obj readonly
 		json& obj;			//	контекстный объект	//	arguments
 		json& sub;			//	контекстный субъект
 		//todo: make ent readonly
 		json& ent;			//	сущность, модель для контекста
-		//todo: rename to $
-		EntContext& $;	//	родительский контекст исполнения
+		vm_ctx& $;	//	родительский контекст исполнения
 
-		EntContext(json& Its, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
+		vm_ctx(json& Its, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx)
 			: its(Its), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}
 
-		EntContext(json& Its, json& Ent)
+		vm_ctx(json& Its, json& Ent)
 			: its(Its), obj(Its), sub(Its), ent(Ent), $(*this) {}
 
-		EntContext(json& Its)
+		vm_ctx(json& Its)
 			: its(Its), obj(Its), sub(Its), ent(Its), $(*this) {}
 
 		void throw_json(const string& function, const json& error)
@@ -777,10 +775,10 @@ case s_s::str_hash(str, s_s::str_len(str))
 			json	j;
 			j["__FUNCTION__"] = function;
 			j["exception"] = error;
-			j["EntContext"]["$ent/"] = ent;
-			j["EntContext"]["$sub/"] = sub;
-			j["EntContext"]["$obj/"] = obj;
-			j["EntContext"]["$its/"] = its;
+			j["vm_ctx"]["$ent/"] = ent;
+			j["vm_ctx"]["$sub/"] = sub;
+			j["vm_ctx"]["$obj/"] = obj;
+			j["vm_ctx"]["$its/"] = its;
 			throw j;
 		}
 	};
@@ -794,13 +792,13 @@ case s_s::str_hash(str, s_s::str_len(str))
 	static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
 #endif
 
-	using x86View = void (*)(vm& rmvm, EntContext& $);
-	using x86_view_map_t = map<json*, x86View>;
+	using binary_view = void (*)(vm& rmvm, vm_ctx& $);
+	using binary_view_map_t = map<json*, binary_view>;
 	
-	class vm : protected database_api, public json, public x86_view_map_t
+	class vm : protected database_api, public json, public binary_view_map_t
 	{
 	private:
-		static void  base_add_entity(vm& rmvm, EntContext& $)
+		static void  base_add_entity(vm& rmvm, vm_ctx& $)
 		{
 			string	ent_id = "";
 			rmvm.add_entity($.obj, ent_id);
@@ -813,21 +811,21 @@ case s_s::str_hash(str, s_s::str_len(str))
 		{
 			database_api::link(db);
 			//	database_api
-			AddBaseEntity(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
+			add_binary_view(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
 		}
 
-		static void	ReferProperty(json*& segment, const string& it)
+		static void	ref_in_json(json*& jptr, const string& it)
 		{
-			json& ref = *segment;
+			json& ref = *jptr;
 
 			switch (ref.type())
 			{
 			case json::value_t::object:
-				segment = &ref[it];
+				jptr = &ref[it];
 				return;
 
 			case json::value_t::array:
-				segment = &ref[std::stoul(it)];
+				jptr = &ref[std::stoul(it)];
 				return;
 				
 			case json::value_t::null:
@@ -842,9 +840,9 @@ case s_s::str_hash(str, s_s::str_len(str))
 					throw json({ {__FUNCTION__, it} });
 
 				if (_Ptr == _Eptr)
-					segment = &ref[it];
+					jptr = &ref[it];
 				else
-					segment = &ref[index];
+					jptr = &ref[index];
 
 				return;
 			}
@@ -854,9 +852,9 @@ case s_s::str_hash(str, s_s::str_len(str))
 			}
 		}
 
-		json& ReferEntity(EntContext& $, const string& str)
+		json& ref_to(vm_ctx& $, const string& str)
 		{
-			json* segment = this;	//	default segment
+			json* jptr = this;	//	default jptr
 			size_t	len = str.length();
 			size_t	pos = str.find_first_of('/', 0);
 
@@ -868,25 +866,25 @@ case s_s::str_hash(str, s_s::str_len(str))
 			SWITCH(it)
 			{
 				//todo: refactor to n of $ that means ctx level
-				CASE("$up3ent") : segment = &$.$.$.$.ent;	break;
-				CASE("$up3sub") : segment = &$.$.$.$.sub;	break;
-				CASE("$up3obj") : segment = &$.$.$.$.obj;	break;
-				CASE("$up3its") : segment = &$.$.$.$.its;	break;
-				CASE("$up2ent") : segment = &$.$.$.ent;	break;
-				CASE("$up2sub") : segment = &$.$.$.sub;	break;
-				CASE("$up2obj") : segment = &$.$.$.obj;	break;
-				CASE("$up2its") : segment = &$.$.$.its;	break;
-				CASE("$up1ent") : segment = &$.$.ent;	break;
-				CASE("$up1sub") : segment = &$.$.sub;	break;
-				CASE("$up1obj") : segment = &$.$.obj;	break;
-				CASE("$up1its") : segment = &$.$.its;	break;
-				CASE("$ent") : segment = &$.ent;	break;
-				CASE("$sub") : segment = &$.sub;	break;
-				CASE("$obj") : segment = &$.obj;	break;
-				CASE("$its") : segment = &$.its;	break;
+				CASE("$up3ent") : jptr = &$.$.$.$.ent;	break;
+				CASE("$up3sub") : jptr = &$.$.$.$.sub;	break;
+				CASE("$up3obj") : jptr = &$.$.$.$.obj;	break;
+				CASE("$up3its") : jptr = &$.$.$.$.its;	break;
+				CASE("$up2ent") : jptr = &$.$.$.ent;	break;
+				CASE("$up2sub") : jptr = &$.$.$.sub;	break;
+				CASE("$up2obj") : jptr = &$.$.$.obj;	break;
+				CASE("$up2its") : jptr = &$.$.$.its;	break;
+				CASE("$up1ent") : jptr = &$.$.ent;	break;
+				CASE("$up1sub") : jptr = &$.$.sub;	break;
+				CASE("$up1obj") : jptr = &$.$.obj;	break;
+				CASE("$up1its") : jptr = &$.$.its;	break;
+				CASE("$ent") : jptr = &$.ent;	break;
+				CASE("$sub") : jptr = &$.sub;	break;
+				CASE("$obj") : jptr = &$.obj;	break;
+				CASE("$its") : jptr = &$.its;	break;
 
 			DEFAULT:
-				json& ref = *segment;
+				json& ref = *jptr;
 				assert(ref.is_object());
 				auto res = ref.find(it);
 
@@ -902,7 +900,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 					if (res == ref.end())
 						throw json({ {__FUNCTION__, "entity '"s + it + "' does not exist in relations model!"s} });
 				}
-				segment = &res.value();
+				jptr = &res.value();
 			}
 
 			while (prev < len)
@@ -911,22 +909,22 @@ case s_s::str_hash(str, s_s::str_len(str))
 				if (pos == string::npos) pos = len;
 				string it = str.substr(prev, pos - prev);
 				prev = pos + 1;
-				try { ReferProperty(segment, it); }
+				try { ref_in_json(jptr, it); }
 				catch (json & j) { throw json({ {__FUNCTION__, j} }); }
 				catch (invalid_argument e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
 				catch (out_of_range e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
 				catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
 			}
 
-			return *segment;
+			return *jptr;
 		}
 
-		json& ReferEntity(EntContext& $, json& ref)
+		json& ref_to(vm_ctx& $, json& ref)
 		{
 			switch (ref.type())
 			{
 			case json::value_t::string:	//	иерархический путь к json значению
-				return ReferEntity($, ref.get_ref<const string&>());
+				return ref_to($, ref.get_ref<const string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
 				return $.its;
@@ -939,10 +937,10 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//todo: json& ent -> json const& ent
 		json& exec(json& its, json& ent)
 		{
-			EntContext $(its);
+			vm_ctx $(its);
 			try
 			{
-				JSONExec($, ent);
+				exec($, ent);
 			}
 			catch (json& j) { $.throw_json(__FUNCTION__, j); }
 			catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -955,10 +953,10 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
 		//todo: json& rel -> json const& rel
-		void JSONExec(EntContext& $, json& rel)
+		void exec(vm_ctx& $, json& ent)
 		{
-			x86_view_map_t& dict = *this;
-			auto it = dict.find(&rel);
+			binary_view_map_t& dict = *this;
+			auto it = dict.find(&ent);
 
 			if (it != dict.end())	//	это скомпилированная сущность?
 			{
@@ -973,26 +971,26 @@ case s_s::str_hash(str, s_s::str_len(str))
 				catch (std::exception& e) { throw json("std::exception: "s + e.what()); }
 				catch (...) { throw json("unknown exception"s); }
 			}
-			else switch (rel.type())
+			else switch (ent.type())
 			{
 			case json::value_t::string:	//	иерархический путь к json значению
 			{
 				try
 				{
-					JSONExec($, ReferEntity($, rel.get_ref<string&>()));
+					exec($, ref_to($, ent.get_ref<string&>()));
 					return;
 				}
-				catch (json& j) { throw json({ {rel.get<string>(), j} }); }
+				catch (json& j) { throw json({ {ent.get<string>(), j} }); }
 			}
 
 			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
 			{
 				int i = 0;
-				for (auto& it : rel)
+				for (auto& it : ent)
 				{
 					try
 					{
-						JSONExec($, it);
+						exec($, it);
 						i++;
 					}
 					catch (json & j) { throw json({ {"["s + to_string(i) + "]"s, j} }); }
@@ -1002,35 +1000,35 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 			case json::value_t::object:
 			{
-				if (rel.count("$rel")) //	это сущность, которую надо исполнить в новом контексте?
+				if (ent.count("$rel")) //	это сущность, которую надо исполнить в новом контексте?
 				{
 					try {
-						JSONExec(
-							EntContext(
+						exec(
+							vm_ctx(
 								$.its,
-								ReferEntity($, rel["$obj"]),
-								ReferEntity($, rel["$sub"]),
-								rel,
+								ref_to($, ent["$obj"]),
+								ref_to($, ent["$sub"]),
+								ent,
 								$),
-							ReferEntity($, rel["$rel"])
+							ref_to($, ent["$rel"])
 						);
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
 				}
 				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
-					for (auto& it : rel.items())
+					for (auto& it : ent.items())
 					{
 						try
 						{
-							JSONExec(
-								EntContext(
-									ReferEntity($, it.key()),
+							exec(
+								vm_ctx(
+									ref_to($, it.key()),
 									$.obj,
 									$.sub,
 									$.ent,
 									$.$),
-								ReferEntity($, it.value())
+								ref_to($, it.value())
 							);
 						}
 						catch (json & j) { throw json({ {it.key(), j} }); }
@@ -1039,17 +1037,17 @@ case s_s::str_hash(str, s_s::str_len(str))
 					/*ToDo:	надо переделать на параллельное проецирование
 					struct callctx
 					{
-						EntContext	$;
+						vm_ctx	$;
 						string&		key;
 						json&		rel;
-						callctx(EntContext& c, string& k, json& r) : $(c), key(k), rel(r) {}
+						callctx(vm_ctx& c, string& k, json& r) : $(c), key(k), rel(r) {}
 					};
 
 					vector<callctx>	vec;
 					for (auto& it : rel.items())
 					{
 						string&	key = it.key();
-						try { vec.push_back(callctx(EntContext(ReferEntity($, key), $.obj, $.sub, $.ent, $.ctx), key, ReferEntity($, it.value()))); }
+						try { vec.push_back(callctx(vm_ctx(ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, ref_to($, it.value()))); }
 						catch (string& error) { throw("\n view "s + key + " : "s + error); }
 						catch (json::exception& e) { throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 						catch (std::exception& e) { throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
@@ -1057,7 +1055,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 					}
 
 					parallel_for_each(begin(vec), end(vec), [](callctx& it) {
-						try { JSONExec(it.$, it.rel); }
+						try { exec(it.$, it.rel); }
 						catch (string& error) { throw("\n view "s + it.key + " : "s + error); }
 						catch (json::exception& e) { throw("\n view "s + it.key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 						catch (std::exception& e) { throw("\n view "s + it.key + " : "s + "std::exception: "s + e.what()); }
@@ -1071,13 +1069,13 @@ case s_s::str_hash(str, s_s::str_len(str))
 				return;
 
 			default:	//	остальные простые типы есть результат исполнения отношения
-				$.its = rel;
+				$.its = ent;
 				return;
 			}
 		}
 
 		//	добавление сущности с закэшированной x86 проекцией
-		json& AddBaseEntity(json& entity, const string& name, const x86View view, const string& description)
+		json& add_binary_view(json& entity, const string& name, const binary_view view, const string& description)
 		{
 			entity[name] = json::object();
 			entity[name]["description"] = description;

@@ -186,7 +186,7 @@ namespace rm
 	}
 
 
-	void jsonToXML(vm& rmvm, EntContext& $)
+	void jsonToXML(vm& rmvm, vm_ctx& $)
 	{
 		$.sub = json2xml($.obj);
 	}
@@ -408,7 +408,7 @@ namespace rm
 #define CA_CERT_FILE "./ca-bundle.crt"
 
 	template<typename _convert, const method& mtd>
-	void  HTTP_METHOD(vm& rmvm, EntContext& $)
+	void  HTTP_METHOD(vm& rmvm, vm_ctx& $)
 	{
 		if (!$.obj.is_object())
 			$.throw_json(__FUNCTION__, ": $obj must be object"s);
@@ -621,7 +621,7 @@ namespace rm
 	}
 
 	template<typename method>
-	void	http_add_methods(vm& rmvm, EntContext& $, Server& svr, json& api)
+	void	http_add_methods(vm& rmvm, vm_ctx& $, Server& svr, json& api)
 	{
 		if (!api.is_object())
 			$.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
@@ -657,7 +657,7 @@ namespace rm
 	}
 
 
-	inline void  http_service(vm& rmvm, EntContext& $)
+	inline void  http_service(vm& rmvm, vm_ctx& $)
 	{
 		//typename _convert;
 		method mtd;
@@ -778,7 +778,7 @@ namespace rm
 
 
 #define add_http_entity(method, converter_type)																					\
-	rmvm.AddBaseEntity(																											\
+	rmvm.add_binary_view(																											\
 		rmvm["http"][ methods::##method::name ],																									\
 		string(#converter_type),																								\
 		HTTP_METHOD<application_##converter_type, methods::##method::name>,															\
@@ -794,14 +794,14 @@ namespace rm
 
 	const string& ImportRelationsModel(vm& rmvm)
 	{
-		rmvm.AddBaseEntity(rmvm, "ToXML"s, jsonToXML, "");
-		//	rmvm.AddBaseEntity(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
+		rmvm.add_binary_view(rmvm, "ToXML"s, jsonToXML, "");
+		//	rmvm.add_binary_view(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
 
 		add_http_entites(urlencoded);
 		add_http_entites(json);
 		add_http_entites(xml);
 
-		rmvm.AddBaseEntity(rmvm["http"], "service"s, http_service, "");
+		rmvm.add_binary_view(rmvm["http"], "service"s, http_service, "");
 
 		return rmvm_version;
 	}

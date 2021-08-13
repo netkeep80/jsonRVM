@@ -79,8 +79,8 @@ TEST_CASE("absolute addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext $(res, root[""]);
-    root.JSONExec($, root[""]);
+    vm_ctx $(res, root[""]);
+    root.exec($, root[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -100,8 +100,8 @@ TEST_CASE("relative addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    EntContext $(res, root[""]);
-    root.JSONExec($, root[""]);
+    vm_ctx $(res, root[""]);
+    root.exec($, root[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["$up3ent"]["id"].get_ref<string&>() == "$up3ent/id"s);
@@ -140,8 +140,8 @@ TEST_CASE("testing call version.json") {
         REQUIRE(in.good());
         in >> root[""];
         
-        EntContext $(res, root[""]);
-        root.JSONExec($, root[""]);
+        vm_ctx $(res, root[""]);
+        root.exec($, root[""]);
         CHECK(res["rmvm"]["version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
@@ -166,8 +166,8 @@ TEST_CASE("testing base entity 'where'") {
         REQUIRE(in.good());
         in >> root[""];
 
-        EntContext $(res, root[""]);
-        root.JSONExec($, root[""]);
+        vm_ctx $(res, root[""]);
+        root.exec($, root[""]);
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }
