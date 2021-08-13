@@ -258,7 +258,7 @@ namespace rm
 
 	void  jsonXOR(jsonRVM& rvm, EntContext& ec)
 	{
-		ec.res = ec.sub ^ ec.obj;
+		ec.$its = ec.sub ^ ec.obj;
 	}
 
 	////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ namespace rm
 
 #define OPP_STO(operation,stype,stype_id,otype,otype_id)										\
 	case (uint8_t(json::value_t::stype_id) << sub_field) | uint8_t(json::value_t::otype_id):	\
-	{ ec.res = (ec.sub.get_ref<stype&>()) operation (ec.obj.get_ref<otype&>()); return; }
+	{ ec.$its = (ec.sub.get_ref<stype&>()) operation (ec.obj.get_ref<otype&>()); return; }
 
 #define OPP_ANYTO(operation,type,type_id)														\
 	OPP_STO(operation, jf, number_float,    type, type_id)										\
@@ -302,7 +302,7 @@ namespace rm
 void  json##name (jsonRVM& rvm, EntContext& ec)			\
 {																								\
 	switch( (uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()) )							\
-	{ VM_OPP( operation ) default: ec.res = json(); }												\
+	{ VM_OPP( operation ) default: ec.$its = json(); }												\
 }
 
 	OP_BODY(Add, +);
@@ -314,12 +314,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		if (ec.obj.is_number())
 			if (ec.obj.get<double>() == 0.0)
 			{
-				ec.res = json();
+				ec.$its = json();
 				return;
 			}
 		switch ((uint8_t(ec.sub.type()) << sub_field) | uint8_t(ec.obj.type()))
 		{
-		VM_OPP(/ ) default: ec.res = json();
+		VM_OPP(/ ) default: ec.$its = json();
 		}
 	}
 
@@ -334,16 +334,16 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 			if (!ec.sub.is_number_float())
 			{	//	result must be integer
 				json::number_float_t da = json::number_float_t(ec.sub.get<json::number_integer_t>());
-				ec.res = json::number_integer_t(pow(da, db) + .5);
+				ec.$its = json::number_integer_t(pow(da, db) + .5);
 			}
 			else
 			{	//	result must be double
 				json::number_float_t da = ec.sub.get<json::number_float_t>();
-				ec.res = json::number_float_t(pow(da, db));
+				ec.$its = json::number_float_t(pow(da, db));
 			}
 		}
 		else
-			ec.res = json();
+			ec.$its = json();
 	}
 
 	void  jsonSqrt(jsonRVM& rvm, EntContext& ec)
@@ -363,12 +363,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		*/
 		if (ec.obj.is_array())
 		{
-			if (!ec.res.is_array()) ec.res = json::array();
+			if (!ec.$its.is_array()) ec.$its = json::array();
 			size_t i = 0;
 			for (auto& it : ec.obj)
 			{
 				try {
-					json& value = ec.res[i];
+					json& value = ec.$its[i];
 					rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.sub); i++;
 				}
 				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
@@ -384,12 +384,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		*/
 		if (ec.sub.is_array())
 		{
-			if (!ec.res.is_array()) ec.res = json::array();
+			if (!ec.$its.is_array()) ec.$its = json::array();
 			size_t i = 0;
 			for (auto& it : ec.sub)
 			{
 				try {
-					json& value = ec.res[i];
+					json& value = ec.$its[i];
 					rvm.JSONExec(EntContext(value, it, value, ec.ent, ec.ctx), ec.obj); i++;
 				}
 				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
@@ -462,7 +462,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 			for (auto& it : ec.obj)
 				ec.sub.push_back(it);
 
-		ec.res = ec.sub;
+		ec.$its = ec.sub;
 	}
 
 	void  jsonNull(jsonRVM& rvm, EntContext& ec) {}
@@ -497,7 +497,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 			ec.sub = int(0);
 		}
 
-		ec.res = ec.sub;
+		ec.$its = ec.sub;
 	}
 
 	void  jsonDouble(jsonRVM& rvm, EntContext& ec)
@@ -601,7 +601,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 	void  string_find(jsonRVM& rvm, EntContext& ec)
 	{
 		if (!(ec.obj.is_string() && ec.sub.is_string())) ec.throw_json(__FUNCTION__, "$obj and $sub must be strings!"s);
-		ec.res = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
+		ec.$its = static_cast<json::number_integer_t>(ec.obj.get_ref<string&>().find(ec.sub.get_ref<string&>().c_str()));
 	}
 
 
@@ -612,13 +612,13 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 			const string& delim = ec.obj.get_ref<string&>();
 			string str = ec.sub.get_ref<string&>();
 			size_t prev = 0, pos = 0;
-			ec.res = json::array();
+			ec.$its = json::array();
 
 			do
 			{
 				pos = str.find(delim, prev);
 				if (pos == string::npos) pos = str.length();
-				ec.res.push_back(str.substr(prev, pos - prev));
+				ec.$its.push_back(str.substr(prev, pos - prev));
 				prev = pos + delim.length();
 			} while (pos < str.length() && prev < str.length());
 		}
@@ -671,7 +671,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 				}
 			}
 
-			ec.res = result;
+			ec.$its = result;
 		}
 		else
 			ec.throw_json(__FUNCTION__, "$obj must be string and $sub must be array!"s);
@@ -682,14 +682,14 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		if (ec.sub.is_array())
 		{
 			if (ec.obj.is_number())
-				ec.res = ec.sub[ec.obj.get<size_t>()];
+				ec.$its = ec.sub[ec.obj.get<size_t>()];
 			else
 				ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
 		}
 		else if (ec.sub.is_object())
 		{
 			if (ec.obj.is_string())
-				ec.res = ec.sub[ec.obj.get_ref<string&>()];
+				ec.$its = ec.sub[ec.obj.get_ref<string&>()];
 			else
 				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
 		}
@@ -702,23 +702,23 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		if (ec.sub.is_array())
 		{
 			if (ec.obj.is_number_unsigned())
-				ec.sub[ec.obj.get<size_t>()] = ec.res;
+				ec.sub[ec.obj.get<size_t>()] = ec.$its;
 			else
 				ec.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
 		}
 		else if (ec.sub.is_object())
 		{
 			if (ec.obj.is_string())
-				ec.sub[ec.obj.get_ref<string&>()] = ec.res;
+				ec.sub[ec.obj.get_ref<string&>()] = ec.$its;
 			else
 				ec.throw_json(__FUNCTION__, "$obj must be string!"s);
 		}
 		else if (ec.sub.is_null())
 		{
 			if (ec.obj.is_number_unsigned())
-				ec.sub[ec.obj.get<size_t>()] = ec.res;
+				ec.sub[ec.obj.get<size_t>()] = ec.$its;
 			else if (ec.obj.is_string())
-				ec.sub[ec.obj.get_ref<string&>()] = ec.res;
+				ec.sub[ec.obj.get_ref<string&>()] = ec.$its;
 			else
 				ec.throw_json(__FUNCTION__, "$obj must be unsigned number or string!"s);
 		}
@@ -741,12 +741,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 	void  jsonIsEq(jsonRVM& rvm, EntContext& ec)
 	{
-		ec.res = ec.sub == ec.obj;
+		ec.$its = ec.sub == ec.obj;
 	}
 
 	void  jsonIsNotEq(jsonRVM& rvm, EntContext& ec)
 	{
-		ec.res = ec.sub != ec.obj;
+		ec.$its = ec.sub != ec.obj;
 	}
 
 	void  jsonSum(jsonRVM& rvm, EntContext& ec)
@@ -785,7 +785,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 	void  jsonWhere(jsonRVM& rvm, EntContext& ec)
 	{
-		ec.res = json::array();		//	подготовка выходного массива
+		ec.$its = json::array();		//	подготовка выходного массива
 
 		if (ec.obj.is_null()) return;
 
@@ -799,7 +799,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 					rvm.JSONExec(EntContext(boolres, it, boolres, ec.ent, ec.ctx), ec.sub);
 					if (boolres.is_boolean())
 						if (boolres.get<bool>())
-							ec.res.push_back(it);	//	фильтруем
+							ec.$its.push_back(it);	//	фильтруем
 					i++;
 				}
 				catch (json& j) { ec.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
@@ -815,31 +815,31 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		{
 		case json::value_t::array:
 		case json::value_t::object:
-			ec.res = json(ec.sub.size() < ec.obj.size());
+			ec.$its = json(ec.sub.size() < ec.obj.size());
 			return;
 
 		case json::value_t::string:
-			ec.res = json(ec.sub.get<string>().size() < ec.obj.get<string>().size());
+			ec.$its = json(ec.sub.get<string>().size() < ec.obj.get<string>().size());
 			return;
 
 		case json::value_t::boolean:
-			ec.res = json(int(ec.sub.get<bool>()) < int(ec.obj.get<bool>()));
+			ec.$its = json(int(ec.sub.get<bool>()) < int(ec.obj.get<bool>()));
 			return;
 
 		case json::value_t::number_float:
-			ec.res = json(ec.sub.get<json::number_float_t>() < ec.obj.get<json::number_float_t>());
+			ec.$its = json(ec.sub.get<json::number_float_t>() < ec.obj.get<json::number_float_t>());
 			return;
 
 		case json::value_t::number_integer:
-			ec.res = json(ec.sub.get<json::number_integer_t>() < ec.obj.get<json::number_integer_t>());
+			ec.$its = json(ec.sub.get<json::number_integer_t>() < ec.obj.get<json::number_integer_t>());
 			return;
 
 		case json::value_t::number_unsigned:
-			ec.res = json(ec.sub.get<json::number_unsigned_t>() < ec.obj.get<json::number_unsigned_t>());
+			ec.$its = json(ec.sub.get<json::number_unsigned_t>() < ec.obj.get<json::number_unsigned_t>());
 			return;
 
 		default:
-			ec.res = json();
+			ec.$its = json();
 			return;
 		}
 	}
@@ -847,7 +847,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 	void  jsonAnd(jsonRVM& rvm, EntContext& ec)
 	{
 		if (ec.sub.is_boolean() && ec.obj.is_boolean())
-			ec.res = ec.sub.get<bool>() && ec.obj.get<bool>();
+			ec.$its = ec.sub.get<bool>() && ec.obj.get<bool>();
 		else
 			ec.throw_json(__FUNCTION__, "$obj and $sub must be boolean!"s);
 	}
@@ -975,12 +975,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 		//	проецируем во внешнем контексте
 		try
 		{
-			rvm.JSONExec(EntContext(ec.res, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
+			rvm.JSONExec(EntContext(ec.$its, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.obj);
 		}
 		catch (json& j)
 		{
-			ec.res = j;
-			rvm.JSONExec(EntContext(ec.res, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.sub);
+			ec.$its = j;
+			rvm.JSONExec(EntContext(ec.$its, ec.ctx.obj, ec.ctx.sub, ec.ctx.ent, ec.ctx), ec.sub);
 		}
 	}
 
@@ -994,7 +994,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 #define define_static_method(static_method)										\
 		void  json_call_##static_method(jsonRVM& rvm, EntContext& ec)	\
 		{																		\
-			ec.res = json::##static_method();									\
+			ec.$its = json::##static_method();									\
 		}
 
 	define_static_method(array)
@@ -1003,7 +1003,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 		void  json_call_null(jsonRVM& rvm, EntContext& ec)
 	{
-		ec.res = json();
+		ec.$its = json();
 	}
 
 	void  jsonPrint(jsonRVM& rvm, EntContext& ec)
@@ -1019,10 +1019,10 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 		string	tag = ec.sub["<>"];
 
-		if (!ec.res.is_string())
-			ec.res = ""s;
+		if (!ec.$its.is_string())
+			ec.$its = ""s;
 
-		string& body = ec.res.get_ref<string&>();
+		string& body = ec.$its.get_ref<string&>();
 		body += "<" + tag;
 
 		for (auto& it : ec.sub.items())
@@ -1030,7 +1030,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 				body += " " + it.key() + "=" + it.value().dump();
 
 		body += ">";
-		//	что бы выходной поток xml попадал в тоже значение ec.res нужно исполнять в текущем контексте EV
+		//	что бы выходной поток xml попадал в тоже значение ec.$its нужно исполнять в текущем контексте EV
 		json	objview;
 		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1048,12 +1048,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 		string	tag = ec.sub["<>"];
 
-		if (!ec.res.is_string())
-			ec.res = res;
-		else if (!ec.res.get_ref<string&>().size())
-			ec.res = res;
+		if (!ec.$its.is_string())
+			ec.$its = res;
+		else if (!ec.$its.get_ref<string&>().size())
+			ec.$its = res;
 
-		string& body = ec.res.get_ref<string&>();
+		string& body = ec.$its.get_ref<string&>();
 		body += "<" + tag;
 
 		for (auto& it : ec.sub.items())
@@ -1061,7 +1061,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 				body += " " + it.key() + "=" + it.value().dump();
 
 		body += ">";
-		//	что бы выходной поток xml попадал в тоже значение ec.res нужно исполнять в текущем контексте EV
+		//	что бы выходной поток xml попадал в тоже значение ec.$its нужно исполнять в текущем контексте EV
 		json	objview;
 		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1079,12 +1079,12 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 		string	tag = ec.sub["<>"];
 
-		if (!ec.res.is_string())
-			ec.res = res;
-		else if (!ec.res.get_ref<string&>().size())
-			ec.res = res;
+		if (!ec.$its.is_string())
+			ec.$its = res;
+		else if (!ec.$its.get_ref<string&>().size())
+			ec.$its = res;
 
-		string& body = ec.res.get_ref<string&>();
+		string& body = ec.$its.get_ref<string&>();
 		body += "<" + tag;
 
 		for (auto& it : ec.sub.items())
@@ -1092,7 +1092,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 				body += " " + it.key() + "=" + it.value().dump();
 
 		body += ">";
-		//	что бы выходной поток xml попадал в тоже значение ec.res нужно исполнять в текущем контексте EV
+		//	что бы выходной поток xml попадал в тоже значение ec.$its нужно исполнять в текущем контексте EV
 		json	objview;
 		rvm.JSONExec(EntContext(objview, ec.obj, ec.sub, ec.ent, ec.ctx), ec.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
@@ -1107,7 +1107,7 @@ void  json##name (jsonRVM& rvm, EntContext& ec)			\
 
 	template<class duration>
 	void steady_clock_(jsonRVM& rvm, EntContext& ec) {
-		ec.res = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
+		ec.$its = chrono::duration_cast<chrono::nanoseconds>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
 	const string&	ImportRelationsModel(jsonRVM& rvm)

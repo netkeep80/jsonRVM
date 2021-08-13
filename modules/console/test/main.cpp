@@ -107,22 +107,22 @@ TEST_CASE("relative addressing in rmodel") {
     CHECK(res["$up3ent"]["id"].get_ref<string&>() == "$up3ent/id"s);
     CHECK(res["$up3sub"]["id"].get_ref<string&>() == "$up3ent/$sub"s);
     CHECK(res["$up3obj"]["id"].get_ref<string&>() == "$up3ent/$obj"s);
-    CHECK(res["$up3res"]["id"].get_ref<string&>() == "$up3res/id"s);
+    CHECK(res["$up3its"]["id"].get_ref<string&>() == "$up3its/id"s);
 
     CHECK(res["$up2ent"]["id"].get_ref<string&>() == "$up2ent/id"s);
     CHECK(res["$up2sub"]["id"].get_ref<string&>() == "$up2ent/$sub"s);
     CHECK(res["$up2obj"]["id"].get_ref<string&>() == "$up2ent/$obj"s);
-    CHECK(res["$up2res"]["id"].get_ref<string&>() == "$up2res/id"s);
+    CHECK(res["$up2its"]["id"].get_ref<string&>() == "$up2its/id"s);
 
     CHECK(res["$up1ent"]["id"].get_ref<string&>() == "$up1ent/id"s);
     CHECK(res["$up1sub"]["id"].get_ref<string&>() == "$up1ent/$sub"s);
     CHECK(res["$up1obj"]["id"].get_ref<string&>() == "$up1ent/$obj"s);
-    CHECK(res["$up1res"]["id"].get_ref<string&>() == "$up1res/id"s);
+    CHECK(res["$up1its"]["id"].get_ref<string&>() == "$up1its/id"s);
 
     CHECK(res["$ent"]["id"].get_ref<string&>() == "$ent/id"s);
     CHECK(res["$sub"]["id"].get_ref<string&>() == "$ent/$sub"s);
     CHECK(res["$obj"]["id"].get_ref<string&>() == "$ent/$obj"s);
-    CHECK(res["$res"]["id"].get_ref<string&>() == "$res/id"s);
+    CHECK(res["$its"]["id"].get_ref<string&>() == "$its/id"s);
 }
 
 TEST_CASE("testing call version.json") {

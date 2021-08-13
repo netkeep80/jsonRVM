@@ -172,12 +172,12 @@ void  fs_file_load_rm(jsonRVM& rvm, EntContext& ec)
 
 	if (rm.is_object())
 	{
-		ec.res = true;
+		ec.$its = true;
 		for (auto& p : rm.items())
 			ec.sub[p.key()] = p.value();
 	}
 	else
-		ec.res = false;
+		ec.$its = false;
 }
 
 void  fs_file_read_json(jsonRVM& rvm, EntContext& ec)
@@ -194,7 +194,7 @@ void  fs_file_read_json(jsonRVM& rvm, EntContext& ec)
 	if (!in.good())
 		ec.throw_json(__FUNCTION__, "Can't load json from the "s + ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>() + " file!" );
 
-	ec.res = true;
+	ec.$its = true;
 	in >> ec.sub;
 	if (ec.sub.is_object())
 		ec.sub["FileInfo"] = ec.obj;
@@ -221,13 +221,13 @@ void  jsonFileToString(jsonRVM& rvm, EntContext& ec)
 				buf[size] = 0;
 				ec.sub = json(utf8_to_wstring(string(buf)));
 				delete[] buf;
-				ec.res = true;
+				ec.$its = true;
 				return;
 			}
 		}
 	}
 
-	ec.res = false;
+	ec.$its = false;
 }
 
 void  jsonFileToStringArray(jsonRVM& rvm, EntContext& ec)
@@ -241,7 +241,7 @@ void  jsonFileToStringArray(jsonRVM& rvm, EntContext& ec)
 			
 			if (in.good())
 			{
-				ec.res = true;
+				ec.$its = true;
 				size_t size = in.tellg();
 				in.seekg(0, ios::beg);
 				char*	buf = new char[size + 1];
@@ -313,23 +313,23 @@ void  fs_file_write_json(jsonRVM& rvm, EntContext& ec)
 			if (out.good())
 			{
 				out << ec.sub;
-				ec.res = true;
+				ec.$its = true;
 				return;
 			}
 
-			ec.res = false;
+			ec.$its = false;
 			ec.throw_json(__FUNCTION__, "Can't open "s + PathName + " file."s );
 		}
 	}
 
-	ec.res = false;
+	ec.$its = false;
 	ec.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
 
 void  jsonToFiles(jsonRVM& rvm, EntContext& ec)
 {
-	ec.res = json::array();
+	ec.$its = json::array();
 
 	/*if (ec.sub.is_array())	//	� ec.sub ������ �������� FileInfo, ������ �� ������� ��������� ���� � ������� ���� ���������
 	{

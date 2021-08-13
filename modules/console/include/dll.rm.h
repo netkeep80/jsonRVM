@@ -114,7 +114,7 @@ namespace rm
 		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
 		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
 
-		ec.res = false;
+		ec.$its = false;
 		ec.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
 	}
 

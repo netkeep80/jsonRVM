@@ -747,14 +747,14 @@ case s_s::str_hash(str, s_s::str_len(str))
 									\||/
 									 \/
         --------------------------------------------------------
-		(&$sub ? $sub : $res) = $res->$ent::$rel( &$obj ? $obj : $res );
+		(&$sub ? $sub : $its) = $its->$ent::$rel( &$obj ? $obj : $its );
 	*/
 
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct EntContext
 	{
 		//todo: rename res to its
-		json& res;			//	entity local address space
+		json& $its;			//	entity local address space
 		//todo: make obj readonly
 		json& obj;			//	контекстный объект	//	arguments
 		json& sub;			//	контекстный субъект
@@ -763,14 +763,14 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//todo: rename to $
 		EntContext& ctx;	//	родительский контекст исполнения
 
-		EntContext(json& Res, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
-			: res(Res), obj(Obj), sub(Sub), ent(Ent), ctx(Ctx) {}
+		EntContext(json& its, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
+			: $its(its), obj(Obj), sub(Sub), ent(Ent), ctx(Ctx) {}
 
-		EntContext(json& Res, json& Ent)
-			: res(Res), obj(Res), sub(Res), ent(Ent), ctx(*this) {}
+		EntContext(json& its, json& Ent)
+			: $its(its), obj(its), sub(its), ent(Ent), ctx(*this) {}
 
-		EntContext(json& Ent)
-			: res(Ent), obj(Ent), sub(Ent), ent(Ent), ctx(*this) {}
+		EntContext(json& its)
+			: $its(its), obj(its), sub(its), ent(its), ctx(*this) {}
 
 		void throw_json(const string& function, const json& error)
 		{
@@ -780,7 +780,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 			j["EntContext"]["$ent/"] = ent;
 			j["EntContext"]["$sub/"] = sub;
 			j["EntContext"]["$obj/"] = obj;
-			j["EntContext"]["$res/"] = res;
+			j["EntContext"]["$its/"] = $its;
 			throw j;
 		}
 	};
@@ -871,19 +871,19 @@ case s_s::str_hash(str, s_s::str_len(str))
 				CASE("$up3ent") : segment = &ec.ctx.ctx.ctx.ent;	break;
 				CASE("$up3sub") : segment = &ec.ctx.ctx.ctx.sub;	break;
 				CASE("$up3obj") : segment = &ec.ctx.ctx.ctx.obj;	break;
-				CASE("$up3res") : segment = &ec.ctx.ctx.ctx.res;	break;
+				CASE("$up3its") : segment = &ec.ctx.ctx.ctx.$its;	break;
 				CASE("$up2ent") : segment = &ec.ctx.ctx.ent;	break;
 				CASE("$up2sub") : segment = &ec.ctx.ctx.sub;	break;
 				CASE("$up2obj") : segment = &ec.ctx.ctx.obj;	break;
-				CASE("$up2res") : segment = &ec.ctx.ctx.res;	break;
+				CASE("$up2its") : segment = &ec.ctx.ctx.$its;	break;
 				CASE("$up1ent") : segment = &ec.ctx.ent;	break;
 				CASE("$up1sub") : segment = &ec.ctx.sub;	break;
 				CASE("$up1obj") : segment = &ec.ctx.obj;	break;
-				CASE("$up1res") : segment = &ec.ctx.res;	break;
+				CASE("$up1its") : segment = &ec.ctx.$its;	break;
 				CASE("$ent") : segment = &ec.ent;	break;
 				CASE("$sub") : segment = &ec.sub;	break;
 				CASE("$obj") : segment = &ec.obj;	break;
-				CASE("$res") : segment = &ec.res;	break;
+				CASE("$its") : segment = &ec.$its;	break;
 
 			DEFAULT:
 				json& ref = *segment;
@@ -929,7 +929,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				return ReferEntity(ec, ref.get_ref<string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
-				return ec.res;
+				return ec.$its;
 
 			default:					//	если это не адрес то возвращаем значение
 				return ref;
@@ -1007,7 +1007,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 					try {
 						JSONExec(
 							EntContext(
-								ec.res,
+								ec.$its,
 								ReferEntity(ec, rel["$obj"]),
 								ReferEntity(ec, rel["$sub"]),
 								rel,
@@ -1071,7 +1071,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				return;
 
 			default:	//	остальные простые типы есть результат исполнения отношения
-				ec.res = rel;
+				ec.$its = rel;
 				return;
 			}
 		}

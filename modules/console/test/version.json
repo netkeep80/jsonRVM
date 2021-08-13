@@ -3,10 +3,10 @@
       {
          "$obj" : "rmvm/version",
          "$rel" : "=",
-         "$sub" : "$res/rmvm/version"
+         "$sub" : "$its/rmvm/version"
       },
       {
-         "$res/meta" : "json/meta"
+         "$its/meta" : "json/meta"
       }
    ]
 }

@@ -519,7 +519,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.res = res->status;
+				ec.$its = res->status;
 				ec.sub = json::object();
 				ec.sub["base_uri"] = base_uri;
 				ec.sub["uri_path"] = uri_path;
@@ -746,7 +746,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.res = res->status;
+				ec.$its = res->status;
 				ec.sub = json::object();
 				ec.sub["base_uri"] = base_uri;
 				ec.sub["uri_path"] = uri_path;

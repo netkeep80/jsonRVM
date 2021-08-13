@@ -4,22 +4,22 @@
          "test" : "get ent1 ",
          "$obj" : "ent1/id",
          "$rel" : "=",
-         "$sub" : "$res/ent1/id"
+         "$sub" : "$its/ent1/id"
       },
       {
          "test" : "get ent2",
          "$obj" : "ent2/id",
          "$rel" : "=",
-         "$sub" : "$res/ent2/id"
+         "$sub" : "$its/ent2/id"
       },
       {
          "test" : "set ent3",
          "$obj" : "$ent/ent3",
          "$rel" : "add_entity",
-         "$sub" : "$res/ent3/id"
+         "$sub" : "$its/ent3/id"
       },
       {
-         "$obj" : "$res/ent3/id",
+         "$obj" : "$its/ent3/id",
          "$rel" : "=",
          "$sub" : "$ent/$rel/4/$obj"
       },
@@ -27,7 +27,7 @@
          "test" : "get ent3",
          "$obj" : null,
          "$rel" : "=",
-         "$sub" : "$res/ent3/val"
+         "$sub" : "$its/ent3/val"
       }
    ],
    "ent3" : {
