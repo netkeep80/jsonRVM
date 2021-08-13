@@ -34,7 +34,7 @@ target_include_directories( ${TARGET_NAME} PUBLIC
     "${COMMON_SOURCE_DIR}/include/nlohmann" )
 
 target_sources( ${TARGET_NAME} PUBLIC
-    "${COMMON_SOURCE_DIR}/include/jsonRVM.h"
+    "${COMMON_SOURCE_DIR}/include/vm.rm.h"
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp" )
 
 if( WIN32 )

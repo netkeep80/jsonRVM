@@ -36,7 +36,7 @@ SOFTWARE.
 #include "windows.h"
 #include "fs.rm.h"
 #include "string_utils.h"
-#include "jsonRVM.h"
+#include "vm.rm.h"
 
 #define MAX_NAME	1024
 using namespace rm;

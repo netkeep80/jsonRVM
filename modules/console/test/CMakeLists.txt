@@ -27,7 +27,7 @@ target_include_directories( ${TARGET_NAME} PRIVATE
 
 target_sources( ${TARGET_NAME} PRIVATE
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
-    "${COMMON_SOURCE_DIR}/include/jsonRVM.h"
+    "${COMMON_SOURCE_DIR}/include/vm.rm.h"
     "${COMMON_SOURCE_DIR}/include/interface.h"
     "${COMMON_SOURCE_DIR}/include/database_api.h"
     "${CONSOLE_SOURCE_DIR}/include/base.rm.h"

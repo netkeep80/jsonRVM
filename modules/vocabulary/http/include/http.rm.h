@@ -34,7 +34,7 @@ SOFTWARE.
 #include "httplib.h"
 #include <iostream>
 #include "string_utils.h"
-#include "jsonRVM.h"
+#include "vm.rm.h"
 #include "xml2json.hpp"
 
 namespace rm

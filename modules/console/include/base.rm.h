@@ -34,7 +34,7 @@ SOFTWARE.
 #include <iostream>
 #include <chrono>
 #include <thread>
-#include "JsonRVM.h"
+#include "vm.rm.h"
 
 namespace rm
 {

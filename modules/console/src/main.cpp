@@ -35,7 +35,7 @@ SOFTWARE.
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "jsonRVM.h"
+#include "vm.rm.h"
 #include "base.rm.h"
 #include "dll.rm.h"
 #include "file_database.h"

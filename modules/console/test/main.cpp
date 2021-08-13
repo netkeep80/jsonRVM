@@ -7,7 +7,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_BEGIN
 #include <vector>
 #include <map>
 
-#include "jsonRVM.h"
+#include "vm.rm.h"
 #include "base.rm.h"
 #include "file_database.h"
 
