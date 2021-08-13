@@ -747,30 +747,30 @@ case s_s::str_hash(str, s_s::str_len(str))
 									\||/
 									 \/
         --------------------------------------------------------
-		(&$sub ? $sub : $its) = $its->$ent::$rel( &$obj ? $obj : $its );
+		(&$sub ? $sub : its) = its->$ent::$rel( &$obj ? $obj : its );
 	*/
 
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct EntContext
 	{
 		//todo: rename res to its
-		json& $its;			//	entity local address space
+		json& its;			//	entity local address space
 		//todo: make obj readonly
 		json& obj;			//	контекстный объект	//	arguments
 		json& sub;			//	контекстный субъект
 		//todo: make ent readonly
 		json& ent;			//	сущность, модель для контекста
 		//todo: rename to $
-		EntContext& ctx;	//	родительский контекст исполнения
+		EntContext& $;	//	родительский контекст исполнения
 
-		EntContext(json& its, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
-			: $its(its), obj(Obj), sub(Sub), ent(Ent), ctx(Ctx) {}
+		EntContext(json& Its, json& Obj, json& Sub, json& Ent, EntContext& Ctx)
+			: its(Its), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}
 
-		EntContext(json& its, json& Ent)
-			: $its(its), obj(its), sub(its), ent(Ent), ctx(*this) {}
+		EntContext(json& Its, json& Ent)
+			: its(Its), obj(Its), sub(Its), ent(Ent), $(*this) {}
 
-		EntContext(json& its)
-			: $its(its), obj(its), sub(its), ent(its), ctx(*this) {}
+		EntContext(json& Its)
+			: its(Its), obj(Its), sub(Its), ent(Its), $(*this) {}
 
 		void throw_json(const string& function, const json& error)
 		{
@@ -780,7 +780,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 			j["EntContext"]["$ent/"] = ent;
 			j["EntContext"]["$sub/"] = sub;
 			j["EntContext"]["$obj/"] = obj;
-			j["EntContext"]["$its/"] = $its;
+			j["EntContext"]["$its/"] = its;
 			throw j;
 		}
 	};
@@ -789,21 +789,21 @@ case s_s::str_hash(str, s_s::str_len(str))
 	//	64 bit
 #ifdef WIN32
 	#define IMPORT_RELATIONS_MODEL		"?ImportRelationsModel@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVjsonRVM@1@@Z"
-	__declspec(dllexport) const string& ImportRelationsModel(jsonRVM& rvm);
-	typedef const string& (*InitDict)(jsonRVM& rvm);
+	__declspec(dllexport) const string& ImportRelationsModel(jsonRVM& rmvm);
+	typedef const string& (*InitDict)(jsonRVM& rmvm);
 	static InitDict	You_must_define_ImportRelationsModel_function_in_your_RM_dictionary = ImportRelationsModel;
 #endif
 
-	using x86View = void (*)(jsonRVM& rvm, EntContext& ec);
+	using x86View = void (*)(jsonRVM& rmvm, EntContext& ec);
 	using x86_view_map_t = map<json*, x86View>;
 	
 	class jsonRVM : protected database_api, public json, public x86_view_map_t
 	{
 	private:
-		static void  base_add_entity(jsonRVM& rvm, EntContext& ec)
+		static void  base_add_entity(jsonRVM& rmvm, EntContext& ec)
 		{
 			string	ent_id = "";
-			rvm.add_entity(ec.obj, ent_id);
+			rmvm.add_entity(ec.obj, ent_id);
 			ec.sub = ent_id;
 		}
 
@@ -854,7 +854,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 			}
 		}
 
-		json& ReferEntity(EntContext& ec, const string& str)
+		json& ReferEntity(EntContext& $, const string& str)
 		{
 			json* segment = this;	//	default segment
 			size_t	len = str.length();
@@ -868,22 +868,22 @@ case s_s::str_hash(str, s_s::str_len(str))
 			SWITCH(it)
 			{
 				//todo: refactor to n of $ that means ctx level
-				CASE("$up3ent") : segment = &ec.ctx.ctx.ctx.ent;	break;
-				CASE("$up3sub") : segment = &ec.ctx.ctx.ctx.sub;	break;
-				CASE("$up3obj") : segment = &ec.ctx.ctx.ctx.obj;	break;
-				CASE("$up3its") : segment = &ec.ctx.ctx.ctx.$its;	break;
-				CASE("$up2ent") : segment = &ec.ctx.ctx.ent;	break;
-				CASE("$up2sub") : segment = &ec.ctx.ctx.sub;	break;
-				CASE("$up2obj") : segment = &ec.ctx.ctx.obj;	break;
-				CASE("$up2its") : segment = &ec.ctx.ctx.$its;	break;
-				CASE("$up1ent") : segment = &ec.ctx.ent;	break;
-				CASE("$up1sub") : segment = &ec.ctx.sub;	break;
-				CASE("$up1obj") : segment = &ec.ctx.obj;	break;
-				CASE("$up1its") : segment = &ec.ctx.$its;	break;
-				CASE("$ent") : segment = &ec.ent;	break;
-				CASE("$sub") : segment = &ec.sub;	break;
-				CASE("$obj") : segment = &ec.obj;	break;
-				CASE("$its") : segment = &ec.$its;	break;
+				CASE("$up3ent") : segment = &$.$.$.$.ent;	break;
+				CASE("$up3sub") : segment = &$.$.$.$.sub;	break;
+				CASE("$up3obj") : segment = &$.$.$.$.obj;	break;
+				CASE("$up3its") : segment = &$.$.$.$.its;	break;
+				CASE("$up2ent") : segment = &$.$.$.ent;	break;
+				CASE("$up2sub") : segment = &$.$.$.sub;	break;
+				CASE("$up2obj") : segment = &$.$.$.obj;	break;
+				CASE("$up2its") : segment = &$.$.$.its;	break;
+				CASE("$up1ent") : segment = &$.$.ent;	break;
+				CASE("$up1sub") : segment = &$.$.sub;	break;
+				CASE("$up1obj") : segment = &$.$.obj;	break;
+				CASE("$up1its") : segment = &$.$.its;	break;
+				CASE("$ent") : segment = &$.ent;	break;
+				CASE("$sub") : segment = &$.sub;	break;
+				CASE("$obj") : segment = &$.obj;	break;
+				CASE("$its") : segment = &$.its;	break;
 
 			DEFAULT:
 				json& ref = *segment;
@@ -929,7 +929,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				return ReferEntity(ec, ref.get_ref<const string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
-				return ec.$its;
+				return ec.its;
 
 			default:					//	если это не адрес то возвращаем значение
 				return ref;
@@ -939,15 +939,15 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//todo: json& ent -> json const& ent
 		json& exec(json& its, json& ent)
 		{
-			EntContext ctx(its);
+			EntContext $(its);
 			try
 			{
-				JSONExec(ctx, ent);
+				JSONExec($, ent);
 			}
-			catch (json& j) { ctx.throw_json(__FUNCTION__, j); }
-			catch (json::exception& e) { ctx.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e) { ctx.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-			catch (...) { ctx.throw_json(__FUNCTION__, "unknown exception"s); }
+			catch (json& j) { $.throw_json(__FUNCTION__, j); }
+			catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
+			catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
 			return its;
 		}
 
@@ -955,7 +955,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
 		//todo: json& rel -> json const& rel
-		void JSONExec(EntContext& ec, json& rel)
+		void JSONExec(EntContext& $, json& rel)
 		{
 			x86_view_map_t& dict = *this;
 			auto it = dict.find(&rel);
@@ -965,7 +965,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				try
 				{
 					auto x86view = it->second;
-					(*x86view)(*this, ec);
+					(*x86view)(*this, $);
 					return;
 				}
 				catch (json& j) { throw j; }
@@ -979,7 +979,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 			{
 				try
 				{
-					JSONExec(ec, ReferEntity(ec, rel.get_ref<string&>()));
+					JSONExec($, ReferEntity($, rel.get_ref<string&>()));
 					return;
 				}
 				catch (json& j) { throw json({ {rel.get<string>(), j} }); }
@@ -992,7 +992,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				{
 					try
 					{
-						JSONExec(ec, it);
+						JSONExec($, it);
 						i++;
 					}
 					catch (json & j) { throw json({ {"["s + to_string(i) + "]"s, j} }); }
@@ -1007,12 +1007,12 @@ case s_s::str_hash(str, s_s::str_len(str))
 					try {
 						JSONExec(
 							EntContext(
-								ec.$its,
-								ReferEntity(ec, rel["$obj"]),
-								ReferEntity(ec, rel["$sub"]),
+								$.its,
+								ReferEntity($, rel["$obj"]),
+								ReferEntity($, rel["$sub"]),
 								rel,
-								ec),
-							ReferEntity(ec, rel["$rel"])
+								$),
+							ReferEntity($, rel["$rel"])
 						);
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
@@ -1025,12 +1025,12 @@ case s_s::str_hash(str, s_s::str_len(str))
 						{
 							JSONExec(
 								EntContext(
-									ReferEntity(ec, it.key()),
-									ec.obj,
-									ec.sub,
-									ec.ent,
-									ec.ctx),
-								ReferEntity(ec, it.value())
+									ReferEntity($, it.key()),
+									$.obj,
+									$.sub,
+									$.ent,
+									$.$),
+								ReferEntity($, it.value())
 							);
 						}
 						catch (json & j) { throw json({ {it.key(), j} }); }
@@ -1071,7 +1071,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				return;
 
 			default:	//	остальные простые типы есть результат исполнения отношения
-				ec.$its = rel;
+				$.its = rel;
 				return;
 			}
 		}

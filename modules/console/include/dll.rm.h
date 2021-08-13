@@ -95,7 +95,7 @@ namespace rm
 
 	//////////////////////////	base dictionary  ///////////////////////////////////
 
-	void  jsonLoadDLL(jsonRVM& rvm, EntContext& ec)
+	void  jsonLoadDLL(jsonRVM& rmvm, EntContext& ec)
 	{
 		try
 		{
@@ -104,7 +104,7 @@ namespace rm
 				if (ec.obj.count("PathFolder") && ec.obj.count("FileName"))
 				{
 					string	FullFileName = ec.obj["PathFolder"].get<string>() + ec.obj["FileName"].get<string>();
-					ec.sub = LoadAndInitDict(FullFileName, rvm);
+					ec.sub = LoadAndInitDict(FullFileName, rmvm);
 					return;
 				}
 			}
@@ -114,15 +114,15 @@ namespace rm
 		catch (std::exception& e) { ec.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
 		catch (...) { ec.throw_json(__FUNCTION__, "unknown exception"s); }
 
-		ec.$its = false;
+		ec.its = false;
 		ec.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	const string&  ImportLoadDLLEntity(jsonRVM& rvm)
+	const string&  ImportLoadDLLEntity(jsonRVM& rmvm)
 	{
-		json&	ent = rvm.AddBaseEntity(rvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
+		json&	ent = rmvm.AddBaseEntity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
 		ent["$obj"] = json::object();
 		ent["$obj"]["PathFolder"] = "input: string with path to compiled to dll vocabulary";
 		ent["$obj"]["FileName"] = "input: string with filename of compiled to dll vocabulary";

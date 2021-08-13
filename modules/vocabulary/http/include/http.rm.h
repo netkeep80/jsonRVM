@@ -186,7 +186,7 @@ namespace rm
 	}
 
 
-	void jsonToXML(jsonRVM& rvm, EntContext& ec)
+	void jsonToXML(jsonRVM& rmvm, EntContext& ec)
 	{
 		ec.sub = json2xml(ec.obj);
 	}
@@ -408,7 +408,7 @@ namespace rm
 #define CA_CERT_FILE "./ca-bundle.crt"
 
 	template<typename _convert, const method& mtd>
-	void  HTTP_METHOD(jsonRVM& rvm, EntContext& ec)
+	void  HTTP_METHOD(jsonRVM& rmvm, EntContext& ec)
 	{
 		if (!ec.obj.is_object())
 			ec.throw_json(__FUNCTION__, ": $obj must be object"s);
@@ -519,7 +519,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.$its = res->status;
+				ec.its = res->status;
 				ec.sub = json::object();
 				ec.sub["base_uri"] = base_uri;
 				ec.sub["uri_path"] = uri_path;
@@ -621,7 +621,7 @@ namespace rm
 	}
 
 	template<typename method>
-	void	http_add_methods(jsonRVM& rvm, EntContext& ec, Server& svr, json& api)
+	void	http_add_methods(jsonRVM& rmvm, EntContext& ec, Server& svr, json& api)
 	{
 		if (!api.is_object())
 			ec.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
@@ -641,7 +641,7 @@ namespace rm
 
 					try
 					{
-						rvm.exec(its, ent);
+						rmvm.exec(its, ent);
 						res.status = 200;
 					}
 					catch (json& j)
@@ -657,7 +657,7 @@ namespace rm
 	}
 
 
-	inline void  http_service(jsonRVM& rvm, EntContext& ec)
+	inline void  http_service(jsonRVM& rmvm, EntContext& ec)
 	{
 		//typename _convert;
 		method mtd;
@@ -719,19 +719,19 @@ namespace rm
 				});
 
 			if (ec.obj.count(methods::GET::name))
-				http_add_methods<methods::GET>(rvm, ec, svr, ec.obj[methods::GET::name]);
+				http_add_methods<methods::GET>(rmvm, ec, svr, ec.obj[methods::GET::name]);
 
 			if (ec.obj.count(methods::POST::name))
-				http_add_methods<methods::POST>(rvm, ec, svr, ec.obj[methods::POST::name]);
+				http_add_methods<methods::POST>(rmvm, ec, svr, ec.obj[methods::POST::name]);
 
 			if (ec.obj.count(methods::PUT::name))
-				http_add_methods<methods::PUT>(rvm, ec, svr, ec.obj[methods::PUT::name]);
+				http_add_methods<methods::PUT>(rmvm, ec, svr, ec.obj[methods::PUT::name]);
 
 			if (ec.obj.count(methods::DEL::name))
-				http_add_methods<methods::DEL>(rvm, ec, svr, ec.obj[methods::DEL::name]);
+				http_add_methods<methods::DEL>(rmvm, ec, svr, ec.obj[methods::DEL::name]);
 
 			if (ec.obj.count(methods::PATCH::name))
-				http_add_methods<methods::PATCH>(rvm, ec, svr, ec.obj[methods::PATCH::name]);
+				http_add_methods<methods::PATCH>(rmvm, ec, svr, ec.obj[methods::PATCH::name]);
 
 			svr.listen(host.c_str(), port);
 			
@@ -746,7 +746,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				ec.$its = res->status;
+				ec.its = res->status;
 				ec.sub = json::object();
 				ec.sub["base_uri"] = base_uri;
 				ec.sub["uri_path"] = uri_path;
@@ -778,8 +778,8 @@ namespace rm
 
 
 #define add_http_entity(method, converter_type)																					\
-	rvm.AddBaseEntity(																											\
-		rvm["http"][ methods::##method::name ],																									\
+	rmvm.AddBaseEntity(																											\
+		rmvm["http"][ methods::##method::name ],																									\
 		string(#converter_type),																								\
 		HTTP_METHOD<application_##converter_type, methods::##method::name>,															\
 		"Calls http webapi "s + methods::##method::name + " method with "s + application_##converter_type::content_type<string>() + " content_type"s		\
@@ -792,16 +792,16 @@ namespace rm
 	add_http_entity(DEL, converter_type);	\
 	add_http_entity(PATCH, converter_type);
 
-	const string& ImportRelationsModel(jsonRVM& rvm)
+	const string& ImportRelationsModel(jsonRVM& rmvm)
 	{
-		rvm.AddBaseEntity(rvm, "ToXML"s, jsonToXML, "");
-		//	rvm.AddBaseEntity(rvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
+		rmvm.AddBaseEntity(rmvm, "ToXML"s, jsonToXML, "");
+		//	rmvm.AddBaseEntity(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
 
 		add_http_entites(urlencoded);
 		add_http_entites(json);
 		add_http_entites(xml);
 
-		rvm.AddBaseEntity(rvm["http"], "service"s, http_service, "");
+		rmvm.AddBaseEntity(rmvm["http"], "service"s, http_service, "");
 
 		return rmvm_version;
 	}

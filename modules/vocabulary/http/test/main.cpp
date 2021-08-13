@@ -148,8 +148,8 @@ TEST_CASE("Test http://localhost:8080/hi") {
 )");
 
 	json    res;
-	EntContext ctx(res, root[""]);
-	root.JSONExec(ctx, root[""]);
+	EntContext $(res, root[""]);
+	root.JSONExec($, root[""]);
 	cout << res.dump(2) << endl;
 
 	CHECK(res["body"].get_ref<string&>() == "Hello World!\n"s);

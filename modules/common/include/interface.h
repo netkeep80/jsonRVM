@@ -69,8 +69,8 @@ public:
 	example3()
 	{
 		auto* db = new file_database_t();
-		jsonRVM<file_database_t> rvm(db);
-		rvm.test1();
+		jsonRVM<file_database_t> rmvm(db);
+		rmvm.test1();
 		delete db;
 	}
 } static_example3;
