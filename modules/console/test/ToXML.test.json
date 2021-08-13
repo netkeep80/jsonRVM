@@ -13,11 +13,11 @@
       {
          "$obj" : [
             {
-               "$obj" : "$up1ent/Phone",
+               "$obj" : "$$ent/Phone",
                "$rel" : "foreachobj",
                "$sub" : {
                 "$obj": {
-                  "$obj": "$up1obj",
+                  "$obj": "$$obj",
                   "$rel": "="
                 },
                   "$rel" : "tag",
@@ -27,7 +27,7 @@
                }
             },
           {
-            "$obj": "$up1ent/splitter",
+            "$obj": "$$ent/splitter",
             "$rel": "string/join"
           }
          ],

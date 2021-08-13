@@ -866,18 +866,18 @@ case s_s::str_hash(str, s_s::str_len(str))
 			SWITCH(it)
 			{
 				//todo: refactor to n of $ that means ctx level
-				CASE("$up3ent") : jptr = &$.$.$.$.ent;	break;
-				CASE("$up3sub") : jptr = &$.$.$.$.sub;	break;
-				CASE("$up3obj") : jptr = &$.$.$.$.obj;	break;
-				CASE("$up3its") : jptr = &$.$.$.$.its;	break;
-				CASE("$up2ent") : jptr = &$.$.$.ent;	break;
-				CASE("$up2sub") : jptr = &$.$.$.sub;	break;
-				CASE("$up2obj") : jptr = &$.$.$.obj;	break;
-				CASE("$up2its") : jptr = &$.$.$.its;	break;
-				CASE("$up1ent") : jptr = &$.$.ent;	break;
-				CASE("$up1sub") : jptr = &$.$.sub;	break;
-				CASE("$up1obj") : jptr = &$.$.obj;	break;
-				CASE("$up1its") : jptr = &$.$.its;	break;
+				CASE("$$$$ent") : jptr = &$.$.$.$.ent;	break;
+				CASE("$$$$sub") : jptr = &$.$.$.$.sub;	break;
+				CASE("$$$$obj") : jptr = &$.$.$.$.obj;	break;
+				CASE("$$$$its") : jptr = &$.$.$.$.its;	break;
+				CASE("$$$ent") : jptr = &$.$.$.ent;	break;
+				CASE("$$$sub") : jptr = &$.$.$.sub;	break;
+				CASE("$$$obj") : jptr = &$.$.$.obj;	break;
+				CASE("$$$its") : jptr = &$.$.$.its;	break;
+				CASE("$$ent") : jptr = &$.$.ent;	break;
+				CASE("$$sub") : jptr = &$.$.sub;	break;
+				CASE("$$obj") : jptr = &$.$.obj;	break;
+				CASE("$$its") : jptr = &$.$.its;	break;
 				CASE("$ent") : jptr = &$.ent;	break;
 				CASE("$sub") : jptr = &$.sub;	break;
 				CASE("$obj") : jptr = &$.obj;	break;
