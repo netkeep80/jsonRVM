@@ -286,7 +286,7 @@ namespace rm
 
 #define OPP_STO(operation,stype,stype_id,otype,otype_id)										\
 	case (uint8_t(json::value_t::stype_id) << sub_field) | uint8_t(json::value_t::otype_id):	\
-	{ $.its = ($.sub.get_ref<stype&>()) operation ($.obj.get_ref<otype&>()); return; }
+	{ $.its = ($.sub.get<stype>()) operation ($.obj.get<otype>()); return; }
 
 #define OPP_ANYTO(operation,type,type_id)														\
 	OPP_STO(operation, jf, number_float,    type, type_id)										\
@@ -319,7 +319,8 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			}
 		switch ((uint8_t($.sub.type()) << sub_field) | uint8_t($.obj.type()))
 		{
-		VM_OPP(/ ) default: $.its = json();
+			VM_OPP(/ );
+			default: $.its = json();
 		}
 	}
 
