@@ -740,24 +740,26 @@ case s_s::str_hash(str, s_s::str_len(str))
 			Mapping OOP to EOP:
 
 		(&result ? result : *this) = this->class::method( &args ? args : *this );
-		----------------------------------------------------------------
+		-------------------------------------------------------------------------
 	                                 ||
 									 ||
 									 ||
 									\||/
 									 \/
-        --------------------------------------------------------
-		(&$sub ? $sub : its) = its->$ent::$rel( &$obj ? $obj : its );
+        -------------------------------------------------------------------------
+		(&$.sub ? $.sub : $.its) = $.its->$.ent::$.rel( &$.obj ? $.obj : $.its );
 	*/
 
-	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
+	//	Контекст исполнения сущности
+	//	инстанцированная проекция модели сущности
+	//	экземпляр сущности
 	struct vm_ctx
 	{
-		json& its;	//	entity local address space
-		json& obj;	//	контекстный объект	//	arguments
-		json& sub;	//	контекстный субъект
-		json& ent;	//	сущность, модель для контекста
-		vm_ctx& $;	//	родительский контекст исполнения
+		json& its;	//	instance projection reference
+		json& obj;	//	context object reference
+		json& sub;	//	context subject reference
+		json& ent;	//	context entity referenceсущность, is model for instance
+		vm_ctx& $;	//	parent context reference
 
 		vm_ctx(json& Its, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx)
 			: its(Its), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}

@@ -68,15 +68,9 @@ string	wstring_to_(const wstring& data)
 }
 
 inline wstring cp1251_to_wstring(const string& data) { return _to_wstring<CP_ACP>(data); }
-inline wstring oem_to_wstring(const string& data) { return _to_wstring<CP_OEMCP>(data); }
 inline wstring utf8_to_wstring(const string& data) { return _to_wstring<CP_UTF8>(data); }
 inline string  wstring_to_cp1251(const wstring& data) { return wstring_to_<CP_ACP>(data); }
-inline string  wstring_to_oem(const wstring& data) { return wstring_to_<CP_OEMCP>(data); }
 inline string  wstring_to_utf8(const wstring& data) { return wstring_to_<CP_UTF8>(data); }
 
-inline string cp1251_to_oem(const string& data) { return wstring_to_oem(_to_wstring<CP_ACP>(data)); }
 inline string cp1251_to_utf8(const string& data) { return wstring_to_utf8(_to_wstring<CP_ACP>(data)); }
-inline string oem_to_cp1251(const string& data) { return wstring_to_cp1251(_to_wstring<CP_OEMCP>(data)); }
-inline string oem_to_utf8(const string& data) { return wstring_to_utf8(_to_wstring<CP_OEMCP>(data)); }
 inline string utf8_to_cp1251(const string& data) { return wstring_to_cp1251(_to_wstring<CP_UTF8>(data)); }
-inline string utf8_to_oem(const string& data) { return wstring_to_oem(_to_wstring<CP_UTF8>(data)); }
