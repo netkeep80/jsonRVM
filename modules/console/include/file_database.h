@@ -63,9 +63,9 @@ namespace rm
 
 		virtual void	add_entity(const json& ent, string& ent_id)
 		{
-			ent_id = to_string(reinterpret_cast<size_t>(&ent)) + ".json";
+			ent_id = to_string(reinterpret_cast<size_t>(&ent));
 
-			string	PathName = PathFolder + utf8_to_cp1251(ent_id);
+			string	PathName = PathFolder + utf8_to_cp1251(ent_id) + ".json";
 			std::ofstream out(PathName.c_str());
 
 			if (!out.good())

@@ -416,15 +416,14 @@ namespace rm
 		try
 		{
 			string base_uri, uri_path;
-			if (!$.obj.count("URI")) $.obj["URI"] = ""s;
-			json& uri = $.obj["URI"];
+			json const& uri = $.obj.count("URI") ? $.obj["URI"] : ""s;
 
 			if (uri.is_string())
 			{
 				const static std::regex re(R"(^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?)");
 				std::cmatch components;
 
-				if (std::regex_match(uri.get_ref<string&>().c_str(), components, re)) {
+				if (std::regex_match(uri.get_ref<string const&>().c_str(), components, re)) {
 
 					auto scheme = components[2].str();
 					auto authority = components[4].str();
@@ -512,7 +511,7 @@ namespace rm
 			if ($.obj.count("header"))
 				if ($.obj["header"].is_object())
 					for (auto& it : $.obj["header"].items())
-						requestObj.set_header(it.key().c_str(), it.value().is_string() ? it.value().get_ref<string&>().c_str() : it.value().dump().c_str());
+						requestObj.set_header(it.key().c_str(), it.value().is_string() ? it.value().get_ref<string const&>().c_str() : it.value().dump().c_str());
 
 			if ($.obj.count("body"))
 				_convert::from_json($.obj["body"], requestObj.body);
@@ -633,7 +632,8 @@ namespace rm
 
 			method::add(svr, http_method.key().c_str(), [&, http_method](const Request& req, Response& res)
 				{
-					json	its, &ent = http_method.value()["$ent"];
+					json	its;
+					json&	ent = http_method.value()["$ent"];
 					using _convert = application_json;
 
 					if (req.body.length())

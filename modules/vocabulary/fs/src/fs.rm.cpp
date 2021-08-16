@@ -345,8 +345,8 @@ void  jsonToFiles(vm& rmvm, vm_ctx& $)
 			size_t i = 0;
 			for (auto& it : $.obj)
 			{
-				json&	FileNameFormat = $.sub["FileNameFormat"];
-				json&	PathFolder = $.sub["PathFolder"];
+				auto&	FileNameFormat = $.sub["FileNameFormat"];
+				auto&	PathFolder = $.sub["PathFolder"];
 				string	FileInfoPathFolder = ".\\";
 				string	FileInfoFileName = to_string(i) + ".json";
 
@@ -355,7 +355,7 @@ void  jsonToFiles(vm& rmvm, vm_ctx& $)
 
 				if (it.is_object())
 				{
-					json &FileInfoVal = it["FileInfo"];
+					auto &FileInfoVal = it["FileInfo"];
 
 					if (FileInfoVal.is_object())
 					{
@@ -388,7 +388,7 @@ void  jsonToFiles(vm& rmvm, vm_ctx& $)
 
 			if ($.obj.is_object())
 			{
-				json &FileInfoVal = $.obj["FileInfo"];
+				json const&FileInfoVal = $.obj["FileInfo"];
 
 				if (FileInfoVal.is_object())
 				{

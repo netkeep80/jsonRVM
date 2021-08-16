@@ -1,0 +1,1 @@
+..\..\..\build\modules\console\Release\rmvm.exe absolute_addressing 2>err.json

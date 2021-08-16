@@ -511,7 +511,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			break;
 
 		case json::value_t::string:
-			$.sub = json::number_float_t(std::stod($.obj.get_ref<string&>()));
+			$.sub = json::number_float_t(std::stod($.obj.get_ref<string const&>()));
 			break;
 
 		case json::value_t::boolean:
@@ -559,7 +559,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			break;
 
 		case json::value_t::string:
-			result = $.obj.get_ref<string&>();
+			result = $.obj.get_ref<string const&>();
 			break;
 
 		default:
@@ -589,7 +589,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			break;
 
 		case json::value_t::string:
-			result += $.obj.get_ref<string&>();
+			result += $.obj.get_ref<string const&>();
 			break;
 
 		default:
@@ -602,7 +602,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 	void  string_find(vm& rmvm, vm_ctx& $)
 	{
 		if (!($.obj.is_string() && $.sub.is_string())) $.throw_json(__FUNCTION__, "$obj and $sub must be strings!"s);
-		$.its = static_cast<json::number_integer_t>($.obj.get_ref<string&>().find($.sub.get_ref<string&>().c_str()));
+		$.its = static_cast<json::number_integer_t>($.obj.get_ref<string const&>().find($.sub.get_ref<string&>().c_str()));
 	}
 
 
@@ -610,7 +610,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 	{
 		if ($.obj.is_string() && $.sub.is_string())
 		{
-			const string& delim = $.obj.get_ref<string&>();
+			const string& delim = $.obj.get_ref<string const&>();
 			string str = $.sub.get_ref<string&>();
 			size_t prev = 0, pos = 0;
 			$.its = json::array();
@@ -634,7 +634,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 
 		if ($.obj.is_string() && $.sub.is_array())
 		{
-			string& splitter = $.obj.get_ref<string&>();
+			auto& splitter = $.obj.get_ref<string const&>();
 
 			for (auto& it : $.sub)
 			{
@@ -690,7 +690,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		else if ($.sub.is_object())
 		{
 			if ($.obj.is_string())
-				$.its = $.sub[$.obj.get_ref<string&>()];
+				$.its = $.sub[$.obj.get_ref<string const&>()];
 			else
 				$.throw_json(__FUNCTION__, "$obj must be string!"s);
 		}
@@ -710,7 +710,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		else if ($.sub.is_object())
 		{
 			if ($.obj.is_string())
-				$.sub[$.obj.get_ref<string&>()] = $.its;
+				$.sub[$.obj.get_ref<string const&>()] = $.its;
 			else
 				$.throw_json(__FUNCTION__, "$obj must be string!"s);
 		}
@@ -719,7 +719,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			if ($.obj.is_number_unsigned())
 				$.sub[$.obj.get<size_t>()] = $.its;
 			else if ($.obj.is_string())
-				$.sub[$.obj.get_ref<string&>()] = $.its;
+				$.sub[$.obj.get_ref<string const&>()] = $.its;
 			else
 				$.throw_json(__FUNCTION__, "$obj must be unsigned number or string!"s);
 		}
@@ -732,7 +732,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		if ($.sub.is_object())
 		{
 			if ($.obj.is_string())
-				$.sub.erase($.obj.get_ref<string&>());
+				$.sub.erase($.obj.get_ref<string const&>());
 			else
 				$.throw_json(__FUNCTION__, "$obj must be string!"s);
 		}
@@ -793,7 +793,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		if ($.obj.is_array())
 		{
 			size_t i = 0;
-			for (json& it : $.obj)
+			for (auto& it : $.obj)
 			{
 				try {
 					json	boolres;
@@ -957,7 +957,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 
 		try
 		{
-			if ($.sub.count($.obj.get_ref<string&>())) rmvm.exec($.$, $.sub[$.obj.get_ref<string&>()]);
+			if ($.sub.count($.obj.get_ref<string const&>())) rmvm.exec($.$, $.sub[$.obj.get_ref<string const&>()]);
 			else rmvm.exec($.$, $.sub["default"]);
 		}
 		catch (json& j) { throw json({ { __FUNCTION__, j} }); }

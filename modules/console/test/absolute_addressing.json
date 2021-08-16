@@ -19,19 +19,24 @@
          "$sub" : "$its/ent3/id"
       },
       {
-         "$obj" : "$its/ent3/id",
+         "$obj" : "$ent/get_ent3_test",
          "$rel" : "=",
-         "$sub" : "$ent/$rel/4/$obj"
+         "$sub" : "$its/get_ent3_test"
       },
       {
-         "test" : "get ent3",
-         "$obj" : null,
+         "$obj" : "$its/ent3/id",
          "$rel" : "=",
-         "$sub" : "$its/ent3/val"
-      }
+         "$sub" : "$its/get_ent3_test/$obj"
+      },
+      "$its/get_ent3_test"
    ],
    "ent3" : {
       "id" : "ent3",
       "description" : "test entity"
+   },
+   "get_ent3_test" : {
+      "test" : "get ent3",
+      "$rel" : "=",
+      "$sub" : "$its/ent3/val"
    }
 }

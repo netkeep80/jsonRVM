@@ -753,12 +753,10 @@ case s_s::str_hash(str, s_s::str_len(str))
 	//	Контекст исполнения сущности, инстанцированная проекция модели сущности
 	struct vm_ctx
 	{
-		json& its;			//	entity local address space
-		//todo: make obj readonly
-		json& obj;			//	контекстный объект	//	arguments
-		json& sub;			//	контекстный субъект
-		//todo: make ent readonly
-		json& ent;			//	сущность, модель для контекста
+		json& its;	//	entity local address space
+		json& obj;	//	контекстный объект	//	arguments
+		json& sub;	//	контекстный субъект
+		json& ent;	//	сущность, модель для контекста
 		vm_ctx& $;	//	родительский контекст исполнения
 
 		vm_ctx(json& Its, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx)
@@ -770,7 +768,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 		vm_ctx(json& Its)
 			: its(Its), obj(Its), sub(Its), ent(Its), $(*this) {}
 
-		void throw_json(const string& function, const json& error)
+		void throw_json(const string& function, const json& error) const
 		{
 			json	j;
 			j["__FUNCTION__"] = function;
@@ -793,28 +791,16 @@ case s_s::str_hash(str, s_s::str_len(str))
 #endif
 
 	using binary_view = void (*)(vm& rmvm, vm_ctx& $);
-	using binary_view_map_t = map<json*, binary_view>;
+	using binary_view_map_t = map<json const*, binary_view>;
 	
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
 	private:
-		static void  base_add_entity(vm& rmvm, vm_ctx& $)
-		{
-			string	ent_id = "";
-			rmvm.add_entity($.obj, ent_id);
-			$.sub = ent_id;
-		}
+		struct rval { static const bool is_lval{ false }; };
+		struct lval { static const bool is_lval{ true }; };
 
-	public:
-		vm(database_api* db = nullptr)
-			: json(json::object())
-		{
-			database_api::link(db);
-			//	database_api
-			add_binary_view(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
-		}
-
-		static void	ref_in_json(json*& jptr, const string& it)
+		template<class val_type>
+		static void	ref_in_json_to(json*& jptr, const string& it)
 		{
 			json& ref = *jptr;
 
@@ -827,34 +813,36 @@ case s_s::str_hash(str, s_s::str_len(str))
 			case json::value_t::array:
 				jptr = &ref[std::stoul(it)];
 				return;
-				
+
 			case json::value_t::null:
-			{
-				int& _Errno_ref = errno; // Nonzero cost, pay it once
-				const char* _Ptr = it.c_str();
-				char* _Eptr;
-				_Errno_ref = 0;
-				unsigned index = strtoul(_Ptr, &_Eptr, 10);
+				if constexpr (val_type::is_lval)
+				{
+					int& _Errno_ref = errno; // Nonzero cost, pay it once
+					const char* _Ptr = it.c_str();
+					char* _Eptr;
+					_Errno_ref = 0;
+					unsigned index = strtoul(_Ptr, &_Eptr, 10);
 
-				if (_Errno_ref == ERANGE)
-					throw json({ {__FUNCTION__, it} });
+					if (_Errno_ref == ERANGE)
+						throw json({ {__FUNCTION__, it} });
 
-				if (_Ptr == _Eptr)
-					jptr = &ref[it];
-				else
-					jptr = &ref[index];
+					if (_Ptr == _Eptr)
+						jptr = &ref[it];
+					else
+						jptr = &ref[index];
 
-				return;
-			}
+					return;
+				}
 
 			default:
 				throw json({ {__FUNCTION__, it} });
 			}
 		}
 
-		json& ref_to(vm_ctx& $, const string& str)
+		template<class val_type>
+		json& string_ref_to(vm_ctx& $, const string& str)
 		{
-			json* jptr = this;	//	default jptr
+			json* jptr;
 			size_t	len = str.length();
 			size_t	pos = str.find_first_of('/', 0);
 
@@ -883,7 +871,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				CASE("$its") : jptr = &$.its;	break;
 
 			DEFAULT:
-				json& ref = *jptr;
+				json& ref = *this;
 				assert(ref.is_object());
 				auto res = ref.find(it);
 
@@ -908,7 +896,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 				if (pos == string::npos) pos = len;
 				string it = str.substr(prev, pos - prev);
 				prev = pos + 1;
-				try { ref_in_json(jptr, it); }
+				try { ref_in_json_to<val_type>(jptr, it); }
 				catch (json& j) { throw json({ {__FUNCTION__, j} }); }
 				catch (invalid_argument e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
 				catch (out_of_range e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
@@ -918,12 +906,13 @@ case s_s::str_hash(str, s_s::str_len(str))
 			return *jptr;
 		}
 
-		json& ref_to(vm_ctx& $, json& ref)
+		template<class val_type>
+		json& val_or_ref_to(vm_ctx& $, json& ref)
 		{
 			switch (ref.type())
 			{
 			case json::value_t::string:	//	иерархический путь к json значению
-				return ref_to($, ref.get_ref<const string&>());
+				return string_ref_to<val_type>($, ref.get_ref<const string&>());
 
 			case json::value_t::null:	//	местоимение проекции контекстной сущности
 				return $.its;
@@ -933,7 +922,22 @@ case s_s::str_hash(str, s_s::str_len(str))
 			}
 		}
 
-		//todo: json& ent -> json const& ent
+		static void  base_add_entity(vm& rmvm, vm_ctx& $)
+		{
+			string	ent_id = "";
+			rmvm.add_entity($.obj, ent_id);
+			$.sub = ent_id;
+		}
+
+	public:
+		vm(database_api* db = nullptr)
+			: json(json::object())
+		{
+			database_api::link(db);
+			//	database_api
+			add_binary_view(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
+		}
+
 		json& exec(json& its, json& ent)
 		{
 			vm_ctx $(its);
@@ -951,7 +955,6 @@ case s_s::str_hash(str, s_s::str_len(str))
 		//	Исполнение сущности либо json байткода
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-		//todo: json& rel -> json const& rel
 		void exec(vm_ctx& $, json& ent)
 		{
 			binary_view_map_t& dict = *this;
@@ -976,10 +979,10 @@ case s_s::str_hash(str, s_s::str_len(str))
 			{
 				try
 				{
-					exec($, ref_to($, ent.get_ref<string&>()));
+					exec($, string_ref_to<rval>($, ent.get_ref<string const&>()));
 					return;
 				}
-				catch (json& j) { throw json({ {ent.get<string>(), j} }); }
+				catch (json& j) { throw json({ {ent.get_ref<string const&>(), j} }); }
 			}
 
 			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
@@ -999,17 +1002,23 @@ case s_s::str_hash(str, s_s::str_len(str))
 
 			case json::value_t::object:
 			{
-				if (ent.count("$rel")) //	это сущность, которую надо исполнить в новом контексте?
+				auto& rel = ent.find("$rel");
+				auto& end = ent.end();
+
+				if (rel != end) //	это сущность, которую надо исполнить в новом контексте?
 				{
+					auto& obj = ent.find("$obj");
+					auto& sub = ent.find("$sub");
+
 					try {
 						exec(
 							vm_ctx(
 								$.its,
-								ref_to($, ent["$obj"]),
-								ref_to($, ent["$sub"]),
+								obj == end ? $.its : val_or_ref_to<rval>($, *obj),
+								sub == end ? $.its : val_or_ref_to<lval>($, *sub),
 								ent,
 								$),
-							ref_to($, ent["$rel"])
+							val_or_ref_to<rval>($, *rel)
 						);
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
@@ -1022,12 +1031,12 @@ case s_s::str_hash(str, s_s::str_len(str))
 						{
 							exec(
 								vm_ctx(
-									ref_to($, it.key()),
+									string_ref_to<lval>($, it.key()),
 									$.obj,
 									$.sub,
 									$.ent,
 									$.$),
-								ref_to($, it.value())
+								val_or_ref_to<rval>($, it.value())
 							);
 						}
 						catch (json & j) { throw json({ {it.key(), j} }); }
@@ -1046,7 +1055,7 @@ case s_s::str_hash(str, s_s::str_len(str))
 					for (auto& it : rel.items())
 					{
 						string&	key = it.key();
-						try { vec.push_back(callctx(vm_ctx(ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, ref_to($, it.value()))); }
+						try { vec.push_back(callctx(vm_ctx(val_or_ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, val_or_ref_to($, it.value()))); }
 						catch (string& error) { throw("\n view "s + key + " : "s + error); }
 						catch (json::exception& e) { throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 						catch (std::exception& e) { throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
