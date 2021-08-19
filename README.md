@@ -1,4 +1,5 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/netkeep80/jsonrvm)
+![Travis (.com)](https://img.shields.io/travis/com/netkeep80/jsonRVM?label=Doxygen%20build)
 
 [jsonRVM Documentation](https://netkeep80.github.io/jsonRVM/)
 
