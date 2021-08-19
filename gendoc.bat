@@ -1,4 +1,1 @@
-mkdir build
-cd build
-cmake ..
-cmake --build . --target docs
+doxygen Doxyfile
