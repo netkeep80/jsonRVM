@@ -46,4 +46,4 @@ jobs:
           # The remote repository that publishing source for GitHub Pages site, defaults to current repo and is formatted like 'user/repo-name'
           #repo: # optional
           # The personal access token that authorize repo access
-          #token:
+          token: ${{ secrets.ACCESS_TOKEN }}
