@@ -23,11 +23,27 @@ jobs:
           fetch-depth: 0
       - name: set version
         run: echo "PROJECT_NUMBER = `git describe --tags`" >> Doxyfile
-      - name: Generate Documentation
-        uses: mattnotmitt/doxygen-action@v1
-      - name: Publish generated content to GitHub Pages
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.1
+      - name: Doxygen Action
+        # You may pin to the exact commit or the version.
+        # uses: mattnotmitt/doxygen-action@9964e41e7f2e2a56e42fe789421f3fe33e938d63
+        uses: mattnotmitt/doxygen-action@v1.3.1
         with:
-          dir: docs/html
+          # Path to Doxyfile
+          doxyfile-path: ./Doxyfile
+          # Working directory
+          working-directory: ./docs
+          # Extra alpine packages for the build environment
+          #additional-packages: # optional, default is 
+      - name: Publish to GitHub Pages
+        # You may pin to the exact commit or the version.
+        # uses: tsunematsu21/actions-publish-gh-pages@c04b531c52b8f9d25c596bc6e6a7ddc116b2f3f8
+        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
+        with:
+          # The name of the directory that containing the content to be published
+          dir: ./docs/html
+          # The name of the remote branch that publishing source for GitHub Pages site
           branch: gh-pages
-          token: ${{ secrets.ACCESS_TOKEN }}
+          # The remote repository that publishing source for GitHub Pages site, defaults to current repo and is formatted like 'user/repo-name'
+          #repo: # optional
+          # The personal access token that authorize repo access
+          #token:
