@@ -1,6 +1,10 @@
 <map id="modules/console/include/dll.rm.h" name="modules/console/include/dll.rm.h">
-<area shape="rect" id="node2" href="$vm_8rm_8h.html" title="vm.rm.h" alt="" coords="125,95,201,121"/>
-<area shape="rect" id="node7" href="$string__utils_8h.html" title="string_utils.h" alt="" coords="279,95,382,121"/>
-<area shape="rect" id="node3" href="$database__api_8h.html" title="database_api.h" alt="" coords="5,169,125,196"/>
-<area shape="rect" id="node4" href="$interface_8h.html" title="interface.h" alt="" coords="9,244,100,271"/>
+<area shape="rect" id="node1" title=" " alt="" coords="144,5,309,47"/>
+<area shape="rect" id="node2" href="$vm_8rm_8h.html" title=" " alt="" coords="118,95,186,121"/>
+<area shape="rect" id="node6" title=" " alt="" coords="189,169,272,196"/>
+<area shape="rect" id="node7" href="$string__utils_8h.html" title=" " alt="" coords="265,95,359,121"/>
+<area shape="rect" id="node3" href="$database__api_8h.html" title=" " alt="" coords="5,169,115,196"/>
+<area shape="rect" id="node5" title=" " alt="" coords="117,244,187,271"/>
+<area shape="rect" id="node4" href="$interface_8h.html" title=" " alt="" coords="9,244,92,271"/>
+<area shape="rect" id="node8" title=" " alt="" coords="297,169,351,196"/>
 </map>

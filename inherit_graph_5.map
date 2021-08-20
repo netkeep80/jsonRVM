@@ -1,8 +1,9 @@
 <map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="node1" href="$classrm_1_1interface__t.html" title="rm::interface_t\&lt; database\l_api \&gt;" alt="" coords="5,5,196,47"/>
-<area shape="rect" id="node2" href="$classrm_1_1database__api.html" title="rm::database_api" alt="" coords="244,13,379,39"/>
-<area shape="rect" id="node3" href="$classrm_1_1file__database__t.html" title="rm::file_database_t" alt="" coords="427,13,572,39"/>
-<area shape="rect" id="node4" href="$classrm_1_1vm.html" title="rm::vm" alt="" coords="465,63,533,90"/>
-<area shape="rect" id="node6" title="STL class. " alt="" coords="245,114,377,141"/>
-<area shape="rect" id="node7" href="$classrm_1_1_d_l_ls.html" title="rm::DLLs" alt="" coords="460,114,539,141"/>
+<area shape="rect" id="node1" href="$classrm_1_1interface__t.html" title=" " alt="" coords="5,5,173,47"/>
+<area shape="rect" id="node2" href="$classrm_1_1database__api.html" title=" " alt="" coords="221,13,341,39"/>
+<area shape="rect" id="node3" href="$classrm_1_1file__database__t.html" title=" " alt="" coords="389,13,520,39"/>
+<area shape="rect" id="node4" href="$classrm_1_1vm.html" title=" " alt="" coords="424,63,485,90"/>
+<area shape="rect" id="node5" title=" " alt="" coords="258,63,305,90"/>
+<area shape="rect" id="node6" title=" " alt="" coords="223,114,340,141"/>
+<area shape="rect" id="node7" href="$classrm_1_1_d_l_ls.html" title=" " alt="" coords="417,114,492,141"/>
 </map>

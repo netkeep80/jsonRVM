@@ -1,5 +1,10 @@
 <map id="modules/console/include/file_database.h" name="modules/console/include/file_database.h">
-<area shape="rect" id="node4" href="$string__utils_8h.html" title="string_utils.h" alt="" coords="125,95,227,121"/>
-<area shape="rect" id="node6" href="$database__api_8h.html" title="database_api.h" alt="" coords="252,95,372,121"/>
-<area shape="rect" id="node7" href="$interface_8h.html" title="interface.h" alt="" coords="255,169,345,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="31,5,197,47"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,169,60,196"/>
+<area shape="rect" id="node3" title=" " alt="" coords="29,95,95,121"/>
+<area shape="rect" id="node4" href="$string__utils_8h.html" title=" " alt="" coords="120,95,215,121"/>
+<area shape="rect" id="node6" href="$database__api_8h.html" title=" " alt="" coords="239,95,349,121"/>
+<area shape="rect" id="node5" title=" " alt="" coords="126,169,209,196"/>
+<area shape="rect" id="node7" href="$interface_8h.html" title=" " alt="" coords="242,169,325,196"/>
+<area shape="rect" id="node8" title=" " alt="" coords="349,169,420,196"/>
 </map>
