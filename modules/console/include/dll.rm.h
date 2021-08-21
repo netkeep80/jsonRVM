@@ -50,7 +50,7 @@ namespace rm
 	class DLLs : public map<string, DLL>
 	{
 	public:
-		DLLs() {}
+		DLLs() = default;
 		~DLLs()
 		{
 			for each (auto dll in *this) if (dll.second.handle)
