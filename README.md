@@ -16,7 +16,9 @@
          /  |  \
         /___|___\
 
-## [jsonRVM Documentation](https://netkeep80.github.io/jsonRVM/)
+## jsonRVM Documentation
+
+[By Doxygen on russian.](https://netkeep80.github.io/jsonRVM/)
 
 ## Used third-party tools
 
