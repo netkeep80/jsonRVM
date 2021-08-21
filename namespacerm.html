@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="set_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-51-gae96719</span>
+   &#160;<span id="projectnumber">2.6.0-52-g69ff464</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -142,8 +142,9 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:ad5cf5268019123f7b388236d04c4de9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ad5cf5268019123f7b388236d04c4de9b">import_help</a> (json &amp;j)</td></tr>
-<tr class="separator:ad5cf5268019123f7b388236d04c4de9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d">import_rmvm_help_to</a> (json &amp;j)</td></tr>
+<tr class="memdesc:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Загрузка руководства по использованию виртуальной машины  <a href="namespacerm.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d">Подробнее...</a><br /></td></tr>
+<tr class="separator:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memTemplParams" colspan="2">template&lt;typename type_t , typename _OP &gt; </td></tr>
 <tr class="memitem:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a177a80f2dc5fc7ce734e7ddfe1de30ae">type_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
 <tr class="separator:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -302,7 +303,7 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00795">795</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00453">453</a></p>
 
 </div>
 </div>
@@ -318,7 +319,7 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00796">796</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00454">454</a></p>
 
 </div>
 </div>
@@ -599,8 +600,8 @@ template&lt;typename type_t , typename _OP &gt; </div>
 
 </div>
 </div>
-<a id="ad5cf5268019123f7b388236d04c4de9b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5cf5268019123f7b388236d04c4de9b">&#9670;&nbsp;</a></span>import_help()</h2>
+<a id="ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d">&#9670;&nbsp;</a></span>import_rmvm_help_to()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -609,7 +610,7 @@ template&lt;typename type_t , typename _OP &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::import_help </td>
+          <td class="memname">void rm::import_rmvm_help_to </td>
           <td>(</td>
           <td class="paramtype">json &amp;&#160;</td>
           <td class="paramname"><em>j</em></td><td>)</td>
@@ -623,7 +624,15 @@ template&lt;typename type_t , typename _OP &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00332">332</a></p>
+<p>Загрузка руководства по использованию виртуальной машины </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">j</td><td>Ссылка на модель отношений куда необходимо подгрузить руководство</td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00335">335</a></p>
 
 </div>
 </div>
@@ -2446,7 +2455,7 @@ template&lt;typename type_t , typename _OP &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00736">736</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00394">394</a></p>
 
 </div>
 </div>

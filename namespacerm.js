@@ -36,7 +36,7 @@ var namespacerm =
     [ "ExecSubWhileObjTrue", "namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d", null ],
     [ "IfObjFalseThenExecSub", "namespacerm.html#a21ce290800600f428c14cf4b748528aa", null ],
     [ "IfObjTrueThenExecSub", "namespacerm.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b", null ],
-    [ "import_help", "namespacerm.html#ad5cf5268019123f7b388236d04c4de9b", null ],
+    [ "import_rmvm_help_to", "namespacerm.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d", null ],
     [ "ImportLoadDLLEntity", "namespacerm.html#a8600084aefb87317d1a6d5c773f87015", null ],
     [ "ImportRelationsModel", "namespacerm.html#a40026dc208cdba2b861d6b03f57c8690", null ],
     [ "json_catch", "namespacerm.html#a367173baa01f996fcba5afbe11a55b2f", null ],

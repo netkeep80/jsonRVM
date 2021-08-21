@@ -32,6 +32,7 @@ var NAVTREE =
         [ "1. ВСЕ СПЕЦ. СИМВОЛЫ ИСПОЛЬЗУЕМЫЕ ДЛЯ МАТЕМАТИКИ И ФИЗИКИ В UNICODE", "md_doc__mathematical_definition.html#autotoc_md4", null ]
       ] ]
     ] ],
+    [ "Словарь общепринятых терминов", "md_doc_wiki_concepts.html", null ],
     [ "Пространства имен", "namespaces.html", [
       [ "Пространства имен", "namespaces.html", "namespaces_dup" ],
       [ "Члены пространств имен", "namespacemembers.html", [
@@ -66,7 +67,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structrm_1_1__div.html#a6ec08309d7e7d68e7e2cb1ae43f05c58"
+"structrm_1_1__div.html#a4a5f37bd5e5dbe503537f3ab6ee8ea8a"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
