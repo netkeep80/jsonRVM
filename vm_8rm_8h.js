@@ -9,7 +9,6 @@ var vm_8rm_8h =
     [ "binary_view_map_t", "vm_8rm_8h.html#a870ad9b4a90cbda34085a4bf43ba0800", null ],
     [ "uchar", "vm_8rm_8h.html#a79dc907c1d0c1607554e0ffd5dec2fe0", null ],
     [ "ullong", "vm_8rm_8h.html#af3929f1e8f71dc2feef426c0111edd82", null ],
-    [ "import_rmvm_help_to", "vm_8rm_8h.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d", null ],
     [ "raise_128_to", "vm_8rm_8h.html#a7fdcc43bee8e2466b774069d9041d97a", null ],
     [ "str_hash", "vm_8rm_8h.html#a0ad0f31b74ac07b39e60ed23840944f0", null ],
     [ "str_hash_for_switch", "vm_8rm_8h.html#a508939cd6d81bcfa7092493074644f6c", null ],

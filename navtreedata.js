@@ -67,7 +67,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"structrm_1_1__div.html#a4a5f37bd5e5dbe503537f3ab6ee8ea8a"
+"structrm_1_1__add.html#a76ab05162b1a38f7455120a56dee672c"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

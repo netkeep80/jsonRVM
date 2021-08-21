@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="set_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-52-g69ff464</span>
+   &#160;<span id="projectnumber">2.6.0-53-g8c3d382</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -162,9 +162,6 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
 <tr class="separator:a508939cd6d81bcfa7092493074644f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52a2664bb7a24eb29684e27b73d3d69f"><td class="memItemLeft" align="right" valign="top">ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a52a2664bb7a24eb29684e27b73d3d69f">rm::s_s::str_hash_for_switch</a> (const std::string &amp;str)</td></tr>
 <tr class="separator:a52a2664bb7a24eb29684e27b73d3d69f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d">rm::import_rmvm_help_to</a> (json &amp;j)</td></tr>
-<tr class="memdesc:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Загрузка руководства по использованию виртуальной машины  <a href="namespacerm.html#ac369d0ac4f3a6d5c4a6cbcf68dfeb43d">Подробнее...</a><br /></td></tr>
-<tr class="separator:ac369d0ac4f3a6d5c4a6cbcf68dfeb43d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
@@ -194,12 +191,12 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
 <b>Макроопределение:</b><div class="fragment"><div class="line">static_assert(<a class="code" href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">s_s::str_is_correct</a>(str) &amp;&amp; (<a class="code" href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">s_s::str_len</a>(str) &lt;= <a class="code" href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">s_s::MAX_LEN</a>),\</div>
 <div class="line"><span class="stringliteral">&quot;CASE string contains wrong characters, or its length is greater than 9&quot;</span>);\</div>
 <div class="line">case <a class="code" href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">s_s::str_hash</a>(str, <a class="code" href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">s_s::str_len</a>(str))</div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a0ad0f31b74ac07b39e60ed23840944f0"><div class="ttname"><a href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">rm::s_s::str_hash</a></div><div class="ttdeci">constexpr ullong str_hash(const char *const str, const uchar current_len)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00325">vm.rm.h:325</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a19578f19aa53841fe8154a858fb0f360"><div class="ttname"><a href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">rm::s_s::MAX_LEN</a></div><div class="ttdeci">const uchar MAX_LEN</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00320">vm.rm.h:320</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a208f00f065027eaffd006286b8b604cb"><div class="ttname"><a href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">rm::s_s::str_is_correct</a></div><div class="ttdeci">constexpr bool str_is_correct(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00323">vm.rm.h:323</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a3726ab685042510712c131defa14b5fe"><div class="ttname"><a href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">rm::s_s::str_len</a></div><div class="ttdeci">constexpr uchar str_len(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00324">vm.rm.h:324</a></div></div>
+<div class="ttc" id="anamespacerm_1_1s__s_html_a0ad0f31b74ac07b39e60ed23840944f0"><div class="ttname"><a href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">rm::s_s::str_hash</a></div><div class="ttdeci">constexpr ullong str_hash(const char *const str, const uchar current_len)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00060">vm.rm.h:60</a></div></div>
+<div class="ttc" id="anamespacerm_1_1s__s_html_a19578f19aa53841fe8154a858fb0f360"><div class="ttname"><a href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">rm::s_s::MAX_LEN</a></div><div class="ttdeci">const uchar MAX_LEN</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00055">vm.rm.h:55</a></div></div>
+<div class="ttc" id="anamespacerm_1_1s__s_html_a208f00f065027eaffd006286b8b604cb"><div class="ttname"><a href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">rm::s_s::str_is_correct</a></div><div class="ttdeci">constexpr bool str_is_correct(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00058">vm.rm.h:58</a></div></div>
+<div class="ttc" id="anamespacerm_1_1s__s_html_a3726ab685042510712c131defa14b5fe"><div class="ttname"><a href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">rm::s_s::str_len</a></div><div class="ttdeci">constexpr uchar str_len(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00059">vm.rm.h:59</a></div></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00311">311</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00046">46</a></p>
 
 </div>
 </div>
@@ -215,7 +212,7 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00314">314</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00049">49</a></p>
 
 </div>
 </div>
@@ -235,7 +232,7 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00310">310</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00045">45</a></p>
 
 </div>
 </div>
