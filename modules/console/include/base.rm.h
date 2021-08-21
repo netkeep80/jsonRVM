@@ -35,6 +35,7 @@ SOFTWARE.
 #include <chrono>
 #include <thread>
 #include "vm.rm.h"
+#include "help.rm.h"
 
 namespace rm
 {
@@ -1113,7 +1114,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 
 	const string&	ImportRelationsModel(vm& rmvm)
 	{
-		import_rmvm_help_to(rmvm);
+		add_rmvm_help_to(rmvm);
 		rmvm["rmvm"]["version"] = rmvm_version;
 		rmvm.add_binary_view(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 		rmvm.add_binary_view(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);

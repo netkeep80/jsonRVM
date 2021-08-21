@@ -25,6 +25,7 @@ target_sources( ${TARGET_NAME} PRIVATE
     "${DOC_SOURCE_DIR}/Introduction.md"
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
     "${COMMON_SOURCE_DIR}/include/vm.rm.h"
+    "${COMMON_SOURCE_DIR}/include/help.rm.h"
     "${COMMON_SOURCE_DIR}/include/interface.h"
     "${COMMON_SOURCE_DIR}/include/database_api.h"
     "${COMMON_SOURCE_DIR}/include/string_utils.h"
