@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   &#160;<span id="projectnumber">2.6.0-55-g864cba1</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -142,8 +142,7 @@ $(document).ready(function(){initNavTree('md_doc__r_v_m.html',''); initResizable
 <div class="line">   &quot;C#view&quot;: &quot;this entity C# code view&quot;,</div>
 <div class="line">   &quot;$obj&quot;: &quot;object entity model&quot;,</div>
 <div class="line">   &quot;$rel&quot;: &quot;relation entity model&quot;,</div>
-<div class="line">   &quot;$sub&quot;: &quot;subject entity model&quot;,</div>
-<div class="line">   &quot;$its&quot;: &quot;entity instance projection value&quot;</div>
+<div class="line">   &quot;$sub&quot;: &quot;subject entity model&quot;</div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
 Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность</h1>
@@ -226,8 +225,19 @@ context_entity_value = $sub-&gt;$rel( context_entity_value, $obj );
 <p>"$$ent" - родительская контекстная сущность, примеры: "$$ent.$obj", "$$ent.some_flag" "$$sub" - родительская контекстный субъект , примеры: "$$sub.some_attribue", "$$sub[43]" "$$obj" - родительская контекстный объект, примеры: "$$obj.arg1", "$$obj[1]" "$$view" - родительское локальное адресное пространство, т.е. текущее значение проекции сущности, примеры: "$$view.local_var", "$$view.[353]"</p>
 <h1><a class="anchor" id="autotoc_md46"></a>
 Стэк</h1>
-<p>Стэк исполнения МО это древовидный стэк контекстов исполнения сущностей - экземпляров отношений. </p>
-</div></div><!-- contents -->
+<p>Стэк исполнения МО это древовидный стэк контекстов исполнения сущностей - экземпляров отношений.</p>
+<h1><a class="anchor" id="autotoc_md47"></a>
+Аналогия исполнения</h1>
+<p>Mapping OOP to EOP: </p><div class="fragment"><div class="line">(&amp;result ? result : *this) = this-&gt;class::method( &amp;args ? args : *this );</div>
+<div class="line">-------------------------------------------------------------------------</div>
+<div class="line">                                     ||</div>
+<div class="line">                                     ||</div>
+<div class="line">                                     ||</div>
+<div class="line">                                    \||/</div>
+<div class="line">                                     \/</div>
+<div class="line">-------------------------------------------------------------------------</div>
+<div class="line">(&amp;$.sub ? $.sub : $.rel) = $.rel-&gt;$.ent::$.rel( &amp;$.obj ? $.obj : $.rel );</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

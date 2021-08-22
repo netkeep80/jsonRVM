@@ -76,7 +76,8 @@ var NAVTREE =
       [ "Entity      | сущность, для которой надо создать дочерний контекст и исполнить", "md_doc__r_v_m.html#autotoc_md43", null ],
       [ "Программирование на МО", "md_doc__r_v_m.html#autotoc_md44", null ],
       [ "Контекст исполнения сущности", "md_doc__r_v_m.html#autotoc_md45", null ],
-      [ "Стэк", "md_doc__r_v_m.html#autotoc_md46", null ]
+      [ "Стэк", "md_doc__r_v_m.html#autotoc_md46", null ],
+      [ "Аналогия исполнения", "md_doc__r_v_m.html#autotoc_md47", null ]
     ] ],
     [ "Словарь общепринятых терминов", "md_doc_wiki_concepts.html", null ],
     [ "Пространства имен", "namespaces.html", [
@@ -113,7 +114,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespacerm.html#acd8c8701c11203b3207ae27f3c1be215"
+"namespacerm.html#ac3f17455016cb3af6b33d43103d8148f"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

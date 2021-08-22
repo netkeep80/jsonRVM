@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['value_5fxor_5farray_275',['value_xor_array',['../namespacerm.html#a7a4003479b4ae7071bb2f472d77c0d48',1,'rm']]],
-  ['vm_276',['vm',['../classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec',1,'rm::vm']]],
-  ['vm_5fctx_277',['vm_ctx',['../structrm_1_1vm__ctx.html#a6121f8048ad8092f1800e30b2bd70fc7',1,'rm::vm_ctx::vm_ctx(json &amp;Its, json &amp;Obj, json &amp;Sub, json &amp;Ent, vm_ctx &amp;Ctx)'],['../structrm_1_1vm__ctx.html#ac62afdab4ece819a3587dd51bc19b717',1,'rm::vm_ctx::vm_ctx(json &amp;Its, json &amp;Ent)'],['../structrm_1_1vm__ctx.html#ad36d0a0d054d3e610f8384c1b4657b83',1,'rm::vm_ctx::vm_ctx(json &amp;Its)']]]
+  ['wstring_5fto_5f_259',['wstring_to_',['../string__utils_8h.html#a4740d9d1f20e5c6e0dcf0f113c71ce16',1,'string_utils.h']]],
+  ['wstring_5fto_5fcp1251_260',['wstring_to_cp1251',['../string__utils_8h.html#add066b89223564bc52aada71bde6a07e',1,'string_utils.h']]],
+  ['wstring_5fto_5futf8_261',['wstring_to_utf8',['../string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2',1,'string_utils.h']]]
 ];

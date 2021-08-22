@@ -1,17 +1,5 @@
 var namespacerm =
 [
-    [ "s_s", "namespacerm_1_1s__s.html", [
-      [ "uchar", "namespacerm_1_1s__s.html#a79dc907c1d0c1607554e0ffd5dec2fe0", null ],
-      [ "ullong", "namespacerm_1_1s__s.html#af3929f1e8f71dc2feef426c0111edd82", null ],
-      [ "raise_128_to", "namespacerm_1_1s__s.html#a7fdcc43bee8e2466b774069d9041d97a", null ],
-      [ "str_hash", "namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0", null ],
-      [ "str_hash_for_switch", "namespacerm_1_1s__s.html#a508939cd6d81bcfa7092493074644f6c", null ],
-      [ "str_hash_for_switch", "namespacerm_1_1s__s.html#a52a2664bb7a24eb29684e27b73d3d69f", null ],
-      [ "str_is_correct", "namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb", null ],
-      [ "str_len", "namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe", null ],
-      [ "MAX_LEN", "namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360", null ],
-      [ "N_HASH", "namespacerm_1_1s__s.html#ac4e0b47437c90f9b4f29a7178018e06d", null ]
-    ] ],
     [ "database_api", "classrm_1_1database__api.html", "classrm_1_1database__api" ],
     [ "interface_t", "classrm_1_1interface__t.html", "classrm_1_1interface__t" ],
     [ "vm_ctx", "structrm_1_1vm__ctx.html", "structrm_1_1vm__ctx" ],
@@ -36,8 +24,8 @@ var namespacerm =
     [ "ExecSubWhileObjTrue", "namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d", null ],
     [ "IfObjFalseThenExecSub", "namespacerm.html#a21ce290800600f428c14cf4b748528aa", null ],
     [ "IfObjTrueThenExecSub", "namespacerm.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b", null ],
+    [ "import_relations_model_to", "namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0", null ],
     [ "ImportLoadDLLEntity", "namespacerm.html#a8600084aefb87317d1a6d5c773f87015", null ],
-    [ "ImportRelationsModel", "namespacerm.html#a40026dc208cdba2b861d6b03f57c8690", null ],
     [ "json_catch", "namespacerm.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "namespacerm.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
     [ "json_switch_bool", "namespacerm.html#a1d960d8aaa961cf261e075550cb2c028", null ],

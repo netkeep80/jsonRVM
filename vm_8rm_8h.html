@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   &#160;<span id="projectnumber">2.6.0-55-g864cba1</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -89,20 +89,19 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
   <div class="summary">
 <a href="#nested-classes">Классы</a> &#124;
 <a href="#namespaces">Пространства имен</a> &#124;
-<a href="#define-members">Макросы</a> &#124;
 <a href="#typedef-members">Определения типов</a> &#124;
-<a href="#func-members">Функции</a> &#124;
 <a href="#var-members">Переменные</a>  </div>
   <div class="headertitle">
 <div class="title">Файл vm.rm.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="database__api_8h_source.html">database_api.h</a>&quot;</code><br />
-<code>#include &quot;json.hpp&quot;</code><br />
+<code>#include &quot;nlohmann/json.hpp&quot;</code><br />
+<code>#include &quot;str_switch/str_switch.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Граф включаемых заголовочных файлов для vm.rm.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="vm_8rm_8h__incl.svg" width="196" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="vm_8rm_8h__incl.svg" width="378" height="202"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -125,117 +124,19 @@ $(document).ready(function(){initNavTree('vm_8rm_8h.html',''); initResizable(); 
 Пространства имен</h2></td></tr>
 <tr class="memitem:namespacerm"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html">rm</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacerm_1_1s__s"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html">rm::s_s</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Макросы</h2></td></tr>
-<tr class="memitem:a5376bbdcf72dbdc027a85ccc9d949cf6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vm_8rm_8h.html#a5376bbdcf72dbdc027a85ccc9d949cf6">SWITCH</a>(str)&#160;&#160;&#160;switch(s_s::str_hash_for_switch(str))</td></tr>
-<tr class="separator:a5376bbdcf72dbdc027a85ccc9d949cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed420f27f8605bb822f942a3d4c2cc71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vm_8rm_8h.html#aed420f27f8605bb822f942a3d4c2cc71">CASE</a>(str)</td></tr>
-<tr class="separator:aed420f27f8605bb822f942a3d4c2cc71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3da44afeba217135a680a7477b5e3ce3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vm_8rm_8h.html#a3da44afeba217135a680a7477b5e3ce3">DEFAULT</a>&#160;&#160;&#160;default</td></tr>
-<tr class="separator:a3da44afeba217135a680a7477b5e3ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Определения типов</h2></td></tr>
-<tr class="memitem:a79dc907c1d0c1607554e0ffd5dec2fe0"><td class="memItemLeft" align="right" valign="top">typedef unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a79dc907c1d0c1607554e0ffd5dec2fe0">rm::s_s::uchar</a></td></tr>
-<tr class="separator:a79dc907c1d0c1607554e0ffd5dec2fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3929f1e8f71dc2feef426c0111edd82"><td class="memItemLeft" align="right" valign="top">typedef unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#af3929f1e8f71dc2feef426c0111edd82">rm::s_s::ullong</a></td></tr>
-<tr class="separator:af3929f1e8f71dc2feef426c0111edd82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89a608ae2bcb4c994d843008354fe993"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">rm::binary_view</a> = void(*)(vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:a89a608ae2bcb4c994d843008354fe993"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a870ad9b4a90cbda34085a4bf43ba0800"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">rm::binary_view_map_t</a> = map&lt; json const  *, binary_view &gt;</td></tr>
 <tr class="separator:a870ad9b4a90cbda34085a4bf43ba0800"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Функции</h2></td></tr>
-<tr class="memitem:a7fdcc43bee8e2466b774069d9041d97a"><td class="memItemLeft" align="right" valign="top">constexpr ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a7fdcc43bee8e2466b774069d9041d97a">rm::s_s::raise_128_to</a> (const uchar power)</td></tr>
-<tr class="separator:a7fdcc43bee8e2466b774069d9041d97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a208f00f065027eaffd006286b8b604cb"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">rm::s_s::str_is_correct</a> (const char *const str)</td></tr>
-<tr class="separator:a208f00f065027eaffd006286b8b604cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3726ab685042510712c131defa14b5fe"><td class="memItemLeft" align="right" valign="top">constexpr uchar&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">rm::s_s::str_len</a> (const char *const str)</td></tr>
-<tr class="separator:a3726ab685042510712c131defa14b5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ad0f31b74ac07b39e60ed23840944f0"><td class="memItemLeft" align="right" valign="top">constexpr ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">rm::s_s::str_hash</a> (const char *const str, const uchar current_len)</td></tr>
-<tr class="separator:a0ad0f31b74ac07b39e60ed23840944f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a508939cd6d81bcfa7092493074644f6c"><td class="memItemLeft" align="right" valign="top">ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a508939cd6d81bcfa7092493074644f6c">rm::s_s::str_hash_for_switch</a> (const char *const str)</td></tr>
-<tr class="separator:a508939cd6d81bcfa7092493074644f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52a2664bb7a24eb29684e27b73d3d69f"><td class="memItemLeft" align="right" valign="top">ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a52a2664bb7a24eb29684e27b73d3d69f">rm::s_s::str_hash_for_switch</a> (const std::string &amp;str)</td></tr>
-<tr class="separator:a52a2664bb7a24eb29684e27b73d3d69f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a19578f19aa53841fe8154a858fb0f360"><td class="memItemLeft" align="right" valign="top">const uchar&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">rm::s_s::MAX_LEN</a> = 7</td></tr>
-<tr class="separator:a19578f19aa53841fe8154a858fb0f360"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4e0b47437c90f9b4f29a7178018e06d"><td class="memItemLeft" align="right" valign="top">const ullong&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm_1_1s__s.html#ac4e0b47437c90f9b4f29a7178018e06d">rm::s_s::N_HASH</a> = static_cast&lt;ullong&gt;(-1)</td></tr>
-<tr class="separator:ac4e0b47437c90f9b4f29a7178018e06d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9aa14bf1a1753d28ffae697e900214d"><td class="memItemLeft" align="right" valign="top">const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a> = &quot;3.0.0&quot;s</td></tr>
 <tr class="separator:ad9aa14bf1a1753d28ffae697e900214d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Макросы</h2>
-<a id="aed420f27f8605bb822f942a3d4c2cc71"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed420f27f8605bb822f942a3d4c2cc71">&#9670;&nbsp;</a></span>CASE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CASE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">str</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Макроопределение:</b><div class="fragment"><div class="line">static_assert(<a class="code" href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">s_s::str_is_correct</a>(str) &amp;&amp; (<a class="code" href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">s_s::str_len</a>(str) &lt;= <a class="code" href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">s_s::MAX_LEN</a>),\</div>
-<div class="line"><span class="stringliteral">&quot;CASE string contains wrong characters, or its length is greater than 9&quot;</span>);\</div>
-<div class="line">case <a class="code" href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">s_s::str_hash</a>(str, <a class="code" href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">s_s::str_len</a>(str))</div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a0ad0f31b74ac07b39e60ed23840944f0"><div class="ttname"><a href="namespacerm_1_1s__s.html#a0ad0f31b74ac07b39e60ed23840944f0">rm::s_s::str_hash</a></div><div class="ttdeci">constexpr ullong str_hash(const char *const str, const uchar current_len)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00060">vm.rm.h:60</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a19578f19aa53841fe8154a858fb0f360"><div class="ttname"><a href="namespacerm_1_1s__s.html#a19578f19aa53841fe8154a858fb0f360">rm::s_s::MAX_LEN</a></div><div class="ttdeci">const uchar MAX_LEN</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00055">vm.rm.h:55</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a208f00f065027eaffd006286b8b604cb"><div class="ttname"><a href="namespacerm_1_1s__s.html#a208f00f065027eaffd006286b8b604cb">rm::s_s::str_is_correct</a></div><div class="ttdeci">constexpr bool str_is_correct(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00058">vm.rm.h:58</a></div></div>
-<div class="ttc" id="anamespacerm_1_1s__s_html_a3726ab685042510712c131defa14b5fe"><div class="ttname"><a href="namespacerm_1_1s__s.html#a3726ab685042510712c131defa14b5fe">rm::s_s::str_len</a></div><div class="ttdeci">constexpr uchar str_len(const char *const str)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00059">vm.rm.h:59</a></div></div>
-</div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00046">46</a></p>
-
-</div>
-</div>
-<a id="a3da44afeba217135a680a7477b5e3ce3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3da44afeba217135a680a7477b5e3ce3">&#9670;&nbsp;</a></span>DEFAULT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFAULT&#160;&#160;&#160;default</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00049">49</a></p>
-
-</div>
-</div>
-<a id="a5376bbdcf72dbdc027a85ccc9d949cf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5376bbdcf72dbdc027a85ccc9d949cf6">&#9670;&nbsp;</a></span>SWITCH</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SWITCH</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">str</td><td>)</td>
-          <td>&#160;&#160;&#160;switch(s_s::str_hash_for_switch(str))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00045">45</a></p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

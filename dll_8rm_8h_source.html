@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   &#160;<span id="projectnumber">2.6.0-55-g864cba1</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('dll_8rm_8h_source.html',''); initResiz
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">Fractal Triune Entity</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">Licensed under the MIT License &lt;http://opensource.org/licenses/MIT&gt;.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">Copyright � 2016 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">Copyright (c) 2016-2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">Permission is hereby granted, free of charge, to any person obtaining a copy</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">of this software and associated documentation files (the &quot;Software&quot;), to deal</span></div>
@@ -205,7 +205,7 @@ $(document).ready(function(){initNavTree('dll_8rm_8h_source.html',''); initResiz
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordflow">catch</span> (std::exception&amp; e) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;std::exception: &quot;</span>s + e.what()); }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <span class="keywordflow">catch</span> (...) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;unknown exception&quot;</span>s); }</div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        $.its = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        $.rel = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;$obj must be json object with PathFolder, FileName properties!&quot;</span>s);</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
@@ -225,21 +225,21 @@ $(document).ready(function(){initNavTree('dll_8rm_8h_source.html',''); initResiz
 <div class="ttc" id="aclassrm_1_1_d_l_ls_html_a0a32f209e124d4dc277ea0d0a1bfc4c0"><div class="ttname"><a href="classrm_1_1_d_l_ls.html#a0a32f209e124d4dc277ea0d0a1bfc4c0">rm::DLLs::~DLLs</a></div><div class="ttdeci">~DLLs()</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00054">dll.rm.h:54</a></div></div>
 <div class="ttc" id="aclassrm_1_1_d_l_ls_html_a2e7ee51e5f338ec634b5d30326e8462d"><div class="ttname"><a href="classrm_1_1_d_l_ls.html#a2e7ee51e5f338ec634b5d30326e8462d">rm::DLLs::LoadDict</a></div><div class="ttdeci">void LoadDict(const string &amp;LibName)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00064">dll.rm.h:64</a></div></div>
 <div class="ttc" id="aclassrm_1_1_d_l_ls_html_ae2e532f0ecb570cae63337aa8430a1b2"><div class="ttname"><a href="classrm_1_1_d_l_ls.html#ae2e532f0ecb570cae63337aa8430a1b2">rm::DLLs::DLLs</a></div><div class="ttdeci">DLLs()=default</div></div>
-<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00129">vm.rm.h:130</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_adca46c222118f00067e029239771d25d"><div class="ttname"><a href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">rm::vm::add_binary_view</a></div><div class="ttdeci">json &amp; add_binary_view(json &amp;entity, const string &amp;name, const binary_view view, const string &amp;description)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00419">vm.rm.h:419</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00092">vm.rm.h:93</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_adca46c222118f00067e029239771d25d"><div class="ttname"><a href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">rm::vm::add_binary_view</a></div><div class="ttdeci">json &amp; add_binary_view(json &amp;entity, const string &amp;name, const binary_view view, const string &amp;description)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00332">vm.rm.h:332</a></div></div>
 <div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:7</a></div></div>
 <div class="ttc" id="anamespacerm_html_a0d97929631e4a2001b614b3b3d932cb1"><div class="ttname"><a href="namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1">rm::LoadedDLLs</a></div><div class="ttdeci">rm::DLLs LoadedDLLs</div></div>
 <div class="ttc" id="anamespacerm_html_a5f8bbb9c4741de4185d81c9fdbb9f743"><div class="ttname"><a href="namespacerm.html#a5f8bbb9c4741de4185d81c9fdbb9f743">rm::LoadAndInitDict</a></div><div class="ttdeci">const string &amp; LoadAndInitDict(const string &amp;LibName, vm &amp;Ent)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00090">dll.rm.h:90</a></div></div>
 <div class="ttc" id="anamespacerm_html_a8600084aefb87317d1a6d5c773f87015"><div class="ttname"><a href="namespacerm.html#a8600084aefb87317d1a6d5c773f87015">rm::ImportLoadDLLEntity</a></div><div class="ttdeci">const string &amp; ImportLoadDLLEntity(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00123">dll.rm.h:123</a></div></div>
 <div class="ttc" id="anamespacerm_html_ab3fa9181d2cb8044b78cabed19818b09"><div class="ttname"><a href="namespacerm.html#ab3fa9181d2cb8044b78cabed19818b09">rm::jsonLoadDLL</a></div><div class="ttdeci">void jsonLoadDLL(vm &amp;rmvm, vm_ctx &amp;$)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00098">dll.rm.h:98</a></div></div>
-<div class="ttc" id="anamespacerm_html_ad9aa14bf1a1753d28ffae697e900214d"><div class="ttname"><a href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a></div><div class="ttdeci">const string rmvm_version</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00067">vm.rm.h:67</a></div></div>
+<div class="ttc" id="anamespacerm_html_ad9aa14bf1a1753d28ffae697e900214d"><div class="ttname"><a href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a></div><div class="ttdeci">const string rmvm_version</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00041">vm.rm.h:41</a></div></div>
 <div class="ttc" id="astring__utils_8h_html"><div class="ttname"><a href="string__utils_8h.html">string_utils.h</a></div></div>
 <div class="ttc" id="astring__utils_8h_html_a280cf15c4682cd6a8336610a45b3da12"><div class="ttname"><a href="string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12">utf8_to_wstring</a></div><div class="ttdeci">wstring utf8_to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition:</b> <a href="string__utils_8h_source.html#l00071">string_utils.h:71</a></div></div>
 <div class="ttc" id="astructrm_1_1_d_l_l_html"><div class="ttname"><a href="structrm_1_1_d_l_l.html">rm::DLL</a></div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00042">dll.rm.h:43</a></div></div>
 <div class="ttc" id="astructrm_1_1_d_l_l_html_a0902f31f222d9159864ff6f027e556ef"><div class="ttname"><a href="structrm_1_1_d_l_l.html#a0902f31f222d9159864ff6f027e556ef">rm::DLL::Init</a></div><div class="ttdeci">InitDict Init</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00045">dll.rm.h:45</a></div></div>
 <div class="ttc" id="astructrm_1_1_d_l_l_html_a6575e2b3bca060de5a199bbd4d3fb477"><div class="ttname"><a href="structrm_1_1_d_l_l.html#a6575e2b3bca060de5a199bbd4d3fb477">rm::DLL::DLL</a></div><div class="ttdeci">DLL()</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00046">dll.rm.h:46</a></div></div>
 <div class="ttc" id="astructrm_1_1_d_l_l_html_aa393228292b089764d59aa344a8de822"><div class="ttname"><a href="structrm_1_1_d_l_l.html#aa393228292b089764d59aa344a8de822">rm::DLL::handle</a></div><div class="ttdeci">HMODULE handle</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00044">dll.rm.h:44</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html"><div class="ttname"><a href="structrm_1_1vm__ctx.html">rm::vm_ctx</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00087">vm.rm.h:88</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html"><div class="ttname"><a href="structrm_1_1vm__ctx.html">rm::vm_ctx</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00059">vm.rm.h:60</a></div></div>
 <div class="ttc" id="avm_8rm_8h_html"><div class="ttname"><a href="vm_8rm_8h.html">vm.rm.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

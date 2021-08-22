@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   &#160;<span id="projectnumber">2.6.0-55-g864cba1</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">Fractal Triune Entity</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">Licensed under the MIT License &lt;http://opensource.org/licenses/MIT&gt;.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">Copyright � 2016 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">Copyright (c) 2016-2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span> </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">Permission is hereby granted, free of charge, to any person obtaining a copy</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">of this software and associated documentation files (the &quot;Software&quot;), to deal</span></div>
@@ -167,7 +167,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;Fractal Triune Entity                                                         &quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;                                                                              &quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;Licensed under the MIT License &lt;http://opensource.org/licenses/MIT&gt;.          &quot;</span> &lt;&lt; endl;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;Copyright (c) 2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.&quot;</span> &lt;&lt; endl;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;Copyright (c) 2016-2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.&quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;                                                                              &quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;Usage:                                                                        &quot;</span> &lt;&lt; endl;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;       rmvm.exe [entry_point]                                                 &quot;</span> &lt;&lt; endl;</div>
@@ -213,7 +213,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    }</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <span class="comment">//  base vocabulary</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <a class="code" href="namespacerm.html#a40026dc208cdba2b861d6b03f57c8690">ImportRelationsModel</a>(root);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <a class="code" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a>(root);</div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <a class="code" href="namespacerm.html#a8600084aefb87317d1a6d5c773f87015">ImportLoadDLLEntity</a>(root);</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;    <span class="keywordflow">if</span> (!strcmp(entry_point, <span class="stringliteral">&quot;rmvm.exe&quot;</span>))</div>
@@ -224,7 +224,7 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    </div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordflow">try</span></div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    {</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        cout &lt;&lt; root.<a class="code" href="classrm_1_1vm.html#a792dc83d485cccaa1ad0faae39de0a53">exec</a>(res, json(entry_point)).dump(2);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        cout &lt;&lt; root.<a class="code" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">exec_ent</a>(res, json(entry_point)).dump(2);</div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">return</span> 0;   <span class="comment">//  ok</span></div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;    <span class="keywordflow">catch</span> (json&amp; j)</div>
@@ -237,17 +237,17 @@ $(document).ready(function(){initNavTree('main_8cpp_source.html',''); initResiza
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;}</div>
 <div class="ttc" id="abase_8rm_8h_html"><div class="ttname"><a href="base_8rm_8h.html">base.rm.h</a></div></div>
 <div class="ttc" id="aclassrm_1_1file__database__t_html"><div class="ttname"><a href="classrm_1_1file__database__t.html">rm::file_database_t</a></div><div class="ttdef"><b>Definition:</b> <a href="file__database_8h_source.html#l00045">file_database.h:46</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00129">vm.rm.h:130</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_a792dc83d485cccaa1ad0faae39de0a53"><div class="ttname"><a href="classrm_1_1vm.html#a792dc83d485cccaa1ad0faae39de0a53">rm::vm::exec</a></div><div class="ttdeci">json &amp; exec(json &amp;its, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00274">vm.rm.h:274</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00092">vm.rm.h:93</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_a4d10fb6a2ccf5480b54846b05e2f7e81"><div class="ttname"><a href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">rm::vm::exec_ent</a></div><div class="ttdeci">json &amp; exec_ent(json &amp;rel, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00237">vm.rm.h:237</a></div></div>
 <div class="ttc" id="adll_8rm_8h_html"><div class="ttname"><a href="dll_8rm_8h.html">dll.rm.h</a></div></div>
 <div class="ttc" id="afile__database_8h_html"><div class="ttname"><a href="file__database_8h.html">file_database.h</a></div></div>
 <div class="ttc" id="amain_8cpp_html_a0ddf1224851353fc92bfbff6f499fa97"><div class="ttname"><a href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a></div><div class="ttdeci">int main(int argc, char *argv[])</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00055">main.cpp:55</a></div></div>
 <div class="ttc" id="amain_8cpp_html_a93b2804ff5b3e0174fc953cfd6952713"><div class="ttname"><a href="main_8cpp.html#a93b2804ff5b3e0174fc953cfd6952713">dump_json</a></div><div class="ttdeci">void dump_json(string &amp;filename, json &amp;res)</div><div class="ttdef"><b>Definition:</b> <a href="main_8cpp_source.html#l00045">main.cpp:45</a></div></div>
 <div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:7</a></div></div>
-<div class="ttc" id="anamespacerm_html_a40026dc208cdba2b861d6b03f57c8690"><div class="ttname"><a href="namespacerm.html#a40026dc208cdba2b861d6b03f57c8690">rm::ImportRelationsModel</a></div><div class="ttdeci">const string &amp; ImportRelationsModel(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l01114">base.rm.h:1114</a></div></div>
+<div class="ttc" id="anamespacerm_html_a555b1c8445cfb272aa963e8a018a08f0"><div class="ttname"><a href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a></div><div class="ttdeci">const string &amp; import_relations_model_to(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l01114">base.rm.h:1114</a></div></div>
 <div class="ttc" id="anamespacerm_html_a5f8bbb9c4741de4185d81c9fdbb9f743"><div class="ttname"><a href="namespacerm.html#a5f8bbb9c4741de4185d81c9fdbb9f743">rm::LoadAndInitDict</a></div><div class="ttdeci">const string &amp; LoadAndInitDict(const string &amp;LibName, vm &amp;Ent)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00090">dll.rm.h:90</a></div></div>
 <div class="ttc" id="anamespacerm_html_a8600084aefb87317d1a6d5c773f87015"><div class="ttname"><a href="namespacerm.html#a8600084aefb87317d1a6d5c773f87015">rm::ImportLoadDLLEntity</a></div><div class="ttdeci">const string &amp; ImportLoadDLLEntity(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="dll_8rm_8h_source.html#l00123">dll.rm.h:123</a></div></div>
-<div class="ttc" id="anamespacerm_html_ad9aa14bf1a1753d28ffae697e900214d"><div class="ttname"><a href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a></div><div class="ttdeci">const string rmvm_version</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00067">vm.rm.h:67</a></div></div>
+<div class="ttc" id="anamespacerm_html_ad9aa14bf1a1753d28ffae697e900214d"><div class="ttname"><a href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a></div><div class="ttdeci">const string rmvm_version</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00041">vm.rm.h:41</a></div></div>
 <div class="ttc" id="avm_8rm_8h_html"><div class="ttname"><a href="vm_8rm_8h.html">vm.rm.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

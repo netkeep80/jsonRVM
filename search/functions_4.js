@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['exec_207',['exec',['../classrm_1_1vm.html#a792dc83d485cccaa1ad0faae39de0a53',1,'rm::vm::exec(json &amp;its, json &amp;ent)'],['../classrm_1_1vm.html#a079eacb991208ee8efa784df7cdb4c13',1,'rm::vm::exec(vm_ctx &amp;$, json &amp;ent)']]],
-  ['execsubwhileobjtrue_208',['ExecSubWhileObjTrue',['../namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d',1,'rm']]]
+  ['exec_5fent_193',['exec_ent',['../classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81',1,'rm::vm::exec_ent(json &amp;rel, json &amp;ent)'],['../classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f',1,'rm::vm::exec_ent(vm_ctx &amp;$, json &amp;ent)']]],
+  ['execsubwhileobjtrue_194',['ExecSubWhileObjTrue',['../namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d',1,'rm']]]
 ];

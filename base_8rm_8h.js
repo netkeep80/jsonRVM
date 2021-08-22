@@ -27,7 +27,7 @@ var base_8rm_8h =
     [ "ExecSubWhileObjTrue", "base_8rm_8h.html#a2311aed65961ce3a449f4d2eb1d0a86d", null ],
     [ "IfObjFalseThenExecSub", "base_8rm_8h.html#a21ce290800600f428c14cf4b748528aa", null ],
     [ "IfObjTrueThenExecSub", "base_8rm_8h.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b", null ],
-    [ "ImportRelationsModel", "base_8rm_8h.html#a40026dc208cdba2b861d6b03f57c8690", null ],
+    [ "import_relations_model_to", "base_8rm_8h.html#a555b1c8445cfb272aa963e8a018a08f0", null ],
     [ "json_catch", "base_8rm_8h.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "base_8rm_8h.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
     [ "json_switch_bool", "base_8rm_8h.html#a1d960d8aaa961cf261e075550cb2c028", null ],

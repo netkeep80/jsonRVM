@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   &#160;<span id="projectnumber">2.6.0-55-g864cba1</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 </div><div class="textblock"><div class="dynheader">
 Граф включаемых заголовочных файлов для base.rm.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="base_8rm_8h__incl.svg" width="391" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="base_8rm_8h__incl.svg" width="504" height="276"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -298,8 +298,8 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplParams" colspan="2">template&lt;class duration &gt; </td></tr>
 <tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a61fe0893d05c0eb63e7f23f4e3a447cc">rm::steady_clock_</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40026dc208cdba2b861d6b03f57c8690"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a40026dc208cdba2b861d6b03f57c8690">rm::ImportRelationsModel</a> (vm &amp;rmvm)</td></tr>
-<tr class="separator:a40026dc208cdba2b861d6b03f57c8690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a555b1c8445cfb272aa963e8a018a08f0"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a> (vm &amp;rmvm)</td></tr>
+<tr class="separator:a555b1c8445cfb272aa963e8a018a08f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Макросы</h2>
 <a id="a181d9fd7e55679e7b17ed6076a023b84"></a>
@@ -367,7 +367,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 </div><div class="memdoc">
 <b>Макроопределение:</b><div class="fragment"><div class="line">        <span class="keywordtype">void</span>  json_call_##static_method(vm&amp; rmvm, vm_ctx&amp; $)    \</div>
 <div class="line">        {                                                                       \</div>
-<div class="line">            $.its = json::##static_method();                                    \</div>
+<div class="line">            $.rel = json::##static_method();                                    \</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
 <p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00995">995</a></p>
@@ -454,7 +454,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <b>Макроопределение:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span>  json##name (vm&amp; rmvm, vm_ctx&amp; $)          \</div>
 <div class="line">{                                                                                               \</div>
 <div class="line">    switch( (uint8_t($.sub.type()) &lt;&lt; <a class="code" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>) | uint8_t($.obj.type()) )                          \</div>
-<div class="line">    { <a class="code" href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a>( operation ) <span class="keywordflow">default</span>: $.its = json(); }                                                \</div>
+<div class="line">    { <a class="code" href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a>( operation ) <span class="keywordflow">default</span>: $.rel = json(); }                                                \</div>
 <div class="line">}</div>
 <div class="ttc" id="abase_8rm_8h_html_a28fbf920b2d47185312cbb470fd929b3"><div class="ttname"><a href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a></div><div class="ttdeci">#define VM_OPP(operation)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00296">base.rm.h:296</a></div></div>
 <div class="ttc" id="abase_8rm_8h_html_a550d7718a13f71b6cc469d1e2a1fd5d3"><div class="ttname"><a href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a></div><div class="ttdeci">#define sub_field</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00284">base.rm.h:284</a></div></div>
@@ -550,7 +550,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
       </table>
 </div><div class="memdoc">
 <b>Макроопределение:</b><div class="fragment"><div class="line">    <span class="keywordflow">case</span> (uint8_t(json::value_t::stype_id) &lt;&lt; <a class="code" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>) | uint8_t(json::value_t::otype_id):    \</div>
-<div class="line">    { $.its = ($.sub.get&lt;stype&gt;()) operation ($.obj.get&lt;otype&gt;()); <span class="keywordflow">return</span>; }</div>
+<div class="line">    { $.rel = ($.sub.get&lt;stype&gt;()) operation ($.obj.get&lt;otype&gt;()); <span class="keywordflow">return</span>; }</div>
 </div><!-- fragment -->
 <p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00287">287</a></p>
 
