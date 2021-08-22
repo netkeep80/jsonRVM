@@ -34,6 +34,7 @@ SOFTWARE.
 #include "database_api.h"
 #include "nlohmann/json.hpp"
 #include "str_switch/str_switch.h"
+#include <string_view>
 
 namespace rm
 {
@@ -146,6 +147,7 @@ namespace rm
 
 			size_t	prev = pos + 1;
 			string	it = str.substr(0, pos);
+			//auto	it = string_view(str.c_str(), pos);
 
 			SWITCH(it)
 			{

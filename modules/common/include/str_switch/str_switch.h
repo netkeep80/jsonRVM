@@ -2,6 +2,7 @@
 #define STR_SWITCH_H
 
 #include <string>
+#include <string_view>
 
 #define SWITCH(str)  switch(s_s::str_hash_for_switch(str))
 #define CASE(str)    static_assert(s_s::str_is_correct(str) && (s_s::str_len(str) <= s_s::MAX_LEN),\
@@ -27,6 +28,11 @@ namespace s_s
         return (static_cast<signed char>(*str) > 0) ? str_is_correct(str + 1) : (*str ? false : true);
     }
 
+    constexpr bool str_is_correct(const std::string_view& str)
+    {
+        return str.size() ? (static_cast<signed char>(str[0]) > 0) && str_is_correct(str.substr(1, str.size() - 1)) : true;
+    }
+
     constexpr uchar str_len(const char* const str)
     {
         return *str ? (1 + str_len(str + 1)) : 0;
@@ -37,6 +43,11 @@ namespace s_s
         return *str ? (raise_128_to(current_len - 1) * static_cast<uchar>(*str) + str_hash(str + 1, current_len - 1)) : 0;
     }
 
+    constexpr ullong str_hash(const std::string_view& str)
+    {
+        return str.size() ? (raise_128_to(str.size() - 1) * static_cast<uchar>(str[0]) + str_hash(str.substr(1, str.size() - 1))) : 0;
+    }
+
     inline ullong str_hash_for_switch(const char* const str)
     {
         return (str_is_correct(str) && (str_len(str) <= MAX_LEN)) ? str_hash(str, str_len(str)) : N_HASH;
@@ -45,6 +56,11 @@ namespace s_s
     inline ullong str_hash_for_switch(const std::string& str)
     {
         return (str_is_correct(str.c_str()) && (str.length() <= MAX_LEN)) ? str_hash(str.c_str(), str.length()) : N_HASH;
+    }
+
+    inline ullong str_hash_for_switch(const std::string_view& str)
+    {
+        return (str_is_correct(str) && (str.size() <= MAX_LEN)) ? str_hash(str) : N_HASH;
     }
 }
 
