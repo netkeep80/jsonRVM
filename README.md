@@ -3,9 +3,10 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/netkeep80/jsonRVM)
 [![GitHub](https://img.shields.io/github/license/netkeep80/jsonRVM)](https://github.com/netkeep80/jsonRVM/blob/master/LICENSE)
 
-<p align="center"><img src="doc/set_view.jpg"></p>
+<p align="center"><img src="rm_view.jpg"></p>
 
 # json Relations (Model) Virtual Machine
+```
             R
          S__|__O
        O   _|_   S     Fractal
@@ -15,7 +16,7 @@
           __|__
          /  |  \
         /___|___\
-
+```
 ## jsonRVM Documentation
 
 [By Doxygen on russian.](https://netkeep80.github.io/jsonRVM/)
