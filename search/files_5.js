@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['main_2ecpp_172',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mathematical_5fdefinition_2emd_173',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]]
+  ['readme_2emd_183',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['rm_2emd_184',['RM.md',['../_r_m_8md.html',1,'']]],
+  ['rm_5fview_2ejpg_185',['rm_view.jpg',['../rm__view_8jpg.html',1,'']]],
+  ['rvm_2emd_186',['RVM.md',['../_r_v_m_8md.html',1,'']]]
 ];

@@ -28,7 +28,6 @@ var namespacerm =
     [ "jf", "namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a", null ],
     [ "ji", "namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7", null ],
     [ "ju", "namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721", null ],
-    [ "add_rmvm_help_to", "namespacerm.html#acbb1f5dc44397b167a0c54aa314abc7b", null ],
     [ "array_operation", "namespacerm.html#a4116e28ead727b00b849232b3d923ce4", null ],
     [ "array_xor_value", "namespacerm.html#a7ae12d755f25ecbb79359e21c2765fa7", null ],
     [ "define_json_is_type", "namespacerm.html#acd8c8701c11203b3207ae27f3c1be215", null ],

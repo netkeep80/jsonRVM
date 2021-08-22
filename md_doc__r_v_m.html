@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jsonRVM: Реляционная виртуальная машина</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">jsonRVM
+   &#160;<span id="projectnumber">2.6.0-54-gfe109f6</span>
+   </div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('md_doc__r_v_m.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="PageDoc"><div class="header">
+  <div class="headertitle">
+<div class="title">Реляционная виртуальная машина </div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md19"></a>
+Инициализация</h1>
+<p>Алгоритм исполнения json после загрузки: </p><pre class="fragment">1. json после десериализации непостредственно представляет собой сегментом данных RVM
+2. корневое значение json всегда есть корневая сущность загруженной Модели Отношений,
+    которую необходимо исполнить
+3. поля указывающие на субъект, отношение и объект могут либо содержать
+    сущность по значению (типы json значений: объект, массив)
+    либо содержать ссылки на сущность (типы json значений: строка, число)
+    либо признак ссылки на контекстную сущность (типы json значений: null)
+    либо значение boolean
+4. Местоимения при нахождении их проекции возвращают ссылку на элементы контекста,
+    проекции которых были найдены до вызова контроллера.
+</pre> <h1><a class="anchor" id="autotoc_md20"></a>
+Исполнение</h1>
+<p>Вычисление результата исполнения экземпляра отношения происходит через интерпретацию сущности (либо исполнение её json проекции) выступающей в качестве сущности-отношения в данном экземпляре отношения. Что бы исполнить сущность, у неё должна быть проекция в язык который понимает вычислитель (РВМ), например: если используется JavaScript виртуальная машина, то у сущности должна быть проекция в JavaScript. Если у сущности нет проекции в язык понимаемый имеющимся вычислителем, то необходимо либо скомпилировать тело сущности (т.е. создать проекцию в нужный язык), либо интерпретировать экземпляр отношения которым она является. Сущность при исполнении в качестве отношения в экземпляре отношения может создать в контексте свойство с именем языка исполнителя и скомпилировать себя туда для непосредственного исполнения сейчас и/или в следующий раз.</p>
+<p>При исполнении МО существует два потока: иерархически вертикальный - это поток байткода json иерархически горизонтальный - это поток данных в json. Горизонтальные потоки это межслойное преобразование данных контроллерами MVC. Вертикальные потоки это потоки управления интерпретацией json-байткода контроллеров MVC виртуальной машиной.</p>
+<p>Самое основное отношение это отношение "#/exec", оно исполняет сущность объекта указанного в поле "$obj" и записывает полученную проекцию в поле "$sub" субъекта. Именно это отношение исполняется для кажого поля json объекта, когда он указан в качестве отношения сущности.</p>
+<h1><a class="anchor" id="autotoc_md21"></a>
+Правила json скрипта (проекции МО в json):</h1>
+<ol type="1">
+<li>json представляет собой агрегат проекций сущностей т.е. иерархию МО по сущности-субъекту,</li>
+<li>местоимение субъекта "$sub" может являеться сущностью агрегатом проекции</li>
+<li>запуск скрипта это вычисление проекции корневой сущности</li>
+<li>внутри корневой json-сущности лежат разные проекции её свойств, либо...</li>
+<li>внутри корневой json проекции лежит jsonView корневой сущности</li>
+<li>у локальных не корневых проекций субъект "$sub" равен сущности в которой они лежат</li>
+<li>если в json объекте есть поле "$rel", то значит этот объект описывает сущность МО</li>
+<li>проекция состоит из проекций, т.о. получается иерархичность агрегирования</li>
+</ol>
+<p>Внутри сущности находится иерархия по сущности-субъекту.</p>
+<p>Новые сущности могут создаваться в результате проецирования, т.е. по сути являются тоже проекциями.</p>
+<h1><a class="anchor" id="autotoc_md22"></a>
+Варианты взаимоотношений узлов json:</h1>
+<ol type="1">
+<li>Проекция в проекции</li>
+<li>Сущность в сущности (в полях "$obj", "$rel", "$sub")</li>
+<li>Сущность в проекции (в объекте или массиве)</li>
+<li>Проекция в сущности (в полях "$obj", "$rel", "$sub")</li>
+<li>Строковая или адресная ссылка на сущность в сущности (в полях "$obj", "$rel", "$sub")</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md23"></a>
+О свойствах (атрибутах) и элементах сущности:</h1>
+<p>У сущности кроме её внутренней троичной структуры есть свойства (её проекции) и элементы свойств. Элементами сущности являются разные её свойства. Элементы объекта и есть его свойства если этот объект не сущность. Свойства (properties) сущности есть элементы (elements) её представления (view). (json properties are elements of its view).</p>
+<p>Сущность это то что является субъекту при наблюдении объекта, через призму их связывающего отношения. Таким образом сущьность есть результат отношения связывающего объект и субъект. Субъект вмещает в себя явление сущности объекта.</p>
+<p>Результат исполнения сущности это проекция в триаде MVC, но т.к. МО это самокомпилирующийся иерархический многослойный MVC, то субъект у сущности это родительский view вмещающий проекцию данной сущности. Таким образом результат проецирования сущности сохраняется в поле "", значение которого состоит из отдельных проекций агрегируемых сущностей. Следовательно если объект json имеет признак того, что это сущность, то данный объект json не должен иметь в себе полей с текстовыми названиями, а только: "id", "\$obj", "\$rel", "\$sub", "\$its". Решением данной проблемы может быть вариант когда текстовые поля внутри объекта json будут хранить в себе кэши проекций данной сущности другими контроллерами (сущностями-отношениями), например:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">   &quot;id&quot;: &quot;this entity english name&quot;,</div>
+<div class="line">   &quot;RusView&quot;: &quot;русское название этой сущности&quot;,</div>
+<div class="line">   &quot;jsView&quot;: &quot;this entity java script view&quot;,</div>
+<div class="line">   &quot;C#view&quot;: &quot;this entity C# code view&quot;,</div>
+<div class="line">   &quot;$obj&quot;: &quot;object entity model&quot;,</div>
+<div class="line">   &quot;$rel&quot;: &quot;relation entity model&quot;,</div>
+<div class="line">   &quot;$sub&quot;: &quot;subject entity model&quot;,</div>
+<div class="line">   &quot;$its&quot;: &quot;entity instance projection value&quot;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md24"></a>
+Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность</h1>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md26"></a>
+тип значения |                     сементика значения</h1>
+<h1><a class="anchor" id="autotoc_md27"></a>
+Number      | адрес объекта типа json в памяти</h1>
+<h1><a class="anchor" id="autotoc_md28"></a>
+Boolean     | непосредственное значение = true/false</h1>
+<p>String | иерархический путь к сущности относительно текущего контекста </p>
+<h1><a class="anchor" id="autotoc_md29"></a>
+| исполнения</h1>
+<h1><a class="anchor" id="autotoc_md30"></a>
+Object      | json объект определяющий непосредственное значение сущности</h1>
+<h1><a class="anchor" id="autotoc_md31"></a>
+Array       | json массив определяющий непосредственное значение сущности</h1>
+<p>Null | значение по умолчанию, пустой указатель на сущность | обозначающий топологическая замкнутость на текущую проекцию </p>
+<h1><a class="anchor" id="autotoc_md32"></a>
+| сущности в контексте исполнения EntView[""]</h1>
+<h1><a class="anchor" id="autotoc_md33"></a>
+Entity      | непосредственное описание другой сущности</h1>
+<h1><a class="anchor" id="autotoc_md34"></a>
+Семантика json значений при исполнении  (json как байткод RVM):</h1>
+<hr  />
+ <h1><a class="anchor" id="autotoc_md36"></a>
+тип значения |                     сементика значения</h1>
+<h1><a class="anchor" id="autotoc_md37"></a>
+Number      | адрес скомпилированного тела сущности, которое необходимо исполнить RVM</h1>
+<p>Boolean | флаг разрешения проецирования объекта в субъект | true : спроецировать </p>
+<h1><a class="anchor" id="autotoc_md38"></a>
+| false : не проецировать</h1>
+<p>String | иерархический путь к json значению относительно контекста исполнения, </p>
+<h1><a class="anchor" id="autotoc_md39"></a>
+| которое необходимо исполнить RVM</h1>
+<p>Object | множество пар "имя поля": значение поля, где: | значение поля - иерархический путь к json значению относительно | контекста исполнения, которое необходимо исполнить | имя поля - иерархический путь к json значению относительно | контекста исполнения, куда необходимо спроецировать сущность </p>
+<h1><a class="anchor" id="autotoc_md40"></a>
+| вычисление проекций множества пар может происходить параллельно, в многопоточном режиме</h1>
+<p>Array | массив значений json которые необходимо последовательность исполнить | в текущем контексте исполнения, при этом результат предыщущего | исполнения всегда доступен для следующей исполняющейся сущности </p>
+<h1><a class="anchor" id="autotoc_md41"></a>
+| как текущее значение проекции</h1>
+<p>Null | возврат текущей контекстной проекции в саму себя, т.е. по сути </p>
+<h1><a class="anchor" id="autotoc_md42"></a>
+| отсутствие действия над текущей проекцией в контексте исполнения</h1>
+<h1><a class="anchor" id="autotoc_md43"></a>
+Entity      | сущность, для которой надо создать дочерний контекст и исполнить</h1>
+<h1><a class="anchor" id="autotoc_md44"></a>
+Программирование на МО</h1>
+<pre class="fragment">Контекстно зависимая проекция сущности может быть получена в результате
+исполнения (или вычисления) отношения "$rel" в контексте субъекта "$sub", объекта "$obj".
+Доступ непосредственно к текущего значения проекции осуществляется через строковый адрес "$view".
+Сущность может использовать контекстно зависимые местоимения в своей модели,
+таким образом реализуется контекстная зависимость проекции сущности.
+
+Аналогичное выражение на языке С++ выглядело бы следующим образом:
+
+json   context_entity_value;
+context_entity_value = $sub-&gt;$rel( context_entity_value, $obj );
+
+В отличие от обычных языков программирования, в МО стек контекстов вызовов и стэк
+локальных адресных пространств (локальные переменные) принципиально разделены.
+
+Локальное адресное пространство при исполнении сущности-отношения указывается всегда явно,
+а стэк контекстов исполнения в общем случае древовидный, т.е. по сути и не является стэком,
+что обеспечивает лёгкое многопоточное исполнение сущностей.
+
+Так же при исполнении сущности-отношения можно указать в каком контексте она будет исполняться, в текущем или родительском
+аргументы тоже группируются в независимый от вызова пакет, и может быть многократно использован в контексте исполнения.
+В обычных языках стэк контекстов (агрументы вызова, адреса возвратов из функции) объединён
+с локальными адресными пространствами функций, поэтому очень важно четко знать где и
+что записано в стэке, четко соблюдать call convention что бы случайно не использовать некую переменную или аргумент как адрес возврата.)";
+</pre><h1><a class="anchor" id="autotoc_md45"></a>
+Контекст исполнения сущности</h1>
+<p>Контекст исполнения сущности необходим для её исполнения, т.е. исполнения экземпляра отношения. При исполнении МО контексты образуют собой древовидный стэк. Это достигается за счет того, что каждый контект имеет ссылку на родительский контекст. </p><pre class="fragment">Строковая адресация в будущей версии jsonRVM
+</pre><p> Строка содержит в себе последовательную запись инструкций по перемещению указателя сущности в МО. По умолчанию указатель установлен на текущую проекцию сущности. Путь сущности — это набор действий пути. Действия пути могут содержать следующие элементы и операторы.</p>
+<p>Знак доллара ($) указывает на смену контекстного адресного пространства. После него должно следовать имя контекста.</p>
+<p>Имена ключей. Например, $.name или $."first name". Если имя ключа начинается со знака доллара или содержит специальные символы, например пробелы, заключите его в кавычки. Элементы массива. Например, $.product[3]. Массивы отсчитываются от нуля. Оператор "точка" (.) указывает на свойство сущности. Например, в $.people[1].surname surname является дочерним элементом people.</p>
+<p>Знак октоторп (#) указывает на текущая модель отношений в глобальном пространство имён, примеры: "#.global_var"</p>
+<p>"$ent" - контекстная сущность, примеры: "$ent.$obj", "$ent.some_flag" "$sub" - контекстный субъект , примеры: "$sub.some_attribue", "$sub[43]" "$obj" - контекстный объект, примеры: "$obj.arg1", "$obj[1]" "", "$view" - (по умолчанию) локальное адресное пространство , т.е. текущее значение проекции сущности, примеры: ".local_var", "$view.[353]"</p>
+<p>"$$ent" - родительская контекстная сущность, примеры: "$$ent.$obj", "$$ent.some_flag" "$$sub" - родительская контекстный субъект , примеры: "$$sub.some_attribue", "$$sub[43]" "$$obj" - родительская контекстный объект, примеры: "$$obj.arg1", "$$obj[1]" "$$view" - родительское локальное адресное пространство, т.е. текущее значение проекции сущности, примеры: "$$view.local_var", "$$view.[353]"</p>
+<h1><a class="anchor" id="autotoc_md46"></a>
+Стэк</h1>
+<p>Стэк исполнения МО это древовидный стэк контекстов исполнения сущностей - экземпляров отношений. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

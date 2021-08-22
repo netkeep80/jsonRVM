@@ -3,7 +3,6 @@ var dir_0c989e04a2cbea17eef1c625c7a83439 =
     [ "database_api.h", "database__api_8h.html", [
       [ "database_api", "classrm_1_1database__api.html", "classrm_1_1database__api" ]
     ] ],
-    [ "help.rm.h", "help_8rm_8h.html", "help_8rm_8h" ],
     [ "interface.h", "interface_8h.html", [
       [ "interface_t", "classrm_1_1interface__t.html", "classrm_1_1interface__t" ]
     ] ],
