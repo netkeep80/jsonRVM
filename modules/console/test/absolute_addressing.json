@@ -4,31 +4,31 @@
          "test" : "get ent1 ",
          "$obj" : "ent1/id",
          "$rel" : "=",
-         "$sub" : "$its/ent1/id"
+         "$sub" : "$rel/ent1/id"
       },
       {
          "test" : "get ent2",
          "$obj" : "ent2/id",
          "$rel" : "=",
-         "$sub" : "$its/ent2/id"
+         "$sub" : "$rel/ent2/id"
       },
       {
          "test" : "set ent3",
          "$obj" : "$ent/ent3",
          "$rel" : "add_entity",
-         "$sub" : "$its/ent3/id"
+         "$sub" : "$rel/ent3/id"
       },
       {
          "$obj" : "$ent/get_ent3_test",
          "$rel" : "=",
-         "$sub" : "$its/get_ent3_test"
+         "$sub" : "$rel/get_ent3_test"
       },
       {
-         "$obj" : "$its/ent3/id",
+         "$obj" : "$rel/ent3/id",
          "$rel" : "=",
-         "$sub" : "$its/get_ent3_test/$obj"
+         "$sub" : "$rel/get_ent3_test/$obj"
       },
-      "$its/get_ent3_test"
+      "$rel/get_ent3_test"
    ],
    "ent3" : {
       "id" : "ent3",
@@ -37,6 +37,6 @@
    "get_ent3_test" : {
       "test" : "get ent3",
       "$rel" : "=",
-      "$sub" : "$its/ent3/val"
+      "$sub" : "$rel/ent3/val"
    }
 }

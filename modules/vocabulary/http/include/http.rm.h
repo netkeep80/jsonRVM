@@ -10,7 +10,7 @@
 Fractal Triune Entity
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -518,7 +518,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				$.its = res->status;
+				$.rel = res->status;
 				$.sub = json::object();
 				$.sub["base_uri"] = base_uri;
 				$.sub["uri_path"] = uri_path;
@@ -632,25 +632,25 @@ namespace rm
 
 			method::add(svr, http_method.key().c_str(), [&, http_method](const Request& req, Response& res)
 				{
-					json	its;
+					json	rel;
 					json&	ent = http_method.value()["$ent"];
 					using _convert = application_json;
 
 					if (req.body.length())
-						_convert::to_json(its, req.body);
+						_convert::to_json(rel, req.body);
 
 					try
 					{
-						rmvm.exec(its, ent);
+						rmvm.exec_ent(rel, ent);
 						res.status = 200;
 					}
 					catch (json& j)
 					{
-						its = j;
+						rel = j;
 						res.status = 400;
 					}					
 					
-					res.set_content(its.dump(2).c_str(), "application/json");
+					res.set_content(rel.dump(2).c_str(), "application/json");
 				}
 			);
 		}
@@ -704,7 +704,7 @@ namespace rm
 	Fractal Triune Entity
 
 	Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-	Copyright (c) 2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+	Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 				)";
 				char buf[BUFSIZ];
 				snprintf(buf, sizeof(buf), fmt, rmvm_version.c_str());
@@ -746,7 +746,7 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				$.its = res->status;
+				$.rel = res->status;
 				$.sub = json::object();
 				$.sub["base_uri"] = base_uri;
 				$.sub["uri_path"] = uri_path;
@@ -792,7 +792,7 @@ namespace rm
 	add_http_entity(DEL, converter_type);	\
 	add_http_entity(PATCH, converter_type);
 
-	const string& ImportRelationsModel(vm& rmvm)
+	const string& import_relations_model_to(vm& rmvm)
 	{
 		rmvm.add_binary_view(rmvm, "ToXML"s, jsonToXML, "");
 		//	rmvm.add_binary_view(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");

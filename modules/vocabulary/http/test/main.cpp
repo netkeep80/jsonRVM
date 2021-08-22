@@ -136,7 +136,7 @@ TEST_CASE("Test http://localhost:8080/hi") {
 
 	vm root;
 	//	base vocabulary
-	ImportRelationsModel(root);
+	import_relations_model_to(root);
 
 	root[""] = json::parse(R"(
 {
@@ -149,7 +149,7 @@ TEST_CASE("Test http://localhost:8080/hi") {
 
 	json    res;
 	vm_ctx $(res, root[""]);
-	root.exec($, root[""]);
+	root.exec_ent($, root[""]);
 	cout << res.dump(2) << endl;
 
 	CHECK(res["body"].get_ref<string&>() == "Hello World!\n"s);

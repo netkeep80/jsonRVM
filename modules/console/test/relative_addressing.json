@@ -11,7 +11,7 @@
                "$rel" : {
                   "$obj" : "$$$$ent/id",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$$ent/id"
+                  "$sub" : "$rel/$$$$ent/id"
                }
             }
          }
@@ -23,7 +23,7 @@
                "$rel" : {
                   "$obj" : "$$$$sub",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$$sub"
+                  "$sub" : "$rel/$$$$sub"
                }
             }
          }
@@ -35,21 +35,21 @@
                "$rel" : {
                   "$obj" : "$$$$obj",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$$obj"
+                  "$sub" : "$rel/$$$$obj"
                }
             }
          }
       },
       {
-         "test" : "$$$$its",
+         "test" : "$$$$rel",
          "$rel" : {
             "$rel" : {
                "$rel" : {
                   "$obj" : {
-                     "id" : "$$$$its/id"
+                     "id" : "$$$$rel/id"
                   },
                   "$rel" : "=",
-                  "$sub" : "$$$$its/$$$$its"
+                  "$sub" : "$$$$rel/$$$$rel"
                }
             }
          }
@@ -62,7 +62,7 @@
                "$rel" : {
                   "$obj" : "$$$ent/id",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$ent/id"
+                  "$sub" : "$rel/$$$ent/id"
                }
             }
          }
@@ -74,7 +74,7 @@
                "$rel" : {
                   "$obj" : "$$$sub",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$sub"
+                  "$sub" : "$rel/$$$sub"
                }
             }
          },
@@ -92,21 +92,21 @@
                "$rel" : {
                   "$obj" : "$$$obj",
                   "$rel" : "=",
-                  "$sub" : "$its/$$$obj"
+                  "$sub" : "$rel/$$$obj"
                }
             }
          }
       },
       {
-         "test" : "$$$its",
+         "test" : "$$$rel",
          "$rel" : {
             "$rel" : {
                "$rel" : {
                   "$obj" : {
-                     "id" : "$$$its/id"
+                     "id" : "$$$rel/id"
                   },
                   "$rel" : "=",
-                  "$sub" : "$$$its/$$$its"
+                  "$sub" : "$$$rel/$$$rel"
                }
             }
          }
@@ -119,7 +119,7 @@
                "$rel" : {
                   "$obj" : "$$ent/id",
                   "$rel" : "=",
-                  "$sub" : "$its/$$ent/id"
+                  "$sub" : "$rel/$$ent/id"
                }
             }
          }
@@ -131,7 +131,7 @@
                "$rel" : {
                   "$obj" : "$$sub",
                   "$rel" : "=",
-                  "$sub" : "$its/$$sub"
+                  "$sub" : "$rel/$$sub"
                }
             },
             "$sub" : {
@@ -149,21 +149,21 @@
                "$rel" : {
                   "$obj" : "$$obj",
                   "$rel" : "=",
-                  "$sub" : "$its/$$obj"
+                  "$sub" : "$rel/$$obj"
                }
             }
          }
       },
       {
-         "test" : "$$its",
+         "test" : "$$rel",
          "$rel" : {
             "$rel" : {
                "$rel" : {
                   "$obj" : {
-                     "id" : "$$its/id"
+                     "id" : "$$rel/id"
                   },
                   "$rel" : "=",
-                  "$sub" : "$$its/$$its"
+                  "$sub" : "$$rel/$$rel"
                }
             }
          }
@@ -176,7 +176,7 @@
                "$rel" : {
                   "$obj" : "$ent/id",
                   "$rel" : "=",
-                  "$sub" : "$its/$ent/id"
+                  "$sub" : "$rel/$ent/id"
                }
             }
          }
@@ -188,7 +188,7 @@
                "$rel" : {
                   "$obj" : "$sub",
                   "$rel" : "=",
-                  "$sub" : "$its/$sub"
+                  "$sub" : "$rel/$sub"
                },
                "$sub" : {
                   "id" : "$ent/$sub"
@@ -206,21 +206,21 @@
                "$rel" : {
                   "$obj" : "$obj",
                   "$rel" : "=",
-                  "$sub" : "$its/$obj"
+                  "$sub" : "$rel/$obj"
                }
             }
          }
       },
       {
-         "test" : "$its",
+         "test" : "$rel",
          "$rel" : {
             "$rel" : {
                "$rel" : {
                   "$obj" : {
-                     "id" : "$its/id"
+                     "id" : "$rel/id"
                   },
                   "$rel" : "=",
-                  "$sub" : "$its/$its"
+                  "$sub" : "$rel/$rel"
                }
             }
          }

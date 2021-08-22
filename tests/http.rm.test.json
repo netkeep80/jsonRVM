@@ -1,7 +1,7 @@
 {
    "$rel" : [
       {
-         "$its/additional_rm_loaded/http.rm.dll" : {
+         "$rel/additional_rm_loaded/http.rm.dll" : {
             "$obj" : {
                "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
                "FileName" : "http.rm.dll"
@@ -10,7 +10,7 @@
          }
       },
       {
-         "$its/test1" : {
+         "$rel/test1" : {
             "$obj" : {
                "URI" : "http://192.168.8.1/api/webserver/token"
             },

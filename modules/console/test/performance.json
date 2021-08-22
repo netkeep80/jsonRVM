@@ -2,13 +2,13 @@
    {
       "$obj" : "#/MeasProcessed",
       "$rel" : "size",
-      "$sub" : "$its/result/meas_count"
+      "$sub" : "$rel/result/meas_count"
    },
    {
-      "$its/start_time" : "steady_clock/microseconds"
+      "$rel/start_time" : "steady_clock/microseconds"
    },
    {
-      "$its/tmp" : [
+      "$rel/tmp" : [
          "#/CalculateMeanValues",
          "#/CalculateTotalValues",
          "#/PrepareFullReport",
@@ -17,12 +17,12 @@
       ]
    },
    {
-      "$its/end_time" : "steady_clock/microseconds"
+      "$rel/end_time" : "steady_clock/microseconds"
    },
    {
-      "$obj" : "$its",
+      "$obj" : "$rel",
       "$rel" : {
-         "$its/result/test_duration" : {
+         "$rel/result/test_duration" : {
             "$obj" : "$obj/start_time",
             "$rel" : "-",
             "$sub" : "$obj/end_time"
@@ -30,13 +30,13 @@
       }
    },
    {
-      "$obj" : "$its/tmp/Report",
+      "$obj" : "$rel/tmp/Report",
       "$rel" : "=",
-      "$sub" : "$its/result/report"
+      "$sub" : "$rel/result/report"
    },
    {
-      "$obj" : "$its/result",
+      "$obj" : "$rel/result",
       "$rel" : "=",
-      "$sub" : "$its"
+      "$sub" : "$rel"
    }
 ]

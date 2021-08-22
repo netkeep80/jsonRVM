@@ -17,19 +17,18 @@ add_library( ${TARGET_NAME} SHARED )
 # Adding build-requirements
 target_include_directories( ${TARGET_NAME} PRIVATE
     "${DOC_SOURCE_DIR}"
-    "${COMMON_SOURCE_DIR}/include/nlohmann"
     "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 
 target_sources( ${TARGET_NAME} PRIVATE
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
+    "${COMMON_SOURCE_DIR}/include/str_switch/str_switch.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/fs.rm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/fs.rm.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/dllmain.cpp" )
 
 # Adding build- and usage-requirements
 target_include_directories( ${TARGET_NAME} PUBLIC
-    "${COMMON_SOURCE_DIR}/include"
-    "${COMMON_SOURCE_DIR}/include/nlohmann" )
+    "${COMMON_SOURCE_DIR}/include" )
 
 target_sources( ${TARGET_NAME} PUBLIC
     "${COMMON_SOURCE_DIR}/include/vm.rm.h"

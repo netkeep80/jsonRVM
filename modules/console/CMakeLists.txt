@@ -18,12 +18,12 @@ add_executable( ${TARGET_NAME} )
 target_include_directories( ${TARGET_NAME} PRIVATE
     "${DOC_SOURCE_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/include"
-    "${COMMON_SOURCE_DIR}/include"
-    "${COMMON_SOURCE_DIR}/include/nlohmann" )
+    "${COMMON_SOURCE_DIR}/include" )
 
 target_sources( ${TARGET_NAME} PRIVATE
     "${DOC_SOURCE_DIR}/Introduction.md"
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
+    "${COMMON_SOURCE_DIR}/include/str_switch/str_switch.h"
     "${COMMON_SOURCE_DIR}/include/vm.rm.h"
     "${COMMON_SOURCE_DIR}/include/interface.h"
     "${COMMON_SOURCE_DIR}/include/database_api.h"

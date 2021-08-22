@@ -73,14 +73,14 @@ TEST_CASE("absolute addressing in rmodel") {
     test_database_t	db(".\\");
     vm root(&db);
     //	base vocabulary
-    ImportRelationsModel(root);
+    import_relations_model_to(root);
     json    res;
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
     vm_ctx $(res, root[""]);
-    root.exec($, root[""]);
+    root.exec_ent($, root[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -94,35 +94,35 @@ TEST_CASE("relative addressing in rmodel") {
     test_database_t	db(".\\");
     vm root(&db);
     //	base vocabulary
-    ImportRelationsModel(root);
+    import_relations_model_to(root);
     json    res;
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
     vm_ctx $(res, root[""]);
-    root.exec($, root[""]);
+    root.exec_ent($, root[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["$$$$ent"]["id"].get_ref<string&>() == "$$$$ent/id"s);
     CHECK(res["$$$$sub"]["id"].get_ref<string&>() == "$$$$ent/$sub"s);
     CHECK(res["$$$$obj"]["id"].get_ref<string&>() == "$$$$ent/$obj"s);
-    CHECK(res["$$$$its"]["id"].get_ref<string&>() == "$$$$its/id"s);
+    CHECK(res["$$$$rel"]["id"].get_ref<string&>() == "$$$$rel/id"s);
 
     CHECK(res["$$$ent"]["id"].get_ref<string&>() == "$$$ent/id"s);
     CHECK(res["$$$sub"]["id"].get_ref<string&>() == "$$$ent/$sub"s);
     CHECK(res["$$$obj"]["id"].get_ref<string&>() == "$$$ent/$obj"s);
-    CHECK(res["$$$its"]["id"].get_ref<string&>() == "$$$its/id"s);
+    CHECK(res["$$$rel"]["id"].get_ref<string&>() == "$$$rel/id"s);
 
     CHECK(res["$$ent"]["id"].get_ref<string&>() == "$$ent/id"s);
     CHECK(res["$$sub"]["id"].get_ref<string&>() == "$$ent/$sub"s);
     CHECK(res["$$obj"]["id"].get_ref<string&>() == "$$ent/$obj"s);
-    CHECK(res["$$its"]["id"].get_ref<string&>() == "$$its/id"s);
+    CHECK(res["$$rel"]["id"].get_ref<string&>() == "$$rel/id"s);
 
     CHECK(res["$ent"]["id"].get_ref<string&>() == "$ent/id"s);
     CHECK(res["$sub"]["id"].get_ref<string&>() == "$ent/$sub"s);
     CHECK(res["$obj"]["id"].get_ref<string&>() == "$ent/$obj"s);
-    CHECK(res["$its"]["id"].get_ref<string&>() == "$its/id"s);
+    CHECK(res["$rel"]["id"].get_ref<string&>() == "$rel/id"s);
 }
 
 TEST_CASE("testing call version.json") {
@@ -130,7 +130,7 @@ TEST_CASE("testing call version.json") {
     file_database_t	db(".\\");
     vm root(&db);
     //	base vocabulary
-    ImportRelationsModel(root);
+    import_relations_model_to(root);
     json    res;
     char *fileNameInput = "version.json";
 
@@ -141,7 +141,7 @@ TEST_CASE("testing call version.json") {
         in >> root[""];
         
         vm_ctx $(res, root[""]);
-        root.exec($, root[""]);
+        root.exec_ent($, root[""]);
         CHECK(res["rmvm"]["version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
@@ -156,7 +156,7 @@ TEST_CASE("testing base entity 'where'") {
     file_database_t	db(".\\");
     vm root(&db);
     //	base vocabulary
-    ImportRelationsModel(root);
+    import_relations_model_to(root);
     json    res;
     char* fileNameInput = "where_test.json";
 
@@ -167,7 +167,7 @@ TEST_CASE("testing base entity 'where'") {
         in >> root[""];
 
         vm_ctx $(res, root[""]);
-        root.exec($, root[""]);
+        root.exec_ent($, root[""]);
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }
@@ -188,9 +188,9 @@ TEST_CASE("performance test") {
     file_database_t	db(".\\");
     vm root(&db);
     //	base vocabulary
-    ImportRelationsModel(root);
+    import_relations_model_to(root);
     json    res;
-    cout << root.exec(res, json("performance")).dump(2);
+    cout << root.exec_ent(res, json("performance")).dump(2);
     CHECK(res["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
     CHECK(res["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
     CHECK(res["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);

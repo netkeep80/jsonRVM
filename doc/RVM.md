@@ -92,8 +92,7 @@
    "C#view": "this entity C# code view",
    "$obj": "object entity model",
    "$rel": "relation entity model",
-   "$sub": "subject entity model",
-   "$its": "entity instance projection value"
+   "$sub": "subject entity model"
 }
 ```
 
@@ -215,3 +214,18 @@
 ## Стэк
 
 Стэк исполнения МО это древовидный стэк контекстов исполнения сущностей - экземпляров отношений.
+
+## Аналогия исполнения
+
+Mapping OOP to EOP:
+```
+(&result ? result : *this) = this->class::method( &args ? args : *this );
+-------------------------------------------------------------------------
+	                                 ||
+	                                 ||
+	                                 ||
+	                                \||/
+	                                 \/
+-------------------------------------------------------------------------
+(&$.sub ? $.sub : $.rel) = $.rel->$.ent::$.rel( &$.obj ? $.obj : $.rel );
+```

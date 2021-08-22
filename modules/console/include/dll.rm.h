@@ -10,7 +10,7 @@
 Fractal Triune Entity
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -114,7 +114,7 @@ namespace rm
 		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
 		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
 
-		$.its = false;
+		$.rel = false;
 		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
 	}
 

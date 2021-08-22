@@ -29,3 +29,4 @@ jsonRVM using the following third-party tools. Thanks a lot!
 - [**The fastest feature-rich C++ single-header testing framework**](https://github.com/onqtam/doctest) for unit testing of Relations (Model) Virtual Machine
 - [**A C++11 single-file header-only cross platform HTTP/HTTPS library**](https://github.com/yhirose/cpp-httplib) for writing http base vocabulary for Relations (Model) Virtual Machine
 - [**xml2json is a header-only C++ library**](https://github.com/Cheedoong/xml2json) for writing http base vocabulary for Relations (Model) Virtual Machine
+- [**Switch for strings in C++11**](https://github.com/Efrit/str_switch) for writing fast switch for Relations (Model) Virtual Machine

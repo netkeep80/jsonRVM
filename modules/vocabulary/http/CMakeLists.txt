@@ -19,19 +19,18 @@ target_include_directories( ${TARGET_NAME} PRIVATE
     "${DOC_SOURCE_DIR}"
     "${THIRD_PARTY_SOURCE_DIR}/xml2json/include"
     "${THIRD_PARTY_SOURCE_DIR}/cpp-httplib"
-    "${COMMON_SOURCE_DIR}/include/nlohmann"
     "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 
 target_sources( ${TARGET_NAME} PRIVATE
     "${COMMON_SOURCE_DIR}/include/nlohmann/json.hpp"
+    "${COMMON_SOURCE_DIR}/include/str_switch/str_switch.h"
     "${THIRD_PARTY_SOURCE_DIR}/cpp-httplib/httplib.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/http.rm.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/dllmain.cpp" )
 
 # Adding build- and usage-requirements
 target_include_directories( ${TARGET_NAME} PUBLIC
-    "${COMMON_SOURCE_DIR}/include"
-    "${COMMON_SOURCE_DIR}/include/nlohmann" )
+    "${COMMON_SOURCE_DIR}/include" )
 
 target_sources( ${TARGET_NAME} PUBLIC
     "${COMMON_SOURCE_DIR}/include/vm.rm.h"

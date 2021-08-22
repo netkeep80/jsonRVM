@@ -10,7 +10,7 @@
 Fractal Triune Entity
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -172,12 +172,12 @@ void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
 
 	if (rm.is_object())
 	{
-		$.its = true;
+		$.rel = true;
 		for (auto& p : rm.items())
 			$.sub[p.key()] = p.value();
 	}
 	else
-		$.its = false;
+		$.rel = false;
 }
 
 void  fs_file_read_json(vm& rmvm, vm_ctx& $)
@@ -194,7 +194,7 @@ void  fs_file_read_json(vm& rmvm, vm_ctx& $)
 	if (!in.good())
 		$.throw_json(__FUNCTION__, "Can't load json from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
 
-	$.its = true;
+	$.rel = true;
 	in >> $.sub;
 	if ($.sub.is_object())
 		$.sub["FileInfo"] = $.obj;
@@ -221,13 +221,13 @@ void  jsonFileToString(vm& rmvm, vm_ctx& $)
 				buf[size] = 0;
 				$.sub = json(utf8_to_wstring(string(buf)));
 				delete[] buf;
-				$.its = true;
+				$.rel = true;
 				return;
 			}
 		}
 	}
 
-	$.its = false;
+	$.rel = false;
 }
 
 void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
@@ -241,7 +241,7 @@ void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
 			
 			if (in.good())
 			{
-				$.its = true;
+				$.rel = true;
 				size_t size = in.tellg();
 				in.seekg(0, ios::beg);
 				char*	buf = new char[size + 1];
@@ -313,23 +313,23 @@ void  fs_file_write_json(vm& rmvm, vm_ctx& $)
 			if (out.good())
 			{
 				out << $.sub;
-				$.its = true;
+				$.rel = true;
 				return;
 			}
 
-			$.its = false;
+			$.rel = false;
 			$.throw_json(__FUNCTION__, "Can't open "s + PathName + " file."s );
 		}
 	}
 
-	$.its = false;
+	$.rel = false;
 	$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
 
 void  jsonToFiles(vm& rmvm, vm_ctx& $)
 {
-	$.its = json::array();
+	$.rel = json::array();
 
 	/*if ($.sub.is_array())	//	� $.sub ������ �������� FileInfo, ������ �� ������� ��������� ���� � ������� ���� ���������
 	{
@@ -426,7 +426,7 @@ void	rmvm_dump(vm& rmvm, vm_ctx& $)
 namespace rm
 {
 	
-	FSRM_API const string&	ImportRelationsModel(vm& rmvm)
+	FSRM_API const string&	import_relations_model_to(vm& rmvm)
 	{
 		rmvm.add_binary_view(rmvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
 		rmvm.add_binary_view(rmvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);

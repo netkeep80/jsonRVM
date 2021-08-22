@@ -10,7 +10,7 @@
 Fractal Triune Entity
 
 Licensed under the MIT License <http://opensource.org/licenses/MIT>.
-Copyright � 2016 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
+Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
 		cout << "Fractal Triune Entity                                                         " << endl;
 		cout << "                                                                              " << endl;
 		cout << "Licensed under the MIT License <http://opensource.org/licenses/MIT>.          " << endl;
-		cout << "Copyright (c) 2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
+		cout << "Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>." << endl;
 		cout << "                                                                              " << endl;
 		cout << "Usage:                                                                        " << endl;
 		cout << "       rmvm.exe [entry_point]                                                 " << endl;
@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
 	}
 
 	//	base vocabulary
-	ImportRelationsModel(root);
+	import_relations_model_to(root);
 	ImportLoadDLLEntity(root);
 
 	if (!strcmp(entry_point, "rmvm.exe"))
@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		cout << root.exec(res, json(entry_point)).dump(2);
+		cout << root.exec_ent(res, json(entry_point)).dump(2);
 		return 0;	//	ok
 	}
 	catch (json& j)
