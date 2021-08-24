@@ -4,7 +4,6 @@
 cloud "," {
 }
 
-cloud ",a,b,c,d,e" {
 cloud ",a,b,c,d" {
 cloud ",a,b,c" {
 cloud ",a,b" {
@@ -32,12 +31,6 @@ cloud ",a" {
     cloud "d" {
     }
     ",a,b,c" <- "d" : ","
-}
-
-
-    cloud "e" {
-    }
-    ",a,b,c,d" <- "e" : ","
 }
 
 @enduml
