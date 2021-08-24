@@ -1,32 +1,28 @@
 @startuml
 
-
 cloud "," {
 }
 
 cloud ",a,b,c,d" {
-cloud ",a,b,c" {
-cloud ",a,b" {
-cloud ",a" {
-    cloud void {
+    cloud ",a,b,c" {
+        cloud ",a,b" {
+            cloud ",a" {
+                cloud void {
+                }
+                cloud "a" {
+                }
+                void <-l- "a" : ","
+            }
+
+            cloud "b" {
+            }
+            ",a" <-l- "b" : ","
+        }
+
+        cloud "c" {
+        }
+        ",a,b" <- "c" : ","
     }
-    cloud "a" {
-    }
-    void <-l- "a" : ","
-}
-
-
-    cloud "b" {
-    }
-    ",a" <-l- "b" : ","
-}
-
-
-    cloud "c" {
-    }
-    ",a,b" <- "c" : ","
-}
-
 
     cloud "d" {
     }
