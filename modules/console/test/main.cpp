@@ -142,7 +142,7 @@ TEST_CASE("testing call version.json") {
         
         vm_ctx $(res, root[""]);
         root.exec_ent($, root[""]);
-        CHECK(res["rmvm"]["version"].get_ref<string&>() == "3.0.0"s);
+        CHECK(res["rmvm_version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __FUNCTION__, j } }); }
     catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }

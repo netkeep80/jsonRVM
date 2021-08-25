@@ -1111,9 +1111,14 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		$.rel = chrono::duration_cast<duration>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
+	void	json_rmvm_version(vm& rmvm, vm_ctx& $)
+	{
+		$.rel = rmvm_version;
+	}
+
 	const string&	import_relations_model_to(vm& rmvm)
 	{
-		rmvm["rmvm"]["version"] = rmvm_version;
+		rmvm.add_binary_view(rmvm["rmvm"], "version"s, json_rmvm_version, "Version of rmvm"s);
 		rmvm.add_binary_view(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 		rmvm.add_binary_view(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 		rmvm.add_binary_view(rmvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);

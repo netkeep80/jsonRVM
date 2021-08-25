@@ -1,1 +1,1 @@
-..\..\..\build\modules\console\Release\rmvm.exe version.json 2>err.json
+..\..\..\build\modules\console\Release\rmvm.exe version 2>err.json
