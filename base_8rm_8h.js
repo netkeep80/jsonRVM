@@ -30,6 +30,7 @@ var base_8rm_8h =
     [ "import_relations_model_to", "base_8rm_8h.html#a555b1c8445cfb272aa963e8a018a08f0", null ],
     [ "json_catch", "base_8rm_8h.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "base_8rm_8h.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
+    [ "json_rmvm_version", "base_8rm_8h.html#abaa7d9e57036b34f37f4eb55542da01b", null ],
     [ "json_switch_bool", "base_8rm_8h.html#a1d960d8aaa961cf261e075550cb2c028", null ],
     [ "json_switch_number", "base_8rm_8h.html#a42a498df5d38a0a784693c6d519cc17b", null ],
     [ "json_switch_string", "base_8rm_8h.html#a14d22264da728bdfcee13e5e72bb82fd", null ],

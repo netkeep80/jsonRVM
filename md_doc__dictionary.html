@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-59-gd7e9a73</span>
+   &#160;<span id="projectnumber">2.6.0-60-g43ec9d4</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -90,8 +90,7 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <div class="title">Терминологический аппарат </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Примечание: при чтении описания понятий может сложиться впечатление "масло масленное", но на самом деле это не так. Дело в том, что Модель Отношений по своей сути рекурсивна, т.е. обладает свойствами иерархичности и фрактальности. РВМ в процессе работы постоянно совершает обход этой рекурсивной структуры в 2х изремениях: в глубину и по горизонтали между ветвями..</p>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md8"></a>
 Ассоциативная Модель Данных</h1>
 <p>Модель данных используемая для хранения Модели Отношений в базе данных</p>
 <h1><a class="anchor" id="autotoc_md9"></a>
@@ -181,8 +180,18 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <li>контекстная сущность</li>
 <li>контекстный субъект</li>
 <li>контекстное отношение</li>
-<li>контекстный объект </li>
+<li>контекстный объект</li>
 </ol>
+<h1><a class="anchor" id="autotoc_md33"></a>
+Лямбда cтруктура</h1>
+<p>Множество пар "имя поля": значение поля, где:</p><ul>
+<li>значение поля - иерархический путь к json значению, которое необходимо исполнить RVM в текущем контексте</li>
+<li>имя поля - иерархический путь к json значению которое необходимо вычислить</li>
+</ul>
+<p>Вычисление проекций множества пар должно происходить параллельно, в многопоточном режиме</p>
+<h1><a class="anchor" id="autotoc_md34"></a>
+Лямбда вектор</h1>
+<p>Массив json значений, которое необходимо исполнить RVM в текущем контексте, при этом последовательно используется текущее значение инстанцированной сущности </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

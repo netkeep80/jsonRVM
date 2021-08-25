@@ -58,60 +58,37 @@ var NAVTREE =
       [ "Вычисление отношения", "md_doc__dictionary.html#autotoc_md29", null ],
       [ "Значение сущности - Значение экземпляра отношения", "md_doc__dictionary.html#autotoc_md30", null ],
       [ "Контекст исполнения", "md_doc__dictionary.html#autotoc_md31", null ],
-      [ "Местоимение", "md_doc__dictionary.html#autotoc_md32", null ]
+      [ "Местоимение", "md_doc__dictionary.html#autotoc_md32", null ],
+      [ "Лямбда cтруктура", "md_doc__dictionary.html#autotoc_md33", null ],
+      [ "Лямбда вектор", "md_doc__dictionary.html#autotoc_md34", null ]
     ] ],
     [ "Введение", "md_doc__introduction.html", null ],
     [ "LICENSE", "md_doc__l_i_c_e_n_s_e.html", null ],
-    [ "Математическая модель", "md_doc__mathematical_definition.html", [
-      [ "Приложения", "md_doc__mathematical_definition.html#autotoc_md36", [
-        [ "Модель Отношений - это язык метапрограммирования.", "md_doc__introduction.html#autotoc_md34", null ],
-        [ "1. ВСЕ СПЕЦ. СИМВОЛЫ ИСПОЛЬЗУЕМЫЕ ДЛЯ МАТЕМАТИКИ И ФИЗИКИ В UNICODE", "md_doc__mathematical_definition.html#autotoc_md37", null ]
-      ] ]
-    ] ],
+    [ "Математическая модель", "md_doc__mathematical_definition.html", null ],
     [ "Модель Отношений", "md_doc__r_m.html", [
       [ "Виды топологий сущностей МО", "md_doc__r_m.html#autotoc_md39", null ],
       [ "json проекция в МО", "md_doc__r_m.html#autotoc_md40", null ]
     ] ],
+    [ "Модель Отношений (старый текст)", "md_doc_rmodel.html", null ],
     [ "Реляционная виртуальная машина", "md_doc__r_v_m.html", [
-      [ "Проекция сущности", "md_doc__r_v_m.html#autotoc_md42", null ],
-      [ "Исполнение сущности", "md_doc__r_v_m.html#autotoc_md43", null ],
-      [ "Вычисление отношения", "md_doc__r_v_m.html#autotoc_md44", null ],
-      [ "Сущность", "md_doc__r_v_m.html#autotoc_md45", null ],
-      [ "Экземпляр отношения", "md_doc__r_v_m.html#autotoc_md46", null ],
-      [ "Экземпляр сущности", "md_doc__r_v_m.html#autotoc_md47", null ],
-      [ "Инициализация", "md_doc__r_v_m.html#autotoc_md48", null ],
-      [ "Исполнение МО", "md_doc__r_v_m.html#autotoc_md49", null ],
-      [ "Правила json скрипта (проекции МО в json):", "md_doc__r_v_m.html#autotoc_md50", null ],
-      [ "Варианты взаимоотношений узлов json:", "md_doc__r_v_m.html#autotoc_md51", null ],
-      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc__r_v_m.html#autotoc_md52", null ],
-      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc__r_v_m.html#autotoc_md53", null ],
-      [ "тип значения |                     сементика значения", "md_doc__r_v_m.html#autotoc_md55", null ],
-      [ "Number      | адрес объекта типа json в памяти", "md_doc__r_v_m.html#autotoc_md56", null ],
-      [ "Boolean     | непосредственное значение = true/false", "md_doc__r_v_m.html#autotoc_md57", null ],
-      [ "| исполнения", "md_doc__r_v_m.html#autotoc_md58", null ],
-      [ "Object      | json объект определяющий непосредственное значение сущности", "md_doc__r_v_m.html#autotoc_md59", null ],
-      [ "Array       | json массив определяющий непосредственное значение сущности", "md_doc__r_v_m.html#autotoc_md60", null ],
-      [ "| сущности в контексте исполнения EntView[\"\"]", "md_doc__r_v_m.html#autotoc_md61", null ],
-      [ "Entity      | непосредственное описание другой сущности", "md_doc__r_v_m.html#autotoc_md62", null ],
-      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc__r_v_m.html#autotoc_md63", null ],
-      [ "тип значения |                     сементика значения", "md_doc__r_v_m.html#autotoc_md65", null ],
-      [ "Number      | адрес скомпилированного тела сущности, которое необходимо исполнить RVM", "md_doc__r_v_m.html#autotoc_md66", null ],
-      [ "| false : не проецировать", "md_doc__r_v_m.html#autotoc_md67", null ],
-      [ "| которое необходимо исполнить RVM", "md_doc__r_v_m.html#autotoc_md68", null ],
-      [ "| вычисление проекций множества пар может происходить параллельно, в многопоточном режиме", "md_doc__r_v_m.html#autotoc_md69", null ],
-      [ "| как текущее значение проекции", "md_doc__r_v_m.html#autotoc_md70", null ],
-      [ "| отсутствие действия над текущей проекцией в контексте исполнения", "md_doc__r_v_m.html#autotoc_md71", null ],
-      [ "Entity      | сущность, для которой надо создать дочерний контекст и исполнить", "md_doc__r_v_m.html#autotoc_md72", null ],
-      [ "Программирование на МО", "md_doc__r_v_m.html#autotoc_md73", null ],
-      [ "Контекст исполнения сущности", "md_doc__r_v_m.html#autotoc_md74", null ],
-      [ "Стэк", "md_doc__r_v_m.html#autotoc_md75", null ],
-      [ "Аналогия исполнения", "md_doc__r_v_m.html#autotoc_md76", null ]
+      [ "Инициализация", "md_doc__r_v_m.html#autotoc_md43", null ],
+      [ "Исполнение МО", "md_doc__r_v_m.html#autotoc_md44", null ],
+      [ "Правила json скрипта (проекции МО в json):", "md_doc__r_v_m.html#autotoc_md45", null ],
+      [ "Варианты взаимоотношений узлов json:", "md_doc__r_v_m.html#autotoc_md46", null ],
+      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc__r_v_m.html#autotoc_md47", null ],
+      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc__r_v_m.html#autotoc_md48", null ],
+      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc__r_v_m.html#autotoc_md49", null ],
+      [ "Программирование на МО", "md_doc__r_v_m.html#autotoc_md50", null ],
+      [ "Контекст исполнения сущности", "md_doc__r_v_m.html#autotoc_md51", null ],
+      [ "Стэк", "md_doc__r_v_m.html#autotoc_md52", null ],
+      [ "Аналогия исполнения", "md_doc__r_v_m.html#autotoc_md53", null ]
     ] ],
     [ "Словарь общепринятых терминов", "md_doc_wiki_concepts.html", null ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md78", [
-        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md79", null ],
-        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md80", null ]
+      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md55", [
+        [ "Модель Отношений - это язык метапрограммирования.", "md_doc__introduction.html#autotoc_md36", null ],
+        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md56", null ],
+        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md57", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -148,7 +125,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespacerm.html#a610895365f144e89242ce3837b38bac2"
+"namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

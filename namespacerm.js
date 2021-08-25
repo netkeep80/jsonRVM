@@ -28,6 +28,7 @@ var namespacerm =
     [ "ImportLoadDLLEntity", "namespacerm.html#a8600084aefb87317d1a6d5c773f87015", null ],
     [ "json_catch", "namespacerm.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "namespacerm.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
+    [ "json_rmvm_version", "namespacerm.html#abaa7d9e57036b34f37f4eb55542da01b", null ],
     [ "json_switch_bool", "namespacerm.html#a1d960d8aaa961cf261e075550cb2c028", null ],
     [ "json_switch_number", "namespacerm.html#a42a498df5d38a0a784693c6d519cc17b", null ],
     [ "json_switch_string", "namespacerm.html#a14d22264da728bdfcee13e5e72bb82fd", null ],
