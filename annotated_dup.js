@@ -13,6 +13,7 @@ var annotated_dup =
       [ "type_map", "structrm_1_1type__map.html", "structrm_1_1type__map" ],
       [ "vm_ctx", "structrm_1_1vm__ctx.html", "structrm_1_1vm__ctx" ],
       [ "base_entity", "structrm_1_1base__entity.html", "structrm_1_1base__entity" ],
+      [ "callctx", "structrm_1_1callctx.html", "structrm_1_1callctx" ],
       [ "vm", "classrm_1_1vm.html", "classrm_1_1vm" ],
       [ "json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
       [ "steady_clock", "structrm_1_1steady__clock.html", "structrm_1_1steady__clock" ],

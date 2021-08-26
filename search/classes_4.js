@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['json_5fdump_175',['json_dump',['../structrm_1_1json__dump.html',1,'rm']]]
+  ['interface_5ft_179',['interface_t',['../classrm_1_1interface__t.html',1,'rm']]],
+  ['interface_5ft_3c_20database_5fapi_20_3e_180',['interface_t&lt; database_api &gt;',['../classrm_1_1interface__t.html',1,'rm']]]
 ];

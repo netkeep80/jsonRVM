@@ -2,6 +2,7 @@ var vm_8rm_8h =
 [
     [ "vm_ctx", "structrm_1_1vm__ctx.html", "structrm_1_1vm__ctx" ],
     [ "base_entity", "structrm_1_1base__entity.html", "structrm_1_1base__entity" ],
+    [ "callctx", "structrm_1_1callctx.html", "structrm_1_1callctx" ],
     [ "vm", "classrm_1_1vm.html", "classrm_1_1vm" ],
     [ "database_api_add_entity", "structrm_1_1vm_1_1database__api__add__entity.html", "structrm_1_1vm_1_1database__api__add__entity" ],
     [ "rmvm_version", "structrm_1_1vm_1_1rmvm__version.html", "structrm_1_1vm_1_1rmvm__version" ],
