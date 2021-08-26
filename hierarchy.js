@@ -4,6 +4,10 @@ var hierarchy =
     [ "rm::_div< type_t >", "structrm_1_1__div.html", null ],
     [ "rm::_mul< type_t >", "structrm_1_1__mul.html", null ],
     [ "rm::_sub< type_t >", "structrm_1_1__sub.html", null ],
+    [ "rm::vm::base_entity", "structrm_1_1vm_1_1base__entity.html", [
+      [ "rm::json_dump", "structrm_1_1json__dump.html", null ],
+      [ "rm::rmvm_version", "structrm_1_1rmvm__version.html", null ]
+    ] ],
     [ "rm::DLL", "structrm_1_1_d_l_l.html", null ],
     [ "rm::interface_t< implementation_t >", "classrm_1_1interface__t.html", null ],
     [ "rm::interface_t< database_api >", "classrm_1_1interface__t.html", [

@@ -8,6 +8,8 @@ var namespacerm =
     [ "_sub", "structrm_1_1__sub.html", "structrm_1_1__sub" ],
     [ "_mul", "structrm_1_1__mul.html", "structrm_1_1__mul" ],
     [ "_div", "structrm_1_1__div.html", "structrm_1_1__div" ],
+    [ "json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
+    [ "rmvm_version", "structrm_1_1rmvm__version.html", "structrm_1_1rmvm__version" ],
     [ "DLL", "structrm_1_1_d_l_l.html", "structrm_1_1_d_l_l" ],
     [ "DLLs", "classrm_1_1_d_l_ls.html", "classrm_1_1_d_l_ls" ],
     [ "file_database_t", "classrm_1_1file__database__t.html", "classrm_1_1file__database__t" ],
@@ -28,7 +30,6 @@ var namespacerm =
     [ "ImportLoadDLLEntity", "namespacerm.html#a8600084aefb87317d1a6d5c773f87015", null ],
     [ "json_catch", "namespacerm.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "namespacerm.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
-    [ "json_rmvm_version", "namespacerm.html#abaa7d9e57036b34f37f4eb55542da01b", null ],
     [ "json_switch_bool", "namespacerm.html#a1d960d8aaa961cf261e075550cb2c028", null ],
     [ "json_switch_number", "namespacerm.html#a42a498df5d38a0a784693c6d519cc17b", null ],
     [ "json_switch_string", "namespacerm.html#a14d22264da728bdfcee13e5e72bb82fd", null ],
@@ -38,7 +39,6 @@ var namespacerm =
     [ "jsonCopy", "namespacerm.html#ab8a155b58bb443ca3bf6fe104c3c1ae4", null ],
     [ "jsonDiv", "namespacerm.html#ab4f101fb1c54aeb62ff22feb47c5eb87", null ],
     [ "jsonDouble", "namespacerm.html#aab629d4095b04549a49316cad0007814", null ],
-    [ "jsonDump", "namespacerm.html#ac3f17455016cb3af6b33d43103d8148f", null ],
     [ "jsonErase", "namespacerm.html#a24d6c2c990b81611e1bcfff8e5d73f5f", null ],
     [ "jsonForEachObject", "namespacerm.html#a9b3d88d76d9835a265f4c71ac7714f89", null ],
     [ "jsonForEachSubject", "namespacerm.html#a0e9903438fcb955c0fd16b33ad367dcc", null ],
@@ -83,6 +83,5 @@ var namespacerm =
     [ "xor_number_unsigned", "namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94", null ],
     [ "xor_object", "namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7", null ],
     [ "xor_string", "namespacerm.html#a3aab555663930f470888fc81d8a33459", null ],
-    [ "LoadedDLLs", "namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1", null ],
-    [ "rmvm_version", "namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d", null ]
+    [ "LoadedDLLs", "namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1", null ]
 ];

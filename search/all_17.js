@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['Введение_145',['Введение',['../md_doc__introduction.html',1,'']]]
+  ['_7edlls_149',['~DLLs',['../classrm_1_1_d_l_ls.html#a0a32f209e124d4dc277ea0d0a1bfc4c0',1,'rm::DLLs']]]
 ];

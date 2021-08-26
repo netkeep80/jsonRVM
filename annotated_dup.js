@@ -9,6 +9,8 @@ var annotated_dup =
       [ "_sub", "structrm_1_1__sub.html", "structrm_1_1__sub" ],
       [ "_mul", "structrm_1_1__mul.html", "structrm_1_1__mul" ],
       [ "_div", "structrm_1_1__div.html", "structrm_1_1__div" ],
+      [ "json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
+      [ "rmvm_version", "structrm_1_1rmvm__version.html", "structrm_1_1rmvm__version" ],
       [ "DLL", "structrm_1_1_d_l_l.html", "structrm_1_1_d_l_l" ],
       [ "DLLs", "classrm_1_1_d_l_ls.html", "classrm_1_1_d_l_ls" ],
       [ "file_database_t", "classrm_1_1file__database__t.html", "classrm_1_1file__database__t" ]

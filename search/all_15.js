@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['xor_5farray_137',['xor_array',['../namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451',1,'rm']]],
-  ['xor_5fboolean_138',['xor_boolean',['../namespacerm.html#ab4f545644d118c245b1419230531b8a3',1,'rm']]],
-  ['xor_5fnumber_5ffloat_139',['xor_number_float',['../namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8',1,'rm']]],
-  ['xor_5fnumber_5finteger_140',['xor_number_integer',['../namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3',1,'rm']]],
-  ['xor_5fnumber_5funsigned_141',['xor_number_unsigned',['../namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94',1,'rm']]],
-  ['xor_5fobject_142',['xor_object',['../namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7',1,'rm']]],
-  ['xor_5fstring_143',['xor_string',['../namespacerm.html#a3aab555663930f470888fc81d8a33459',1,'rm']]]
+  ['wiki_5fconcepts_2emd_138',['wiki_concepts.md',['../wiki__concepts_8md.html',1,'']]],
+  ['wstring_5fto_5f_139',['wstring_to_',['../string__utils_8h.html#a4740d9d1f20e5c6e0dcf0f113c71ce16',1,'string_utils.h']]],
+  ['wstring_5fto_5fcp1251_140',['wstring_to_cp1251',['../string__utils_8h.html#add066b89223564bc52aada71bde6a07e',1,'string_utils.h']]],
+  ['wstring_5fto_5futf8_141',['wstring_to_utf8',['../string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2',1,'string_utils.h']]]
 ];

@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-60-g43ec9d4</span>
+   &#160;<span id="projectnumber">2.6.0-61-gdd06acf</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -125,6 +125,10 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1__div.html">rm::_div&lt; type_t &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1json__dump.html">rm::json_dump</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1rmvm__version.html">rm::rmvm_version</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
 Пространства имен</h2></td></tr>
@@ -153,9 +157,9 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="separator:a67ee0817546165e752bc8858ab404a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a794dacf84960f6e2019fc37a95062673"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#a794dacf84960f6e2019fc37a95062673">define_static_method</a>(static_method)</td></tr>
 <tr class="separator:a794dacf84960f6e2019fc37a95062673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0db49d5997201a16f4ca812505353bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#ae0db49d5997201a16f4ca812505353bd">map_json_is_type</a>(json_type)&#160;&#160;&#160;rmvm.add_binary_view( rmvm, &quot;is_&quot;s + #json_type, json_is_##json_type, &quot;&quot;s );</td></tr>
+<tr class="memitem:ae0db49d5997201a16f4ca812505353bd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#ae0db49d5997201a16f4ca812505353bd">map_json_is_type</a>(json_type)&#160;&#160;&#160;rmvm.add_base_entity( rmvm, &quot;is_&quot;s + #json_type, json_is_##json_type, &quot;&quot;s );</td></tr>
 <tr class="separator:ae0db49d5997201a16f4ca812505353bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd6be3e3a559bfbadd6ded87e64d3d19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19">map_json_static_method</a>(static_method)&#160;&#160;&#160;rmvm.add_binary_view( rmvm[&quot;json&quot;], #static_method, json_call_##static_method, &quot;&quot;s );</td></tr>
+<tr class="memitem:acd6be3e3a559bfbadd6ded87e64d3d19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19">map_json_static_method</a>(static_method)&#160;&#160;&#160;rmvm.add_base_entity( rmvm[&quot;json&quot;], #static_method, json_call_##static_method, &quot;&quot;s );</td></tr>
 <tr class="separator:acd6be3e3a559bfbadd6ded87e64d3d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -293,13 +297,9 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="separator:aa9d2e02e729da065d7fa1c7a4a35b0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa4d1c30f7dc4e13f696c1c63f47ee0de">rm::jsonHTML</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3f17455016cb3af6b33d43103d8148f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ac3f17455016cb3af6b33d43103d8148f">rm::jsonDump</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
-<tr class="separator:ac3f17455016cb3af6b33d43103d8148f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplParams" colspan="2">template&lt;class duration &gt; </td></tr>
 <tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a61fe0893d05c0eb63e7f23f4e3a447cc">rm::steady_clock_</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abaa7d9e57036b34f37f4eb55542da01b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abaa7d9e57036b34f37f4eb55542da01b">rm::json_rmvm_version</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
-<tr class="separator:abaa7d9e57036b34f37f4eb55542da01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a555b1c8445cfb272aa963e8a018a08f0"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a> (vm &amp;rmvm)</td></tr>
 <tr class="separator:a555b1c8445cfb272aa963e8a018a08f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -387,7 +387,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">json_type</td><td>)</td>
-          <td>&#160;&#160;&#160;rmvm.add_binary_view( rmvm, &quot;is_&quot;s + #json_type, json_is_##json_type, &quot;&quot;s );</td>
+          <td>&#160;&#160;&#160;rmvm.add_base_entity( rmvm, &quot;is_&quot;s + #json_type, json_is_##json_type, &quot;&quot;s );</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -405,7 +405,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">static_method</td><td>)</td>
-          <td>&#160;&#160;&#160;rmvm.add_binary_view( rmvm[&quot;json&quot;], #static_method, json_call_##static_method, &quot;&quot;s );</td>
+          <td>&#160;&#160;&#160;rmvm.add_base_entity( rmvm[&quot;json&quot;], #static_method, json_call_##static_method, &quot;&quot;s );</td>
         </tr>
       </table>
 </div><div class="memdoc">

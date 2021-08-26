@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-60-g43ec9d4</span>
+   &#160;<span id="projectnumber">2.6.0-61-gdd06acf</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -130,356 +130,374 @@ $(document).ready(function(){initNavTree('vm_8rm_8h_source.html',''); initResiza
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacerm.html">rm</a></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;{</div>
-<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">   42</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">string</span> <a class="code" href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rmvm_version</a> = <span class="stringliteral">&quot;3.0.0&quot;</span>s;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">using namespace </span>std;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">using namespace </span>nlohmann;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">class </span><a class="code" href="classrm_1_1vm.html">vm</a>;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">//  64 bit</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifdef WIN32</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#define IMPORT_RELATIONS_MODEL      &quot;?import_relations_model_to@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVvm@1@@Z&quot;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    __declspec(dllexport) <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a>(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; (*InitDict)(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keyword">static</span> InitDict You_must_define_import_relations_model_to_function_in_your_RM_dictionary = <a class="code" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a>;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">//  Контекст исполнения сущности</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">//  инстанцированная проекция модели сущности</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="comment">//  экземпляр сущности</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html">   60</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $;  <span class="comment">//  parent context reference</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">   63</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">ent</a>;  <span class="comment">//  context entity reference сущность, is model for instance</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">   64</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>;  <span class="comment">//  context object reference</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">   65</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rel</a>;  <span class="comment">//  relation instance value</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">   66</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a>;  <span class="comment">//  context subject reference</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">   68</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">vm_ctx</a>(json&amp; Rel, json&amp; Obj, json&amp; Sub, json&amp; Ent, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; Ctx)</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            : rel(Rel), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">   71</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">vm_ctx</a>(json&amp; Rel, json&amp; Ent)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            : rel(Rel), obj(Rel), sub(Rel), ent(Ent), $(*this) {}</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">   74</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">vm_ctx</a>(json&amp; Rel)</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            : rel(Rel), obj(Rel), sub(Rel), ent(Rel), $(*this) {}</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">   77</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <span class="keyword">function</span>, <span class="keyword">const</span> json&amp; error)<span class="keyword"> const</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">        </span>{</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            json    j;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            j[<span class="stringliteral">&quot;__FUNCTION__&quot;</span>] = <span class="keyword">function</span>;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            j[<span class="stringliteral">&quot;exception&quot;</span>] = error;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$ent/&quot;</span>] = ent;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$obj/&quot;</span>] = obj;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$rel/&quot;</span>] = rel;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$sub/&quot;</span>] = sub;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">throw</span> j;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    };</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">   90</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> = void (*)(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $);</div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">   91</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a> = map&lt;json const*, binary_view&gt;;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    </div>
-<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html">   93</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classrm_1_1vm.html">vm</a> : <span class="keyword">protected</span> <a class="code" href="classrm_1_1database__api.html">database_api</a>, <span class="keyword">public</span> json, <span class="keyword">public</span> <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a></div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    {</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        <span class="keyword">struct </span>rval { <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> is_lval{ <span class="keyword">false</span> }; };</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">struct </span>lval { <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> is_lval{ <span class="keyword">true</span> }; };</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> ref_in_json_to(json*&amp; jptr, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; it)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            json&amp; ref = *jptr;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keywordflow">switch</span> (ref.type())</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            {</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            <span class="keywordflow">case</span> json::value_t::object:</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;                jptr = &amp;ref[it];</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">case</span> json::value_t::array:</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                jptr = &amp;ref[std::stoul(it)];</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                <span class="keywordflow">if</span> constexpr (val_type::is_lval)</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                    <span class="keywordtype">int</span>&amp; _Errno_ref = errno; <span class="comment">// Nonzero cost, pay it once</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">char</span>* _Ptr = it.c_str();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                    <span class="keywordtype">char</span>* _Eptr;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                    _Errno_ref = 0;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                    <span class="keywordtype">unsigned</span> index = strtoul(_Ptr, &amp;_Eptr, 10);</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;                    <span class="keywordflow">if</span> (_Errno_ref == ERANGE)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                        <span class="keywordflow">throw</span> json({ {__FUNCTION__, it} });</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                    <span class="keywordflow">if</span> (_Ptr == _Eptr)</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                        jptr = &amp;ref[it];</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                    <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                        jptr = &amp;ref[index];</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;                    <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                }</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;                <span class="keywordflow">throw</span> json({ {__FUNCTION__, it} });</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        }</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        json&amp; string_ref_to(<a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str)</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        {</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            json* jptr;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            <span class="keywordtype">size_t</span>  len = str.length();</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordtype">size_t</span>  pos = str.find_first_of(<span class="charliteral">&#39;/&#39;</span>, 0);</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">if</span> (pos == str.npos) pos = len;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;            <span class="keywordtype">size_t</span>  prev = pos + 1;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordtype">string</span>  it = str.substr(0, pos);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="comment">//auto  it = string_view(str.c_str(), pos);</span></div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160; </div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;            SWITCH(it)</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            {</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$ent&quot;</span>) : jptr = &amp;$.$.$.$.ent;  <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$sub&quot;</span>) : jptr = &amp;$.$.$.$.sub;  <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$obj&quot;</span>) : jptr = &amp;$.$.$.$.obj;  <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$rel&quot;</span>) : jptr = &amp;$.$.$.$.rel;  <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                CASE(<span class="stringliteral">&quot;$$$ent&quot;</span>) : jptr = &amp;$.$.$.ent; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                CASE(<span class="stringliteral">&quot;$$$sub&quot;</span>) : jptr = &amp;$.$.$.sub; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                CASE(<span class="stringliteral">&quot;$$$obj&quot;</span>) : jptr = &amp;$.$.$.obj; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                CASE(<span class="stringliteral">&quot;$$$rel&quot;</span>) : jptr = &amp;$.$.$.rel; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                CASE(<span class="stringliteral">&quot;$$ent&quot;</span>) : jptr = &amp;$.$.ent;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                CASE(<span class="stringliteral">&quot;$$sub&quot;</span>) : jptr = &amp;$.$.sub;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                CASE(<span class="stringliteral">&quot;$$obj&quot;</span>) : jptr = &amp;$.$.obj;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                CASE(<span class="stringliteral">&quot;$$rel&quot;</span>) : jptr = &amp;$.$.rel;    <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                CASE(<span class="stringliteral">&quot;$ent&quot;</span>) : jptr = &amp;$.ent;   <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                CASE(<span class="stringliteral">&quot;$sub&quot;</span>) : jptr = &amp;$.sub;   <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                CASE(<span class="stringliteral">&quot;$obj&quot;</span>) : jptr = &amp;$.obj;   <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                CASE(<span class="stringliteral">&quot;$rel&quot;</span>) : jptr = &amp;$.rel;   <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;            DEFAULT:</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                json&amp; ref = *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                assert(ref.is_object());</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                <span class="keyword">auto</span> res = ref.find(it);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160; </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;                <span class="keywordflow">if</span> (res == ref.end())</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                {</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                    <span class="keywordflow">try</span> { this-&gt;get_entity(ref[it], it); }</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                    <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, j} }); }</div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                    <span class="keywordflow">catch</span> (invalid_argument&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; invalid_argument, &quot;</span> + e.what()} }); }</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                    <span class="keywordflow">catch</span> (out_of_range&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; out_of_range, &quot;</span> + e.what()} }); }</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; does not exist!&quot;</span>} }); }</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                    res = ref.find(it);</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                    <span class="keywordflow">if</span> (res == ref.end())</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                        <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;entity &#39;&quot;</span>s + it + <span class="stringliteral">&quot;&#39; does not exist in relations model!&quot;</span>s} });</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                }</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                jptr = &amp;res.value();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;            }</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;            <span class="keywordflow">while</span> (prev &lt; len)</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            {</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;                pos = str.find_first_of(<span class="charliteral">&#39;/&#39;</span>, prev);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                <span class="keywordflow">if</span> (pos == string::npos) pos = len;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                <span class="keywordtype">string</span> it = str.substr(prev, pos - prev);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                prev = pos + 1;</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                <span class="keywordflow">try</span> { ref_in_json_to&lt;val_type&gt;(jptr, it); }</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, j} }); }</div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                <span class="keywordflow">catch</span> (invalid_argument&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; invalid_argument, &quot;</span> + e.what()} }); }</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                <span class="keywordflow">catch</span> (out_of_range&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; out_of_range, &quot;</span> + e.what()} }); }</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; does not exist!&quot;</span>} }); }</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;            }</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <span class="keywordflow">return</span> *jptr;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        }</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        json&amp; val_or_ref_to(<a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $, json&amp; ref)</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        {</div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;            <span class="keywordflow">switch</span> (ref.type())</div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            {</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            <span class="keywordflow">case</span> json::value_t::string: <span class="comment">//  иерархический путь к json значению</span></div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                <span class="keywordflow">return</span> string_ref_to&lt;val_type&gt;($, ref.get_ref&lt;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp;&gt;());</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:   <span class="comment">//  местоимение проекции контекстной сущности</span></div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                <span class="keywordflow">return</span> $.rel;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;            <span class="keywordflow">default</span>:                    <span class="comment">//  если это не адрес то возвращаем значение</span></div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                <span class="keywordflow">return</span> ref;</div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;            }</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        }</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span>  base_add_entity(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $)</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        {</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            <span class="keywordtype">string</span>  ent_id = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            rmvm.<a class="code" href="classrm_1_1database__api.html#a45a70b9606c95b53a518781187462897">add_entity</a>($.obj, ent_id);</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            $.sub = ent_id;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        }</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160; </div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00231"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">  231</a></span>&#160;        <a class="code" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">vm</a>(<a class="code" href="classrm_1_1database__api.html">database_api</a>* db = <span class="keyword">nullptr</span>)</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            : json(json::object())</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        {</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <a class="code" href="classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a">database_api::link</a>(db);</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            <span class="comment">//  database_api</span></div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            add_binary_view(*<span class="keyword">this</span>, <span class="stringliteral">&quot;add_entity&quot;</span>s, base_add_entity, <span class="stringliteral">&quot;Add new entity to database&quot;</span>s);</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        }</div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
-<div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">  239</a></span>&#160;        json&amp; <a class="code" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">exec_ent</a>(json&amp; rel, json&amp; ent)</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        {</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a> $(rel);</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            {</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;                exec_ent($, ent);</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            }</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            <span class="keywordflow">catch</span> (json&amp; j) { $.throw_json(__FUNCTION__, j); }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="keywordflow">catch</span> (json::exception&amp; e) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;json::exception: &quot;</span>s + e.what() + <span class="stringliteral">&quot;, id: &quot;</span>s + to_string(e.id)); }</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <span class="keywordflow">catch</span> (std::exception&amp; e) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;std::exception: &quot;</span>s + e.what()); }</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            <span class="keywordflow">catch</span> (...) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;unknown exception&quot;</span>s); }</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordflow">return</span> rel;</div>
-<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;        }</div>
-<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        <span class="comment">//  Исполнение сущности либо json байткода</span></div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="comment">//  имеет прототип отличный от других контроллеров и не является контроллером</span></div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="comment">//  рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей</span></div>
-<div class="line"><a name="l00256"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">  256</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">exec_ent</a>(<a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $, json&amp; ent)</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        {</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a>&amp; dict = *<span class="keyword">this</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            <span class="keyword">auto</span> it = dict.find(&amp;ent);</div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160; </div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;            <span class="keywordflow">if</span> (it != dict.end())   <span class="comment">//  это скомпилированная сущность?</span></div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            {</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;                <span class="keywordflow">try</span> { (*it-&gt;second)(*<span class="keyword">this</span>, $); }</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> j; }</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                <span class="keywordflow">catch</span> (json::exception&amp; e) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;json::exception: &quot;</span>s + e.what() + <span class="stringliteral">&quot;, id: &quot;</span>s + to_string(e.id)); }</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                <span class="keywordflow">catch</span> (std::exception&amp; e) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;std::exception: &quot;</span>s + e.what()); }</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;unknown exception&quot;</span>s); }</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;            }</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">switch</span> (ent.type())</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            {</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            <span class="keywordflow">case</span> json::value_t::string: <span class="comment">//  иерархический путь к json значению</span></div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;                <span class="keywordflow">try</span> { exec_ent($, string_ref_to&lt;rval&gt;($, ent.get_ref&lt;<span class="keywordtype">string</span> <span class="keyword">const</span>&amp;&gt;())); }</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {ent.get_ref&lt;<span class="keywordtype">string</span> <span class="keyword">const</span>&amp;&gt;(), j} }); }</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;            <span class="keywordflow">case</span> json::value_t::array:  <span class="comment">//  лямбда вектор, который управляет последовательным изменением проекции сущности</span></div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = ent.begin(); it != ent.end(); ++it)</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                    <span class="keywordflow">try</span> { exec_ent($, *it); }</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {<span class="stringliteral">&quot;[&quot;</span>s + to_string(it - ent.begin()) + <span class="stringliteral">&quot;]&quot;</span>s, j} }); }</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;            <span class="keywordflow">case</span> json::value_t::object:</div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            {</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;                <span class="keyword">auto</span>&amp; rel = ent.find(<span class="stringliteral">&quot;$rel&quot;</span>);</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                <span class="keyword">auto</span>&amp; end = ent.end();</div>
-<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;                <span class="keywordflow">if</span> (rel != end) <span class="comment">//  это сущность, которую надо исполнить в новом контексте?</span></div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                {</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                    <span class="keyword">auto</span>&amp; obj = ent.find(<span class="stringliteral">&quot;$obj&quot;</span>);</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                    <span class="keyword">auto</span>&amp; sub = ent.find(<span class="stringliteral">&quot;$sub&quot;</span>);</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                    <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                        exec_ent(</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>(</div>
-<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                                $.rel,</div>
-<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                                obj == end ? $.rel : val_or_ref_to&lt;rval&gt;($, *obj),</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                                sub == end ? $.rel : val_or_ref_to&lt;lval&gt;($, *sub),</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                                ent,</div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                                $),</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                            val_or_ref_to&lt;rval&gt;($, *rel)</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                        );</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                    }</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {<span class="stringliteral">&quot;$rel&quot;</span>s, j} }); }</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                }</div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                <span class="keywordflow">else</span> <span class="comment">// контроллер это лямбда структура, которая управляет параллельным проецированием сущностей</span></div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                {</div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; it : ent.items()) <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    {</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                        exec_ent(</div>
-<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>(</div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                                string_ref_to&lt;lval&gt;($, it.key()),</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                                $.obj,</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                                $.sub,</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                                $.ent,</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                                $.$),</div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                            val_or_ref_to&lt;rval&gt;($, it.value())</div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                        );</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                    }</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {it.key(), j} }); }</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                }</div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            }</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;            <span class="keywordflow">default</span>:    <span class="comment">//  остальные простые типы есть результат исполнения отношения</span></div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                $.rel = ent;</div>
-<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:   <span class="comment">//  null - означает отсутствие отношения, т.е. неизменность проекции</span></div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            }</div>
-<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        }</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="comment">//  добавление сущности с закэшированной x86 проекцией</span></div>
-<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">  334</a></span>&#160;        json&amp; <a class="code" href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">add_binary_view</a>(json&amp; entity, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, <span class="keyword">const</span> <a class="code" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> view, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; description)</div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        {</div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;            entity[name] = { { <span class="stringliteral">&quot;description&quot;</span>, description } };</div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;            <span class="keyword">static_cast&lt;</span><a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a>&amp;<span class="keyword">&gt;</span>(*this)[&amp;(entity[name])] = view;</div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;            <span class="keywordflow">return</span> entity[name];</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;        }</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    };</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;}</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">using namespace </span>std;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">using namespace </span>nlohmann;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">class </span>vm;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">//  64 bit</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#ifdef WIN32</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#define IMPORT_RELATIONS_MODEL      &quot;?import_relations_model_to@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVvm@1@@Z&quot;</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    __declspec(dllexport) <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <a class="code" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a>(vm&amp; rmvm);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; (*InitDict)(vm&amp; rmvm);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">static</span> InitDict You_must_define_import_relations_model_to_function_in_your_RM_dictionary = <a class="code" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a>;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">//  Контекст исполнения сущности</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">//  инстанцированная проекция модели сущности</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="comment">//  экземпляр сущности</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html">   56</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $;  <span class="comment">//  parent context reference</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">   59</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">ent</a>;  <span class="comment">//  context entity reference сущность, is model for instance</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">   60</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>;  <span class="comment">//  context object reference</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">   61</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rel</a>;  <span class="comment">//  relation instance value</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">   62</a></span>&#160;        json&amp; <a class="code" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a>;  <span class="comment">//  context subject reference</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">   64</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">vm_ctx</a>(json&amp; Rel, json&amp; Obj, json&amp; Sub, json&amp; Ent, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; Ctx)</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            : rel(Rel), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">   67</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">vm_ctx</a>(json&amp; Rel, json&amp; Ent)</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            : rel(Rel), obj(Rel), sub(Rel), ent(Ent), $(*this) {}</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">   70</a></span>&#160;        <a class="code" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">vm_ctx</a>(json&amp; Rel)</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            : rel(Rel), obj(Rel), sub(Rel), ent(Rel), $(*this) {}</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">   73</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; <span class="keyword">function</span>, <span class="keyword">const</span> json&amp; error)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">        </span>{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            json    j;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            j[<span class="stringliteral">&quot;__FUNCTION__&quot;</span>] = <span class="keyword">function</span>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            j[<span class="stringliteral">&quot;exception&quot;</span>] = error;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$ent/&quot;</span>] = ent;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$obj/&quot;</span>] = obj;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$rel/&quot;</span>] = rel;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            j[<span class="stringliteral">&quot;vm_ctx&quot;</span>][<span class="stringliteral">&quot;$sub/&quot;</span>] = sub;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">throw</span> j;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    };</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">   86</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> = void (*)(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $);</div>
+<div class="line"><a name="l00087"></a><span class="lineno"><a class="line" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">   87</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a> = map&lt;json const*, binary_view&gt;;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    </div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html">   90</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classrm_1_1vm.html">vm</a> : <span class="keyword">protected</span> <a class="code" href="classrm_1_1database__api.html">database_api</a>, <span class="keyword">public</span> json, <span class="keyword">public</span> <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    {</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0">   93</a></span>&#160;    <span class="keyword">public</span>: <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">inline</span> <span class="keywordtype">string</span> version = <span class="stringliteral">&quot;3.0.0&quot;</span>s;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;        <span class="keyword">struct </span>rval { <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> is_lval{ <span class="keyword">false</span> }; };</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">struct </span>lval { <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">bool</span> is_lval{ <span class="keyword">true</span> }; };</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span> ref_in_json_to(json*&amp; jptr, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; it)</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;        {</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            json&amp; ref = *jptr;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;            <span class="keywordflow">switch</span> (ref.type())</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;            {</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;            <span class="keywordflow">case</span> json::value_t::object:</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;                jptr = &amp;ref[it];</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keywordflow">case</span> json::value_t::array:</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                jptr = &amp;ref[std::stoul(it)];</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                <span class="keywordflow">if</span> constexpr (val_type::is_lval)</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                {</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;                    <span class="keywordtype">int</span>&amp; _Errno_ref = errno; <span class="comment">// Nonzero cost, pay it once</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;                    <span class="keyword">const</span> <span class="keywordtype">char</span>* _Ptr = it.c_str();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;                    <span class="keywordtype">char</span>* _Eptr;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;                    _Errno_ref = 0;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;                    <span class="keywordtype">unsigned</span> index = strtoul(_Ptr, &amp;_Eptr, 10);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;                    <span class="keywordflow">if</span> (_Errno_ref == ERANGE)</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;                        <span class="keywordflow">throw</span> json({ {__FUNCTION__, it} });</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;                    <span class="keywordflow">if</span> (_Ptr == _Eptr)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;                        jptr = &amp;ref[it];</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;                        jptr = &amp;ref[index];</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;                    <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                }</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;            <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                <span class="keywordflow">throw</span> json({ {__FUNCTION__, it} });</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        }</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        json&amp; string_ref_to(vm_ctx&amp; $, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str)</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        {</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;            json* jptr;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;            <span class="keywordtype">size_t</span>  len = str.length();</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            <span class="keywordtype">size_t</span>  pos = str.find_first_of(<span class="charliteral">&#39;/&#39;</span>, 0);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            <span class="keywordflow">if</span> (pos == str.npos) pos = len;</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            <span class="keywordtype">size_t</span>  prev = pos + 1;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordtype">string</span>  it = str.substr(0, pos);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            <span class="comment">//auto  it = string_view(str.c_str(), pos);</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;            SWITCH(it)</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            {</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$ent&quot;</span>) : jptr = &amp;$.$.$.$.ent;  <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$sub&quot;</span>) : jptr = &amp;$.$.$.$.sub;  <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$obj&quot;</span>) : jptr = &amp;$.$.$.$.obj;  <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;                CASE(<span class="stringliteral">&quot;$$$$rel&quot;</span>) : jptr = &amp;$.$.$.$.rel;  <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                CASE(<span class="stringliteral">&quot;$$$ent&quot;</span>) : jptr = &amp;$.$.$.ent; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                CASE(<span class="stringliteral">&quot;$$$sub&quot;</span>) : jptr = &amp;$.$.$.sub; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                CASE(<span class="stringliteral">&quot;$$$obj&quot;</span>) : jptr = &amp;$.$.$.obj; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;                CASE(<span class="stringliteral">&quot;$$$rel&quot;</span>) : jptr = &amp;$.$.$.rel; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                CASE(<span class="stringliteral">&quot;$$ent&quot;</span>) : jptr = &amp;$.$.ent;    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;                CASE(<span class="stringliteral">&quot;$$sub&quot;</span>) : jptr = &amp;$.$.sub;    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                CASE(<span class="stringliteral">&quot;$$obj&quot;</span>) : jptr = &amp;$.$.obj;    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                CASE(<span class="stringliteral">&quot;$$rel&quot;</span>) : jptr = &amp;$.$.rel;    <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;                CASE(<span class="stringliteral">&quot;$ent&quot;</span>) : jptr = &amp;$.ent;   <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;                CASE(<span class="stringliteral">&quot;$sub&quot;</span>) : jptr = &amp;$.sub;   <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                CASE(<span class="stringliteral">&quot;$obj&quot;</span>) : jptr = &amp;$.obj;   <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                CASE(<span class="stringliteral">&quot;$rel&quot;</span>) : jptr = &amp;$.rel;   <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;            DEFAULT:</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                json&amp; ref = *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;                assert(ref.is_object());</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                <span class="keyword">auto</span> res = ref.find(it);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                <span class="keywordflow">if</span> (res == ref.end())</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                    <span class="keywordflow">try</span> { this-&gt;get_entity(ref[it], it); }</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                    <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, j} }); }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                    <span class="keywordflow">catch</span> (invalid_argument&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; invalid_argument, &quot;</span> + e.what()} }); }</div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                    <span class="keywordflow">catch</span> (out_of_range&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; out_of_range, &quot;</span> + e.what()} }); }</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                    <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; does not exist!&quot;</span>} }); }</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                    res = ref.find(it);</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                    <span class="keywordflow">if</span> (res == ref.end())</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                        <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;entity &#39;&quot;</span>s + it + <span class="stringliteral">&quot;&#39; does not exist in relations model!&quot;</span>s} });</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;                }</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;                jptr = &amp;res.value();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            }</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <span class="keywordflow">while</span> (prev &lt; len)</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                pos = str.find_first_of(<span class="charliteral">&#39;/&#39;</span>, prev);</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                <span class="keywordflow">if</span> (pos == string::npos) pos = len;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                <span class="keywordtype">string</span> it = str.substr(prev, pos - prev);</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                prev = pos + 1;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                <span class="keywordflow">try</span> { ref_in_json_to&lt;val_type&gt;(jptr, it); }</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, j} }); }</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                <span class="keywordflow">catch</span> (invalid_argument&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; invalid_argument, &quot;</span> + e.what()} }); }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                <span class="keywordflow">catch</span> (out_of_range&amp; e) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; out_of_range, &quot;</span> + e.what()} }); }</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json({ {__FUNCTION__, <span class="stringliteral">&quot;property &#39;&quot;</span>s + str + <span class="stringliteral">&quot;&#39; does not exist!&quot;</span>} }); }</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;            }</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;            <span class="keywordflow">return</span> *jptr;</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;        }</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> val_type&gt;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;        json&amp; val_or_ref_to(vm_ctx&amp; $, json&amp; ref)</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;        {</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;            <span class="keywordflow">switch</span> (ref.type())</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;            {</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;            <span class="keywordflow">case</span> json::value_t::string: <span class="comment">//  иерархический путь к json значению</span></div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                <span class="keywordflow">return</span> string_ref_to&lt;val_type&gt;($, ref.get_ref&lt;<span class="keyword">const</span> <span class="keywordtype">string</span>&amp;&gt;());</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:   <span class="comment">//  местоимение проекции контекстной сущности</span></div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                <span class="keywordflow">return</span> $.rel;</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordflow">default</span>:                    <span class="comment">//  если это не адрес то возвращаем значение</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                <span class="keywordflow">return</span> ref;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            }</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;        }</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;        <span class="keyword">static</span> <span class="keywordtype">void</span>  base_add_entity(vm&amp; rmvm, vm_ctx&amp; $)</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        {</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="keywordtype">string</span>  ent_id = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;            rmvm.add_entity($.obj, ent_id);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            $.sub = ent_id;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        }</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00232"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">  232</a></span>&#160;        <a class="code" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">vm</a>(<a class="code" href="classrm_1_1database__api.html">database_api</a>* db = <span class="keyword">nullptr</span>)</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;            : json(json::object())</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;        {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;            <a class="code" href="classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a">database_api::link</a>(db);</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            <span class="comment">//  database_api</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            add_base_entity(*<span class="keyword">this</span>, <span class="stringliteral">&quot;add_entity&quot;</span>s, base_add_entity, <span class="stringliteral">&quot;Add new entity to database&quot;</span>s);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00240"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">  240</a></span>&#160;        json&amp; <a class="code" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">exec_ent</a>(json&amp; rel, json&amp; ent)</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;        {</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a> $(rel);</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;            <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;            {</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;                exec_ent($, ent);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;            }</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;            <span class="keywordflow">catch</span> (json&amp; j) { $.throw_json(__FUNCTION__, j); }</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;            <span class="keywordflow">catch</span> (json::exception&amp; e) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;json::exception: &quot;</span>s + e.what() + <span class="stringliteral">&quot;, id: &quot;</span>s + to_string(e.id)); }</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;            <span class="keywordflow">catch</span> (std::exception&amp; e) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;std::exception: &quot;</span>s + e.what()); }</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordflow">catch</span> (...) { $.throw_json(__FUNCTION__, <span class="stringliteral">&quot;unknown exception&quot;</span>s); }</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;            <span class="keywordflow">return</span> rel;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;        }</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="comment">//  Исполнение сущности либо json байткода</span></div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        <span class="comment">//  имеет прототип отличный от других контроллеров и не является контроллером</span></div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <span class="comment">//  рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей</span></div>
+<div class="line"><a name="l00257"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">  257</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">exec_ent</a>(<a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $, json&amp; ent)</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;        {</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            <a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a>&amp; dict = *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            <span class="keyword">auto</span> it = dict.find(&amp;ent);</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160; </div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;            <span class="keywordflow">if</span> (it != dict.end())   <span class="comment">//  это скомпилированная сущность?</span></div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;            {</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;                <span class="keywordflow">try</span> { (*it-&gt;second)(*<span class="keyword">this</span>, $); }</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> j; }</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;                <span class="keywordflow">catch</span> (json::exception&amp; e) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;json::exception: &quot;</span>s + e.what() + <span class="stringliteral">&quot;, id: &quot;</span>s + to_string(e.id)); }</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;                <span class="keywordflow">catch</span> (std::exception&amp; e) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;std::exception: &quot;</span>s + e.what()); }</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;                <span class="keywordflow">catch</span> (...) { <span class="keywordflow">throw</span> json(<span class="stringliteral">&quot;unknown exception&quot;</span>s); }</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;            }</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">switch</span> (ent.type())</div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;            {</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            <span class="keywordflow">case</span> json::value_t::string: <span class="comment">//  иерархический путь к json значению</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                <span class="keywordflow">try</span> { exec_ent($, string_ref_to&lt;rval&gt;($, ent.get_ref&lt;<span class="keywordtype">string</span> <span class="keyword">const</span>&amp;&gt;())); }</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;                <span class="keywordflow">catch</span> (json&amp; j) { <span class="keywordflow">throw</span> json({ {ent.get_ref&lt;<span class="keywordtype">string</span> <span class="keyword">const</span>&amp;&gt;(), j} }); }</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;            <span class="keywordflow">case</span> json::value_t::array:  <span class="comment">//  лямбда вектор, который управляет последовательным изменением проекции сущности</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;                <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = ent.begin(); it != ent.end(); ++it)</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;                    <span class="keywordflow">try</span> { exec_ent($, *it); }</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {<span class="stringliteral">&quot;[&quot;</span>s + to_string(it - ent.begin()) + <span class="stringliteral">&quot;]&quot;</span>s, j} }); }</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;            <span class="keywordflow">case</span> json::value_t::object:</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;            {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                <span class="keyword">auto</span>&amp; rel = ent.find(<span class="stringliteral">&quot;$rel&quot;</span>);</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;                <span class="keyword">auto</span>&amp; end = ent.end();</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="keywordflow">if</span> (rel != end) <span class="comment">//  это сущность, которую надо исполнить в новом контексте?</span></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                    <span class="keyword">auto</span>&amp; obj = ent.find(<span class="stringliteral">&quot;$obj&quot;</span>);</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                    <span class="keyword">auto</span>&amp; sub = ent.find(<span class="stringliteral">&quot;$sub&quot;</span>);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                    <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                        exec_ent(</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>(</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                                $.rel,</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                                obj == end ? $.rel : val_or_ref_to&lt;rval&gt;($, *obj),</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;                                sub == end ? $.rel : val_or_ref_to&lt;lval&gt;($, *sub),</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;                                ent,</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;                                $),</div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;                            val_or_ref_to&lt;rval&gt;($, *rel)</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;                        );</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                    }</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {<span class="stringliteral">&quot;$rel&quot;</span>s, j} }); }</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;                }</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;                <span class="keywordflow">else</span> <span class="comment">// контроллер это лямбда структура, которая управляет параллельным проецированием сущностей</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;                {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; it : ent.items()) <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;                    {</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;                        exec_ent(</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;                            <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>(</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;                                string_ref_to&lt;lval&gt;($, it.key()),</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;                                $.obj,</div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                                $.sub,</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;                                $.ent,</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;                                $.$),</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;                            val_or_ref_to&lt;rval&gt;($, it.value())</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;                        );</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;                    }</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;                    <span class="keywordflow">catch</span> (json &amp; j) { <span class="keywordflow">throw</span> json({ {it.key(), j} }); }</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;                }</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            }</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;            <span class="keywordflow">default</span>:    <span class="comment">//  остальные простые типы есть результат исполнения отношения</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;                $.rel = ent;</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <span class="keywordflow">case</span> json::value_t::null:   <span class="comment">//  null - означает отсутствие отношения, т.е. неизменность проекции</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;            }</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        }</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
+<div class="line"><a name="l00335"></a><span class="lineno"><a class="line" href="structrm_1_1vm_1_1base__entity.html">  335</a></span>&#160;        <span class="keyword">struct </span><a class="code" href="structrm_1_1vm_1_1base__entity.html">base_entity</a></div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;        {</div>
+<div class="line"><a name="l00337"></a><span class="lineno"><a class="line" href="structrm_1_1vm_1_1base__entity.html#a0064dcaefb46cf524829e254cc9e800e">  337</a></span>&#160;            <span class="keyword">const</span> json_pointer path{};</div>
+<div class="line"><a name="l00338"></a><span class="lineno"><a class="line" href="structrm_1_1vm_1_1base__entity.html#aa8ea4980b988c1a93b939c265996fc61">  338</a></span>&#160;            <span class="keyword">const</span> <span class="keywordtype">string</span> description{};</div>
+<div class="line"><a name="l00339"></a><span class="lineno"><a class="line" href="structrm_1_1vm_1_1base__entity.html#a62386059245be193610a62aa468ed52a">  339</a></span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="structrm_1_1vm_1_1base__entity.html#a62386059245be193610a62aa468ed52a">view</a>(<a class="code" href="classrm_1_1vm.html">vm</a>&amp; rmvm, <a class="code" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $) {}</div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;        };</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160; </div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;<span class="comment">/*ToDo: надо переделать на параллельное проецирование</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;<span class="comment">                    struct callctx</span></div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;<span class="comment">                    {</span></div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="comment">                        vm_ctx  $;</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="comment">                        string&amp;     key;</span></div>
-<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="comment">                        json&amp;       rel;</span></div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="comment">                        callctx(vm_ctx&amp; c, string&amp; k, json&amp; r) : $(c), key(k), rel(r) {}</span></div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;<span class="comment">                    };</span></div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;<span class="comment">                    vector&lt;callctx&gt; vec;</span></div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;<span class="comment">                    for (auto&amp; it : rel.items())</span></div>
-<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;<span class="comment">                    {</span></div>
-<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;<span class="comment">                        string&amp; key = it.key();</span></div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;<span class="comment">                        try { vec.push_back(callctx(vm_ctx(val_or_ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, val_or_ref_to($, it.value()))); }</span></div>
-<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;<span class="comment">                        catch (string&amp; error) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + error); }</span></div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="comment">                        catch (json::exception&amp; e) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;json::exception: &quot;s + e.what() + &quot;, id: &quot;s + to_string(e.id)); }</span></div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="comment">                        catch (std::exception&amp; e) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;std::exception: &quot;s + e.what()); }</span></div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;<span class="comment">                        catch (...) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;unknown exception&quot;s); }</span></div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="comment">                    }</span></div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="comment">                    parallel_for_each(begin(vec), end(vec), [](callctx&amp; it) {</span></div>
-<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="comment">                        try { exec_ent(it.$, it.rel); }</span></div>
-<div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;<span class="comment">                        catch (string&amp; error) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + error); }</span></div>
-<div class="line"><a name="l00366"></a><span class="lineno">  366</span>&#160;<span class="comment">                        catch (json::exception&amp; e) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;json::exception: &quot;s + e.what() + &quot;, id: &quot;s + to_string(e.id)); }</span></div>
-<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;<span class="comment">                        catch (std::exception&amp; e) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;std::exception: &quot;s + e.what()); }</span></div>
-<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;<span class="comment">                        catch (...) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;unknown exception&quot;s); }</span></div>
-<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;<span class="comment">                    });*/</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> base_entity_t = base_entity&gt;</div>
+<div class="line"><a name="l00350"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3">  350</a></span>&#160;        <a class="code" href="classrm_1_1vm.html">vm</a>&amp; operator &lt;&lt; (<span class="keyword">const</span> base_entity_t&amp; bent)</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;        {</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;            json&amp; ent = (*this)[bent.path] = { { <span class="stringliteral">&quot;description&quot;</span>, bent.description } };</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;            <span class="keyword">static_cast&lt;</span><a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a>&amp;<span class="keyword">&gt;</span>(*this)[&amp;(ent)] = base_entity_t::view;</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;            <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;        }</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
+<div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
+<div class="line"><a name="l00366"></a><span class="lineno"><a class="line" href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">  366</a></span>&#160;        json&amp; <a class="code" href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">add_base_entity</a>(json&amp; entity, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; name, <span class="keyword">const</span> <a class="code" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> view, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; description)</div>
+<div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;        {</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;            entity[name] = { { <span class="stringliteral">&quot;description&quot;</span>, description } };</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;            <span class="keyword">static_cast&lt;</span><a class="code" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a>&amp;<span class="keyword">&gt;</span>(*this)[&amp;(entity[name])] = view;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;            <span class="keywordflow">return</span> entity[name];</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;        }</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;    };</div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;}</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160; </div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="comment">/*ToDo: надо переделать на параллельное проецирование</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;<span class="comment">                    struct callctx</span></div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="comment">                    {</span></div>
+<div class="line"><a name="l00378"></a><span class="lineno">  378</span>&#160;<span class="comment">                        vm_ctx  $;</span></div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;<span class="comment">                        string&amp;     key;</span></div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;<span class="comment">                        json&amp;       rel;</span></div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;<span class="comment">                        callctx(vm_ctx&amp; c, string&amp; k, json&amp; r) : $(c), key(k), rel(r) {}</span></div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;<span class="comment">                    };</span></div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00384"></a><span class="lineno">  384</span>&#160;<span class="comment">                    vector&lt;callctx&gt; vec;</span></div>
+<div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;<span class="comment">                    for (auto&amp; it : rel.items())</span></div>
+<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="comment">                    {</span></div>
+<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;<span class="comment">                        string&amp; key = it.key();</span></div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;<span class="comment">                        try { vec.push_back(callctx(vm_ctx(val_or_ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, val_or_ref_to($, it.value()))); }</span></div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;<span class="comment">                        catch (string&amp; error) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + error); }</span></div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;<span class="comment">                        catch (json::exception&amp; e) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;json::exception: &quot;s + e.what() + &quot;, id: &quot;s + to_string(e.id)); }</span></div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;<span class="comment">                        catch (std::exception&amp; e) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;std::exception: &quot;s + e.what()); }</span></div>
+<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;<span class="comment">                        catch (...) { throw(&quot;\n view &quot;s + key + &quot; : &quot;s + &quot;unknown exception&quot;s); }</span></div>
+<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;<span class="comment">                    }</span></div>
+<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;<span class="comment">                    parallel_for_each(begin(vec), end(vec), [](callctx&amp; it) {</span></div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;<span class="comment">                        try { exec_ent(it.$, it.rel); }</span></div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;<span class="comment">                        catch (string&amp; error) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + error); }</span></div>
+<div class="line"><a name="l00398"></a><span class="lineno">  398</span>&#160;<span class="comment">                        catch (json::exception&amp; e) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;json::exception: &quot;s + e.what() + &quot;, id: &quot;s + to_string(e.id)); }</span></div>
+<div class="line"><a name="l00399"></a><span class="lineno">  399</span>&#160;<span class="comment">                        catch (std::exception&amp; e) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;std::exception: &quot;s + e.what()); }</span></div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;<span class="comment">                        catch (...) { throw(&quot;\n view &quot;s + it.key + &quot; : &quot;s + &quot;unknown exception&quot;s); }</span></div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;<span class="comment">                    });*/</span></div>
 <div class="ttc" id="aclassrm_1_1database__api_html"><div class="ttname"><a href="classrm_1_1database__api.html">rm::database_api</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00011">database_api.h:12</a></div></div>
-<div class="ttc" id="aclassrm_1_1database__api_html_a45a70b9606c95b53a518781187462897"><div class="ttname"><a href="classrm_1_1database__api.html#a45a70b9606c95b53a518781187462897">rm::database_api::add_entity</a></div><div class="ttdeci">virtual void add_entity(const json &amp;ent, string &amp;ent_id)</div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00015">database_api.h:15</a></div></div>
 <div class="ttc" id="aclassrm_1_1interface__t_html_a6749acdb352836b1ed439b61e9b4388a"><div class="ttname"><a href="classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a">rm::interface_t&lt; database_api &gt;::link</a></div><div class="ttdeci">void link(database_api *ptr)</div><div class="ttdef"><b>Definition:</b> <a href="interface_8h_source.html#l00010">interface.h:10</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00093">vm.rm.h:94</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_a195332ba5d7b93aa8d15207198f07fec"><div class="ttname"><a href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">rm::vm::vm</a></div><div class="ttdeci">vm(database_api *db=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00231">vm.rm.h:231</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_a485ca533acff87ec99438f68df9f4a2f"><div class="ttname"><a href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">rm::vm::exec_ent</a></div><div class="ttdeci">void exec_ent(vm_ctx &amp;$, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00256">vm.rm.h:256</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_a4d10fb6a2ccf5480b54846b05e2f7e81"><div class="ttname"><a href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">rm::vm::exec_ent</a></div><div class="ttdeci">json &amp; exec_ent(json &amp;rel, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00239">vm.rm.h:239</a></div></div>
-<div class="ttc" id="aclassrm_1_1vm_html_adca46c222118f00067e029239771d25d"><div class="ttname"><a href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">rm::vm::add_binary_view</a></div><div class="ttdeci">json &amp; add_binary_view(json &amp;entity, const string &amp;name, const binary_view view, const string &amp;description)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00334">vm.rm.h:334</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00090">vm.rm.h:91</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_a195332ba5d7b93aa8d15207198f07fec"><div class="ttname"><a href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">rm::vm::vm</a></div><div class="ttdeci">vm(database_api *db=nullptr)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00232">vm.rm.h:232</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_a43e33a3dca5f84a505fa51713be54b58"><div class="ttname"><a href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">rm::vm::add_base_entity</a></div><div class="ttdeci">json &amp; add_base_entity(json &amp;entity, const string &amp;name, const binary_view view, const string &amp;description)</div><div class="ttdoc">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00366">vm.rm.h:366</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_a485ca533acff87ec99438f68df9f4a2f"><div class="ttname"><a href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">rm::vm::exec_ent</a></div><div class="ttdeci">void exec_ent(vm_ctx &amp;$, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00257">vm.rm.h:257</a></div></div>
+<div class="ttc" id="aclassrm_1_1vm_html_a4d10fb6a2ccf5480b54846b05e2f7e81"><div class="ttname"><a href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">rm::vm::exec_ent</a></div><div class="ttdeci">json &amp; exec_ent(json &amp;rel, json &amp;ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00240">vm.rm.h:240</a></div></div>
 <div class="ttc" id="adatabase__api_8h_html"><div class="ttname"><a href="database__api_8h.html">database_api.h</a></div></div>
 <div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:7</a></div></div>
-<div class="ttc" id="anamespacerm_html_a555b1c8445cfb272aa963e8a018a08f0"><div class="ttname"><a href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a></div><div class="ttdeci">const string &amp; import_relations_model_to(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l01119">base.rm.h:1119</a></div></div>
-<div class="ttc" id="anamespacerm_html_a870ad9b4a90cbda34085a4bf43ba0800"><div class="ttname"><a href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">rm::binary_view_map_t</a></div><div class="ttdeci">map&lt; json const  *, binary_view &gt; binary_view_map_t</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00091">vm.rm.h:91</a></div></div>
-<div class="ttc" id="anamespacerm_html_a89a608ae2bcb4c994d843008354fe993"><div class="ttname"><a href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">rm::binary_view</a></div><div class="ttdeci">void(*)(vm &amp;rmvm, vm_ctx &amp;$) binary_view</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00090">vm.rm.h:90</a></div></div>
-<div class="ttc" id="anamespacerm_html_ad9aa14bf1a1753d28ffae697e900214d"><div class="ttname"><a href="namespacerm.html#ad9aa14bf1a1753d28ffae697e900214d">rm::rmvm_version</a></div><div class="ttdeci">const string rmvm_version</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00042">vm.rm.h:42</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html"><div class="ttname"><a href="structrm_1_1vm__ctx.html">rm::vm_ctx</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00060">vm.rm.h:61</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_a08ba251c6e6b6b7b8cc7c9f10a24d394"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">rm::vm_ctx::ent</a></div><div class="ttdeci">vm_ctx &amp;json &amp; ent</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00063">vm.rm.h:62</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_a5d5dfd112b297c6c3de4fabc75e6d26c"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rm::vm_ctx::rel</a></div><div class="ttdeci">json &amp; rel</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00065">vm.rm.h:65</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_a6c236cd297bfe0fd44a1dd449ab4ecaf"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel, json &amp;Ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00071">vm.rm.h:71</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_a7d086205ec21bd2e2d36d5c6422ed0c3"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00074">vm.rm.h:74</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_a9b0fe8aa3b4d2d9250efdca9187f8195"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel, json &amp;Obj, json &amp;Sub, json &amp;Ent, vm_ctx &amp;Ctx)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00068">vm.rm.h:68</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_acb06c430cfb3f2a63f13e24de1701714"><div class="ttname"><a href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">rm::vm_ctx::throw_json</a></div><div class="ttdeci">void throw_json(const string &amp;function, const json &amp;error) const</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00077">vm.rm.h:77</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_ae2b79f5a395732d62aaa2553e9122446"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">rm::vm_ctx::obj</a></div><div class="ttdeci">json &amp; obj</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00064">vm.rm.h:64</a></div></div>
-<div class="ttc" id="astructrm_1_1vm__ctx_html_ae335c37b8a77e66d9e89d9b95cd83f8e"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">rm::vm_ctx::sub</a></div><div class="ttdeci">json &amp; sub</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00066">vm.rm.h:66</a></div></div>
+<div class="ttc" id="anamespacerm_html_a555b1c8445cfb272aa963e8a018a08f0"><div class="ttname"><a href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a></div><div class="ttdeci">const string &amp; import_relations_model_to(vm &amp;rmvm)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l01123">base.rm.h:1123</a></div></div>
+<div class="ttc" id="anamespacerm_html_a870ad9b4a90cbda34085a4bf43ba0800"><div class="ttname"><a href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">rm::binary_view_map_t</a></div><div class="ttdeci">map&lt; json const  *, binary_view &gt; binary_view_map_t</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00087">vm.rm.h:87</a></div></div>
+<div class="ttc" id="anamespacerm_html_a89a608ae2bcb4c994d843008354fe993"><div class="ttname"><a href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">rm::binary_view</a></div><div class="ttdeci">void(*)(vm &amp;rmvm, vm_ctx &amp;$) binary_view</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00086">vm.rm.h:86</a></div></div>
+<div class="ttc" id="astructrm_1_1vm_1_1base__entity_html"><div class="ttname"><a href="structrm_1_1vm_1_1base__entity.html">rm::vm::base_entity</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00335">vm.rm.h:336</a></div></div>
+<div class="ttc" id="astructrm_1_1vm_1_1base__entity_html_a62386059245be193610a62aa468ed52a"><div class="ttname"><a href="structrm_1_1vm_1_1base__entity.html#a62386059245be193610a62aa468ed52a">rm::vm::base_entity::view</a></div><div class="ttdeci">static void view(vm &amp;rmvm, vm_ctx &amp;$)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00339">vm.rm.h:339</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html"><div class="ttname"><a href="structrm_1_1vm__ctx.html">rm::vm_ctx</a></div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00056">vm.rm.h:57</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_a08ba251c6e6b6b7b8cc7c9f10a24d394"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">rm::vm_ctx::ent</a></div><div class="ttdeci">vm_ctx &amp;json &amp; ent</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00059">vm.rm.h:58</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_a5d5dfd112b297c6c3de4fabc75e6d26c"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rm::vm_ctx::rel</a></div><div class="ttdeci">json &amp; rel</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00061">vm.rm.h:61</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_a6c236cd297bfe0fd44a1dd449ab4ecaf"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel, json &amp;Ent)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00067">vm.rm.h:67</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_a7d086205ec21bd2e2d36d5c6422ed0c3"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00070">vm.rm.h:70</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_a9b0fe8aa3b4d2d9250efdca9187f8195"><div class="ttname"><a href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">rm::vm_ctx::vm_ctx</a></div><div class="ttdeci">vm_ctx(json &amp;Rel, json &amp;Obj, json &amp;Sub, json &amp;Ent, vm_ctx &amp;Ctx)</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00064">vm.rm.h:64</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_acb06c430cfb3f2a63f13e24de1701714"><div class="ttname"><a href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">rm::vm_ctx::throw_json</a></div><div class="ttdeci">void throw_json(const string &amp;function, const json &amp;error) const</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00073">vm.rm.h:73</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_ae2b79f5a395732d62aaa2553e9122446"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">rm::vm_ctx::obj</a></div><div class="ttdeci">json &amp; obj</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00060">vm.rm.h:60</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_ae335c37b8a77e66d9e89d9b95cd83f8e"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">rm::vm_ctx::sub</a></div><div class="ttdeci">json &amp; sub</div><div class="ttdef"><b>Definition:</b> <a href="vm_8rm_8h_source.html#l00062">vm.rm.h:62</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

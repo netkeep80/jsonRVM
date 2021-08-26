@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-60-g43ec9d4</span>
+   &#160;<span id="projectnumber">2.6.0-61-gdd06acf</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
   <div class="summary">
 <a href="#nested-classes">Классы</a> &#124;
 <a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pub-static-attribs">Статические открытые данные</a> &#124;
 <a href="classrm_1_1vm-members.html">Полный список членов класса</a>  </div>
   <div class="headertitle">
 <div class="title">Класс rm::vm</div>  </div>
@@ -105,10 +106,15 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 <div class="dynheader">
 Граф связей класса rm::vm:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classrm_1_1vm__coll__graph.svg" width="392" height="218"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classrm_1_1vm__coll__graph.svg" width="511" height="231"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">см. легенду</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1base__entity.html">base_entity</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:a195332ba5d7b93aa8d15207198f07fec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">vm</a> (<a class="el" href="classrm_1_1database__api.html">database_api</a> *db=nullptr)</td></tr>
@@ -117,8 +123,18 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 <tr class="separator:a4d10fb6a2ccf5480b54846b05e2f7e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a485ca533acff87ec99438f68df9f4a2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">exec_ent</a> (<a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$, json &amp;ent)</td></tr>
 <tr class="separator:a485ca533acff87ec99438f68df9f4a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adca46c222118f00067e029239771d25d"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#adca46c222118f00067e029239771d25d">add_binary_view</a> (json &amp;entity, const string &amp;name, const <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> view, const string &amp;description)</td></tr>
-<tr class="separator:adca46c222118f00067e029239771d25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memTemplParams" colspan="2">template&lt;class base_entity_t  = base_entity&gt; </td></tr>
+<tr class="memitem:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3">operator&lt;&lt;</a> (const base_entity_t &amp;bent)</td></tr>
+<tr class="memdesc:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <a href="classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3">Подробнее...</a><br /></td></tr>
+<tr class="separator:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43e33a3dca5f84a505fa51713be54b58"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">add_base_entity</a> (json &amp;entity, const string &amp;name, const <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> view, const string &amp;description)</td></tr>
+<tr class="memdesc:a43e33a3dca5f84a505fa51713be54b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <a href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">Подробнее...</a><br /></td></tr>
+<tr class="separator:a43e33a3dca5f84a505fa51713be54b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Статические открытые данные</h2></td></tr>
+<tr class="memitem:a441b59d53c4816cdeacedf59cec254d0"><td class="memItemLeft" align="right" valign="top">static const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0">version</a> = &quot;3.0.0&quot;s</td></tr>
+<tr class="separator:a441b59d53c4816cdeacedf59cec254d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Дополнительные унаследованные члены</h2></td></tr>
@@ -137,7 +153,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock">
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00093">93</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00090">90</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a195332ba5d7b93aa8d15207198f07fec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a195332ba5d7b93aa8d15207198f07fec">&#9670;&nbsp;</a></span>vm()</h2>
@@ -163,13 +179,13 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00231">231</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00232">232</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Методы</h2>
-<a id="adca46c222118f00067e029239771d25d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adca46c222118f00067e029239771d25d">&#9670;&nbsp;</a></span>add_binary_view()</h2>
+<a id="a43e33a3dca5f84a505fa51713be54b58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43e33a3dca5f84a505fa51713be54b58">&#9670;&nbsp;</a></span>add_base_entity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +194,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">json&amp; rm::vm::add_binary_view </td>
+          <td class="memname">json&amp; rm::vm::add_base_entity </td>
           <td>(</td>
           <td class="paramtype">json &amp;&#160;</td>
           <td class="paramname"><em>entity</em>, </td>
@@ -214,7 +230,19 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00334">334</a></p>
+<p>Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">entity</td><td></td></tr>
+    <tr><td class="paramname">name</td><td></td></tr>
+    <tr><td class="paramname">view</td><td></td></tr>
+    <tr><td class="paramname">description</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00366">366</a></p>
 
 </div>
 </div>
@@ -252,7 +280,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00239">239</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00240">240</a></p>
 
 </div>
 </div>
@@ -290,7 +318,77 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00256">256</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00257">257</a></p>
+
+</div>
+</div>
+<a id="a48559e303866aa8c2de0fc8ef64bbaf3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48559e303866aa8c2de0fc8ef64bbaf3">&#9670;&nbsp;</a></span>operator&lt;&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class base_entity_t  = base_entity&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classrm_1_1vm.html">vm</a>&amp; rm::vm::operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const base_entity_t &amp;&#160;</td>
+          <td class="paramname"><em>bent</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией </p>
+<dl class="tparams"><dt>Параметры шаблона</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">base_entity_t</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bent</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00350">350</a></p>
+
+</div>
+</div>
+<h2 class="groupheader">Данные класса</h2>
+<a id="a441b59d53c4816cdeacedf59cec254d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a441b59d53c4816cdeacedf59cec254d0">&#9670;&nbsp;</a></span>version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const string rm::vm::version = &quot;3.0.0&quot;s</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00093">93</a></p>
 
 </div>
 </div>
