@@ -1101,29 +1101,33 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		body += "</" + tag + ">";
 	}
 
-	void  jsonDump(vm& rmvm, vm_ctx& $)
+	struct json_dump : public vm::base_entity
 	{
-		$.sub = $.obj.dump(3);
-	}
+		const json_pointer<json> path{ "/json/dump" };
+		const string description{ "Dump $obj to $sub" };
+		static void	view(vm& rmvm, vm_ctx& $) { $.sub = $.obj.dump(3); }
+	};
 
 	template<class duration>
 	void steady_clock_(vm& rmvm, vm_ctx& $) {
 		$.rel = chrono::duration_cast<duration>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
-	void	json_rmvm_version(vm& rmvm, vm_ctx& $)
+	struct rmvm_version : public vm::base_entity
 	{
-		$.rel = rmvm_version;
-	}
+		const json_pointer<json> path{ "/rmvm/version" };
+		const string description{ "Version of rmvm" };
+		static void	view(vm& rmvm, vm_ctx& $) { $.rel = vm::version; }
+	};
 
 	const string&	import_relations_model_to(vm& rmvm)
 	{
-		rmvm.add_binary_view(rmvm["rmvm"], "version"s, json_rmvm_version, "Version of rmvm"s);
-		rmvm.add_binary_view(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
-		rmvm.add_binary_view(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
-		rmvm.add_binary_view(rmvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
+		rmvm << rmvm_version();
+		rmvm.add_base_entity(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+		rmvm.add_base_entity(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
+		rmvm.add_base_entity(rmvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 
-#define map_json_is_type(json_type)	rmvm.add_binary_view( rmvm, "is_"s + #json_type, json_is_##json_type, ""s );
+#define map_json_is_type(json_type)	rmvm.add_base_entity( rmvm, "is_"s + #json_type, json_is_##json_type, ""s );
 		map_json_is_type(array);
 		map_json_is_type(boolean);
 		map_json_is_type(number_float);
@@ -1138,81 +1142,81 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		map_json_is_type(discarded);
 
 		//	json
-#define map_json_static_method(static_method)	rmvm.add_binary_view( rmvm["json"], #static_method, json_call_##static_method, ""s );
+#define map_json_static_method(static_method)	rmvm.add_base_entity( rmvm["json"], #static_method, json_call_##static_method, ""s );
 		map_json_static_method(array);
 		map_json_static_method(null);
 		map_json_static_method(meta);
 		map_json_static_method(object);
 
-		rmvm.add_binary_view(rmvm["json"], "dump"s, jsonDump, ""s);
+		rmvm << json_dump();
 
 		//	convert
-		rmvm.add_binary_view(rmvm, "integer"s, jsonInt32, ""s);
-		rmvm.add_binary_view(rmvm, "int"s, jsonInt32, ""s);
-		rmvm.add_binary_view(rmvm, "float"s, jsonDouble, ""s);
-		rmvm.add_binary_view(rmvm, "double"s, jsonDouble, ""s);
-		rmvm.add_binary_view(rmvm, "null"s, jsonNull, ""s);
+		rmvm.add_base_entity(rmvm, "integer"s, jsonInt32, ""s);
+		rmvm.add_base_entity(rmvm, "int"s, jsonInt32, ""s);
+		rmvm.add_base_entity(rmvm, "float"s, jsonDouble, ""s);
+		rmvm.add_base_entity(rmvm, "double"s, jsonDouble, ""s);
+		rmvm.add_base_entity(rmvm, "null"s, jsonNull, ""s);
 
 		//	data operations
-		rmvm.add_binary_view(rmvm, "where"s, jsonWhere, ""s);
-		rmvm.add_binary_view(rmvm, "union"s, jsonUnion, ""s);
-		rmvm.add_binary_view(rmvm, "size"s, jsonSize, ""s);
-		rmvm.add_binary_view(rmvm, "get"s, jsonGet, ""s);
-		rmvm.add_binary_view(rmvm, "set"s, jsonSet, ""s);
-		rmvm.add_binary_view(rmvm, "erase"s, jsonErase, "Удаляет элементы, которые соответствуют заданному ключу."s);
-		rmvm.add_binary_view(rmvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
+		rmvm.add_base_entity(rmvm, "where"s, jsonWhere, ""s);
+		rmvm.add_base_entity(rmvm, "union"s, jsonUnion, ""s);
+		rmvm.add_base_entity(rmvm, "size"s, jsonSize, ""s);
+		rmvm.add_base_entity(rmvm, "get"s, jsonGet, ""s);
+		rmvm.add_base_entity(rmvm, "set"s, jsonSet, ""s);
+		rmvm.add_base_entity(rmvm, "erase"s, jsonErase, "Удаляет элементы, которые соответствуют заданному ключу."s);
+		rmvm.add_base_entity(rmvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
 
 		//	math
-		rmvm.add_binary_view(rmvm, "*"s, jsonMul, ""s);
-		rmvm.add_binary_view(rmvm, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
-		rmvm.add_binary_view(rmvm, "+", jsonAdd, ""s);
-		rmvm.add_binary_view(rmvm, "-", jsonSubstract, ""s);
-		rmvm.add_binary_view(rmvm, "pow"s, jsonPower, ""s);
-		rmvm.add_binary_view(rmvm, "sqrt"s, jsonSqrt, ""s);
-		rmvm.add_binary_view(rmvm, "sum"s, jsonSum, ""s);
+		rmvm.add_base_entity(rmvm, "*"s, jsonMul, ""s);
+		rmvm.add_base_entity(rmvm, ":"s, jsonDiv, "субъект делимое, объект делитель"s);
+		rmvm.add_base_entity(rmvm, "+", jsonAdd, ""s);
+		rmvm.add_base_entity(rmvm, "-", jsonSubstract, ""s);
+		rmvm.add_base_entity(rmvm, "pow"s, jsonPower, ""s);
+		rmvm.add_base_entity(rmvm, "sqrt"s, jsonSqrt, ""s);
+		rmvm.add_base_entity(rmvm, "sum"s, jsonSum, ""s);
 
 		//	logic
-		rmvm.add_binary_view(rmvm, "^"s, jsonXOR, ""s);
-		rmvm.add_binary_view(rmvm, "=="s, jsonIsEq, ""s);
-		rmvm.add_binary_view(rmvm, "!="s, jsonIsNotEq, ""s);
-		rmvm.add_binary_view(rmvm, "<"s, jsonBelow, ""s);
-		rmvm.add_binary_view(rmvm, "&&"s, jsonAnd, ""s);
+		rmvm.add_base_entity(rmvm, "^"s, jsonXOR, ""s);
+		rmvm.add_base_entity(rmvm, "=="s, jsonIsEq, ""s);
+		rmvm.add_base_entity(rmvm, "!="s, jsonIsNotEq, ""s);
+		rmvm.add_base_entity(rmvm, "<"s, jsonBelow, ""s);
+		rmvm.add_base_entity(rmvm, "&&"s, jsonAnd, ""s);
 
 		//	strings
-		rmvm.add_binary_view(rmvm["string"], "="s, string_string, ""s);
-		rmvm.add_binary_view(rmvm["string"], "+="s, string_add, ""s);
-		rmvm.add_binary_view(rmvm["string"], "find"s, string_find, ""s);
-		rmvm.add_binary_view(rmvm["string"], "split"s, string_split, ""s);
-		rmvm.add_binary_view(rmvm["string"], "join"s, string_join, ""s);
+		rmvm.add_base_entity(rmvm["string"], "="s, string_string, ""s);
+		rmvm.add_base_entity(rmvm["string"], "+="s, string_add, ""s);
+		rmvm.add_base_entity(rmvm["string"], "find"s, string_find, ""s);
+		rmvm.add_base_entity(rmvm["string"], "split"s, string_split, ""s);
+		rmvm.add_base_entity(rmvm["string"], "join"s, string_join, ""s);
 
 		//	control
-		rmvm.add_binary_view(rmvm, "foreachobj"s, jsonForEachObject, ""s);
-		rmvm.add_binary_view(rmvm, "foreachsub"s, jsonForEachSubject, ""s);
-		rmvm.add_binary_view(rmvm, "then"s, IfObjTrueThenExecSub, ""s);
-		rmvm.add_binary_view(rmvm, "else"s, IfObjFalseThenExecSub, "");
-		rmvm.add_binary_view(rmvm, "while"s, ExecSubWhileObjTrue, ""s);
-		rmvm.add_binary_view(rmvm["switch"], "bool"s, json_switch_bool, ""s);
-		rmvm.add_binary_view(rmvm["switch"], "number"s, json_switch_number, ""s);
-		rmvm.add_binary_view(rmvm["switch"], "string"s, json_switch_string, ""s);
-		rmvm.add_binary_view(rmvm, "throw"s, json_throw, "");
-		rmvm.add_binary_view(rmvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
+		rmvm.add_base_entity(rmvm, "foreachobj"s, jsonForEachObject, ""s);
+		rmvm.add_base_entity(rmvm, "foreachsub"s, jsonForEachSubject, ""s);
+		rmvm.add_base_entity(rmvm, "then"s, IfObjTrueThenExecSub, ""s);
+		rmvm.add_base_entity(rmvm, "else"s, IfObjFalseThenExecSub, "");
+		rmvm.add_base_entity(rmvm, "while"s, ExecSubWhileObjTrue, ""s);
+		rmvm.add_base_entity(rmvm["switch"], "bool"s, json_switch_bool, ""s);
+		rmvm.add_base_entity(rmvm["switch"], "number"s, json_switch_number, ""s);
+		rmvm.add_base_entity(rmvm["switch"], "string"s, json_switch_string, ""s);
+		rmvm.add_base_entity(rmvm, "throw"s, json_throw, "");
+		rmvm.add_base_entity(rmvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
 
 		//	display
-		rmvm.add_binary_view(rmvm, "print"s, jsonPrint, ""s);
+		rmvm.add_base_entity(rmvm, "print"s, jsonPrint, ""s);
 
 		//	browser
-		rmvm.add_binary_view(rmvm, "tag"s, jsonTAG, ""s);
-		rmvm.add_binary_view(rmvm, "xml"s, jsonXML, ""s);
-		rmvm.add_binary_view(rmvm, "html"s, jsonHTML, ""s);
+		rmvm.add_base_entity(rmvm, "tag"s, jsonTAG, ""s);
+		rmvm.add_base_entity(rmvm, "xml"s, jsonXML, ""s);
+		rmvm.add_base_entity(rmvm, "html"s, jsonHTML, ""s);
 
 		//	steady clock
-		rmvm.add_binary_view(rmvm["steady_clock"], "nanoseconds"s, steady_clock_<chrono::nanoseconds>, "Sets $res to time since epoch in nanoseconds"s);
-		rmvm.add_binary_view(rmvm["steady_clock"], "microseconds"s, steady_clock_<chrono::microseconds>, "Sets $res to time since epoch in microseconds"s);
-		rmvm.add_binary_view(rmvm["steady_clock"], "milliseconds"s, steady_clock_<chrono::milliseconds>, "Sets $res to time since epoch in milliseconds"s);
-		rmvm.add_binary_view(rmvm["steady_clock"], "seconds"s, steady_clock_<chrono::seconds>, "Sets $res to time since epoch in seconds"s);
-		rmvm.add_binary_view(rmvm["steady_clock"], "minutes"s, steady_clock_<chrono::minutes>, "Sets $res to time since epoch in minutes"s);
-		rmvm.add_binary_view(rmvm["steady_clock"], "hours"s, steady_clock_<chrono::hours>, "Sets $res to time since epoch in hours"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "nanoseconds"s, steady_clock_<chrono::nanoseconds>, "Sets $res to time since epoch in nanoseconds"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "microseconds"s, steady_clock_<chrono::microseconds>, "Sets $res to time since epoch in microseconds"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "milliseconds"s, steady_clock_<chrono::milliseconds>, "Sets $res to time since epoch in milliseconds"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "seconds"s, steady_clock_<chrono::seconds>, "Sets $res to time since epoch in seconds"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "minutes"s, steady_clock_<chrono::minutes>, "Sets $res to time since epoch in minutes"s);
+		rmvm.add_base_entity(rmvm["steady_clock"], "hours"s, steady_clock_<chrono::hours>, "Sets $res to time since epoch in hours"s);
 
-		return rmvm_version;
+		return vm::version;
 	}
 }

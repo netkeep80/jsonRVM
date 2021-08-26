@@ -428,23 +428,23 @@ namespace rm
 	
 	FSRM_API const string&	import_relations_model_to(vm& rmvm)
 	{
-		rmvm.add_binary_view(rmvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
-		rmvm.add_binary_view(rmvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
-		rmvm.add_binary_view(rmvm["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
+		rmvm.add_base_entity(rmvm["dir"], "scan"s, fs_dir_scan, "Scanning filesystem directory, $obj must be json object with PathFolder and FileNameFormat properties"s);
+		rmvm.add_base_entity(rmvm["dir"], "create"s, fs_dir_create, "Create new directory, $obj must be string"s);
+		rmvm.add_base_entity(rmvm["dir"], "delete"s, fs_dir_delete, "Delete directory, $obj must be string"s);
 
-		rmvm.add_binary_view(rmvm["file"]["load"], "rm"s, fs_file_load_rm, "Loads rm from json"s);
+		rmvm.add_base_entity(rmvm["file"]["load"], "rm"s, fs_file_load_rm, "Loads rm from json"s);
 
-		rmvm.add_binary_view(rmvm["file"]["read"], "json"s, fs_file_read_json, "Reads json file and parse it"s);
-		rmvm.add_binary_view(rmvm["file"]["read"], "string"s, jsonFileToString, ""s);
-		rmvm.add_binary_view(rmvm["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
+		rmvm.add_base_entity(rmvm["file"]["read"], "json"s, fs_file_read_json, "Reads json file and parse it"s);
+		rmvm.add_base_entity(rmvm["file"]["read"], "string"s, jsonFileToString, ""s);
+		rmvm.add_base_entity(rmvm["file"]["read"]["array"], "string"s, jsonFileToStringArray, ""s);
 
-		rmvm.add_binary_view(rmvm["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
-		rmvm.add_binary_view(rmvm["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
-		rmvm.add_binary_view(rmvm["files"]["write"], "json"s, jsonToFiles, ""s);
+		rmvm.add_base_entity(rmvm["file"]["write"]["array"], "string"s, jsonStringArrayToFile, ""s);
+		rmvm.add_base_entity(rmvm["file"]["write"], "json"s, fs_file_write_json, "Write json to file"s);
+		rmvm.add_base_entity(rmvm["files"]["write"], "json"s, jsonToFiles, ""s);
 
-		rmvm.add_binary_view(rmvm["rmvm"], "dump"s, rmvm_dump, "Dump rmvm current state"s);
+		rmvm.add_base_entity(rmvm["rmvm"], "dump"s, rmvm_dump, "Dump rmvm current state"s);
 
-		return rmvm_version;
+		return vm::version;
 	}
 	
 }

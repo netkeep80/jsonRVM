@@ -38,10 +38,6 @@ SOFTWARE.
 
 namespace rm
 {
-	////////////////////////////// VERSION //////////////////////////////
-	const string rmvm_version = "3.0.0"s;
-	////////////////////////////// VERSION //////////////////////////////
-
 	using namespace std;
 	using namespace nlohmann;
 
@@ -89,9 +85,14 @@ namespace rm
 
 	using binary_view = void (*)(vm& rmvm, vm_ctx& $);
 	using binary_view_map_t = map<json const*, binary_view>;
+
 	
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
+	////////////////////////////// VERSION //////////////////////////////
+	public: static const inline string version = "3.0.0"s;
+	////////////////////////////// VERSION //////////////////////////////
+
 	private:
 		struct rval { static const bool is_lval{ false }; };
 		struct lval { static const bool is_lval{ true }; };
@@ -233,7 +234,7 @@ namespace rm
 		{
 			database_api::link(db);
 			//	database_api
-			add_binary_view(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
+			add_base_entity(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
 		}
 
 		json& exec_ent(json& rel, json& ent)
@@ -330,8 +331,39 @@ namespace rm
 			}
 		}
 
-		//	добавление сущности с закэшированной x86 проекцией
-		json& add_binary_view(json& entity, const string& name, const binary_view view, const string& description)
+
+		struct base_entity
+		{
+			const json_pointer path{};
+			const string description{};
+			static void	view(vm& rmvm, vm_ctx& $) {}
+		};
+
+
+		/// <summary>
+		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
+		/// </summary>
+		/// <typeparam name="base_entity_t"></typeparam>
+		/// <param name="bent"></param>
+		/// <returns></returns>
+		template<class base_entity_t = base_entity>
+		vm&	operator << (const base_entity_t& bent)
+		{
+			json& ent = (*this)[bent.path] = { { "description", bent.description } };
+			static_cast<binary_view_map_t&>(*this)[&(ent)] = base_entity_t::view;
+			return *this;
+		}
+
+
+		/// <summary>
+		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
+		/// </summary>
+		/// <param name="entity"></param>
+		/// <param name="name"></param>
+		/// <param name="view"></param>
+		/// <param name="description"></param>
+		/// <returns></returns>
+		json& add_base_entity(json& entity, const string& name, const binary_view view, const string& description)
 		{
 			entity[name] = { { "description", description } };
 			static_cast<binary_view_map_t&>(*this)[&(entity[name])] = view;

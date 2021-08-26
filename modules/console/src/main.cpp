@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 		cout << "          R                                                                   " << endl;
 		cout << "       S__|__O                                                                " << endl;
 		cout << "     O   _|_   S                                                              " << endl;
-		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << rmvm_version << "]                   " << endl;
+		cout << "  R__|__/_|_\\__|__R  rmvm [Version " << vm::version << "]                    " << endl;
 		cout << "     |  \\_|_/  |     json Relations (Model) Virtual Machine                  " << endl;
 		cout << "     S    |    O     https://github.com/netkeep80/jsonRVM                     " << endl;
 		cout << "        __|__                                                                 " << endl;

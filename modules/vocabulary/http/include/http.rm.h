@@ -707,7 +707,7 @@ namespace rm
 	Copyright (c) 2016-2021 Vertushkin Roman Pavlovich <https://vk.com/earthbirthbook>.
 				)";
 				char buf[BUFSIZ];
-				snprintf(buf, sizeof(buf), fmt, rmvm_version.c_str());
+				snprintf(buf, sizeof(buf), fmt, vm::version.c_str());
 				res.set_content(buf, "text/plain");
 				});
 
@@ -778,7 +778,7 @@ namespace rm
 
 
 #define add_http_entity(method, converter_type)																					\
-	rmvm.add_binary_view(																											\
+	rmvm.add_base_entity(																											\
 		rmvm["http"][ methods::##method::name ],																									\
 		string(#converter_type),																								\
 		HTTP_METHOD<application_##converter_type, methods::##method::name>,															\
@@ -794,15 +794,15 @@ namespace rm
 
 	const string& import_relations_model_to(vm& rmvm)
 	{
-		rmvm.add_binary_view(rmvm, "ToXML"s, jsonToXML, "");
-		//	rmvm.add_binary_view(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
+		rmvm.add_base_entity(rmvm, "ToXML"s, jsonToXML, "");
+		//	rmvm.add_base_entity(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
 
 		add_http_entites(urlencoded);
 		add_http_entites(json);
 		add_http_entites(xml);
 
-		rmvm.add_binary_view(rmvm["http"], "service"s, http_service, "");
+		rmvm.add_base_entity(rmvm["http"], "service"s, http_service, "");
 
-		return rmvm_version;
+		return vm::version;
 	}
 }
