@@ -40,78 +40,15 @@ namespace rm
 {
 	using namespace std;
 
-	template<typename type_t>
-	struct _add
-	{
-		typedef type_t& _Tref;	type_t c;
-		operator _Tref() { return c; };
-		_add(const type_t a, const type_t b) { c = a + b; };
-	};
+	inline json operator ^ (const json& a, const json& b);
 
 	template<typename type_t>
-	struct _sub
-	{
-		typedef type_t& _Tref;	type_t c;
-		operator _Tref() { return c; };
-		_sub(const type_t a, const type_t b) { c = a - b; };
-	};
-
-	template<typename type_t>
-	struct _mul
-	{
-		typedef type_t& _Tref;	type_t c;
-		operator _Tref() { return c; };
-		_mul(const type_t a, const type_t b) : c(a* b) {};
-	};
-
-	template<typename type_t>
-	struct _div
-	{
-		typedef type_t& _Tref;	type_t c;
-		operator _Tref() { return c; };
-		_div(const type_t a, const type_t b) : c(a / b) {};
-	};
-
-	template<typename type_t, typename _OP>
-	json type_operation(const json& a, const json& b)
-	{
-		return json(type_t(_OP(a.get<type_t>(), b.get<type_t>())));
-	}
-
-	template<typename type_t, typename _OP>
 	json diff_operation(const json& a, const json& b)
 	{
-		_OP	operation(a.get<type_t>(), b.get<type_t>());
-		type_t& res = operation;
+		type_t res = a.get<type_t>() - b.get<type_t>();
 		if (res == type_t()) return json();
 		return json(res);
 	}
-
-	template<typename _OP>
-	json object_operation(const json& a, const json& b)
-	{
-		json $.obj;
-
-		for (auto it = a.begin(); it != a.end(); it++)
-		{
-			const string& key = it.key();
-			if (b.count(key)) $.obj[key] = _OP(it.value(), b[key]);
-		}
-		return $.obj;
-	}
-
-	template<typename _OP>
-	json array_operation(const json& a, const json& b)
-	{
-		json	ar = json::array();
-		size_t	max_size = min<size_t>(a.size(), b.size());
-		for (size_t i = 0; i < max_size; i++) ar[i] = _OP(a[i], b[i]);
-		return ar;
-	}
-
-#define SUB_CASE(op,type,op1,op2) case json::value_t::##type: return op##_##type(op1,op2);
-
-	inline json operator ^ (const json& a, const json& b);
 
 	inline json xor_array(const json& a, const json& b)
 	{
@@ -151,9 +88,9 @@ namespace rm
 		else return json();
 	}
 
-	inline json xor_number_float(const json& a, const json& b) { return diff_operation<json::number_float_t, _sub<json::number_float_t>>(a, b); }
-	inline json xor_number_integer(const json& a, const json& b) { return diff_operation<json::number_integer_t, _sub<json::number_integer_t>>(a, b); }
-	inline json xor_number_unsigned(const json& a, const json& b) { return diff_operation<json::number_unsigned_t, _sub<json::number_unsigned_t>>(a, b); }
+	inline json xor_number_float(const json& a, const json& b) { return diff_operation<json::number_float_t>(a, b); }
+	inline json xor_number_integer(const json& a, const json& b) { return diff_operation<json::number_integer_t>(a, b); }
+	inline json xor_number_unsigned(const json& a, const json& b) { return diff_operation<json::number_unsigned_t>(a, b); }
 
 	inline json xor_object(const json& a, const json& b)
 	{
@@ -226,22 +163,34 @@ namespace rm
 	{
 		if (a.type() == b.type()) switch (a.type())
 		{
-			SUB_CASE(xor, array, a, b);
-			SUB_CASE(xor, boolean, a, b);
-			SUB_CASE(xor, number_float, a, b);
-			SUB_CASE(xor, number_integer, a, b);
-			SUB_CASE(xor, number_unsigned, a, b);
-			SUB_CASE(xor, object, a, b);
-			SUB_CASE(xor, string, a, b);
-		default: return json();
+		case json::value_t::array:
+			return xor_array(a, b);
+		case json::value_t::boolean:
+			return xor_boolean(a, b);
+		case json::value_t::number_float:
+			return xor_number_float(a, b);
+		case json::value_t::number_integer:
+			return xor_number_integer(a, b);
+		case json::value_t::number_unsigned:
+			return xor_number_unsigned(a, b);
+		case json::value_t::object:
+			return xor_object(a, b);
+		case json::value_t::string:
+			return xor_string(a, b);
+		default:
+			return json();
 		}
 		else if (a.is_array()) return array_xor_value(a, b);
 		else if (b.is_array()) return value_xor_array(a, b);
 		else return json::array({ a, b });
 	}
 
-	void  sleep_ms(vm& rmvm, vm_ctx& $)
-	{
+	/// <summary>
+	/// Усыпляет этот поток на $.obj миллисекунд
+	/// </summary>
+	/// <param name="rmvm">Виртуальная машины</param>
+	/// <param name="$">Контекст исполнения</param>
+	void  sleep_ms(vm& rmvm, vm_ctx& $) {
 		this_thread::sleep_for(chrono::milliseconds($.obj.get<json::number_unsigned_t>()));
 	}
 
@@ -261,25 +210,21 @@ namespace rm
 		$.rel = $.sub ^ $.obj;
 	}
 
-	////////////////////////////////////////////////////////
-	/*
-	enum class value_t : std::uint8_t
-	{
-		null,             ///< null value
-		object,           ///< object (unordered set of name/value pairs)
-		array,            ///< array (ordered collection of values)
-		string,           ///< string value
-		boolean,          ///< boolean value
-		number_integer,   ///< number value (signed integer)
-		number_unsigned,  ///< number value (unsigned integer)
-		number_float,     ///< number value (floating-point)
-		discarded         ///< discarded by the the parser callback function
-	};
-	*/
-
-	typedef json::number_float_t	jf;
-	typedef json::number_integer_t	ji;
-	typedef json::number_unsigned_t	ju;
+/*
+enum class value_t : std::uint8_t
+{
+	null,             ///< null value
+	object,           ///< object (unordered set of name/value pairs)
+	array,            ///< array (ordered collection of values)
+	string,           ///< string value
+	boolean,          ///< boolean value
+	number_integer,   ///< number value (signed integer)
+	number_unsigned,  ///< number value (unsigned integer)
+	number_float,     ///< number value (floating-point)
+	binary,           ///< binary array (ordered collection of bytes)
+	discarded         ///< discarded by the parser callback function
+};
+*/
 
 #define     sub_field       4
 #define     obj_field       4
@@ -289,41 +234,26 @@ namespace rm
 	{ $.rel = ($.sub.get<stype>()) operation ($.obj.get<otype>()); return; }
 
 #define OPP_ANYTO(operation,type,type_id)														\
-	OPP_STO(operation, jf, number_float,    type, type_id)										\
-	OPP_STO(operation, ji, number_integer,  type, type_id)										\
-	OPP_STO(operation, ju, number_unsigned, type, type_id)
+	OPP_STO(operation, json::number_float_t, number_float,    type, type_id)					\
+	OPP_STO(operation, json::number_integer_t, number_integer,  type, type_id)					\
+	OPP_STO(operation, json::number_unsigned_t, number_unsigned, type, type_id)
 
 #define VM_OPP(operation)																		\
-	OPP_ANYTO(operation, jf, number_float)														\
-	OPP_ANYTO(operation, ji, number_integer)													\
-	OPP_ANYTO(operation, ju, number_unsigned)
+	OPP_ANYTO(operation, json::number_float_t, number_float)									\
+	OPP_ANYTO(operation, json::number_integer_t, number_integer)								\
+	OPP_ANYTO(operation, json::number_unsigned_t, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-void  json##name (vm& rmvm, vm_ctx& $)			\
+void  json##name (vm& rmvm, vm_ctx& $)															\
 {																								\
-	switch( (uint8_t($.sub.type()) << sub_field) | uint8_t($.obj.type()) )							\
-	{ VM_OPP( operation ) default: $.rel = json(); }												\
+	switch( (uint8_t($.sub.type()) << sub_field) | uint8_t($.obj.type()) )						\
+	{ VM_OPP( operation ) default: $.rel = json(); }											\
 }
 
 	OP_BODY(Add, +);
 	OP_BODY(Substract, -);
 	OP_BODY(Mul, *);
-
-	void  jsonDiv(vm& rmvm, vm_ctx& $)
-	{
-		if ($.obj.is_number())
-			if ($.obj.get<double>() == 0.0)
-			{
-				$.rel = json();
-				return;
-			}
-		switch ((uint8_t($.sub.type()) << sub_field) | uint8_t($.obj.type()))
-		{
-			VM_OPP(/ );
-			default: $.rel = json();
-		}
-	}
-
+	OP_BODY(Div, /);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	void  jsonPower(vm& rmvm, vm_ctx& $)
@@ -1101,17 +1031,22 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		body += "</" + tag + ">";
 	}
 
-	struct json_dump : public base_entity
-	{
+	struct json_dump : public base_entity {
 		const json_pointer<json> path{ "/json/dump" };
 		const string description{ "Dump $obj to $sub" };
 		static void	view(vm& rmvm, vm_ctx& $) { $.sub = $.obj.dump(3); }
 	};
 
-	template<class duration>
-	void steady_clock_(vm& rmvm, vm_ctx& $) {
-		$.rel = chrono::duration_cast<duration>(chrono::steady_clock::now().time_since_epoch()).count();
-	}
+
+	template<class duration_t, class name_t>
+	struct steady_clock : public base_entity {
+		const json_pointer<json> path{ "/steady_clock/"s + name_t::str };
+		const string description{ "Sets $rel to time since epoch in "s + name_t::str };
+		static void	view(vm& rmvm, vm_ctx& $) {
+			$.rel = chrono::duration_cast<duration_t>(chrono::steady_clock::now().time_since_epoch()).count();
+		}
+	};
+
 
 	const string&	import_relations_model_to(vm& rmvm)
 	{
@@ -1202,12 +1137,9 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		rmvm.add_base_entity(rmvm, "html"s, jsonHTML, ""s);
 
 		//	steady clock
-		rmvm.add_base_entity(rmvm["steady_clock"], "nanoseconds"s, steady_clock_<chrono::nanoseconds>, "Sets $res to time since epoch in nanoseconds"s);
-		rmvm.add_base_entity(rmvm["steady_clock"], "microseconds"s, steady_clock_<chrono::microseconds>, "Sets $res to time since epoch in microseconds"s);
-		rmvm.add_base_entity(rmvm["steady_clock"], "milliseconds"s, steady_clock_<chrono::milliseconds>, "Sets $res to time since epoch in milliseconds"s);
-		rmvm.add_base_entity(rmvm["steady_clock"], "seconds"s, steady_clock_<chrono::seconds>, "Sets $res to time since epoch in seconds"s);
-		rmvm.add_base_entity(rmvm["steady_clock"], "minutes"s, steady_clock_<chrono::minutes>, "Sets $res to time since epoch in minutes"s);
-		rmvm.add_base_entity(rmvm["steady_clock"], "hours"s, steady_clock_<chrono::hours>, "Sets $res to time since epoch in hours"s);
+		rmvm << steady_clock<chrono::nanoseconds, as_type("nanoseconds")>()	<< steady_clock<chrono::microseconds, as_type("microseconds")>()
+			<< steady_clock<chrono::milliseconds, as_type("milliseconds")>() << steady_clock<chrono::seconds, as_type("seconds")>()
+			<< steady_clock<chrono::minutes, as_type("minutes")>() << steady_clock<chrono::hours, as_type("hours")>();
 
 		return vm::version;
 	}
