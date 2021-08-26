@@ -31,10 +31,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #pragma once
+#include <execution>
+#include <algorithm>
 #include "database_api.h"
 #include "nlohmann/json.hpp"
 #include "str_switch/str_switch.h"
 #include "string_type.h"
+
 
 namespace rm
 {
@@ -91,6 +94,17 @@ namespace rm
 		const json_pointer<json> path{};
 		const string description{};
 		static void	view(vm& rmvm, vm_ctx& $) {}
+	};
+
+	struct callctx
+	{
+		vm& rvm;
+		vm_ctx& $;
+		const string& key;
+		json& rel;
+		json	exc;
+		callctx(vm& vm, vm_ctx& c, const string& k, json& r)
+			: rvm(vm), $(c), key(k), rel(r) {}
 	};
 	
 	class vm : protected database_api, public json, public binary_view_map_t
@@ -266,6 +280,25 @@ namespace rm
 			return rel;
 		}
 
+		static void	callctx_exec(callctx& it)
+		{
+			try {
+				it.rvm.exec_ent(vm_ctx(it.rvm.string_ref_to<lval>(it.$, it.key),
+										it.$.obj,
+										it.$.sub,
+										it.$.ent,
+										it.$.$),
+					it.rel);
+			}
+			catch (json& j) { it.exc = json({ {it.key, j} }); }
+			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
+		}
+
+		static void	callctx_throw(callctx& it)
+		{
+			if (!it.exc.is_null()) throw it.exc;
+		}
+
 		//	Исполнение сущности либо json байткода
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
@@ -324,7 +357,7 @@ namespace rm
 				}
 				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
-					auto it = ent.begin();
+					/*auto it = ent.begin();
 
 					try {
 						for (; it != end; ++it)
@@ -336,6 +369,28 @@ namespace rm
 									  val_or_ref_to<rval>($, it.value()) );
 					}
 					catch (json & j) { throw json({ {it.key(), j} }); }
+					*/
+
+					vector<callctx>	vct;
+					vct.reserve(ent.size());
+					auto it = ent.begin();
+
+					try {
+						for (; it != end; ++it)
+						{
+							vct.emplace_back(*this,
+								$,
+								it.key(),
+								val_or_ref_to<rval>($, it.value())
+							);
+						}
+					}
+					catch (json& j) { throw json({ {it.key(), j} }); }
+					
+					//for_each(std::execution::par, vct.begin(), vct.end(), callctx_exec);
+					for_each(std::execution::seq, vct.begin(), vct.end(), callctx_exec);
+					for_each(std::execution::seq, vct.begin(), vct.end(), callctx_throw);
+					
 				}
 				return;
 			}
@@ -382,6 +437,15 @@ namespace rm
 }
 
 /*ToDo:	надо переделать на параллельное проецирование
+* 
+ #include <iostream>
+#include <vector>
+#include <algorithm>
+....
+std::for_each(std::execution::par, vct.begin(), vct.end(),
+  [](auto &e) { e += 42; });
+....
+
 					struct callctx
 					{
 						vm_ctx	$;
