@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_5ftref_321',['_Tref',['../structrm_1_1__add.html#a4e3db95a59b6bcec500a6290ec73bda2',1,'rm::_add::_Tref()'],['../structrm_1_1__sub.html#ac28a43540dd4af7f60b4e868f78e973f',1,'rm::_sub::_Tref()'],['../structrm_1_1__mul.html#a8fb770b7df823c92af1c0adcb6da0546',1,'rm::_mul::_Tref()'],['../structrm_1_1__div.html#a4a5f37bd5e5dbe503537f3ab6ee8ea8a',1,'rm::_div::_Tref()']]]
+  ['binary_5fview_310',['binary_view',['../namespacerm.html#a89a608ae2bcb4c994d843008354fe993',1,'rm']]],
+  ['binary_5fview_5fmap_5ft_311',['binary_view_map_t',['../namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800',1,'rm']]]
 ];

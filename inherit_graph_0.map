@@ -1,3 +1,7 @@
 <map id="Иерархия классов. Графический вид." name="Иерархия классов. Графический вид.">
-<area shape="rect" id="node1" href="$structrm_1_1__add.html" title=" " alt="" coords="5,5,133,32"/>
+<area shape="rect" id="node1" href="$structrm_1_1base__entity.html" title=" " alt="" coords="5,97,115,124"/>
+<area shape="rect" id="node2" href="$structrm_1_1json__dump.html" title=" " alt="" coords="197,5,304,32"/>
+<area shape="rect" id="node3" href="$structrm_1_1steady__clock.html" title=" " alt="" coords="163,57,339,98"/>
+<area shape="rect" id="node4" href="$structrm_1_1vm_1_1database__api__add__entity.html" title=" " alt="" coords="179,122,323,163"/>
+<area shape="rect" id="node5" href="$structrm_1_1vm_1_1rmvm__version.html" title=" " alt="" coords="176,188,325,215"/>
 </map>

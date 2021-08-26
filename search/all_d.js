@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['obj_99',['obj',['../structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446',1,'rm::vm_ctx']]],
-  ['obj_5ffield_100',['obj_field',['../base_8rm_8h.html#aacf201145f6a783a230a50858ab5a166',1,'base.rm.h']]],
-  ['object_5foperation_101',['object_operation',['../namespacerm.html#afcdb68b32469cabb77df50340eea0999',1,'rm']]],
-  ['op_5fbody_102',['OP_BODY',['../base_8rm_8h.html#a335f6ddd43d0d2e02df76cff3858e2c3',1,'OP_BODY():&#160;base.rm.h'],['../namespacerm.html#a1c7d0997ec99952a5d349c066811b0d1',1,'rm::OP_BODY(Add,+)'],['../namespacerm.html#af4fcc532b37ac2ea771815afa4863e58',1,'rm::OP_BODY(Substract, -)'],['../namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5',1,'rm::OP_BODY(Mul, *)']]],
-  ['operator_20_5ftref_103',['operator _Tref',['../structrm_1_1__add.html#a1c79dd1ca0b14d48fd46baf99f7a7046',1,'rm::_add::operator _Tref()'],['../structrm_1_1__sub.html#ad0ce472c5aa0ab4af50978c5fcfed822',1,'rm::_sub::operator _Tref()'],['../structrm_1_1__mul.html#a95076ed82b2008bd3e5601fbf8219768',1,'rm::_mul::operator _Tref()'],['../structrm_1_1__div.html#a6ec08309d7e7d68e7e2cb1ae43f05c58',1,'rm::_div::operator _Tref()']]],
-  ['operator_3c_3c_104',['operator&lt;&lt;',['../classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3',1,'rm::vm']]],
-  ['operator_5e_105',['operator^',['../namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739',1,'rm']]],
-  ['opp_5fanyto_106',['OPP_ANYTO',['../base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7',1,'base.rm.h']]],
-  ['opp_5fsto_107',['OPP_STO',['../base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83',1,'base.rm.h']]]
+  ['main_83',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
+  ['main_2ecpp_84',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['make_85',['make',['../structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463',1,'rm::string_type_maker::make()'],['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28',1,'rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make()']]],
+  ['map_5fjson_5fis_5ftype_86',['map_json_is_type',['../base_8rm_8h.html#ae0db49d5997201a16f4ca812505353bd',1,'base.rm.h']]],
+  ['map_5fjson_5fstatic_5fmethod_87',['map_json_static_method',['../base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19',1,'base.rm.h']]],
+  ['mathematical_5fdefinition_2emd_88',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]],
+  ['mvc_5ftrinity_2ejpg_89',['mvc_trinity.jpg',['../mvc__trinity_8jpg.html',1,'']]]
 ];

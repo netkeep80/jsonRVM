@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['jf_324',['jf',['../namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a',1,'rm']]],
-  ['ji_325',['ji',['../namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7',1,'rm']]],
-  ['ju_326',['ju',['../namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721',1,'rm']]]
+  ['key_313',['key',['../structrm_1_1type__pair__null.html#a2271f6cf5d45aaae99e63fd65fe9839e',1,'rm::type_pair_null::key()'],['../structrm_1_1type__pair.html#a22e3c4cc936fe793c9d806b4c468698a',1,'rm::type_pair::key()']]]
 ];

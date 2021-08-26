@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-62-g47e73cd</span>
+   &#160;<span id="projectnumber">2.6.0-63-gc545ff6</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -90,7 +90,6 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <a href="#nested-classes">Классы</a> &#124;
 <a href="#namespaces">Пространства имен</a> &#124;
 <a href="#define-members">Макросы</a> &#124;
-<a href="#typedef-members">Определения типов</a> &#124;
 <a href="#func-members">Функции</a>  </div>
   <div class="headertitle">
 <div class="title">Файл base.rm.h</div>  </div>
@@ -117,15 +116,9 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Классы</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1__add.html">rm::_add&lt; type_t &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1__sub.html">rm::_sub&lt; type_t &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1__mul.html">rm::_mul&lt; type_t &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1__div.html">rm::_div&lt; type_t &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1json__dump.html">rm::json_dump</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1steady__clock.html">rm::steady_clock&lt; duration_t, name_t &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -135,8 +128,6 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
-<tr class="memitem:ac60cbe5d3f0bf0d891856e7629bfa75d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#ac60cbe5d3f0bf0d891856e7629bfa75d">SUB_CASE</a>(op,  type,  op1,  op2)&#160;&#160;&#160;case json::value_t::##type: return op##_##type(op1,op2);</td></tr>
-<tr class="separator:ac60cbe5d3f0bf0d891856e7629bfa75d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a550d7718a13f71b6cc469d1e2a1fd5d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>&#160;&#160;&#160;4</td></tr>
 <tr class="separator:a550d7718a13f71b6cc469d1e2a1fd5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacf201145f6a783a230a50858ab5a166"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#aacf201145f6a783a230a50858ab5a166">obj_field</a>&#160;&#160;&#160;4</td></tr>
@@ -160,31 +151,13 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="memitem:acd6be3e3a559bfbadd6ded87e64d3d19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19">map_json_static_method</a>(static_method)&#160;&#160;&#160;rmvm.add_base_entity( rmvm[&quot;json&quot;], #static_method, json_call_##static_method, &quot;&quot;s );</td></tr>
 <tr class="separator:acd6be3e3a559bfbadd6ded87e64d3d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Определения типов</h2></td></tr>
-<tr class="memitem:a912ba45a3d6439bf8055c310cb70e67a"><td class="memItemLeft" align="right" valign="top">typedef json::number_float_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a">rm::jf</a></td></tr>
-<tr class="separator:a912ba45a3d6439bf8055c310cb70e67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f91eae2f6c56adc4f161fa215102f7"><td class="memItemLeft" align="right" valign="top">typedef json::number_integer_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7">rm::ji</a></td></tr>
-<tr class="separator:a86f91eae2f6c56adc4f161fa215102f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5e3455de8496f3b7c8d2ca7e1a5c721"><td class="memItemLeft" align="right" valign="top">typedef json::number_unsigned_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721">rm::ju</a></td></tr>
-<tr class="separator:aa5e3455de8496f3b7c8d2ca7e1a5c721"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memTemplParams" colspan="2">template&lt;typename type_t , typename _OP &gt; </td></tr>
-<tr class="memitem:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a177a80f2dc5fc7ce734e7ddfe1de30ae">rm::type_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
-<tr class="separator:a177a80f2dc5fc7ce734e7ddfe1de30ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f3417038b2a2ebb137afb0151a959c2"><td class="memTemplParams" colspan="2">template&lt;typename type_t , typename _OP &gt; </td></tr>
-<tr class="memitem:a5f3417038b2a2ebb137afb0151a959c2"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a5f3417038b2a2ebb137afb0151a959c2">rm::diff_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
-<tr class="separator:a5f3417038b2a2ebb137afb0151a959c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcdb68b32469cabb77df50340eea0999"><td class="memTemplParams" colspan="2">template&lt;typename _OP &gt; </td></tr>
-<tr class="memitem:afcdb68b32469cabb77df50340eea0999"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#afcdb68b32469cabb77df50340eea0999">rm::object_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
-<tr class="separator:afcdb68b32469cabb77df50340eea0999"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4116e28ead727b00b849232b3d923ce4"><td class="memTemplParams" colspan="2">template&lt;typename _OP &gt; </td></tr>
-<tr class="memitem:a4116e28ead727b00b849232b3d923ce4"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a4116e28ead727b00b849232b3d923ce4">rm::array_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
-<tr class="separator:a4116e28ead727b00b849232b3d923ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15d07b40b1a6cd0b250ac67c328f9739"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739">rm::operator^</a> (const json &amp;a, const json &amp;b)</td></tr>
 <tr class="separator:a15d07b40b1a6cd0b250ac67c328f9739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a569610ab133b63e65d75117d023e1841"><td class="memTemplParams" colspan="2">template&lt;typename type_t &gt; </td></tr>
+<tr class="memitem:a569610ab133b63e65d75117d023e1841"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a569610ab133b63e65d75117d023e1841">rm::diff_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="separator:a569610ab133b63e65d75117d023e1841"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69cf30fab0c837bfeaa88a4104f06451"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451">rm::xor_array</a> (const json &amp;a, const json &amp;b)</td></tr>
 <tr class="separator:a69cf30fab0c837bfeaa88a4104f06451"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4f545644d118c245b1419230531b8a3"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab4f545644d118c245b1419230531b8a3">rm::xor_boolean</a> (const json &amp;a, const json &amp;b)</td></tr>
@@ -204,6 +177,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="memitem:a7ae12d755f25ecbb79359e21c2765fa7"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7ae12d755f25ecbb79359e21c2765fa7">rm::array_xor_value</a> (const json &amp;a, const json &amp;b)</td></tr>
 <tr class="separator:a7ae12d755f25ecbb79359e21c2765fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedad2d281b11c88b6b08e410ff879d2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e">rm::sleep_ms</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
+<tr class="memdesc:aedad2d281b11c88b6b08e410ff879d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Усыпляет этот поток на $.obj миллисекунд  <a href="namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e">Подробнее...</a><br /></td></tr>
 <tr class="separator:aedad2d281b11c88b6b08e410ff879d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8a155b58bb443ca3bf6fe104c3c1ae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab8a155b58bb443ca3bf6fe104c3c1ae4">rm::jsonCopy</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:ab8a155b58bb443ca3bf6fe104c3c1ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -217,8 +191,8 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="separator:af4fcc532b37ac2ea771815afa4863e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbcfcac92c7390f35866ff7afe1903e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5">rm::OP_BODY</a> (Mul, *)</td></tr>
 <tr class="separator:abbcfcac92c7390f35866ff7afe1903e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4f101fb1c54aeb62ff22feb47c5eb87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab4f101fb1c54aeb62ff22feb47c5eb87">rm::jsonDiv</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
-<tr class="separator:ab4f101fb1c54aeb62ff22feb47c5eb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a384e283e71b6a3106bc525bbaa4109c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a384e283e71b6a3106bc525bbaa4109c0">rm::OP_BODY</a> (Div,/)</td></tr>
+<tr class="separator:a384e283e71b6a3106bc525bbaa4109c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840659979cba1959c9357e267adc4f09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a840659979cba1959c9357e267adc4f09">rm::jsonPower</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:a840659979cba1959c9357e267adc4f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a548173288c7fdfc99bcb350a593a7d26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a548173288c7fdfc99bcb350a593a7d26">rm::jsonSqrt</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
@@ -295,9 +269,6 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <tr class="separator:aa9d2e02e729da065d7fa1c7a4a35b0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa4d1c30f7dc4e13f696c1c63f47ee0de">rm::jsonHTML</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
 <tr class="separator:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplParams" colspan="2">template&lt;class duration &gt; </td></tr>
-<tr class="memitem:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a61fe0893d05c0eb63e7f23f4e3a447cc">rm::steady_clock_</a> (vm &amp;rmvm, vm_ctx &amp;$)</td></tr>
-<tr class="separator:a61fe0893d05c0eb63e7f23f4e3a447cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a555b1c8445cfb272aa963e8a018a08f0"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">rm::import_relations_model_to</a> (vm &amp;rmvm)</td></tr>
 <tr class="separator:a555b1c8445cfb272aa963e8a018a08f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -322,7 +293,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <div class="line">        $.sub = $.obj.is_##json_type();                     \</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00408">408</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00338">338</a></p>
 
 </div>
 </div>
@@ -346,7 +317,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <div class="line">            $.sub = $.obj.##object_method();                                    \</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00989">989</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00919">919</a></p>
 
 </div>
 </div>
@@ -370,7 +341,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <div class="line">            $.rel = json::##static_method();                                    \</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00995">995</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00925">925</a></p>
 
 </div>
 </div>
@@ -422,7 +393,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00285">285</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00230">230</a></p>
 
 </div>
 </div>
@@ -451,15 +422,15 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Макроопределение:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span>  json##name (vm&amp; rmvm, vm_ctx&amp; $)          \</div>
+<b>Макроопределение:</b><div class="fragment"><div class="line"><span class="keywordtype">void</span>  json##name (vm&amp; rmvm, vm_ctx&amp; $)                                                          \</div>
 <div class="line">{                                                                                               \</div>
-<div class="line">    switch( (uint8_t($.sub.type()) &lt;&lt; <a class="code" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>) | uint8_t($.obj.type()) )                          \</div>
-<div class="line">    { <a class="code" href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a>( operation ) <span class="keywordflow">default</span>: $.rel = json(); }                                                \</div>
+<div class="line">    switch( (uint8_t($.sub.type()) &lt;&lt; <a class="code" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>) | uint8_t($.obj.type()) )                      \</div>
+<div class="line">    { <a class="code" href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a>( operation ) <span class="keywordflow">default</span>: $.rel = json(); }                                            \</div>
 <div class="line">}</div>
-<div class="ttc" id="abase_8rm_8h_html_a28fbf920b2d47185312cbb470fd929b3"><div class="ttname"><a href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a></div><div class="ttdeci">#define VM_OPP(operation)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00296">base.rm.h:296</a></div></div>
-<div class="ttc" id="abase_8rm_8h_html_a550d7718a13f71b6cc469d1e2a1fd5d3"><div class="ttname"><a href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a></div><div class="ttdeci">#define sub_field</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00284">base.rm.h:284</a></div></div>
+<div class="ttc" id="abase_8rm_8h_html_a28fbf920b2d47185312cbb470fd929b3"><div class="ttname"><a href="base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3">VM_OPP</a></div><div class="ttdeci">#define VM_OPP(operation)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00241">base.rm.h:241</a></div></div>
+<div class="ttc" id="abase_8rm_8h_html_a550d7718a13f71b6cc469d1e2a1fd5d3"><div class="ttname"><a href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a></div><div class="ttdeci">#define sub_field</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00229">base.rm.h:229</a></div></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00301">301</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00246">246</a></p>
 
 </div>
 </div>
@@ -494,15 +465,12 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Макроопределение:</b><div class="fragment"><div class="line">    <a class="code" href="base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83">OPP_STO</a>(operation, <a class="code" href="namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a">jf</a>, number_float,    type, type_id)                                      \</div>
-<div class="line">    OPP_STO(operation, <a class="code" href="namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7">ji</a>, number_integer,  type, type_id)                                      \</div>
-<div class="line">    OPP_STO(operation, <a class="code" href="namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721">ju</a>, number_unsigned, type, type_id)</div>
-<div class="ttc" id="abase_8rm_8h_html_a7acd2162b9787cb77b1bff31e989da83"><div class="ttname"><a href="base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83">OPP_STO</a></div><div class="ttdeci">#define OPP_STO(operation, stype, stype_id, otype, otype_id)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00287">base.rm.h:287</a></div></div>
-<div class="ttc" id="anamespacerm_html_a86f91eae2f6c56adc4f161fa215102f7"><div class="ttname"><a href="namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7">rm::ji</a></div><div class="ttdeci">json::number_integer_t ji</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00281">base.rm.h:281</a></div></div>
-<div class="ttc" id="anamespacerm_html_a912ba45a3d6439bf8055c310cb70e67a"><div class="ttname"><a href="namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a">rm::jf</a></div><div class="ttdeci">json::number_float_t jf</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00280">base.rm.h:280</a></div></div>
-<div class="ttc" id="anamespacerm_html_aa5e3455de8496f3b7c8d2ca7e1a5c721"><div class="ttname"><a href="namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721">rm::ju</a></div><div class="ttdeci">json::number_unsigned_t ju</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00282">base.rm.h:282</a></div></div>
+<b>Макроопределение:</b><div class="fragment"><div class="line">    <a class="code" href="base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83">OPP_STO</a>(operation, json::number_float_t, number_float,    type, type_id)                    \</div>
+<div class="line">    OPP_STO(operation, json::number_integer_t, number_integer,  type, type_id)                  \</div>
+<div class="line">    OPP_STO(operation, json::number_unsigned_t, number_unsigned, type, type_id)</div>
+<div class="ttc" id="abase_8rm_8h_html_a7acd2162b9787cb77b1bff31e989da83"><div class="ttname"><a href="base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83">OPP_STO</a></div><div class="ttdeci">#define OPP_STO(operation, stype, stype_id, otype, otype_id)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00232">base.rm.h:232</a></div></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00291">291</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00236">236</a></p>
 
 </div>
 </div>
@@ -552,49 +520,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
 <b>Макроопределение:</b><div class="fragment"><div class="line">    <span class="keywordflow">case</span> (uint8_t(json::value_t::stype_id) &lt;&lt; <a class="code" href="base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3">sub_field</a>) | uint8_t(json::value_t::otype_id):    \</div>
 <div class="line">    { $.rel = ($.sub.get&lt;stype&gt;()) operation ($.obj.get&lt;otype&gt;()); <span class="keywordflow">return</span>; }</div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00287">287</a></p>
-
-</div>
-</div>
-<a id="ac60cbe5d3f0bf0d891856e7629bfa75d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac60cbe5d3f0bf0d891856e7629bfa75d">&#9670;&nbsp;</a></span>SUB_CASE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SUB_CASE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">op, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">type, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">op1, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">op2&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;case json::value_t::##type: return op##_##type(op1,op2);</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00112">112</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00232">232</a></p>
 
 </div>
 </div>
@@ -610,7 +536,7 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00284">284</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00229">229</a></p>
 
 </div>
 </div>
@@ -629,12 +555,12 @@ $(document).ready(function(){initNavTree('base_8rm_8h.html',''); initResizable()
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Макроопределение:</b><div class="fragment"><div class="line">    <a class="code" href="base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7">OPP_ANYTO</a>(operation, <a class="code" href="namespacerm.html#a912ba45a3d6439bf8055c310cb70e67a">jf</a>, number_float)                                                      \</div>
-<div class="line">    OPP_ANYTO(operation, <a class="code" href="namespacerm.html#a86f91eae2f6c56adc4f161fa215102f7">ji</a>, number_integer)                                                    \</div>
-<div class="line">    OPP_ANYTO(operation, <a class="code" href="namespacerm.html#aa5e3455de8496f3b7c8d2ca7e1a5c721">ju</a>, number_unsigned)</div>
-<div class="ttc" id="abase_8rm_8h_html_aea8edabe8ea9b9ba039ef619c4254ff7"><div class="ttname"><a href="base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7">OPP_ANYTO</a></div><div class="ttdeci">#define OPP_ANYTO(operation, type, type_id)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00291">base.rm.h:291</a></div></div>
+<b>Макроопределение:</b><div class="fragment"><div class="line">    <a class="code" href="base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7">OPP_ANYTO</a>(operation, json::number_float_t, number_float)                                    \</div>
+<div class="line">    OPP_ANYTO(operation, json::number_integer_t, number_integer)                                \</div>
+<div class="line">    OPP_ANYTO(operation, json::number_unsigned_t, number_unsigned)</div>
+<div class="ttc" id="abase_8rm_8h_html_aea8edabe8ea9b9ba039ef619c4254ff7"><div class="ttname"><a href="base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7">OPP_ANYTO</a></div><div class="ttdeci">#define OPP_ANYTO(operation, type, type_id)</div><div class="ttdef"><b>Definition:</b> <a href="base_8rm_8h_source.html#l00236">base.rm.h:236</a></div></div>
 </div><!-- fragment -->
-<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00296">296</a></p>
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00241">241</a></p>
 
 </div>
 </div>

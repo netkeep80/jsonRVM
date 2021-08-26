@@ -1,10 +1,12 @@
 var searchData=
 [
-  ['value_5fxor_5farray_143',['value_xor_array',['../namespacerm.html#a7a4003479b4ae7071bb2f472d77c0d48',1,'rm']]],
-  ['version_144',['version',['../classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0',1,'rm::vm']]],
-  ['view_145',['view',['../structrm_1_1base__entity.html#a5ea7f8288322e7d484a995462accf818',1,'rm::base_entity::view()'],['../structrm_1_1vm_1_1database__api__add__entity.html#a5a1bee844d09738b354cbca3021a4c5f',1,'rm::vm::database_api_add_entity::view()'],['../structrm_1_1vm_1_1rmvm__version.html#afac5af346ae1e0fe6a67920dc5ddf0ea',1,'rm::vm::rmvm_version::view()'],['../structrm_1_1json__dump.html#ad4548b4c5013ea48e85a99b42731ebd9',1,'rm::json_dump::view()']]],
-  ['vm_146',['vm',['../classrm_1_1vm.html',1,'rm::vm'],['../classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec',1,'rm::vm::vm()']]],
-  ['vm_2erm_2eh_147',['vm.rm.h',['../vm_8rm_8h.html',1,'']]],
-  ['vm_5fctx_148',['vm_ctx',['../structrm_1_1vm__ctx.html',1,'rm::vm_ctx'],['../structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195',1,'rm::vm_ctx::vm_ctx(json &amp;Rel, json &amp;Obj, json &amp;Sub, json &amp;Ent, vm_ctx &amp;Ctx)'],['../structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf',1,'rm::vm_ctx::vm_ctx(json &amp;Rel, json &amp;Ent)'],['../structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3',1,'rm::vm_ctx::vm_ctx(json &amp;Rel)']]],
-  ['vm_5fopp_149',['VM_OPP',['../base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3',1,'base.rm.h']]]
+  ['throw_5fjson_129',['throw_json',['../structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714',1,'rm::vm_ctx']]],
+  ['to_5fsv_130',['to_sv',['../string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff',1,'string_type.h']]],
+  ['type_131',['type',['../structrm_1_1type__pair.html#ad83d31626d0aaf0d8cbaf8cb4292d71a',1,'rm::type_pair']]],
+  ['type_5fmap_132',['type_map',['../structrm_1_1type__map.html',1,'rm']]],
+  ['type_5fmap_2eh_133',['type_map.h',['../type__map_8h.html',1,'']]],
+  ['type_5fpair_134',['type_pair',['../structrm_1_1type__pair.html',1,'rm']]],
+  ['type_5fpair_5flist_135',['type_pair_list',['../structrm_1_1type__pair__list.html',1,'rm']]],
+  ['type_5fpair_5flist_3c_20key_5ft_2c_20first_2c_20tail_2e_2e_2e_20_3e_136',['type_pair_list&lt; key_t, first, tail... &gt;',['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html',1,'rm']]],
+  ['type_5fpair_5fnull_137',['type_pair_null',['../structrm_1_1type__pair__null.html',1,'rm']]]
 ];

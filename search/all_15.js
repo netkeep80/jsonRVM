@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['wiki_5fconcepts_2emd_150',['wiki_concepts.md',['../wiki__concepts_8md.html',1,'']]],
-  ['wstring_5fto_5f_151',['wstring_to_',['../string__utils_8h.html#a4740d9d1f20e5c6e0dcf0f113c71ce16',1,'string_utils.h']]],
-  ['wstring_5fto_5fcp1251_152',['wstring_to_cp1251',['../string__utils_8h.html#add066b89223564bc52aada71bde6a07e',1,'string_utils.h']]],
-  ['wstring_5fto_5futf8_153',['wstring_to_utf8',['../string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2',1,'string_utils.h']]]
+  ['utf8_5fto_5fcp1251_138',['utf8_to_cp1251',['../string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231',1,'string_utils.h']]],
+  ['utf8_5fto_5fwstring_139',['utf8_to_wstring',['../string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12',1,'string_utils.h']]]
 ];

@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['string_5ftype_184',['string_type',['../structrm_1_1string__type.html',1,'rm']]],
-  ['string_5ftype_5fmaker_185',['string_type_maker',['../structrm_1_1string__type__maker.html',1,'rm']]],
-  ['string_5ftype_5fmaker_3c_20n_2c_20string_5ftype_3c_20chars_2e_2e_2e_20_3e_2c_20first_2c_20tail_2e_2e_2e_20_3e_186',['string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;',['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html',1,'rm']]]
+  ['type_5fmap_181',['type_map',['../structrm_1_1type__map.html',1,'rm']]],
+  ['type_5fpair_182',['type_pair',['../structrm_1_1type__pair.html',1,'rm']]],
+  ['type_5fpair_5flist_183',['type_pair_list',['../structrm_1_1type__pair__list.html',1,'rm']]],
+  ['type_5fpair_5flist_3c_20key_5ft_2c_20first_2c_20tail_2e_2e_2e_20_3e_184',['type_pair_list&lt; key_t, first, tail... &gt;',['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html',1,'rm']]],
+  ['type_5fpair_5fnull_185',['type_pair_null',['../structrm_1_1type__pair__null.html',1,'rm']]]
 ];

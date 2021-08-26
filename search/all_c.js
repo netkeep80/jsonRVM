@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['main_92',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
-  ['main_2ecpp_93',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['make_94',['make',['../structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463',1,'rm::string_type_maker::make()'],['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28',1,'rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make()']]],
-  ['map_5fjson_5fis_5ftype_95',['map_json_is_type',['../base_8rm_8h.html#ae0db49d5997201a16f4ca812505353bd',1,'base.rm.h']]],
-  ['map_5fjson_5fstatic_5fmethod_96',['map_json_static_method',['../base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19',1,'base.rm.h']]],
-  ['mathematical_5fdefinition_2emd_97',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]],
-  ['mvc_5ftrinity_2ejpg_98',['mvc_trinity.jpg',['../mvc__trinity_8jpg.html',1,'']]]
+  ['license_77',['LICENSE',['../md_doc__l_i_c_e_n_s_e.html',1,'']]],
+  ['license_2emd_78',['LICENSE.md',['../_l_i_c_e_n_s_e_8md.html',1,'']]],
+  ['link_79',['link',['../classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a',1,'rm::interface_t']]],
+  ['loadandinitdict_80',['LoadAndInitDict',['../namespacerm.html#a5f8bbb9c4741de4185d81c9fdbb9f743',1,'rm']]],
+  ['loaddict_81',['LoadDict',['../classrm_1_1_d_l_ls.html#a2e7ee51e5f338ec634b5d30326e8462d',1,'rm::DLLs']]],
+  ['loadeddlls_82',['LoadedDLLs',['../namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1',1,'rm']]]
 ];
