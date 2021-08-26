@@ -171,17 +171,17 @@
 <!-- Node10 -->
 <g id="node10" class="node">
 <title>Node10</title>
-<g id="a_node10"><a xlink:title=" ">
-<polygon fill="none" stroke="#bfbfbf" points="56,-56.5 56,-75.5 122,-75.5 122,-56.5 56,-56.5"/>
-<text text-anchor="middle" x="89" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">string_view</text>
+<g id="a_node10"><a xlink:href="string__type_8h.html" target="_top" xlink:title=" ">
+<polygon fill="none" stroke="black" points="50.5,-56.5 50.5,-75.5 121.5,-75.5 121.5,-56.5 50.5,-56.5"/>
+<text text-anchor="middle" x="86" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">string_type.h</text>
 </a>
 </g>
 </g>
 <!-- Node5&#45;&gt;Node10 -->
 <g id="edge10" class="edge">
 <title>Node5&#45;&gt;Node10</title>
-<path fill="none" stroke="midnightblue" d="M202.61,-112.44C180.29,-103.52 145.1,-89.44 119.79,-79.32"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="120.88,-75.98 110.29,-75.52 118.28,-82.48 120.88,-75.98"/>
+<path fill="none" stroke="midnightblue" d="M202.13,-112.44C179.22,-103.48 143.02,-89.31 117.13,-79.18"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="118.35,-75.9 107.76,-75.52 115.8,-82.42 118.35,-75.9"/>
 </g>
 <!-- Node7 -->
 <g id="node7" class="node">

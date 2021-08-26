@@ -5,7 +5,6 @@ var base_8rm_8h =
     [ "_mul", "structrm_1_1__mul.html", "structrm_1_1__mul" ],
     [ "_div", "structrm_1_1__div.html", "structrm_1_1__div" ],
     [ "json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
-    [ "rmvm_version", "structrm_1_1rmvm__version.html", "structrm_1_1rmvm__version" ],
     [ "define_json_is_type", "base_8rm_8h.html#a181d9fd7e55679e7b17ed6076a023b84", null ],
     [ "define_object_method", "base_8rm_8h.html#a67ee0817546165e752bc8858ab404a59", null ],
     [ "define_static_method", "base_8rm_8h.html#a794dacf84960f6e2019fc37a95062673", null ],

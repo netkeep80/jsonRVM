@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-61-gdd06acf</span>
+   &#160;<span id="projectnumber">2.6.0-62-g47e73cd</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('file__database_8h_source.html',''); in
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            std::ifstream in(PathName.c_str());</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordflow">if</span> (!in.good())</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordflow">throw</span> runtime_error(__FUNCTION__ + <span class="stringliteral">&quot;: Can&#39;t load json from the &quot;</span>s + PathFolder + ent_id + <span class="stringliteral">&quot; file!&quot;</span>);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                <span class="keywordflow">throw</span> runtime_error(__func__ + <span class="stringliteral">&quot;: Can&#39;t load json from the &quot;</span>s + PathFolder + ent_id + <span class="stringliteral">&quot; file!&quot;</span>);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            in &gt;&gt; ent;</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div>
@@ -161,14 +161,14 @@ $(document).ready(function(){initNavTree('file__database_8h_source.html',''); in
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            std::ofstream out(PathName.c_str());</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">if</span> (!out.good())</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">throw</span> runtime_error(__FUNCTION__ + <span class="stringliteral">&quot;: Can&#39;t open &quot;</span>s + PathName + <span class="stringliteral">&quot; file.&quot;</span>s);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;                <span class="keywordflow">throw</span> runtime_error(__func__ + <span class="stringliteral">&quot;: Can&#39;t open &quot;</span>s + PathName + <span class="stringliteral">&quot; file.&quot;</span>s);</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            out &lt;&lt; ent;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        }</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160; </div>
 <div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classrm_1_1file__database__t.html#ab6c815b846316dbce425ba534546f754">   77</a></span>&#160;        <span class="keyword">virtual</span> <span class="keywordtype">void</span>    <a class="code" href="classrm_1_1file__database__t.html#ab6c815b846316dbce425ba534546f754">query_entity</a>(json&amp; ent, <span class="keyword">const</span> json&amp; query)</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        {</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            cout &lt;&lt; __FUNCTION__ &lt;&lt; endl;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            cout &lt;&lt; __func__ &lt;&lt; endl;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        }</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    };</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;}</div>

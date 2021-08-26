@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['string_5futils_2eh_191',['string_utils.h',['../string__utils_8h.html',1,'']]]
+  ['string_5ftype_2eh_207',['string_type.h',['../string__type_8h.html',1,'']]],
+  ['string_5futils_2eh_208',['string_utils.h',['../string__utils_8h.html',1,'']]]
 ];

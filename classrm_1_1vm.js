@@ -1,6 +1,7 @@
 var classrm_1_1vm =
 [
-    [ "base_entity", "structrm_1_1vm_1_1base__entity.html", "structrm_1_1vm_1_1base__entity" ],
+    [ "database_api_add_entity", "structrm_1_1vm_1_1database__api__add__entity.html", "structrm_1_1vm_1_1database__api__add__entity" ],
+    [ "rmvm_version", "structrm_1_1vm_1_1rmvm__version.html", "structrm_1_1vm_1_1rmvm__version" ],
     [ "vm", "classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec", null ],
     [ "add_base_entity", "classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58", null ],
     [ "exec_ent", "classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81", null ],

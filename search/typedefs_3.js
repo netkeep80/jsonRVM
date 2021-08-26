@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['uchar_306',['uchar',['../namespacerm_1_1s__s.html#a79dc907c1d0c1607554e0ffd5dec2fe0',1,'rm::s_s']]],
-  ['ullong_307',['ullong',['../namespacerm_1_1s__s.html#af3929f1e8f71dc2feef426c0111edd82',1,'rm::s_s']]]
+  ['make_327',['make',['../structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463',1,'rm::string_type_maker::make()'],['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28',1,'rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make()']]]
 ];

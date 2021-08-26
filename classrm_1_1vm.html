@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-61-gdd06acf</span>
+   &#160;<span id="projectnumber">2.6.0-62-g47e73cd</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -112,7 +112,9 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Классы</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1base__entity.html">base_entity</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1database__api__add__entity.html">database_api_add_entity</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1rmvm__version.html">rmvm_version</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -153,7 +155,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock">
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00090">90</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00096">96</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a195332ba5d7b93aa8d15207198f07fec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a195332ba5d7b93aa8d15207198f07fec">&#9670;&nbsp;</a></span>vm()</h2>
@@ -179,7 +181,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00232">232</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00250">250</a></p>
 
 </div>
 </div>
@@ -242,7 +244,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00366">366</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00375">375</a></p>
 
 </div>
 </div>
@@ -280,7 +282,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00240">240</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00258">258</a></p>
 
 </div>
 </div>
@@ -318,7 +320,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00257">257</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00272">272</a></p>
 
 </div>
 </div>
@@ -351,19 +353,19 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
 <p>Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией </p>
 <dl class="tparams"><dt>Параметры шаблона</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">base_entity_t</td><td></td></tr>
+    <tr><td class="paramname">base_entity_t</td><td>Тип базовый сущности</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bent</td><td></td></tr>
+    <tr><td class="paramname">bent</td><td>Экземпляр базовой сущности</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Ссылка на виртуальную машину</dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00350">350</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00359">359</a></p>
 
 </div>
 </div>
@@ -388,7 +390,7 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00093">93</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00099">99</a></p>
 
 </div>
 </div>
