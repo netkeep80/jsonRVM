@@ -75,12 +75,12 @@ namespace rm
 				{
 					(FARPROC&)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
 					if (!it[LibName].Init)
-						throw json({ { __FUNCTION__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL} });
+						throw json({ { __func__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL} });
 				}
 				else
 				{
 					it[LibName].Init = nullptr;
-					throw json({ { __FUNCTION__, "can't load '" + LibName + "' dictionary"s} });
+					throw json({ { __func__, "can't load '" + LibName + "' dictionary"s} });
 				}
 			}
 		}
@@ -109,13 +109,13 @@ namespace rm
 				}
 			}
 		}
-		catch (json& j) { $.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__func__, j); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 
 		$.rel = false;
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder, FileName properties!"s);
+		$.throw_json(__func__, "$obj must be json object with PathFolder, FileName properties!"s);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////

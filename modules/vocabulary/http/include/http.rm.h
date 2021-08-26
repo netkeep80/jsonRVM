@@ -411,7 +411,7 @@ namespace rm
 	void  HTTP_METHOD(vm& rmvm, vm_ctx& $)
 	{
 		if (!$.obj.is_object())
-			$.throw_json(__FUNCTION__, ": $obj must be object"s);
+			$.throw_json(__func__, ": $obj must be object"s);
 
 		try
 		{
@@ -541,10 +541,10 @@ namespace rm
 #endif
 			}
 		}
-		catch (json& j) { $.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__func__, j); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
 
@@ -623,12 +623,12 @@ namespace rm
 	void	http_add_methods(vm& rmvm, vm_ctx& $, Server& svr, json& api)
 	{
 		if (!api.is_object())
-			$.throw_json(__FUNCTION__, ": $obj/GET must be object"s);
+			$.throw_json(__func__, ": $obj/GET must be object"s);
 
 		for (auto& http_method : api.items())
 		{
 			if (!http_method.value().is_object())
-				$.throw_json(__FUNCTION__, ": $obj/GET/"s + http_method.key() + " must be object"s);
+				$.throw_json(__func__, ": $obj/GET/"s + http_method.key() + " must be object"s);
 
 			method::add(svr, http_method.key().c_str(), [&, http_method](const Request& req, Response& res)
 				{
@@ -663,14 +663,14 @@ namespace rm
 		method mtd;
 
 		if (!$.obj.is_object())
-			$.throw_json(__FUNCTION__, ": $obj must be object"s);
+			$.throw_json(__func__, ": $obj must be object"s);
 
 		string	host = "0.0.0.0"s;
 
 		if ($.obj.count("host"))
 		{
 			if (!$.obj["host"].is_string())
-				$.throw_json(__FUNCTION__, ": $obj/host must be string"s);
+				$.throw_json(__func__, ": $obj/host must be string"s);
 
 			host = $.obj["host"].get<json::string_t>();
 		}
@@ -770,10 +770,10 @@ namespace rm
 			}*/
 
 		}
-		catch (json& j) { $.throw_json(__FUNCTION__, j); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { $.throw_json(__func__, j); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
 

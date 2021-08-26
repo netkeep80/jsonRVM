@@ -372,11 +372,11 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 					json& value = $.rel[i];
 					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.sub); i++;
 				}
-				catch (json& j) { $.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
+				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must be array!"s);
+			$.throw_json(__func__, "$obj must be array!"s);
 	}
 
 	void  jsonForEachSubject(vm& rmvm, vm_ctx& $)
@@ -393,11 +393,11 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 					json& value = $.rel[i];
 					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.obj); i++;
 				}
-				catch (json& j) { $.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
+				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
 		}
 		else
-			$.throw_json(__FUNCTION__, "$sub must be array!"s);
+			$.throw_json(__func__, "$sub must be array!"s);
 	}
 
 	void  jsonSize(vm& rmvm, vm_ctx& $)
@@ -441,7 +441,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 				$.sub.push_back(i);
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must has 'from', 'to' and 'step' properties!"s);
+			$.throw_json(__func__, "$obj must has 'from', 'to' and 'step' properties!"s);
 	}
 
 	void  jsonUnion(vm& rmvm, vm_ctx& $)
@@ -601,7 +601,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 
 	void  string_find(vm& rmvm, vm_ctx& $)
 	{
-		if (!($.obj.is_string() && $.sub.is_string())) $.throw_json(__FUNCTION__, "$obj and $sub must be strings!"s);
+		if (!($.obj.is_string() && $.sub.is_string())) $.throw_json(__func__, "$obj and $sub must be strings!"s);
 		$.rel = static_cast<json::number_integer_t>($.obj.get_ref<string const&>().find($.sub.get_ref<string&>().c_str()));
 	}
 
@@ -624,7 +624,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			} while (pos < str.length() && prev < str.length());
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj and $sub must be string!"s);
+			$.throw_json(__func__, "$obj and $sub must be string!"s);
 	}
 
 	void  string_join(vm& rmvm, vm_ctx& $)
@@ -645,7 +645,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 				{
 				case json::value_t::object:
 				case json::value_t::array:
-					$.throw_json(__FUNCTION__, "$sub must be array of simple type values!"s);
+					$.throw_json(__func__, "$sub must be array of simple type values!"s);
 
 				case json::value_t::number_float:
 					result += to_string(it.get<json::number_float_t>());
@@ -675,7 +675,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			$.rel = result;
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must be string and $sub must be array!"s);
+			$.throw_json(__func__, "$obj must be string and $sub must be array!"s);
 	}
 
 	void  jsonGet(vm& rmvm, vm_ctx& $)
@@ -685,17 +685,17 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			if ($.obj.is_number())
 				$.rel = $.sub[$.obj.get<size_t>()];
 			else
-				$.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
+				$.throw_json(__func__, "$obj must be unsigned number!"s);
 		}
 		else if ($.sub.is_object())
 		{
 			if ($.obj.is_string())
 				$.rel = $.sub[$.obj.get_ref<string const&>()];
 			else
-				$.throw_json(__FUNCTION__, "$obj must be string!"s);
+				$.throw_json(__func__, "$obj must be string!"s);
 		}
 		else
-			$.throw_json(__FUNCTION__, "$sub must be array or object!"s);
+			$.throw_json(__func__, "$sub must be array or object!"s);
 	}
 
 	void  jsonSet(vm& rmvm, vm_ctx& $)
@@ -705,14 +705,14 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			if ($.obj.is_number_unsigned())
 				$.sub[$.obj.get<size_t>()] = $.rel;
 			else
-				$.throw_json(__FUNCTION__, "$obj must be unsigned number!"s);
+				$.throw_json(__func__, "$obj must be unsigned number!"s);
 		}
 		else if ($.sub.is_object())
 		{
 			if ($.obj.is_string())
 				$.sub[$.obj.get_ref<string const&>()] = $.rel;
 			else
-				$.throw_json(__FUNCTION__, "$obj must be string!"s);
+				$.throw_json(__func__, "$obj must be string!"s);
 		}
 		else if ($.sub.is_null())
 		{
@@ -721,10 +721,10 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			else if ($.obj.is_string())
 				$.sub[$.obj.get_ref<string const&>()] = $.rel;
 			else
-				$.throw_json(__FUNCTION__, "$obj must be unsigned number or string!"s);
+				$.throw_json(__func__, "$obj must be unsigned number or string!"s);
 		}
 		else
-			$.throw_json(__FUNCTION__, "$sub must be array, object or null!"s);
+			$.throw_json(__func__, "$sub must be array, object or null!"s);
 	}
 
 	void  jsonErase(vm& rmvm, vm_ctx& $)
@@ -734,10 +734,10 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			if ($.obj.is_string())
 				$.sub.erase($.obj.get_ref<string const&>());
 			else
-				$.throw_json(__FUNCTION__, "$obj must be string!"s);
+				$.throw_json(__func__, "$obj must be string!"s);
 		}
 		else
-			$.throw_json(__FUNCTION__, "$sub must be object!"s);
+			$.throw_json(__func__, "$sub must be object!"s);
 	}
 
 	void  jsonIsEq(vm& rmvm, vm_ctx& $)
@@ -781,7 +781,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			return;
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must be json array!"s);
+			$.throw_json(__func__, "$obj must be json array!"s);
 	}
 
 	void  jsonWhere(vm& rmvm, vm_ctx& $)
@@ -803,11 +803,11 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 							$.rel.push_back(it);	//	фильтруем
 					i++;
 				}
-				catch (json& j) { $.throw_json(__FUNCTION__, json({ {"["s + to_string(i) + "]"s, j} })); }
+				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must be json array!"s);
+			$.throw_json(__func__, "$obj must be json array!"s);
 	}
 
 	void  jsonBelow(vm& rmvm, vm_ctx& $)	//	<
@@ -850,46 +850,46 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		if ($.sub.is_boolean() && $.obj.is_boolean())
 			$.rel = $.sub.get<bool>() && $.obj.get<bool>();
 		else
-			$.throw_json(__FUNCTION__, "$obj and $sub must be boolean!"s);
+			$.throw_json(__func__, "$obj and $sub must be boolean!"s);
 	}
 
 	void  IfObjTrueThenExecSub(vm& rmvm, vm_ctx& $)
 	{
 		if (!$.obj.is_boolean())
-			$.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+			$.throw_json(__func__, "$obj must be boolean!"s);
 
 		try
 		{
 			if ($.obj.get<bool>())
 				rmvm.exec_ent($.$, $.sub);
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
 	void  IfObjFalseThenExecSub(vm& rmvm, vm_ctx& $)
 	{
 		if (!$.obj.is_boolean())
-			$.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+			$.throw_json(__func__, "$obj must be boolean!"s);
 
 		try
 		{
 			if (!$.obj.get<bool>())
 				rmvm.exec_ent($.$, $.sub);
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
 	void  ExecSubWhileObjTrue(vm& rmvm, vm_ctx& $)
 	{
 		while (true)
 		{
-			if (!$.obj.is_boolean()) $.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+			if (!$.obj.is_boolean()) $.throw_json(__func__, "$obj must be boolean!"s);
 			if (!$.obj.get<bool>()) return;
 			try
 			{
 				rmvm.exec_ent($.$, $.sub);
 			}
-			catch (json& j) { throw json({ { __FUNCTION__, j} }); }
+			catch (json& j) { throw json({ { __func__, j} }); }
 		}
 	}
 
@@ -899,20 +899,20 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			return;
 
 		if (!$.obj.is_boolean())
-			$.throw_json(__FUNCTION__, "$obj must be boolean!"s);
+			$.throw_json(__func__, "$obj must be boolean!"s);
 
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		try
 		{
 			if ($.obj.get<bool>())	rmvm.exec_ent($.$, $.sub["true"]);
 			else	rmvm.exec_ent($.$, $.sub["false"]);
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { throw json({ { __func__, j} }); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
 	void  json_switch_number(vm& rmvm, vm_ctx& $)
@@ -921,10 +921,10 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			return;
 
 		if (!($.obj.is_number_unsigned() || $.obj.is_number_integer()))
-			$.throw_json(__FUNCTION__, "$obj must be number!"s);
+			$.throw_json(__func__, "$obj must be number!"s);
 
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		try
 		{
@@ -937,10 +937,10 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			if ($.sub.count(key)) rmvm.exec_ent($.$, $.sub[key]);
 			else rmvm.exec_ent($.$, $.sub["default"]);
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { throw json({ { __func__, j} }); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
 
@@ -950,20 +950,20 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 			return;
 
 		if (!$.obj.is_string())
-			$.throw_json(__FUNCTION__, "$obj must be string!"s);
+			$.throw_json(__func__, "$obj must be string!"s);
 
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		try
 		{
 			if ($.sub.count($.obj.get_ref<string const&>())) rmvm.exec_ent($.$, $.sub[$.obj.get_ref<string const&>()]);
 			else rmvm.exec_ent($.$, $.sub["default"]);
 		}
-		catch (json& j) { throw json({ { __FUNCTION__, j} }); }
-		catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+		catch (json& j) { throw json({ { __func__, j} }); }
+		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
 
@@ -1016,7 +1016,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 	void  jsonTAG(vm& rmvm, vm_ctx& $)
 	{
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		string	tag = $.sub["<>"];
 
@@ -1045,7 +1045,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
 
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		string	tag = $.sub["<>"];
 
@@ -1076,7 +1076,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		std::string res = "<!DOCTYPE html>"s;
 
 		if (!$.sub.is_object())
-			$.throw_json(__FUNCTION__, "$sub must be json object!"s);
+			$.throw_json(__func__, "$sub must be json object!"s);
 
 		string	tag = $.sub["<>"];
 
@@ -1101,7 +1101,7 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		body += "</" + tag + ">";
 	}
 
-	struct json_dump : public vm::base_entity
+	struct json_dump : public base_entity
 	{
 		const json_pointer<json> path{ "/json/dump" };
 		const string description{ "Dump $obj to $sub" };
@@ -1113,16 +1113,8 @@ void  json##name (vm& rmvm, vm_ctx& $)			\
 		$.rel = chrono::duration_cast<duration>(chrono::steady_clock::now().time_since_epoch()).count();
 	}
 
-	struct rmvm_version : public vm::base_entity
-	{
-		const json_pointer<json> path{ "/rmvm/version" };
-		const string description{ "Version of rmvm" };
-		static void	view(vm& rmvm, vm_ctx& $) { $.rel = vm::version; }
-	};
-
 	const string&	import_relations_model_to(vm& rmvm)
 	{
-		rmvm << rmvm_version();
 		rmvm.add_base_entity(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 		rmvm.add_base_entity(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 		rmvm.add_base_entity(rmvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);

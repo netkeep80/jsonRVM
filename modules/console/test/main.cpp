@@ -45,7 +45,7 @@ namespace rm
         {
             auto res = __rm.find(ent_id);
 			if (res == __rm.end())
-                throw runtime_error(__FUNCTION__ + ": Can't find entity "s + ent_id);
+                throw runtime_error(__func__ + ": Can't find entity "s + ent_id);
 
             ent = json::parse((*res).second);
         }
@@ -59,7 +59,7 @@ namespace rm
 
         virtual void	query_entity(json& ent, const json& query) override
         {
-            cout << __FUNCTION__ << endl;
+            cout << __func__ << endl;
         }
     };
 }
@@ -144,10 +144,10 @@ TEST_CASE("testing call version.json") {
         root.exec_ent($, root[""]);
         CHECK(res["rmvm_version"].get_ref<string&>() == "3.0.0"s);
     }
-    catch (json& j) { throw json({ { __FUNCTION__, j } }); }
-    catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
-    catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
-    catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+    catch (json& j) { throw json({ { __func__, j } }); }
+    catch (json::exception& e) { throw json({ { __func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+    catch (std::exception& e) { throw json({ { __func__, "std::exception: "s + e.what() } }); }
+    catch (...) { throw json({ { __func__, "unknown exception"s } }); }
 }
 
 
@@ -171,10 +171,10 @@ TEST_CASE("testing base entity 'where'") {
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }
-    catch (json& j) { throw json({ { __FUNCTION__, j } }); }
-    catch (json::exception& e) { throw json({ { __FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
-    catch (std::exception& e) { throw json({ { __FUNCTION__, "std::exception: "s + e.what() } }); }
-    catch (...) { throw json({ { __FUNCTION__, "unknown exception"s } }); }
+    catch (json& j) { throw json({ { __func__, j } }); }
+    catch (json::exception& e) { throw json({ { __func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+    catch (std::exception& e) { throw json({ { __func__, "std::exception: "s + e.what() } }); }
+    catch (...) { throw json({ { __func__, "unknown exception"s } }); }
 
     /*
     * надо ещё написать кейсы на невалидный $obj (когда его тип не array)

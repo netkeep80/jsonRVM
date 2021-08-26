@@ -26,6 +26,7 @@ target_sources( ${TARGET_NAME} PRIVATE
     "${COMMON_SOURCE_DIR}/include/str_switch/str_switch.h"
     "${COMMON_SOURCE_DIR}/include/vm.rm.h"
     "${COMMON_SOURCE_DIR}/include/interface.h"
+    "${COMMON_SOURCE_DIR}/include/string_type.h"
     "${COMMON_SOURCE_DIR}/include/database_api.h"
     "${COMMON_SOURCE_DIR}/include/string_utils.h"
     "${CMAKE_CURRENT_SOURCE_DIR}/include/base.rm.h"

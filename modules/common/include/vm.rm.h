@@ -34,7 +34,7 @@ SOFTWARE.
 #include "database_api.h"
 #include "nlohmann/json.hpp"
 #include "str_switch/str_switch.h"
-#include <string_view>
+#include "string_type.h"
 
 namespace rm
 {
@@ -73,7 +73,7 @@ namespace rm
 		void throw_json(const string& function, const json& error) const
 		{
 			json	j;
-			j["__FUNCTION__"] = function;
+			j["__func__"] = function;
 			j["exception"] = error;
 			j["vm_ctx"]["$ent/"] = ent;
 			j["vm_ctx"]["$obj/"] = obj;
@@ -86,6 +86,12 @@ namespace rm
 	using binary_view = void (*)(vm& rmvm, vm_ctx& $);
 	using binary_view_map_t = map<json const*, binary_view>;
 
+	struct base_entity
+	{
+		const json_pointer<json> path{};
+		const string description{};
+		static void	view(vm& rmvm, vm_ctx& $) {}
+	};
 	
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
@@ -122,7 +128,7 @@ namespace rm
 					unsigned index = strtoul(_Ptr, &_Eptr, 10);
 
 					if (_Errno_ref == ERANGE)
-						throw json({ {__FUNCTION__, it} });
+						throw json({ {__func__, it} });
 
 					if (_Ptr == _Eptr)
 						jptr = &ref[it];
@@ -133,7 +139,7 @@ namespace rm
 				}
 
 			default:
-				throw json({ {__FUNCTION__, it} });
+				throw json({ {__func__, it} });
 			}
 		}
 
@@ -177,14 +183,14 @@ namespace rm
 				if (res == ref.end())
 				{
 					try { this->get_entity(ref[it], it); }
-					catch (json& j) { throw json({ {__FUNCTION__, j} }); }
-					catch (invalid_argument& e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
-					catch (out_of_range& e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
-					catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
+					catch (json& j) { throw json({ {__func__, j} }); }
+					catch (invalid_argument& e) { throw json({ {__func__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
+					catch (out_of_range& e) { throw json({ {__func__, "property '"s + str + "' out_of_range, " + e.what()} }); }
+					catch (...) { throw json({ {__func__, "property '"s + str + "' does not exist!"} }); }
 
 					res = ref.find(it);
 					if (res == ref.end())
-						throw json({ {__FUNCTION__, "entity '"s + it + "' does not exist in relations model!"s} });
+						throw json({ {__func__, "entity '"s + it + "' does not exist in relations model!"s} });
 				}
 				jptr = &res.value();
 			}
@@ -196,10 +202,10 @@ namespace rm
 				string it = str.substr(prev, pos - prev);
 				prev = pos + 1;
 				try { ref_in_json_to<val_type>(jptr, it); }
-				catch (json& j) { throw json({ {__FUNCTION__, j} }); }
-				catch (invalid_argument& e) { throw json({ {__FUNCTION__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
-				catch (out_of_range& e) { throw json({ {__FUNCTION__, "property '"s + str + "' out_of_range, " + e.what()} }); }
-				catch (...) { throw json({ {__FUNCTION__, "property '"s + str + "' does not exist!"} }); }
+				catch (json& j) { throw json({ {__func__, j} }); }
+				catch (invalid_argument& e) { throw json({ {__func__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
+				catch (out_of_range& e) { throw json({ {__func__, "property '"s + str + "' out_of_range, " + e.what()} }); }
+				catch (...) { throw json({ {__func__, "property '"s + str + "' does not exist!"} }); }
 			}
 
 			return *jptr;
@@ -221,33 +227,42 @@ namespace rm
 			}
 		}
 
-		static void  base_add_entity(vm& rmvm, vm_ctx& $)
-		{
-			string	ent_id = "";
-			rmvm.add_entity($.obj, ent_id);
-			$.sub = ent_id;
-		}
-
 	public:
+		struct database_api_add_entity : public base_entity
+		{
+			const json_pointer path{ "/add_entity" };
+			const string description{ "Add new entity to database" };
+			static void	view(vm& rmvm, vm_ctx& $)
+			{
+				string	ent_id = "";
+				rmvm.add_entity($.obj, ent_id);
+				$.sub = ent_id;
+			}
+		};
+
+		struct rmvm_version : public base_entity
+		{
+			const json_pointer path{ "/rmvm/version" };
+			const string description{ "Version of rmvm" };
+			static void	view(vm& rmvm, vm_ctx& $) { $.rel = vm::version; }
+		};
+
 		vm(database_api* db = nullptr)
 			: json(json::object())
 		{
 			database_api::link(db);
-			//	database_api
-			add_base_entity(*this, "add_entity"s, base_add_entity, "Add new entity to database"s);
+			//	rmvm base voc
+			*this << rmvm_version() << database_api_add_entity();
 		}
 
 		json& exec_ent(json& rel, json& ent)
 		{
 			vm_ctx $(rel);
-			try
-			{
-				exec_ent($, ent);
-			}
-			catch (json& j) { $.throw_json(__FUNCTION__, j); }
-			catch (json::exception& e) { $.throw_json(__FUNCTION__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-			catch (std::exception& e) { $.throw_json(__FUNCTION__, "std::exception: "s + e.what()); }
-			catch (...) { $.throw_json(__FUNCTION__, "unknown exception"s); }
+			try { exec_ent($, ent); }
+			catch (json& j) { $.throw_json(__func__, j); }
+			catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
+			catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
+			catch (...) { $.throw_json(__func__, "unknown exception"s); }
 			return rel;
 		}
 
@@ -276,20 +291,23 @@ namespace rm
 				return;
 
 			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
-				for (auto it = ent.begin(); it != ent.end(); ++it)
-					try { exec_ent($, *it); }
-					catch (json & j) { throw json({ {"["s + to_string(it - ent.begin()) + "]"s, j} }); }
+			{
+				auto it = ent.begin();
+				auto end = ent.end();
+				try { for (; it != end; ++it) exec_ent($, *it); }
+				catch (json& j) { throw json({ {"["s + to_string(it - ent.begin()) + "]"s, j} }); }
 				return;
+			}
 
 			case json::value_t::object:
 			{
-				auto& rel = ent.find("$rel");
-				auto& end = ent.end();
+				auto rel = ent.find("$rel");
+				auto end = ent.end();
 
 				if (rel != end) //	это сущность, которую надо исполнить в новом контексте?
 				{
-					auto& obj = ent.find("$obj");
-					auto& sub = ent.find("$sub");
+					auto obj = ent.find("$obj");
+					auto sub = ent.find("$sub");
 
 					try {
 						exec_ent(
@@ -306,17 +324,16 @@ namespace rm
 				}
 				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
-					for (auto& it : ent.items()) try
-					{
-						exec_ent(
-							vm_ctx(
-								string_ref_to<lval>($, it.key()),
-								$.obj,
-								$.sub,
-								$.ent,
-								$.$),
-							val_or_ref_to<rval>($, it.value())
-						);
+					auto it = ent.begin();
+
+					try {
+						for (; it != end; ++it)
+							exec_ent( vm_ctx( string_ref_to<lval>($, it.key()),
+											  $.obj,
+									          $.sub,
+									          $.ent,
+									          $.$),
+									  val_or_ref_to<rval>($, it.value()) );
 					}
 					catch (json & j) { throw json({ {it.key(), j} }); }
 				}
@@ -332,20 +349,12 @@ namespace rm
 		}
 
 
-		struct base_entity
-		{
-			const json_pointer path{};
-			const string description{};
-			static void	view(vm& rmvm, vm_ctx& $) {}
-		};
-
-
 		/// <summary>
 		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
 		/// </summary>
-		/// <typeparam name="base_entity_t"></typeparam>
-		/// <param name="bent"></param>
-		/// <returns></returns>
+		/// <typeparam name="base_entity_t">Тип базовый сущности</typeparam>
+		/// <param name="bent">Экземпляр базовой сущности</param>
+		/// <returns>Ссылка на виртуальную машину</returns>
 		template<class base_entity_t = base_entity>
 		vm&	operator << (const base_entity_t& bent)
 		{

@@ -56,7 +56,7 @@ namespace rm
 			std::ifstream in(PathName.c_str());
 
 			if (!in.good())
-				throw runtime_error(__FUNCTION__ + ": Can't load json from the "s + PathFolder + ent_id + " file!");
+				throw runtime_error(__func__ + ": Can't load json from the "s + PathFolder + ent_id + " file!");
 
 			in >> ent;
 		}
@@ -69,14 +69,14 @@ namespace rm
 			std::ofstream out(PathName.c_str());
 
 			if (!out.good())
-				throw runtime_error(__FUNCTION__ + ": Can't open "s + PathName + " file."s);
+				throw runtime_error(__func__ + ": Can't open "s + PathName + " file."s);
 
 			out << ent;
 		}
 
 		virtual void	query_entity(json& ent, const json& query)
 		{
-			cout << __FUNCTION__ << endl;
+			cout << __func__ << endl;
 		}
 	};
 }

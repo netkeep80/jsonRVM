@@ -103,10 +103,10 @@ namespace nlohmann
 void  fs_dir_scan(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
 
 	if (!$.obj.count("PathFolder") || !$.obj.count("FileNameFormat"))
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
 
 	string	FileNameFormat = $.obj["FileNameFormat"];
 	string	PathFolder = $.obj["PathFolder"];
@@ -138,7 +138,7 @@ void  fs_dir_scan(vm& rmvm, vm_ctx& $)
 void  fs_dir_create(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_string())
-		$.throw_json(__FUNCTION__, "$obj must be json string with PathName!" );
+		$.throw_json(__func__, "$obj must be json string with PathName!" );
 
 	string	PathName = utf8_to_cp1251($.obj);
 	$.sub = bool(CreateDirectoryA(PathName.c_str(), nullptr));
@@ -147,7 +147,7 @@ void  fs_dir_create(vm& rmvm, vm_ctx& $)
 void  fs_dir_delete(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_string())
-		$.throw_json(__FUNCTION__, "$obj must be json string with PathName!" );
+		$.throw_json(__func__, "$obj must be json string with PathName!" );
 
 	string	PathName = utf8_to_cp1251($.obj);
 	$.sub = bool(RemoveDirectoryA(PathName.c_str()));
@@ -156,16 +156,16 @@ void  fs_dir_delete(vm& rmvm, vm_ctx& $)
 void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
 
 	if (!$.obj.count("PathFolder") || !$.obj.count("FileName"))
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
 
 	string	PathName = utf8_to_cp1251($.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		$.throw_json(__FUNCTION__, "Can't load json from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
+		$.throw_json(__func__, "Can't load json from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
 
 	json	rm;
 	in >> rm;
@@ -183,16 +183,16 @@ void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
 void  fs_file_read_json(vm& rmvm, vm_ctx& $)
 {
 	if (!$.obj.is_object())
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
 
 	if (!$.obj.count("PathFolder") || !$.obj.count("FileName"))
-		$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName properties!" );
+		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
 
 	string	PathName = utf8_to_cp1251($.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>());
 	std::ifstream in(PathName.c_str());
 
 	if (!in.good())
-		$.throw_json(__FUNCTION__, "Can't load json from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
+		$.throw_json(__func__, "Can't load json from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
 
 	$.rel = true;
 	in >> $.sub;
@@ -265,11 +265,11 @@ void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
 				return;
 			}
 
-			$.throw_json(__FUNCTION__, "Can't load string array from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
+			$.throw_json(__func__, "Can't load string array from the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
 		}
 	}
 
-	$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
+	$.throw_json(__func__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
 void  jsonStringArrayToFile(vm& rmvm, vm_ctx& $)
@@ -292,13 +292,13 @@ void  jsonStringArrayToFile(vm& rmvm, vm_ctx& $)
 				return;
 			}
 			else
-				$.throw_json(__FUNCTION__, "Can't create the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
+				$.throw_json(__func__, "Can't create the "s + $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>() + " file!" );
 		}
 		else
-			$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
+			$.throw_json(__func__, "$obj must be json object with PathFolder and FileName property!" );
 	}
 	else
-		$.throw_json(__FUNCTION__, "$obj must be object and $sub must be array!" );
+		$.throw_json(__func__, "$obj must be object and $sub must be array!" );
 }
 
 void  fs_file_write_json(vm& rmvm, vm_ctx& $)
@@ -318,12 +318,12 @@ void  fs_file_write_json(vm& rmvm, vm_ctx& $)
 			}
 
 			$.rel = false;
-			$.throw_json(__FUNCTION__, "Can't open "s + PathName + " file."s );
+			$.throw_json(__func__, "Can't open "s + PathName + " file."s );
 		}
 	}
 
 	$.rel = false;
-	$.throw_json(__FUNCTION__, "$obj must be json object with PathFolder and FileName property!" );
+	$.throw_json(__func__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
 

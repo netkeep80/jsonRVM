@@ -32,8 +32,8 @@ public:
 class file_database_t : public database_api<file_database_t>
 {
 public:
-	void func1(void) { cout << __FUNCTION__ << endl; }
-	void func2(void) { cout << __FUNCTION__ << endl; }
+	void func1(void) { cout << __func__ << endl; }
+	void func2(void) { cout << __func__ << endl; }
 };
 
 
