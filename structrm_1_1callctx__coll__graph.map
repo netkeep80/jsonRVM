@@ -1,13 +1,13 @@
 <map id="rm::callctx" name="rm::callctx">
-<area shape="rect" id="node1" title=" " alt="" coords="241,288,321,315"/>
-<area shape="rect" id="node2" href="$classrm_1_1vm.html" title=" " alt="" coords="203,199,264,225"/>
-<area shape="rect" id="node3" href="$classrm_1_1database__api.html" title=" " alt="" coords="29,109,149,136"/>
-<area shape="rect" id="node4" href="$classrm_1_1interface__t.html" title=" " alt="" coords="5,5,173,47"/>
-<area shape="rect" id="node5" title=" " alt="" coords="174,109,221,136"/>
-<area shape="rect" id="node6" title=" " alt="" coords="245,109,379,136"/>
-<area shape="rect" id="node7" title=" " alt="" coords="242,13,281,39"/>
-<area shape="rect" id="node8" title=" " alt="" coords="305,13,343,39"/>
-<area shape="rect" id="node9" title=" " alt="" coords="403,109,482,136"/>
-<area shape="rect" id="node10" title=" " alt="" coords="381,5,505,47"/>
-<area shape="rect" id="node11" href="$structrm_1_1vm__ctx.html" title=" " alt="" coords="288,199,373,225"/>
+<area shape="rect" id="node1" title=" " alt="" coords="272,288,352,315"/>
+<area shape="rect" id="node2" href="$structrm_1_1vm__ctx.html" title=" " alt="" coords="127,199,212,225"/>
+<area shape="rect" id="node3" href="$classrm_1_1vm.html" title=" " alt="" coords="281,199,343,225"/>
+<area shape="rect" id="node4" href="$classrm_1_1database__api.html" title=" " alt="" coords="29,109,149,136"/>
+<area shape="rect" id="node5" href="$classrm_1_1interface__t.html" title=" " alt="" coords="5,5,173,47"/>
+<area shape="rect" id="node6" title=" " alt="" coords="174,109,221,136"/>
+<area shape="rect" id="node7" title=" " alt="" coords="245,109,379,136"/>
+<area shape="rect" id="node8" title=" " alt="" coords="242,13,281,39"/>
+<area shape="rect" id="node9" title=" " alt="" coords="305,13,343,39"/>
+<area shape="rect" id="node10" title=" " alt="" coords="403,109,482,136"/>
+<area shape="rect" id="node11" title=" " alt="" coords="381,5,505,47"/>
 </map>
