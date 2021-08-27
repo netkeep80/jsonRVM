@@ -1,7 +1,7 @@
 {
    "$rel" : [
       {
-         "$ent/additional_rm_loaded/http.rm.dll" : {
+         "$rel/additional_rm_loaded/http.rm.dll" : {
             "$obj" : {
                "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
                "FileName" : "http.rm.dll"
@@ -14,122 +14,119 @@
             "URI" : "http://192.168.8.1/api/webserver/token"
          },
          "$rel" : "http/GET/xml",
-         "$sub" : "$ent/Modem/SesTokInfo"
+         "$sub" : "$rel/Modem/SesTokInfo"
       },
       {
-         "$obj" : "$ent/HTTP/CODE_OK",
-         "$rel" : "=="
-      },
-      {
-         "$rel" : "then",
-         "$sub" : [
-            {
-               "$ent/Modem/request" : "json/object",
-               "$ent/Modem/request/URI" : {
-                  "$obj" : "$ent/Modem/SendSMS/URI",
-                  "$rel" : "="
-               },
-               "$ent/Modem/request/header/__RequestVerificationToken" : {
-                  "$obj" : "$ent/Modem/SesTokInfo/body/response/token",
-                  "$rel" : "="
-               },
-               "$ent/Modem/request/body" : {
-                  "$obj" : [
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Index",
-                           "$rel" : "="
-                        },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Index"
-                        }
-                     },
-                     {
-                        "$obj" : [
-                           {
-                              "$obj" : {
-                                 "$obj" : "$ent/Phone",
-                                 "$rel" : "="
-                              },
-                              "$rel" : "tag",
-                              "$sub" : {
-                                 "<>" : "Phone"
-                              }
+         "$obj" : "$rel/Modem/SesTokInfo/status",
+         "$rel" : "switch/number",
+         "$sub" : {
+            "200" : [
+               {
+                  "$rel/Modem/request/URI" : {
+                     "$obj" : "$ent/Modem/SendSMS/URI",
+                     "$rel" : "="
+                  },
+                  "$rel/Modem/request/body" : {
+                     "$obj" : [
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Index",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Index"
                            }
-                        ],
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Phones"
-                        }
-                     },
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Sca",
-                           "$rel" : "="
                         },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Sca"
-                        }
-                     },
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Content",
-                           "$rel" : "="
+                        {
+                           "$obj" : [
+                              {
+                                 "$obj" : {
+                                    "$obj" : "$ent/Phone",
+                                    "$rel" : "="
+                                 },
+                                 "$rel" : "tag",
+                                 "$sub" : {
+                                    "<>" : "Phone"
+                                 }
+                              }
+                           ],
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Phones"
+                           }
                         },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Content"
-                        }
-                     },
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Length",
-                           "$rel" : "="
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Sca",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Sca"
+                           }
                         },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Length"
-                        }
-                     },
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Reserved",
-                           "$rel" : "="
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Content",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Content"
+                           }
                         },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Reserved"
-                        }
-                     },
-                     {
-                        "$obj" : {
-                           "$obj" : "$ent/Date",
-                           "$rel" : "="
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Length",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Length"
+                           }
                         },
-                        "$rel" : "tag",
-                        "$sub" : {
-                           "<>" : "Date"
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Reserved",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Reserved"
+                           }
+                        },
+                        {
+                           "$obj" : {
+                              "$obj" : "$ent/Date",
+                              "$rel" : "="
+                           },
+                           "$rel" : "tag",
+                           "$sub" : {
+                              "<>" : "Date"
+                           }
                         }
+                     ],
+                     "$rel" : "xml",
+                     "$sub" : {
+                        "<>" : "request"
                      }
-                  ],
-                  "$rel" : "xml",
-                  "$sub" : {
-                     "<>" : "request"
                   }
+               },
+               {
+                  "$obj" : "$rel/Modem/SesTokInfo/body/response/token",
+                  "$rel" : "=",
+                  "$sub" : "$rel/Modem/request/header/__RequestVerificationToken"
+               },
+               {
+                  "$obj" : "$rel/Modem/request",
+                  "$rel" : "http/POST/xml"
                }
-            },
-            {
-               "$obj" : "$ent/Modem/request",
-               "$rel" : "http/POST/xml"
-            }
-         ]
+            ],
+            "default" : null
+         }
       }
    ],
-   "HTTP" : {
-      "CODE_OK" : 200
-   },
    "Modem" : {
       "SendSMS" : {
          "URI" : "http://192.168.8.1/api/sms/send-sms"

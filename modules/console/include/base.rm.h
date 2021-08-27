@@ -864,8 +864,10 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			else if ($.obj.is_number_integer())
 				key = to_string($.obj.get<json::number_integer_t>());
 
-			if ($.sub.count(key)) rmvm.exec_ent($.$, $.sub[key]);
-			else rmvm.exec_ent($.$, $.sub["default"]);
+			if ($.sub.count(key))
+				rmvm.exec_ent($.$, $.sub[key]);
+			else
+				rmvm.exec_ent($.$, $.sub["default"]);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }

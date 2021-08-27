@@ -518,8 +518,8 @@ namespace rm
 
 			if (auto res = cli.send(requestObj))
 			{
-				$.rel = res->status;
 				$.sub = json::object();
+				$.sub["status"] = res->status;
 				$.sub["base_uri"] = base_uri;
 				$.sub["uri_path"] = uri_path;
 				$.sub["header"] = json::object();

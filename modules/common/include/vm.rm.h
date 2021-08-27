@@ -31,6 +31,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #pragma once
+#include <mutex>
 #include <execution>
 #include <algorithm>
 #include "database_api.h"
@@ -96,17 +97,19 @@ namespace rm
 		static void	view(vm& rmvm, vm_ctx& $) {}
 	};
 
-	struct callctx
+	struct callctx : public vm_ctx
 	{
-		vm& rvm;
-		vm_ctx& $;
+		vm&		rvm;
 		const string& key;
-		json& rel;
+		json&	value;
 		json	exc;
-		callctx(vm& vm, vm_ctx& c, const string& k, json& r)
-			: rvm(vm), $(c), key(k), rel(r) {}
+
+		callctx(json& Rel, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx, vm& vm, const string& k, json& v)
+			: vm_ctx(Rel, Obj, Sub, Ent, Ctx), rvm(vm), key(k), value(v) {}
 	};
 	
+	
+	//template<class _ExPo = execution::seq>
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
 	////////////////////////////// VERSION //////////////////////////////
@@ -116,21 +119,51 @@ namespace rm
 	private:
 		struct rval { static const bool is_lval{ false }; };
 		struct lval { static const bool is_lval{ true }; };
+		mutex __object_mutex;
+		mutex __array_mutex;
+		mutex __null_mutex;
 
 		template<class val_type>
-		static void	ref_in_json_to(json*& jptr, const string& it)
+		void	ref_in_json_to(json*& jptr, const string& it)
 		{
 			json& ref = *jptr;
 
 			switch (ref.type())
 			{
 			case json::value_t::object:
-				jptr = &ref[it];
-				return;
+				//if constexpr (val_type::is_lval)
+				{
+					lock_guard<mutex> guard(__object_mutex);
+					jptr = &ref[it];
+					return;
+				}
+				/*else
+				{
+					auto rel = ref.find(it);
+
+					if (rel == ref.end())
+						throw json({ {__func__, it} });
+					
+					jptr = &*rel;
+					return;
+				}*/
 
 			case json::value_t::array:
-				jptr = &ref[std::stoul(it)];
-				return;
+				//if constexpr (val_type::is_lval)
+				{
+					lock_guard<mutex> guard(__array_mutex);
+					jptr = &ref[std::stoul(it)];
+					return;
+				}
+				/*else
+				{
+					auto id = std::stoul(it);
+					if (id >= ref.size())
+						throw json({ {__func__, it} });
+
+					jptr = &ref[id];
+					return;
+				}*/
 
 			case json::value_t::null:
 				if constexpr (val_type::is_lval)
@@ -143,6 +176,8 @@ namespace rm
 
 					if (_Errno_ref == ERANGE)
 						throw json({ {__func__, it} });
+
+					lock_guard<mutex> guard(__null_mutex);
 
 					if (_Ptr == _Eptr)
 						jptr = &ref[it];
@@ -282,21 +317,9 @@ namespace rm
 
 		static void	callctx_exec(callctx& it)
 		{
-			try {
-				it.rvm.exec_ent(vm_ctx(it.rvm.string_ref_to<lval>(it.$, it.key),
-										it.$.obj,
-										it.$.sub,
-										it.$.ent,
-										it.$.$),
-					it.rel);
-			}
-			catch (json& j) { it.exc = json({ {it.key, j} }); }
+			try { it.rvm.exec_ent(it, it.value); }
+			catch (json& j) { it.exc = j; }
 			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
-		}
-
-		static void	callctx_throw(callctx& it)
-		{
-			if (!it.exc.is_null()) throw it.exc;
 		}
 
 		//	Исполнение сущности либо json байткода
@@ -357,8 +380,8 @@ namespace rm
 				}
 				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
-					/*auto it = ent.begin();
-
+					auto it = ent.begin();
+					/*
 					try {
 						for (; it != end; ++it)
 							exec_ent( vm_ctx( string_ref_to<lval>($, it.key()),
@@ -373,13 +396,17 @@ namespace rm
 
 					vector<callctx>	vct;
 					vct.reserve(ent.size());
-					auto it = ent.begin();
 
 					try {
 						for (; it != end; ++it)
 						{
-							vct.emplace_back(*this,
-								$,
+							vct.emplace_back(
+								string_ref_to<lval>($, it.key()),
+								$.obj,
+								$.sub,
+								$.ent,
+								$.$,
+								*this,
 								it.key(),
 								val_or_ref_to<rval>($, it.value())
 							);
@@ -387,10 +414,14 @@ namespace rm
 					}
 					catch (json& j) { throw json({ {it.key(), j} }); }
 					
-					//for_each(std::execution::par, vct.begin(), vct.end(), callctx_exec);
-					for_each(std::execution::seq, vct.begin(), vct.end(), callctx_exec);
-					for_each(std::execution::seq, vct.begin(), vct.end(), callctx_throw);
-					
+					for_each(
+						std::execution::par,
+						//std::execution::seq,
+						vct.begin(), vct.end(), callctx_exec);
+
+					for(auto& it : vct)
+						if (!it.exc.is_null())
+							throw json({ {it.key, it.exc} });
 				}
 				return;
 			}
