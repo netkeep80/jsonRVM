@@ -4,6 +4,7 @@
          "$rel/additional_rm_loaded/http.rm.dll" : {
             "$obj" : {
                "PathFolder" : ".\\..\\build\\modules\\vocabulary\\http\\Release\\",
+               "PathFolder1" : ".\\..\\build\\modules\\vocabulary\\http\\Debug\\",
                "FileName" : "http.rm.dll"
             },
             "$rel" : "rmvm/load/dll"

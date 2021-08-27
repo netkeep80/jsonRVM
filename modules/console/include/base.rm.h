@@ -770,7 +770,42 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			return;
 
 		default:
-			$.rel = json();
+			$.rel = json(false);
+			return;
+		}
+	}
+
+	void  jsonGreater(vm& rmvm, vm_ctx& $)	//	>
+	{
+		if ($.sub.type() == $.obj.type()) switch ($.obj.type())
+		{
+		case json::value_t::array:
+		case json::value_t::object:
+			$.rel = json($.sub.size() > $.obj.size());
+			return;
+
+		case json::value_t::string:
+			$.rel = json($.sub.get<string>().size() > $.obj.get<string>().size());
+			return;
+
+		case json::value_t::boolean:
+			$.rel = json(int($.sub.get<bool>()) > int($.obj.get<bool>()));
+			return;
+
+		case json::value_t::number_float:
+			$.rel = json($.sub.get<json::number_float_t>() > $.obj.get<json::number_float_t>());
+			return;
+
+		case json::value_t::number_integer:
+			$.rel = json($.sub.get<json::number_integer_t>() > $.obj.get<json::number_integer_t>());
+			return;
+
+		case json::value_t::number_unsigned:
+			$.rel = json($.sub.get<json::number_unsigned_t>() > $.obj.get<json::number_unsigned_t>());
+			return;
+
+		default:
+			$.rel = json(false);
 			return;
 		}
 	}
@@ -781,6 +816,36 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.rel = $.sub.get<bool>() && $.obj.get<bool>();
 		else
 			$.throw_json(__func__, "$obj and $sub must be boolean!"s);
+	}
+
+	void  if_rel_then_obj_else_sub(vm& rmvm, vm_ctx& $)
+	{
+		if (!$.rel.is_boolean())
+			$.throw_json(__func__, "$obj must be boolean!"s);
+
+		try
+		{
+			if ($.rel.get<bool>())
+				rmvm.exec_ent($.$, $.obj);
+			else
+				rmvm.exec_ent($.$, $.sub);
+		}
+		catch (json& j) { throw json({ { __func__, j} }); }
+	}
+
+	void  if_rel_then_sub_else_obj(vm& rmvm, vm_ctx& $)
+	{
+		if (!$.rel.is_boolean())
+			$.throw_json(__func__, "$obj must be boolean!"s);
+
+		try
+		{
+			if ($.rel.get<bool>())
+				rmvm.exec_ent($.$, $.sub);
+			else
+				rmvm.exec_ent($.$, $.obj);
+		}
+		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
 	void  IfObjTrueThenExecSub(vm& rmvm, vm_ctx& $)
@@ -965,7 +1030,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.obj, $.sub, $.ent, $.$), $.obj);
+		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -994,9 +1059,9 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 				body += " " + it.key() + "=" + it.value().dump();
 
 		body += ">";
-		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
+		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контекс itsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.obj, $.sub, $.ent, $.$), $.obj);
+		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1027,7 +1092,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.obj, $.sub, $.ent, $.$), $.obj);
+		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1109,6 +1174,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		rmvm.add_base_entity(rmvm, "=="s, jsonIsEq, ""s);
 		rmvm.add_base_entity(rmvm, "!="s, jsonIsNotEq, ""s);
 		rmvm.add_base_entity(rmvm, "<"s, jsonBelow, ""s);
+		rmvm.add_base_entity(rmvm, ">"s, jsonGreater, ""s);
 		rmvm.add_base_entity(rmvm, "&&"s, jsonAnd, ""s);
 
 		//	strings
@@ -1121,6 +1187,10 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		//	control
 		rmvm.add_base_entity(rmvm, "foreachobj"s, jsonForEachObject, ""s);
 		rmvm.add_base_entity(rmvm, "foreachsub"s, jsonForEachSubject, ""s);
+
+		rmvm.add_base_entity(rmvm, "if_rel_then_obj_else_sub"s, if_rel_then_obj_else_sub, ""s);
+		rmvm.add_base_entity(rmvm, "if_rel_then_sub_else_obj"s, if_rel_then_sub_else_obj, ""s);
+
 		rmvm.add_base_entity(rmvm, "then"s, IfObjTrueThenExecSub, ""s);
 		rmvm.add_base_entity(rmvm, "else"s, IfObjFalseThenExecSub, "");
 		rmvm.add_base_entity(rmvm, "while"s, ExecSubWhileObjTrue, ""s);

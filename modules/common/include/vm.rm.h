@@ -77,12 +77,11 @@ namespace rm
 		void throw_json(const string& function, const json& error) const
 		{
 			json	j;
-			j["__func__"] = function;
-			j["exception"] = error;
-			j["vm_ctx"]["$ent/"] = ent;
-			j["vm_ctx"]["$obj/"] = obj;
+			j[function] = error;
 			j["vm_ctx"]["$rel/"] = rel;
-			j["vm_ctx"]["$sub/"] = sub;
+			if (obj != rel) j["vm_ctx"]["$obj/"] = obj;
+			if (sub != rel) j["vm_ctx"]["$sub/"] = sub;
+			if (ent != rel) j["vm_ctx"]["$ent/"] = ent;
 			throw j;
 		}
 	};
@@ -96,20 +95,20 @@ namespace rm
 		const string description{};
 		static void	view(vm& rmvm, vm_ctx& $) {}
 	};
-
-	struct callctx : public vm_ctx
+	
+	struct callctx
 	{
-		vm&		rvm;
+		json& rel;
+		vm_ctx& $;
+		vm& rvm;
 		const string& key;
-		json&	value;
+		json& value;
 		json	exc;
 
-		callctx(json& Rel, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx, vm& vm, const string& k, json& v)
-			: vm_ctx(Rel, Obj, Sub, Ent, Ctx), rvm(vm), key(k), value(v) {}
+		callctx(json& Rel, vm_ctx& Ctx, vm& vm, const string& k, json& v)
+			: rel(Rel), $(Ctx), rvm(vm), key(k), value(v) {}
 	};
 	
-	
-	//template<class _ExPo = execution::seq>
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
 	////////////////////////////// VERSION //////////////////////////////
@@ -131,39 +130,39 @@ namespace rm
 			switch (ref.type())
 			{
 			case json::value_t::object:
-				//if constexpr (val_type::is_lval)
+				if constexpr (val_type::is_lval)
 				{
 					lock_guard<mutex> guard(__object_mutex);
 					jptr = &ref[it];
 					return;
 				}
-				/*else
+				else
 				{
 					auto rel = ref.find(it);
 
 					if (rel == ref.end())
-						throw json({ {__func__, it} });
+						throw json({ {it, *jptr} });
 					
 					jptr = &*rel;
 					return;
-				}*/
+				}
 
 			case json::value_t::array:
-				//if constexpr (val_type::is_lval)
+				if constexpr (val_type::is_lval)
 				{
 					lock_guard<mutex> guard(__array_mutex);
 					jptr = &ref[std::stoul(it)];
 					return;
 				}
-				/*else
+				else
 				{
 					auto id = std::stoul(it);
 					if (id >= ref.size())
-						throw json({ {__func__, it} });
+						throw json({ {it, *jptr} });
 
 					jptr = &ref[id];
 					return;
-				}*/
+				}
 
 			case json::value_t::null:
 				if constexpr (val_type::is_lval)
@@ -175,7 +174,7 @@ namespace rm
 					unsigned index = strtoul(_Ptr, &_Eptr, 10);
 
 					if (_Errno_ref == ERANGE)
-						throw json({ {__func__, it} });
+						throw json({ {it, *jptr} });
 
 					lock_guard<mutex> guard(__null_mutex);
 
@@ -188,7 +187,7 @@ namespace rm
 				}
 
 			default:
-				throw json({ {__func__, it} });
+				throw json({ {it, *jptr} });
 			}
 		}
 
@@ -232,14 +231,14 @@ namespace rm
 				if (res == ref.end())
 				{
 					try { this->get_entity(ref[it], it); }
-					catch (json& j) { throw json({ {__func__, j} }); }
-					catch (invalid_argument& e) { throw json({ {__func__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
-					catch (out_of_range& e) { throw json({ {__func__, "property '"s + str + "' out_of_range, " + e.what()} }); }
-					catch (...) { throw json({ {__func__, "property '"s + str + "' does not exist!"} }); }
+					catch (json& j) { $.throw_json(__func__, j); }
+					catch (invalid_argument& e) { $.throw_json(__func__, "entity '"s + str + "' invalid_argument, " + e.what()); }
+					catch (out_of_range& e) { $.throw_json(__func__, "entity '"s + str + "' out_of_range, " + e.what()); }
+					catch (...) { $.throw_json(__func__, "entity '"s + str + "' does not exist!"); }
 
 					res = ref.find(it);
 					if (res == ref.end())
-						throw json({ {__func__, "entity '"s + it + "' does not exist in relations model!"s} });
+						$.throw_json(__func__, "entity '"s + it + "' does not exist in relations model!"s);
 				}
 				jptr = &res.value();
 			}
@@ -251,10 +250,10 @@ namespace rm
 				string it = str.substr(prev, pos - prev);
 				prev = pos + 1;
 				try { ref_in_json_to<val_type>(jptr, it); }
-				catch (json& j) { throw json({ {__func__, j} }); }
-				catch (invalid_argument& e) { throw json({ {__func__, "property '"s + str + "' invalid_argument, " + e.what()} }); }
-				catch (out_of_range& e) { throw json({ {__func__, "property '"s + str + "' out_of_range, " + e.what()} }); }
-				catch (...) { throw json({ {__func__, "property '"s + str + "' does not exist!"} }); }
+				catch (json& j) { $.throw_json(__func__, j); }
+				catch (invalid_argument& e) { $.throw_json(__func__, "property '"s + str + "' invalid_argument, " + e.what()); }
+				catch (out_of_range& e) { $.throw_json(__func__, "property '"s + str + "' out_of_range, " + e.what()); }
+				catch (...) { $.throw_json(__func__, "property '"s + str + "' does not exist!"); }
 			}
 
 			return *jptr;
@@ -317,7 +316,12 @@ namespace rm
 
 		static void	callctx_exec(callctx& it)
 		{
-			try { it.rvm.exec_ent(it, it.value); }
+			try {
+				it.rvm.exec_ent(
+					vm_ctx(	it.rel,	it.$.obj, it.$.sub, it.$.ent, it.$.$),
+					it.rvm.val_or_ref_to<rval>(it.$, it.value)
+				);
+			}
 			catch (json& j) { it.exc = j; }
 			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
 		}
@@ -381,43 +385,24 @@ namespace rm
 				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 				{
 					auto it = ent.begin();
-					/*
-					try {
-						for (; it != end; ++it)
-							exec_ent( vm_ctx( string_ref_to<lval>($, it.key()),
-											  $.obj,
-									          $.sub,
-									          $.ent,
-									          $.$),
-									  val_or_ref_to<rval>($, it.value()) );
-					}
-					catch (json & j) { throw json({ {it.key(), j} }); }
-					*/
-
 					vector<callctx>	vct;
 					vct.reserve(ent.size());
 
 					try {
-						for (; it != end; ++it)
-						{
+						for (; it != end; ++it) {
 							vct.emplace_back(
 								string_ref_to<lval>($, it.key()),
-								$.obj,
-								$.sub,
-								$.ent,
-								$.$,
+								$,
 								*this,
 								it.key(),
-								val_or_ref_to<rval>($, it.value())
+								it.value()
+								//val_or_ref_to<rval>($, it.value())
 							);
 						}
 					}
 					catch (json& j) { throw json({ {it.key(), j} }); }
 					
-					for_each(
-						std::execution::par,
-						//std::execution::seq,
-						vct.begin(), vct.end(), callctx_exec);
+					for_each( std::execution::par, vct.begin(), vct.end(), callctx_exec);
 
 					for(auto& it : vct)
 						if (!it.exc.is_null())
@@ -466,40 +451,3 @@ namespace rm
 		}
 	};
 }
-
-/*ToDo:	надо переделать на параллельное проецирование
-* 
- #include <iostream>
-#include <vector>
-#include <algorithm>
-....
-std::for_each(std::execution::par, vct.begin(), vct.end(),
-  [](auto &e) { e += 42; });
-....
-
-					struct callctx
-					{
-						vm_ctx	$;
-						string&		key;
-						json&		rel;
-						callctx(vm_ctx& c, string& k, json& r) : $(c), key(k), rel(r) {}
-					};
-
-					vector<callctx>	vec;
-					for (auto& it : rel.items())
-					{
-						string&	key = it.key();
-						try { vec.push_back(callctx(vm_ctx(val_or_ref_to($, key), $.obj, $.sub, $.ent, $.ctx), key, val_or_ref_to($, it.value()))); }
-						catch (string& error) { throw("\n view "s + key + " : "s + error); }
-						catch (json::exception& e) { throw("\n view "s + key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-						catch (std::exception& e) { throw("\n view "s + key + " : "s + "std::exception: "s + e.what()); }
-						catch (...) { throw("\n view "s + key + " : "s + "unknown exception"s); }
-					}
-
-					parallel_for_each(begin(vec), end(vec), [](callctx& it) {
-						try { exec_ent(it.$, it.rel); }
-						catch (string& error) { throw("\n view "s + it.key + " : "s + error); }
-						catch (json::exception& e) { throw("\n view "s + it.key + " : "s + "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-						catch (std::exception& e) { throw("\n view "s + it.key + " : "s + "std::exception: "s + e.what()); }
-						catch (...) { throw("\n view "s + it.key + " : "s + "unknown exception"s); }
-					});*/
