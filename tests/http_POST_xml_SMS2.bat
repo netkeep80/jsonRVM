@@ -1,1 +1,1 @@
-..\build\modules\console\Release\rmvm.exe http_POST_xml_SMS
+..\build\modules\console\Release\rmvm.exe http_POST_xml_SMS2  2>err.json
