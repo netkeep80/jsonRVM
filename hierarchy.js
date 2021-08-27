@@ -6,6 +6,7 @@ var hierarchy =
       [ "rm::vm::database_api_add_entity", "structrm_1_1vm_1_1database__api__add__entity.html", null ],
       [ "rm::vm::rmvm_version", "structrm_1_1vm_1_1rmvm__version.html", null ]
     ] ],
+    [ "rm::callctx", "structrm_1_1callctx.html", null ],
     [ "rm::DLL", "structrm_1_1_d_l_l.html", null ],
     [ "rm::interface_t< implementation_t >", "classrm_1_1interface__t.html", null ],
     [ "rm::interface_t< database_api >", "classrm_1_1interface__t.html", [
@@ -29,7 +30,5 @@ var hierarchy =
     [ "rm::type_pair_list< key_t, pairs_t >", "structrm_1_1type__pair__list.html", null ],
     [ "rm::type_pair_list< key_t, first, tail... >", "structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html", null ],
     [ "rm::type_pair_null", "structrm_1_1type__pair__null.html", null ],
-    [ "rm::vm_ctx", "structrm_1_1vm__ctx.html", [
-      [ "rm::callctx", "structrm_1_1callctx.html", null ]
-    ] ]
+    [ "rm::vm_ctx", "structrm_1_1vm__ctx.html", null ]
 ];
