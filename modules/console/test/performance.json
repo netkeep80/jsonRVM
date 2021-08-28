@@ -1,8 +1,8 @@
 [
    {
-      "$obj" : "#/MeasProcessed",
+      "$obj" : {"$ref":"#/MeasProcessed"},
       "$rel" : "size",
-      "$sub" : "$rel/result/meas_count"
+      "$sub" : {"$ref":"$rel/result/meas_count"}
    },
    {
       "$rel/start_time" : "steady_clock/microseconds"
@@ -20,23 +20,23 @@
       "$rel/end_time" : "steady_clock/microseconds"
    },
    {
-      "$obj" : "$rel",
+      "$obj" : {"$ref":"$rel"},
       "$rel" : {
          "$rel/result/test_duration" : {
-            "$obj" : "$obj/start_time",
+            "$obj" : {"$ref":"$obj/start_time"},
             "$rel" : "-",
-            "$sub" : "$obj/end_time"
+            "$sub" : {"$ref":"$obj/end_time"}
          }
       }
    },
    {
-      "$obj" : "$rel/tmp/Report",
+      "$obj" : {"$ref":"$rel/tmp/Report"},
       "$rel" : "=",
-      "$sub" : "$rel/result/report"
+      "$sub" : {"$ref":"$rel/result/report"}
    },
    {
-      "$obj" : "$rel/result",
+      "$obj" : {"$ref":"$rel/result"},
       "$rel" : "=",
-      "$sub" : "$rel"
+      "$sub" : {"$ref":"$rel"}
    }
 ]

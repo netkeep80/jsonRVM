@@ -2,33 +2,55 @@
    "$rel" : [
       {
          "test" : "get ent1 ",
-         "$obj" : "ent1/id",
+         "$obj" : {
+            "$ref" : "ent1/id"
+         },
          "$rel" : "=",
-         "$sub" : "$rel/ent1/id"
+         "$sub" : {
+            "$ref" : "$rel/ent1/id"
+         }
       },
       {
          "test" : "get ent2",
-         "$obj" : "ent2/id",
+         "$obj" : {
+            "$ref" : "ent2/id"
+         },
          "$rel" : "=",
-         "$sub" : "$rel/ent2/id"
+         "$sub" : {
+            "$ref" : "$rel/ent2/id"
+         }
       },
       {
          "test" : "set ent3",
-         "$obj" : "$ent/ent3",
+         "$obj" : {
+            "$ref" : "$ent/ent3"
+         },
          "$rel" : "add_entity",
-         "$sub" : "$rel/ent3/id"
+         "$sub" : {
+            "$ref" : "$rel/ent3/id"
+         }
       },
       {
-         "$obj" : "$ent/get_ent3_test",
+         "$obj" : {
+            "$ref" : "$ent/get_ent3_test"
+         },
          "$rel" : "=",
-         "$sub" : "$rel/get_ent3_test"
+         "$sub" : {
+            "$ref" : "$rel/get_ent3_test"
+         }
       },
       {
-         "$obj" : "$rel/ent3/id",
+         "$obj" : {
+            "$ref" : "$rel/ent3/id"
+         },
          "$rel" : "=",
-         "$sub" : "$rel/get_ent3_test/$obj"
+         "$sub" : {
+            "$ref" : "$rel/get_ent3_test/$obj/$ref"
+         }
       },
-      "$rel/get_ent3_test"
+      {
+         "$ref" : "$rel/get_ent3_test"
+      }
    ],
    "ent3" : {
       "id" : "ent3",
@@ -37,6 +59,8 @@
    "get_ent3_test" : {
       "test" : "get ent3",
       "$rel" : "=",
-      "$sub" : "$rel/ent3/val"
+      "$sub" : {
+         "$ref" : "$rel/ent3/val"
+      }
    }
 }

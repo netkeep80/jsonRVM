@@ -2,7 +2,7 @@
    "$obj" : [ null, 2, false, "4", {} ],
    "$rel" : "where",
    "$sub" : {
-      "$obj" : "$obj",
+      "$obj" : {"$ref":"$obj"},
       "$rel" : "is_string"
    }
 }

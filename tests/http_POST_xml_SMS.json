@@ -15,23 +15,29 @@
             "URI" : "http://192.168.8.1/api/webserver/token"
          },
          "$rel" : "http/GET/xml",
-         "$sub" : "$rel/Modem/SesTokInfo"
+         "$sub" : {
+            "$ref" : "$rel/Modem/SesTokInfo"
+         }
       },
       {
-         "$obj" : "$rel/Modem/SesTokInfo/status",
+         "$obj" : {
+            "$ref" : "$rel/Modem/SesTokInfo/status"
+         },
          "$rel" : "switch/number",
          "$sub" : {
             "200" : [
                {
                   "$rel/Modem/request/URI" : {
-                     "$obj" : "$ent/Modem/SendSMS/URI",
+                     "$obj" : {
+                        "$ref" : "$ent/Modem/SendSMS/URI"
+                     },
                      "$rel" : "="
                   },
                   "$rel/Modem/request/body" : {
                      "$obj" : [
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Index",
+                              "$obj" : -1,
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -43,7 +49,9 @@
                            "$obj" : [
                               {
                                  "$obj" : {
-                                    "$obj" : "$ent/Phone",
+                                    "$obj" : {
+                                       "$ref" : "$ent/Phone"
+                                    },
                                     "$rel" : "="
                                  },
                                  "$rel" : "tag",
@@ -59,7 +67,7 @@
                         },
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Sca",
+                              "$obj" : "",
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -69,7 +77,9 @@
                         },
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Content",
+                              "$obj" : {
+                                 "$ref" : "$ent/Content"
+                              },
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -79,7 +89,7 @@
                         },
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Length",
+                              "$obj" : 3,
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -89,7 +99,7 @@
                         },
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Reserved",
+                              "$obj" : "1",
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -99,7 +109,9 @@
                         },
                         {
                            "$obj" : {
-                              "$obj" : "$ent/Date",
+                              "$obj" : {
+                                 "$ref" : "$ent/Date"
+                              },
                               "$rel" : "="
                            },
                            "$rel" : "tag",
@@ -115,12 +127,18 @@
                   }
                },
                {
-                  "$obj" : "$rel/Modem/SesTokInfo/body/response/token",
+                  "$obj" : {
+                     "$ref" : "$rel/Modem/SesTokInfo/body/response/token"
+                  },
                   "$rel" : "=",
-                  "$sub" : "$rel/Modem/request/header/__RequestVerificationToken"
+                  "$sub" : {
+                     "$ref" : "$rel/Modem/request/header/__RequestVerificationToken"
+                  }
                },
                {
-                  "$obj" : "$rel/Modem/request",
+                  "$obj" : {
+                     "$ref" : "$rel/Modem/request"
+                  },
                   "$rel" : "http/POST/xml"
                }
             ],
@@ -133,11 +151,7 @@
          "URI" : "http://192.168.8.1/api/sms/send-sms"
       }
    },
-   "Index" : "-1",
    "Phone" : "89875421631",
-   "Sca" : "",
    "Content" : "test message from jsonRVM",
-   "Length" : "3",
-   "Reserved" : "1",
    "Date" : "2017-12-18 15:01:01"
 }

@@ -202,7 +202,6 @@ namespace rm
 
 			size_t	prev = pos + 1;
 			string	it = str.substr(0, pos);
-			//auto	it = string_view(str.c_str(), pos);
 
 			SWITCH(it)
 			{
@@ -260,19 +259,33 @@ namespace rm
 		}
 
 		template<class val_type>
-		json& val_or_ref_to(vm_ctx& $, json& ref)
+		json& val_or_ref_to(vm_ctx& $, json& val)
 		{
-			switch (ref.type())
-			{
-			case json::value_t::string:	//	иерархический путь к json значению
-				return string_ref_to<val_type>($, ref.get_ref<const string&>());
-
-			case json::value_t::null:	//	местоимение проекции контекстной сущности
-				return $.rel;
-
-			default:					//	если это не адрес то возвращаем значение
-				return ref;
+			if (val.is_object()) {
+				//	это ссылка на json значение?
+				if (auto ref = val.find("$ref"); ref != val.end()) {
+					//	иерархический путь к json значению?
+					if (ref->is_string())
+						return string_ref_to<val_type>($, ref->get_ref<const string&>());
+					else
+						throw json({ {"$ref", *ref} });
+				}
 			}
+
+			//	если не ссылка, возвращаем значение
+			return val;
+		}
+
+		static void	callctx_thread(callctx& it)
+		{
+			try {
+				it.rvm.exec_ent(
+					vm_ctx(it.rel, it.$.obj, it.$.sub, it.$.ent, it.$.$),
+					it.rvm.val_or_ref_to<rval>(it.$, it.value)
+				);
+			}
+			catch (json& j) { it.exc = j; }
+			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
 		}
 
 	public:
@@ -314,18 +327,6 @@ namespace rm
 			return rel;
 		}
 
-		static void	callctx_exec(callctx& it)
-		{
-			try {
-				it.rvm.exec_ent(
-					vm_ctx(	it.rel,	it.$.obj, it.$.sub, it.$.ent, it.$.$),
-					it.rvm.val_or_ref_to<rval>(it.$, it.value)
-				);
-			}
-			catch (json& j) { it.exc = j; }
-			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
-		}
-
 		//	Исполнение сущности либо json байткода
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
@@ -361,11 +362,17 @@ namespace rm
 
 			case json::value_t::object:
 			{
-				auto rel = ent.find("$rel");
 				auto end = ent.end();
 
-				if (rel != end) //	это сущность, которую надо исполнить в новом контексте?
-				{
+				if (auto ref = ent.find("$ref"); ref != end) {	//	это ссылка на json значение
+					if (ref->is_string()) {
+						try { exec_ent($, string_ref_to<rval>($, ref->get_ref<string const&>())); }
+						catch (json& j) { throw json({ {ref->get_ref<string const&>(), j} }); }
+					}
+					else
+						throw json({ {"$ref", *ref} });
+				}
+				else if (auto rel = ent.find("$rel"); rel != end) {	//	это сущность, которую надо исполнить в новом контексте?
 					auto obj = ent.find("$obj");
 					auto sub = ent.find("$sub");
 
@@ -382,8 +389,7 @@ namespace rm
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
 				}
-				else //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
-				{
+				else {	//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 					auto it = ent.begin();
 					vector<callctx>	vct;
 					vct.reserve(ent.size());
@@ -396,13 +402,12 @@ namespace rm
 								*this,
 								it.key(),
 								it.value()
-								//val_or_ref_to<rval>($, it.value())
 							);
 						}
 					}
 					catch (json& j) { throw json({ {it.key(), j} }); }
 					
-					for_each( std::execution::par, vct.begin(), vct.end(), callctx_exec);
+					for_each( std::execution::par, vct.begin(), vct.end(), callctx_thread);
 
 					for(auto& it : vct)
 						if (!it.exc.is_null())
