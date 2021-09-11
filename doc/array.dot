@@ -1,0 +1,22 @@
+digraph {
+  #layout=neato
+  splines=curved
+  concentrate=true
+  compound=true;
+
+  e1 [label=","]
+  e2 [label="'a'"]
+  e3 [label="'b'"]
+  e1 -> e2 [label="sub"]
+  e1 -> e3 [label="obj"]
+
+  e4 [label=","]
+  e5 [label="'c'"]
+  e4 -> e1  [label="sub"]
+  e4 -> e5 [label="obj"]
+
+  e6 [label=","]
+  e7 [label="'d'"]
+  e6 -> e4  [label="sub"]
+  e6 -> e7 [label="obj"]
+}

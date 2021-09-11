@@ -1,0 +1,34 @@
+digraph {
+  #layout=neato
+  #splines=curved
+  concentrate=true
+  compound=true;
+
+  ranksep=.75; size = "7.5,7.5";
+  {
+    node [shape=plaintext, fontsize=16];
+    /* the time-line graph */
+    "$$$$" -> "$$$" -> "$$" -> "$" [dir=none];
+  }
+
+  node [shape = record,height=.1]
+  { rank = same; "$$$$"; node0[label = "<$> $|<ent> ent|<obj> obj|<sub> sub|<rel> rel"]; }
+  { rank = same; "$$$"; node1[label = "<$> $|<ent> ent|<obj> obj|<sub> sub|<rel> rel"]; }
+  { rank = same; "$$"; node2[label = "<$> $|<ent> ent|<obj> obj|<sub> sub|<rel> rel"]; }
+  {
+    rank = same; "$";
+    node3[label = "<$> $|<ent> ent|<obj> obj|<sub> sub|<rel> rel"];
+    node4[label = "<$> $|<ent> ent|<obj> obj|<sub> sub|<rel> rel"];
+  }
+
+  "node1":"$" -> "node0" [label="up"]
+  "node2":"$" -> "node1" [label="up"]
+  "node3":"$" -> "node2" [label="up"]
+  "node4":"$" -> "node2" [label="up"]
+
+
+  "node0" -> "node1" [label="child", style=dotted]
+  "node1" -> "node2" [label="child", style=dotted]
+  "node2" -> "node3" [label="child", style=dotted]
+  "node3" -> "node4" [label="child", style=dotted]
+ }
