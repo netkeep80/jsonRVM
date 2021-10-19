@@ -1,0 +1,1 @@
+..\build\modules\console\Release\rmvm.exe 1+1

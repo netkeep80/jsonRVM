@@ -8,7 +8,7 @@ Entity Oriented Programming
 ## RM / МО
 Relations Model - metaprogremming lanuage
 
-Модель Отношений -язык метапрограммирования
+Модель Отношений - язык метапрограммирования
 
 ## RVM / РВМ
 Relational Virtual Machine - executes Relations Model

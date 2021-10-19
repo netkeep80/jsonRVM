@@ -202,7 +202,18 @@ namespace rm
 	void  jsonView(vm& rmvm, vm_ctx& $)
 	{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 		//	проецируем во внешнем контексте
-		rmvm.exec_ent(vm_ctx($.sub, $.$.obj, $.$.sub, $.$.ent, $.$), $.obj);
+		//	1. Создание дочернего контекста исполнения
+		//	2. Исполнение сущности $.obj
+		rmvm.exec_ent(
+			vm_ctx(
+				$.sub,
+				$.$.obj,
+				$.$.sub,
+				$.$.ent,
+				$.$
+			),
+			$.obj
+		);
 	}
 
 	void  jsonXOR(vm& rmvm, vm_ctx& $)

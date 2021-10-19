@@ -27,8 +27,8 @@ digraph {
   "node4":"$" -> "node2" [label="up"]
 
 
-  "node0" -> "node1" [label="child", style=dotted]
-  "node1" -> "node2" [label="child", style=dotted]
-  "node2" -> "node3" [label="child", style=dotted]
-  "node3" -> "node4" [label="child", style=dotted]
+  "node1" -> "node0" [label="parent", style=dotted]
+  "node2" -> "node1" [label="parent", style=dotted]
+  "node3" -> "node2" [label="parent", style=dotted]
+  "node4" -> "node3" [label="parent", style=dotted]
  }
