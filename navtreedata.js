@@ -95,7 +95,8 @@ var NAVTREE =
         [ "Модель Отношений - это язык метапрограммирования.", "md_doc__introduction.html#autotoc_md45", null ],
         [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md65", null ],
         [ "License", "md__r_e_a_d_m_e.html#autotoc_md66", null ],
-        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md67", null ]
+        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md67", null ],
+        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md68", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -132,7 +133,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"namespacerm.html#a14d22264da728bdfcee13e5e72bb82fd"
+"namespacerm.html#a0e9903438fcb955c0fd16b33ad367dcc"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

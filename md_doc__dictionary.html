@@ -29,7 +29,7 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-71-g6016bab</span>
+   &#160;<span id="projectnumber">2.6.0-72-gf620c72</span>
    </div>
    <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 В</h1>
 <h3><a class="anchor" id="outter_ent_struct"></a>
 Внешняя структура сущности</h3>
-<p>Это <a href="#rm"><b>Модель Отношений</b></a> в которых <a href="#ent"><b>сущность</b></a> учавствует в роли <a href="#sub"><b>субъекта</b></a> <a href="#obj"><b>объекта</b></a> или <a href="#rel"><b>отношения</b></a></p>
+<p>Это <a href="#rm"><b>Модель Отношений</b></a> в которой <a href="#ent"><b>сущность</b></a> учавствует в качестве <a href="#ent_sub"><b>сущности субъекта</b></a> <a href="#ent_obj"><b>сущности объекта</b></a> или <a href="#ent_rel"><b>сущности отношения</b></a></p>
 <h3><a class="anchor" id="inner_ent_struct"></a>
 Внутренняя структура сущности</h3>
 <p>По своей структуре сущность есть <a href="#triplet"><b>триплет</b></a>: <a href="#sub"><b>субъект</b></a>, <a href="#rel"><b>отношение</b></a>, <a href="#obj"><b>объект</b></a></p>
@@ -128,9 +128,6 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 Ж</h1>
 <h1><a class="anchor" id="autotoc_md16"></a>
 З</h1>
-<h3><a class="anchor" id="rel_res"></a>
-Результат отношения</h3>
-<p>Результат отношения это значение <a href="#ctx_rel"><b>контекстного отношения</b></a> определяемое в процессе <a href="#exec_ent"><b>исполнения сущности</b></a> <a href="#rel"><b>отношения</b></a> в <a href="#exec_ctx"><b>контексте исполнения</b></a>.</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 И</h1>
 <h3><a class="anchor" id="exec_ent"></a>
@@ -199,10 +196,7 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 О</h1>
 <h3><a class="anchor" id="obj"></a>
 Объект</h3>
-<p>В зависимости от контекста употребления:</p><ol type="1">
-<li>В <a href="#rm"><b>МО</b></a> - <a href="#ent_obj"><b>Сущность объект</b></a></li>
-<li>В РВМ - <a href="#ctx_obj"><b>Контекстный объект</b></a></li>
-</ol>
+<p>Это определенная <a href="#ent_obj"><b>сущностью объекта</b></a> вещь, явление или процесс на которую направлена определённая <a href="#ent_rel"><b>сущностью отношения</b></a> деятельность <a href="#sub"><b>субъекта</b></a>; при этом, в качестве объекта может выступать и сам <a href="#sub"><b>субъект</b></a>.</p>
 <h3><a class="anchor" id="objectification"></a>
 Объективация</h3>
 <p>В зависимости от контекста употребления:</p><ol type="1">
@@ -217,15 +211,14 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <p>Получение <a href="#rel_val"><b>значения отношения</b></a> посредством <a href="#exec_ent"><b>исполнения сущности</b></a> <a href="#rel"><b>отношения</b></a> в <a href="#exec_ctx"><b>контексте исполнения</b></a>.</p>
 <h3><a class="anchor" id="rel"></a>
 Отношение</h3>
-<p>В зависимости от контекста употребления:</p><ol type="1">
-<li>В МО - <a href="#ent_rel"><b>Сущность отношения</b></a></li>
-<li>В РВМ - <a href="#ctx_rel"><b>Контекстное отношение</b></a></li>
-</ol>
+<p>Это определённое <a href="#ent_rel"><b>сущностью отношения</b></a> взаимодействие <a href="#sub"><b>субъекта</b></a> с <a href="#obj"><b>объектом</b></a></p>
 <h1><a class="anchor" id="autotoc_md26"></a>
 П</h1>
+<p>? </p>
 <h3><a class="anchor" id="view"></a>
 Проецирование сущности</h3>
 <p>Создание нового экземпляра <a href="#exec_ctx"><b>контекста исполнения</b></a> для <a href="#exec_ent"><b>исполнения сущности</b></a> и <a href="#calc_rel"><b>определения отношения</b></a>.</p>
+<p>? </p>
 <h3><a class="anchor" id="ent_view"></a>
 Проекция сущности</h3>
 <p><a href="#ent"><b>Сущность</b></a> спроецированная в <a href="#child_ctx"><b>дочерний контекст исполнения</b></a> РВМ По сути тоже самое что и <a href="#exec_ctx"><b>контекст исполнения</b></a></p>
@@ -239,9 +232,15 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 </ol>
 <h1><a class="anchor" id="autotoc_md27"></a>
 Р</h1>
+<p>? </p>
+<h3><a class="anchor" id="rel_res"></a>
+Результат отношения</h3>
+<p>Это результат определённого <a href="#ent_rel"><b>сущностью отношения</b></a> взаимодействия <a href="#sub"><b>субъекта</b></a> с <a href="#obj"><b>объектом</b></a> хранимый в <a href="#ctx_rel"><b>контекстном отношении</b></a></p>
+<p>Результат отношения это значение <a href="#ctx_rel"><b>контекстного отношения</b></a> определяемое в процессе <a href="#exec_ent"><b>исполнения сущности</b></a> <a href="#rel"><b>отношения</b></a> в <a href="#exec_ctx"><b>контексте исполнения</b></a>.</p>
+<p>? </p>
 <h3><a class="anchor" id="parent_ctx"></a>
 Родительский контекст исполнения</h3>
-<p>Это <a href="#exec_ctx"><b>контекст исполнения</b></a> в котором РВМ породила <a href="#ctx"><b>текущий контекст исполнения</b></a> при <a href="#exec_ent"><b>исполнении сущности</b></a>.</p>
+<p>Это <a href="#exec_ctx"><b>контекст исполнения</b></a> в котором РВМ породила <a href="#ctx"><b>текущий контекст исполнения</b></a> при вычислении отношения ? <a href="#exec_ent"><b>исполнении сущности</b></a>.</p>
 <h1><a class="anchor" id="autotoc_md28"></a>
 С</h1>
 <h3><a class="anchor" id="ancestor_link"></a>
@@ -252,35 +251,25 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <p>Это <a href="#rm"><b>Модель Отношений</b></a> сущности.</p>
 <h3><a class="anchor" id="sub"></a>
 Субъект</h3>
-<p>В зависимости от контекста употребления:</p><ol type="1">
-<li>В <a href="#rm"><b>МО</b></a> - <a href="#ent_sub"><b>Сущность субъект</b></a></li>
-<li>В РВМ - <a href="#$sub"><b>Контекстный субъект</b></a></li>
-</ol>
+<p>Это определенный <a href="#ent_sub"><b>сущностью субъекта</b></a> носитель деятельности направленной на <a href="#obj"><b>объект</b></a></p>
 <h3><a class="anchor" id="subjectification"></a>
 Субъективация</h3>
-<p>В зависимости от контекста употребления:</p><ol type="1">
-<li>В <a href="#rm"><b>МО</b></a> - Использование сущности в качестве сущности субъекта</li>
-<li>В РВМ - Создание новой контекста исполнения из сущности</li>
-</ol>
+<p>Это создание нового контекста исполнения из сущности в процессе работы РВМ</p>
 <p>Etymology subjective +‎ -ation; attested since the 19th century.</p>
 <p>Noun subjectivation (countable and uncountable, plural subjectivations)</p>
 <p>The process of turning subjective.</p>
 <h3><a class="anchor" id="ent"></a>
 Сущность</h3>
-<p>В зависимости от контекста использования:</p><ol type="1">
-<li>В <a href="#rm"><b>МО</b></a> - это взаимодействие <a href="#ent_sub"><b>сущности субъекта</b></a> с <a href="#ent_obj"><b>сущностью объекта</b></a> характеризуемое <a href="#ent_rel"><b>сущность отношения</b></a>, описываемое <a href="#triplet"><b>триплетом</b></a> субъект-отношение-объект</li>
-<li>В РВМ - <a href="#$ent"><b>Контекстная сущность</b></a></li>
-</ol>
-<p>Примеры: &lt; sub, rel, obj &gt; &lt; 10, 11, 12 &gt;</p>
+<p>Сущность это определённый <a href="#ent_rel"><b>сущностью отношения</b></a> принцип взаимодействия <a href="#sub"><b>субъекта</b></a> с <a href="#obj"><b>объектом</b></a>, описанный <a href="#triplet"><b>триплетом</b></a>: &lt; <a href="#ent_sub"><b>сущностью субъекта</b></a>, <a href="#ent_rel"><b>сущностью отношения</b></a>, <a href="#ent_obj"><b>сущностью объекта</b></a> &gt; Сущность предмета выражается в его определении.</p>
 <h3><a class="anchor" id="ent_obj"></a>
 Сущность объекта</h3>
-<p>Это <a href="#ent"><b>сущность</b></a> на которую направлена определённая <a href="#ent_rel"><b>сущностью отношения</b></a> деятельность <a href="#ent_sub"><b>сущности субъекта</b></a>; при этом, в качестве сущности объекта может выступать и сама <a href="#ent_sub"><b>сущность субъекта</b></a>.</p>
+<p>Это <a href="#ent"><b>сущность</b></a> определяющая <a href="#obj"><b>объект</b></a></p>
 <h3><a class="anchor" id="autotoc_md29"></a>
 Сущностно ориентированное программирование</h3>
 <p>Парадигма программирования в основе которого постулируется, что всё есть <a href="#ent"><b>сущность</b></a>.</p>
 <h3><a class="anchor" id="ent_rel"></a>
 Сущность отношения</h3>
-<p>Это <a href="#ent"><b>сущность</b></a> определяющая характер деятельности <a href="#ent_sub"><b>сущности субъекта</b></a> по отношению к <a href="#ent_obj"><b>сущности объекта</b></a></p>
+<p>Это <a href="#ent"><b>сущность</b></a> определяющая принцип взаимодействия <a href="#sub"><b>субъекта</b></a> c <a href="#obj"><b>объектом</b></a></p>
 <p>Пример: сущность отношения 1+2 есть +</p>
 <ol type="1">
 <li>Отношение - это ассоциация или "связь" между двумя сущностями.</li>
@@ -296,7 +285,7 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 </ol>
 <h3><a class="anchor" id="ent_sub"></a>
 Сущность субъекта</h3>
-<p>Это <a href="#ent"><b>сущность</b></a> - носитель определённой <a href="#ent_rel"><b>сущностью отношения</b></a> деятельности, направленной на <a href="#obj"><b>сущность объекта</b></a></p>
+<p>Это <a href="#ent"><b>сущность</b></a> определяющая <a href="#sub"><b>субъект</b></a></p>
 <h1><a class="anchor" id="autotoc_md30"></a>
 Т</h1>
 <h3><a class="anchor" id="ctx"></a>
