@@ -15,6 +15,11 @@ Relational Virtual Machine - executes Relations Model
 
 Реляционная Виртуальная Машина - исполняет Модель Отношений
 
+## AVM / АВМ
+Associative Virtual Machine - executes associative projection of Relations Model 
+
+Ассоциативная Виртуальная Машина - исполняет ассоциативную проекцию Модели Отношений
+
 ## AMD / АМД
 Associative Model of Data
 

@@ -61,7 +61,7 @@ namespace rm
 			in >> ent;
 		}
 
-		virtual void	add_entity(const json& ent, string& ent_id)
+		virtual void	add_entity(const json& ent, string& ent_id) override
 		{
 			ent_id = to_string(reinterpret_cast<size_t>(&ent));
 
@@ -74,7 +74,7 @@ namespace rm
 			out << ent;
 		}
 
-		virtual void	query_entity(json& ent, const json& query)
+		virtual void	query_entity(json& ent, const json& query) override
 		{
 			cout << __func__ << endl;
 		}
