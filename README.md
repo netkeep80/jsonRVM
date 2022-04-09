@@ -1,6 +1,7 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/netkeep80/jsonrvm)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish?label=Publish%20Doxygen%20to%20gh-pages)](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml)
-https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish)](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml)
 ![GitHub last commit](https://img.shields.io/github/last-commit/netkeep80/jsonRVM)
 [![GitHub](https://img.shields.io/github/license/netkeep80/jsonRVM)](https://github.com/netkeep80/jsonRVM/blob/master/LICENSE)
 
