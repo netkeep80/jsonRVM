@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Математическая модель</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -29,19 +29,18 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-72-gf620c72</span>
    </div>
-   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.9.1 -->
+<!-- Создано системой Doxygen 1.8.17 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
@@ -90,18 +89,53 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <div class="title">Математическая модель </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Определим RM как мультимножество сущностей ei. Элементы множества RM, находятся в разного вида отношениях друг относительно друга.</p>
-<p>Субъект - сущность находящаяся в определённого вида отношении к объекту. Объект - сущность с которой субъект находится в определённого вида отношении.</p>
-<p>Обозначим через: S - множество субъектов, s ∈ S, S ⊆ RM, ∃ ei = (si, Ri, oi) O - множество объектов, o ∈ O, O ⊆ RM R - множество видов отношений, элементы которого Ri - есть вид отношения Ri ⊆ S x O, R ⊆ RM, Ri ⊆ RM² = RM x RM</p>
-<p>Значение сущности ei есть упорядоченная тройка или тернарный кортеж вида (si, Ri, oi) описывающая экземпляр бинарного отношения вида ri.</p>
-<p>Так как в МО сущность тождественна есть тернарное отношение то определим МО следующим образом: пусть M множество элементами которого являются сущности ei. Отношение R ⊆ M x M x M есть множество кортежей вида &lt; e1, e2, e3 &gt;, где ei ∊ M. </p>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md54"></a>
+МО в теории множеств как множество взаимосвязанных множеств кортежей длины 3</h1>
+<pre class="fragment">RM = {E,R,S,O}, где
+    E - множество триединых сущностей
+    R - множество триединых отношений
+    S - множество триединых субъектов
+    O - множество триединых объектов
+</pre><h1><a class="anchor" id="autotoc_md55"></a>
+Множество кортежей - сущностей Модели Отношений</h1>
+<pre class="fragment">E ⊆ O×S×R = {(o,s,r): o ∈ O, s ∈ S, r ∈ R}
+</pre><p>Кортеж сущность эквивалентен кортежу сущность-отношения: </p><pre class="fragment">e = (o,s,r) &lt;=&gt; ((o,s),r) = (os,r) &lt;=&gt; (e,r) &lt;=&gt; o
+</pre><p>Множество кортежей объект-&gt;субъекта эквивалентно множеству кортежей сущностей: </p><pre class="fragment">OS ⊆ O×S = {(o,s): o ∈ O, s ∈ S}
+OS &lt;=&gt; E &lt;=&gt; ER
+</pre><h1><a class="anchor" id="autotoc_md56"></a>
+Множество кортежей - отношений Модели Отношений</h1>
+<pre class="fragment">R ⊆ S×O×E = {(s,o,e): s ∈ S, o ∈ O, e ∈ E}
+</pre><p>Кортеж отношение эквивалентен кортежу отношение-сущности: </p><pre class="fragment">r = (s,o,e) &lt;=&gt; ((s,o),e) = (so,e) &lt;=&gt; (r,e) &lt;=&gt; s
+</pre><p>Множество кортежей субъект-&gt;объекта эквивалентно множеству кортежей отношений: </p><pre class="fragment">SO ⊆ S×O = {(s,o): s ∈ S, o ∈ O}
+SO &lt;=&gt; R &lt;=&gt; RE
+</pre><h1><a class="anchor" id="autotoc_md57"></a>
+Множество кортежей - субъектов Модели Отношений</h1>
+<pre class="fragment">S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O}
+</pre><p>Кортеж субъект эквивалентен кортежу субъект-объекта: </p><pre class="fragment">s = (r,e,o) &lt;=&gt; ((r,e),o) = (re,o) &lt;=&gt; (s,o) &lt;=&gt; r
+</pre><p>Множество кортежей отношение-&gt;сущности эквивалентно множеству кортежей субъектов: </p><pre class="fragment">RE ⊆ R×E = {(r,e): r ∈ R, e ∈ E}
+RE &lt;=&gt; S &lt;=&gt; SO
+</pre><h1><a class="anchor" id="autotoc_md58"></a>
+Множество кортежей - объектов Модели Отношений</h1>
+<pre class="fragment">O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S}
+</pre><p>Кортеж объект эквивалентен кортежу объект-субъекта: </p><pre class="fragment">o = (e,r,s) &lt;=&gt; ((e,r),s) = (er,s) &lt;=&gt; (o,s) &lt;=&gt; e
+</pre><p>Множество кортежей сущность-&gt;отношения эквивалентно множеству кортежей объектов: </p><pre class="fragment">ER ⊆ E×R = {(e,r): e ∈ E, r ∈ R}
+ER &lt;=&gt; O &lt;=&gt; OS
+</pre><h1><a class="anchor" id="autotoc_md59"></a>
+МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2</h1>
+<p>Множества E, R, S, O могут быть эквивалентно представлены 4 множествами кортежей длины 2: </p><pre class="fragment">E &lt;=&gt; OS - множество сущностей эквивалентно множеству объектов-субъективации,
+R &lt;=&gt; SO - множество отношений эквивалентно множеству субъективаций-объектов,
+S &lt;=&gt; RE - множество субъектов эквивалентно множеству отношений-сущностей,
+O &lt;=&gt; ER - множество объектов  эквивалентно множеству сущностей-отношений,
+</pre><p><img src="set_3_to_2.jpg" alt="" class="inline"/> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
 </div>
 </body>

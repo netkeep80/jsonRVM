@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Исходный файл modules/common/include/string_type.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -29,19 +29,18 @@
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">jsonRVM
-   &#160;<span id="projectnumber">2.6.0-72-gf620c72</span>
    </div>
-   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.9.1 -->
+<!-- Создано системой Doxygen 1.8.17 -->
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
@@ -154,21 +153,23 @@ $(document).ready(function(){initNavTree('string__type_8h_source.html',''); init
 <div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">   62</a></span>&#160;<span class="preprocessor">#define as_type(s) string_type_maker&lt;str_size(s), string_type&lt;&gt;, selch(s,0), selch(s,1), selch(s,2), selch(s,3), selch(s,4), selch(s,5), selch(s,6), selch(s,7), selch(s,8), selch(s,9), selch(s,10), selch(s,11), selch(s,12), selch(s,13), selch(s,14), selch(s,15), selch(s,16), selch(s,17), selch(s,18), selch(s,19), selch(s,20), selch(s,21), selch(s,22), selch(s,23), selch(s,24), selch(s,25), selch(s,26), selch(s,27), selch(s,28), selch(s,29), selch(s,30), selch(s,31), selch(s,32), selch(s,33), selch(s,34), selch(s,35), selch(s,36), selch(s,37), selch(s,38), selch(s,39), selch(s,40), selch(s,41), selch(s,42), selch(s,43), selch(s,44), selch(s,45), selch(s,46), selch(s,47), selch(s,48), selch(s,49), selch(s,50), selch(s,51), selch(s,52), selch(s,53), selch(s,54), selch(s,55), selch(s,56), selch(s,57), selch(s,58), selch(s,59), selch(s,60), selch(s,61), selch(s,62), selch(s,63), selch(s,64)&gt;::make</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff">   63</a></span>&#160;<span class="preprocessor">#define to_sv(s)   as_type(s)::str</span></div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
-<div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:7</a></div></div>
-<div class="ttc" id="anamespacerm_html_a04361b6c2ec93d40270af30bdde86ffc"><div class="ttname"><a href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">rm::selch</a></div><div class="ttdeci">constexpr auto selch(const char(&amp;str)[size], const size_t index)</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00060">string_type.h:60</a></div></div>
-<div class="ttc" id="anamespacerm_html_a22f84d438e39fcc290c63f67580a395e"><div class="ttname"><a href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">rm::str_size</a></div><div class="ttdeci">constexpr auto str_size(const char(&amp;str)[size])</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00057">string_type.h:57</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4_html_ab2a81cad92b26b805ba6172167e59c28"><div class="ttname"><a href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make</a></div><div class="ttdeci">std::conditional_t&lt;(sizeof...(chars)==N), string_type&lt; chars... &gt;, typename string_type_maker&lt; N, string_type&lt; chars..., first &gt;, tail... &gt;::make &gt; make</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00053">string_type.h:53</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type__maker_html"><div class="ttname"><a href="structrm_1_1string__type__maker.html">rm::string_type_maker</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00045">string_type.h:46</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html"><div class="ttname"><a href="structrm_1_1string__type.html">rm::string_type</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00038">string_type.h:39</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html_a2b430850add7355c851bb511900081d1"><div class="ttname"><a href="structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1">rm::string_type::size</a></div><div class="ttdeci">constexpr static size_t size</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00041">string_type.h:41</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html_a3f9f6ac8b8b4b75a7fed79feaff6ba19"><div class="ttname"><a href="structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19">rm::string_type::str</a></div><div class="ttdeci">constexpr static char str[]</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00040">string_type.h:40</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="astructrm_1_1string__type__maker_html"><div class="ttname"><a href="structrm_1_1string__type__maker.html">rm::string_type_maker</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00045">string_type.h:45</a></div></div>
+<div class="ttc" id="anamespacerm_html_a22f84d438e39fcc290c63f67580a395e"><div class="ttname"><a href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">rm::str_size</a></div><div class="ttdeci">constexpr auto str_size(const char(&amp;str)[size])</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00057">string_type.h:57</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html_a3f9f6ac8b8b4b75a7fed79feaff6ba19"><div class="ttname"><a href="structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19">rm::string_type::str</a></div><div class="ttdeci">constexpr static char str[]</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00040">string_type.h:40</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html"><div class="ttname"><a href="structrm_1_1string__type.html">rm::string_type</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00038">string_type.h:38</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4_html_ab2a81cad92b26b805ba6172167e59c28"><div class="ttname"><a href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make</a></div><div class="ttdeci">std::conditional_t&lt;(sizeof...(chars)==N), string_type&lt; chars... &gt;, typename string_type_maker&lt; N, string_type&lt; chars..., first &gt;, tail... &gt;::make &gt; make</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00053">string_type.h:53</a></div></div>
+<div class="ttc" id="anamespacerm_html_a04361b6c2ec93d40270af30bdde86ffc"><div class="ttname"><a href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">rm::selch</a></div><div class="ttdeci">constexpr auto selch(const char(&amp;str)[size], const size_t index)</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00060">string_type.h:60</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html_a2b430850add7355c851bb511900081d1"><div class="ttname"><a href="structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1">rm::string_type::size</a></div><div class="ttdeci">constexpr static size_t size</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00041">string_type.h:41</a></div></div>
+<div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:6</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_9a5e51f49964887903df6eed98080585.html">common</a></li><li class="navelem"><a class="el" href="dir_0c989e04a2cbea17eef1c625c7a83439.html">include</a></li><li class="navelem"><a class="el" href="string__type_8h.html">string_type.h</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Создано системой
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
 </div>
 </body>
