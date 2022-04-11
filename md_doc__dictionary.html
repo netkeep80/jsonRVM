@@ -104,7 +104,16 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <p>Понять это можно следующим образом: каждая ассоциация в ассоциативной модели, ассоциирует одну ассоциацию с другой (либо с самой собой)</p>
 <h1><a class="anchor" id="autotoc_md10"></a>
 Модель Отношений</h1>
-<p>Запишем базовый словарь сущностей, в виде кортежей длины 2 и 3: RE = &lt;Rel, Ent&gt; = Obj - Объект есть существование отношения ER = &lt;Ent, Rel&gt; = Sub - Субъект есть отношение сущности SO = &lt;Obj, Sub&gt; = Rel - Отношение есть субъективация объекта OS = &lt;Sub, Obj&gt; = Ent - Сущность есть объективация субъекта</p>
+<p>Множество взаимосвязанных множеств: </p><pre class="fragment">RM = {E,R,S,O}, где
+    E - множество триединых сущностей
+    R - множество триединых отношений
+    S - множество триединых субъектов
+    O - множество триединых объектов
+</pre><h1><a class="anchor" id="autotoc_md11"></a>
+Базовый словарь сущностей</h1>
+<p>Запишем базовый словарь сущностей, в виде кортежей длины 2 и 3:</p>
+<p>Ent = &lt;Obj, Sub, Rel&gt; = Rel = &lt;Sub, Obj, Ent&gt; = Sub = &lt;Rel, Ent, Obj&gt; = Obj = &lt;Ent, Rel, Sub&gt; =</p>
+<p>Obj = RE = &lt;Rel, Ent&gt; - Объект есть существование отношения Sub = ER = &lt;Ent, Rel&gt; - Субъект есть отношение сущности Rel = SO = &lt;Obj, Sub&gt; - Отношение есть субъективация объекта Ent = OS = &lt;Sub, Obj&gt; - Сущность есть объективация субъекта</p>
 <p>Ent = &lt;Obj, Sub, Rel&gt; = &lt;&lt;Obj, Sub&gt;, Rel&gt; - корневая сущность Rel = &lt;Sub, Obj, Ent&gt; = &lt;Ent, &lt;Obj, Sub&gt;&gt; - корневое отношение ? Sub = &lt;Rel, Ent, Obj&gt; = &lt;Ent, Rel&gt; - субъект Obj = &lt;Ent, Rel, Sub&gt; = &lt;Rel, Ent&gt; - объект</p>
 <p>Ent = &lt;&lt;Sub, Obj&gt;, Rel&gt; = &lt;&lt;Sub, Obj&gt;, &lt;Ent, &lt;Sub, Obj&gt;&gt;&gt; Rel = &lt;Ent, &lt;Sub, Obj&gt;&gt; = &lt;&lt;&lt;Sub, Obj&gt;, Rel&gt;, &lt;Sub, Obj&gt;&gt; Sub = &lt;&lt;Rel, Ent&gt;, Obj&gt; = &lt;&lt;Rel, Ent&gt;, &lt;&lt;Ent, Rel&gt;, Sub&gt;&gt; Obj = &lt;&lt;Ent, Rel&gt;, Sub&gt; = &lt;&lt;Ent, Rel&gt;, &lt;&lt;Rel, Ent&gt;, Obj&gt;&gt;</p>
 <p>SO = &lt;Sub, Obj&gt; - связь RE = &lt;Rel, Ent&gt; - сущность отношения: Ent = &lt;Rel, Ent&gt; = &lt;&lt;Ent, Rel&gt;, Ent&gt; ER = &lt;Ent, Rel&gt; - отношение сущности</p>
@@ -113,14 +122,14 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <p>Ent = &lt;SO, &lt;Ent, SO&gt;&gt; = &lt;SO, &lt;&lt;SO, &lt;Ent, SO&gt;&gt;, SO&gt;&gt; Rel = &lt;&lt;SO, Rel&gt;, SO&gt; = &lt;&lt;SO, &lt;&lt;SO, Rel&gt;, SO&gt;&gt;, SO&gt; Sub = &lt;RE, &lt;ER, Sub&gt;&gt; = &lt;RE, &lt;ER, &lt;RE, &lt;ER, Sub&gt;&gt;&gt;&gt; Obj = &lt;ER, &lt;RE, Obj&gt;&gt; = &lt;ER, &lt;RE, &lt;ER, &lt;RE, Obj&gt;&gt;&gt;&gt;</p>
 <p>Решение системы кортежей базового словаря: SO = &lt;Sub, Obj&gt; =?= Rel RE = &lt;Rel, Ent&gt; =?= Sub ER = &lt;Ent, Rel&gt; =?= Obj</p>
 <p>Ent = &lt;SO, Rel&gt; = &lt;Rel, Rel&gt; Rel = &lt;Ent, SO&gt; = &lt;Ent, Rel&gt; Sub = &lt;RE, Obj&gt; = &lt;Sub, Rel&gt; Obj = &lt;ER, Sub&gt; = &lt;Rel, Sub&gt;</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 А</h1>
 <h1><a class="anchor" id="amd"></a>
 Ассоциативная Модель Данных</h1>
 <p>Модель данных используемая для хранения <a href="#rm"><b>Модели Отношений</b></a> в базе данных. Может быть основана на кортежах длины 2 (связях) и 3 (триплетах).</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
-Б</h1>
 <h1><a class="anchor" id="autotoc_md13"></a>
+Б</h1>
+<h1><a class="anchor" id="autotoc_md14"></a>
 В</h1>
 <h1><a class="anchor" id="outter_rel_struct"></a>
 Внешняя структура отношения</h1>
@@ -132,9 +141,9 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <h1><a class="anchor" id="upper_ctx"></a>
 Вышестоящий контекст исполнения</h1>
 <p>Вышестояший <a href="#mani_ctx"><b>контекст проявления</b></a> находится выше <a href="#ctx"><b>текущего контекста исполнения</b></a> в <a href="#ctx_tree"><b>граф контекстов исполнения</b></a>. Последовательно вышестоящие контексты исполнения обозначается местоимениями $$, $$$, $$$$ и т.д.</p>
-<h1><a class="anchor" id="autotoc_md14"></a>
-Г</h1>
 <h1><a class="anchor" id="autotoc_md15"></a>
+Г</h1>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Д</h1>
 <h1><a class="anchor" id="ctx_tree"></a>
 Мультистек контекстов исполнения</h1>
@@ -143,22 +152,22 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <h1><a class="anchor" id="child_ctx"></a>
 Дочерний контекст исполнения</h1>
 <p>Это <a href="#exec_ctx"><b>контекст исполнения</b></a> порождённый РВМ из <a href="#ctx"><b>текущего контекста исполнения</b></a> при <a href="#exec_ent"><b>исполнении сущности</b></a>.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
-Е</h1>
 <h1><a class="anchor" id="autotoc_md17"></a>
-Ё</h1>
+Е</h1>
 <h1><a class="anchor" id="autotoc_md18"></a>
-Ж</h1>
+Ё</h1>
 <h1><a class="anchor" id="autotoc_md19"></a>
-З</h1>
+Ж</h1>
 <h1><a class="anchor" id="autotoc_md20"></a>
+З</h1>
+<h1><a class="anchor" id="autotoc_md21"></a>
 И</h1>
 <h1><a class="anchor" id="exec_ent"></a>
 Исполнение сущности</h1>
 <p>Процесс проявления <a href="#ent"><b>сущности отношения</b></a> в <a href="#exec_ctx"><b>контексте исполнения</b></a> РВМ.</p>
-<h1><a class="anchor" id="autotoc_md21"></a>
-Й</h1>
 <h1><a class="anchor" id="autotoc_md22"></a>
+Й</h1>
+<h1><a class="anchor" id="autotoc_md23"></a>
 К</h1>
 <h1><a class="anchor" id="exec_ctx"></a>
 Контекст исполнения</h1>
@@ -194,19 +203,19 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <h1><a class="anchor" id="root_ent"></a>
 Корневая сущность модели отношений</h1>
 <p>Сущность - экземпляр отношения, в котором эта же сущность выступает в роли субъекта, отношения и объекта.</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
-Л</h1>
 <h1><a class="anchor" id="autotoc_md24"></a>
+Л</h1>
+<h1><a class="anchor" id="autotoc_md25"></a>
 Лямбда вектор {#}</h1>
 <p>Массив json значений, которое необходимо исполнить RVM в текущем контексте, при этом последовательно используется текущее значение отношение</p>
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md26"></a>
 Лямбда cтруктура {#}</h1>
 <p>Множество пар "имя поля": значение поля, где:</p><ul>
 <li>значение поля - иерархический путь к json значению, которое необходимо исполнить RVM в текущем контексте</li>
 <li>имя поля - иерархический путь к json значению которое необходимо вычислить</li>
 </ul>
 <p>Вычисление проекций множества пар должно происходить параллельно, в многопоточном режиме</p>
-<h1><a class="anchor" id="autotoc_md26"></a>
+<h1><a class="anchor" id="autotoc_md27"></a>
 М</h1>
 <h1><a class="anchor" id="pronoun"></a>
 Местоимение</h1>
@@ -223,9 +232,9 @@ $(document).ready(function(){initNavTree('md_doc__dictionary.html',''); initResi
 <p><a href="#rm"><b>Модель отношений</b></a> исполняется внутри контекста исполнения.</p>
 <p>В Модели Отношений под понятиями субъект, сущность и объект всегда подразумеваются субъект отношения, сущность отношения и объект отношения соответственно.</p>
 <p><img src="rm_view.jpg" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md27"></a>
-Н</h1>
 <h1><a class="anchor" id="autotoc_md28"></a>
+Н</h1>
+<h1><a class="anchor" id="autotoc_md29"></a>
 О</h1>
 <h1><a class="anchor" id="obj"></a>
 Объект</h1>
@@ -258,14 +267,14 @@ Relation clarification / Выяснение отношения</h1>
 <p>По сути отношение есть процесс взаимодействия <a href="#sub"><b>субъекта</b></a> с <a href="#obj"><b>объектом</b></a>, заключенный в отнесении <a href="#rel_ent"><b>сущности</b></a> объекта в субъект.</p>
 <p>Субъективно описывается в МО в виде <a href="#rel_ent"><b>сущности отношения</b></a>.</p>
 <p>Объективно существует в виде текущего <a href="#rel_val"><b>состояния отношения</b></a> в <a href="#exec_ctx"><b>контексте исполнения</b></a>.</p>
-<h1><a class="anchor" id="autotoc_md29"></a>
+<h1><a class="anchor" id="autotoc_md30"></a>
 П</h1>
 <h1><a class="anchor" id="ent_view"></a>
 Субъективация отношения</h1>
 <p>Есть фаза работы РВМ, во время которой из отношения создаётся новой <a href="#exec_ctx"><b>контекст исполнения</b></a> для проявления <a href="#rel_ent"><b>сущности отношения</b></a> и выяснения субъективного <a href="#calc_rel"><b>значения отношения</b></a>.</p>
-<h1><a class="anchor" id="autotoc_md30"></a>
-Р</h1>
 <h1><a class="anchor" id="autotoc_md31"></a>
+Р</h1>
+<h1><a class="anchor" id="autotoc_md32"></a>
 Реляционная Виртуальная Машина</h1>
 <p>Есть субъект проявляющий модель отношений Есть механизм проявляющий сущности отношений в текущем контексте отношения и интегрирующий текущее отношение.</p>
 <h1><a class="anchor" id="rel_res"></a>
@@ -278,7 +287,7 @@ Relation clarification / Выяснение отношения</h1>
 <h1><a class="anchor" id="parent_ctx"></a>
 Родительский контекст отношения</h1>
 <p>Это <a href="#rel_ctx"><b>контекст отношения</b></a> в котором РВМ породила <a href="#ctx"><b>текущий контекст отношения</b></a> при вычислении отношения ? <a href="#exec_ent"><b>исполнении сущности</b></a>.</p>
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 С</h1>
 <h1><a class="anchor" id="link"></a>
 Связь</h1>
@@ -314,18 +323,18 @@ Relation clarification / Выяснение отношения</h1>
 <p>Сущность это определённый <a href="#ent_rel"><b>сущностью отношения</b></a> принцип или способ взаимодействия <a href="#sub"><b>субъекта</b></a> с <a href="#obj"><b>объектом</b></a>,</p>
 <p>Сущность предмета выражается в его определении. Определение предмета выражает его сущность.</p>
 <p>В качестве аналогии можно понимать, что сущность есть производная значения отношения как функции от времени: ent = rel' = d sub / d obj.</p>
-<h1><a class="anchor" id="autotoc_md33"></a>
+<h1><a class="anchor" id="autotoc_md34"></a>
 Сущность объекта</h1>
 <p>Есть сущность отношения выступающего в качестве объекта.</p>
-<h1><a class="anchor" id="autotoc_md34"></a>
+<h1><a class="anchor" id="autotoc_md35"></a>
 Реляционное программирование</h1>
 <p>Парадигма программирования в основе которого лежит постулат, что всё есть <a href="#rel"><b>отношение</b></a>.</p>
-<h1><a class="anchor" id="autotoc_md35"></a>
+<h1><a class="anchor" id="autotoc_md36"></a>
 Т</h1>
 <h1><a class="anchor" id="ctx"></a>
 Текущий контекст исполнения</h1>
 <p>Это <a href="#exec_ctx"><b>контекст исполнения</b></a> который определяет область видимости для исполняемой в данный момент РВМ <a href="#ent"><b>сущности</b></a>. Текущий контекст исполнения обозначается <a href="#pronoun"><b>местоимением</b></a> $</p>
-<h1><a class="anchor" id="autotoc_md36"></a>
+<h1><a class="anchor" id="autotoc_md37"></a>
 Триединство</h1>
 <h1><a class="anchor" id="triplet"></a>
 Триплет</h1>
@@ -333,34 +342,34 @@ Relation clarification / Выяснение отношения</h1>
 <p>Ent = &lt;Sub, Obj, Rel&gt;</p>
 <p><a href="https://studopedia.ru/10_41363_kortezhi-dekartovo-proizvedenie-mnozhestv.html">https://studopedia.ru/10_41363_kortezhi-dekartovo-proizvedenie-mnozhestv.html</a></p>
 <p><a href="https://ru.wikipedia.org/wiki/">https://ru.wikipedia.org/wiki/</a>Кортеж_(информатика)#Определения_в_теории_множеств В рамках теории множеств кортеж длины 3 можно индуктивно поставить в соответствие: &lt;x1,x2,x3&gt; = &lt;&lt;x1,x2&gt;,x3&gt; Другими словами, структурно триединство можно представить в виде двух двуединств.</p>
-<h1><a class="anchor" id="autotoc_md37"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 У</h1>
 <h1><a class="anchor" id="ctx_level"></a>
 Уровень контекста исполнения</h1>
 <p>Уровень <a href="#exec_ctx"><b>контекста исполнения</b></a> определяет вложенность в <a href="#ctx_tree"><b>дереве контекстов исполнения</b></a>. Бывают: <a href="#upper_ctx"><b>вышестоящие контекст исполнения</b></a> и <a href="#ctx"><b>текущий контекст исполнения</b></a> Вышестоящие контексты исполнения обозначается через местоимения $$, $$$, $$$$ и т.д.</p>
-<h1><a class="anchor" id="autotoc_md38"></a>
-Ф</h1>
 <h1><a class="anchor" id="autotoc_md39"></a>
-Х</h1>
+Ф</h1>
 <h1><a class="anchor" id="autotoc_md40"></a>
-Ц</h1>
+Х</h1>
 <h1><a class="anchor" id="autotoc_md41"></a>
-Ч</h1>
+Ц</h1>
 <h1><a class="anchor" id="autotoc_md42"></a>
-Ш</h1>
+Ч</h1>
 <h1><a class="anchor" id="autotoc_md43"></a>
-Щ</h1>
+Ш</h1>
 <h1><a class="anchor" id="autotoc_md44"></a>
-Ъ</h1>
+Щ</h1>
 <h1><a class="anchor" id="autotoc_md45"></a>
-Ы</h1>
+Ъ</h1>
 <h1><a class="anchor" id="autotoc_md46"></a>
-Ь</h1>
+Ы</h1>
 <h1><a class="anchor" id="autotoc_md47"></a>
-Э</h1>
+Ь</h1>
 <h1><a class="anchor" id="autotoc_md48"></a>
-Ю</h1>
+Э</h1>
 <h1><a class="anchor" id="autotoc_md49"></a>
+Ю</h1>
+<h1><a class="anchor" id="autotoc_md50"></a>
 Я</h1>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
