@@ -120,7 +120,7 @@ var NAVTREE =
     [ "LICENSE", "md_doc__l_i_c_e_n_s_e.html", null ],
     [ "Математическая модель", "md_doc__mathematical_definition.html", [
       [ "МО в теории множеств представляется как множество 4х взаимосвязанных множеств кортежей длины 3", "md_doc__mathematical_definition.html#autotoc_md55", null ],
-      [ "Сведение 4х триединств к 4м двуединствам:", "md_doc__mathematical_definition.html#autotoc_md56", null ],
+      [ "Преобразование множеств кортежей длины 3 к множествам кортежей длины 2:", "md_doc__mathematical_definition.html#autotoc_md56", null ],
       [ "Множество кортежей - сущностей Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md57", null ],
       [ "Множество кортежей - объектов Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md58", null ],
       [ "Множество кортежей - отношений Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md59", null ],
