@@ -92,10 +92,31 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <div class="textblock"><h1><a class="anchor" id="autotoc_md55"></a>
 МО в теории множеств представляется как множество 4х взаимосвязанных множеств кортежей длины 3</h1>
 <p>RM = {E, O, R, S}, где</p>
-<p>R ⊆ O×S×E = {(o,s,e): o ∈ S, s ∈ O, e ∈ E} - множество кортежей отношений O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов E ⊆ S×O×R = {(s,o,r): s ∈ O, o ∈ S, r ∈ R} - множество кортежей сущностей</p>
+<p>R ⊆ O×S×E = {(o,s,e): o ∈ S, s ∈ O, e ∈ E} - множество кортежей отношений</p>
+<p>O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов</p>
+<p>S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов</p>
+<p>E ⊆ S×O×R = {(s,o,r): s ∈ O, o ∈ S, r ∈ R} - множество кортежей сущностей</p>
 <h1><a class="anchor" id="autotoc_md56"></a>
 Преобразование множеств кортежей длины 3 к множествам кортежей длины 2:</h1>
-<p>e = (s,o,r) = ((s,o),r) = (so,r) = (so,(os,e)) = (so,(os,e)) o = (e,r,s) = ((e,r),s) = (er,s) = (er,(re,o)) = (er,(re,o)) r = (o,s,e) = ((o,s),e) = (os,e) = (os,(so,r)) = (os,(so,r)) s = (r,e,o) = ((r,e),o) = (re,o) = (re,(er,s)) = (re,(er,s)) =&gt; e × r = (so,(os,e × r)) = (e,r) = er o × s = (er,(re,o × s)) = (o,s) = os r × e = (os,(so,r × e)) = (r,e) = re s × o = (re,(er,s × o)) = (s,o) = so =&gt; (e,r) = (so,(os,er)) =&gt; (e = so, r = (os,er)) (o,s) = (er,(re,os)) =&gt; (o = er, s = (re,os)) (r,e) = (os,(so,re)) =&gt; (r = os, e = (so,re)) (s,o) = (re,(er,so)) =&gt; (s = re, o = (er,so)) =&gt; e = so = (so, re) o = er = (er, so) r = os = (os, er) s = re = (re, os)</p>
+<p>e = (s,o,r) = ((s,o),r) = (so,r) = (so,(os,e)) = (so,(os,e))</p>
+<p>o = (e,r,s) = ((e,r),s) = (er,s) = (er,(re,o)) = (er,(re,o))</p>
+<p>r = (o,s,e) = ((o,s),e) = (os,e) = (os,(so,r)) = (os,(so,r))</p>
+<p>s = (r,e,o) = ((r,e),o) = (re,o) = (re,(er,s)) = (re,(er,s))</p>
+<p>=&gt;</p>
+<p>e × r = (so,(os,e × r)) = (e,r) = er</p>
+<p>o × s = (er,(re,o × s)) = (o,s) = os</p>
+<p>r × e = (os,(so,r × e)) = (r,e) = re</p>
+<p>s × o = (re,(er,s × o)) = (s,o) = so</p>
+<p>=&gt;</p>
+<p>(e,r) = (so,(os,er)) =&gt; (e = so, r = (os,er))</p>
+<p>(o,s) = (er,(re,os)) =&gt; (o = er, s = (re,os))</p>
+<p>(r,e) = (os,(so,re)) =&gt; (r = os, e = (so,re))</p>
+<p>(s,o) = (re,(er,so)) =&gt; (s = re, o = (er,so))</p>
+<p>=&gt;</p>
+<p>e = so = (so, re)</p>
+<p>o = er = (er, so)</p>
+<p>r = os = (os, er)</p>
+<p>s = re = (re, os)</p>
 <p>Так же из этого следует, что множества E, O, R, S эквивалентны. Это ещё раз подтверждает, что в МО сущность можно использовать в качестве субъекта, отношения или объекта.</p>
 <h1><a class="anchor" id="autotoc_md57"></a>
 Множество кортежей - сущностей Модели Отношений</h1>
@@ -123,7 +144,10 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2</h1>
 <p>Множество RM может быть эквивалентно представлено 4мя множествами кортежей длины 2:</p>
 <p>RM = {ER, OS, RE, SO}, где</p>
-<p>ER ⊆ ER×SO = {(er, so): er ∈ ER, so ∈ SO} - множество кортежей сущностей-отношений OS ⊆ OS×ER = {(os, er): os ∈ OS, er ∈ ER} - множество кортежей объектов-субъекта RE ⊆ RE×OS = {(re, os): re ∈ RE, os ∈ OS} - множество кортежей отношений-сущности SO ⊆ SO×RE = {(so, re): so ∈ SO, re ∈ RE} - множество кортежей субъектов-объекта </p>
+<p>ER ⊆ ER×SO = {(er, so): er ∈ ER, so ∈ SO} - множество кортежей сущностей-отношений</p>
+<p>OS ⊆ OS×ER = {(os, er): os ∈ OS, er ∈ ER} - множество кортежей объектов-субъекта</p>
+<p>RE ⊆ RE×OS = {(re, os): re ∈ RE, os ∈ OS} - множество кортежей отношений-сущности</p>
+<p>SO ⊆ SO×RE = {(so, re): so ∈ SO, re ∈ RE} - множество кортежей субъектов-объекта </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
