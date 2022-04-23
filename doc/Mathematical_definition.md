@@ -52,13 +52,13 @@ S × O ⊆ (RE × (ER×SO)) => S ⊆ RE, O ⊆ ER × SO
 
 =>
 
-E ⊆ SO ⊆ SO × RE
+E ⊆ SO ⊆ SO × RE ⊆ SO × RE × OS × ER × SO
 
-O ⊆ ER ⊆ ER × SO
+O ⊆ ER ⊆ ER × SO ⊆ ER × SO × RE × OS × ER
 
-R ⊆ OS ⊆ OS × ER
+R ⊆ OS ⊆ OS × ER ⊆ OS × ER × SO × RE × OS
 
-S ⊆ RE ⊆ RE × OS
+S ⊆ RE ⊆ RE × OS ⊆ RE × OS × ER × SO × RE
 
 <img src="EORS.jpg">
 
