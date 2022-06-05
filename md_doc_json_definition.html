@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>jsonRVM: Описания</title>
+<title>jsonRVM: Ассоциативаня Модель Отношений формата json</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,7 +66,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('md_doc_json_definition.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -84,28 +84,43 @@ $(document).ready(function(){initNavTree('pages.html',''); initResizable(); });
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Описания</div>  </div>
+<div class="title">Ассоциативаня Модель Отношений формата json </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Полный список дополнительных описаний.</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__abbreviations.html" target="_self">Сокращения принятые в руководстве</a></td><td class="desc"></td></tr>
-<tr id="row_1_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__dictionary.html" target="_self">Понятийный словарь</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__introduction.html" target="_self">Введение</a></td><td class="desc"></td></tr>
-<tr id="row_3_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc_json_definition.html" target="_self">Ассоциативаня Модель Отношений формата json</a></td><td class="desc"></td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__l_i_c_e_n_s_e.html" target="_self">LICENSE</a></td><td class="desc"></td></tr>
-<tr id="row_5_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__mathematical_definition.html" target="_self">Математическая модель</a></td><td class="desc"></td></tr>
-<tr id="row_6_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__r_m.html" target="_self">Модель Отношений</a></td><td class="desc"></td></tr>
-<tr id="row_7_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc_rmodel.html" target="_self">Модель Отношений (старый текст)</a></td><td class="desc"></td></tr>
-<tr id="row_8_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__r_v_m.html" target="_self">Реляционная виртуальная машина</a></td><td class="desc"></td></tr>
-<tr id="row_9_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc_wiki_concepts.html" target="_self">Словарь общепринятых терминов</a></td><td class="desc"></td></tr>
-<tr id="row_10_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html" target="_self">План развития МО</a></td><td class="desc"></td></tr>
-<tr id="row_11_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md__r_e_a_d_m_e.html" target="_self">README</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="autotoc_md56"></a>
+rel - ассоциация типа отношения</h1>
+<p>Это ассоциация между ассоциацией типа объект и ассоциацией типа субъект</p>
+<p>В json в явном виде ассоциация отношения как отдельный тип не существует, явно проявляется только в виде:</p><ol type="1">
+<li>знака : между ключем и значением в object.</li>
+<li>знака , между значениями в array.</li>
+<li>пространством между символами в string.</li>
+<li>пространством между значениями bool в number.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md57"></a>
+null node</h1>
+<p>null = void = ent - пустота т.е. существование - наличие пространства</p>
+<h1><a class="anchor" id="autotoc_md58"></a>
+bool node</h1>
+<p>true = 1 = obj - правда т.е. объективно false = 0 = sub - ложь т.е. субъективно</p>
+<h1><a class="anchor" id="autotoc_md59"></a>
+number node</h1>
+<p>цепочка ассоциаций между bool</p>
+<h1><a class="anchor" id="autotoc_md60"></a>
+string node</h1>
+<p>цепочка ассоциаций между number</p>
+<h1><a class="anchor" id="autotoc_md61"></a>
+array node</h1>
+<p>цепочка ассоциаций между json node</p>
+<h1><a class="anchor" id="autotoc_md62"></a>
+object node</h1>
+<p>множество ассоциаций между string и json node</p>
+<h1><a class="anchor" id="autotoc_md63"></a>
+идеи по переходу от старой проекции МО в json к ассоциативной проекции в json</h1>
+<p>{ $obj : сущность по значению, либо строковая ссылка, либо сложная модель $rel : сущность по значению, либо строковая ссылка, либо сложная модель $sub : сущность по значению, либо строковая ссылка, либо сложная модель } </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

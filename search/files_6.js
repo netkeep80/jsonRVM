@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['main_2ecpp_206',['main.cpp',['../main_8cpp.html',1,'']]],
-  ['mathematical_5fdefinition_2emd_207',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]]
+  ['license_2emd_208',['LICENSE.md',['../_l_i_c_e_n_s_e_8md.html',1,'']]]
 ];

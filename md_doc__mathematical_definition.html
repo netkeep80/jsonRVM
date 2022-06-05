@@ -89,65 +89,183 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <div class="title">Математическая модель </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="autotoc_md55"></a>
-МО в теории множеств представляется как множество 4х взаимосвязанных множеств кортежей длины 3</h1>
+<div class="textblock"><h1><a class="anchor" id="autotoc_md65"></a>
+МО в теории множеств</h1>
+<p>МО в теории множеств представляется как множество 4х взаимосвязанных множеств ссылок на кортежи длины 3, компонентами кортежей являются ссылки на кортежи. В качестве ссылок используются индексы кортежей.</p>
 <p>RM = {E, O, R, S}, где</p>
 <p>R ⊆ O×S×E = {(o,s,e): o ∈ S, s ∈ O, e ∈ E} - множество кортежей отношений</p>
 <p>O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов</p>
 <p>S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов</p>
 <p>E ⊆ S×O×R = {(s,o,r): s ∈ O, o ∈ S, r ∈ R} - множество кортежей сущностей</p>
-<h1><a class="anchor" id="autotoc_md56"></a>
-Преобразование множеств кортежей длины 3 к множествам кортежей длины 2:</h1>
-<p>E ⊆ (S×O×R) = ((S×O)×R) = (SO×R) = (SO×(OS×E)) = (SO×(OS×E))</p>
-<p>SO = S×O = {(s,o): s ∈ S, o ∈ O}</p>
-<p>O ⊆ (E×R×S) = ((E×R)×S) = (ER×S) = (ER×(RE×O)) = (ER×(RE×O))</p>
-<p>ER = E×R = {(e,r): e ∈ E, r ∈ R}</p>
-<p>R ⊆ (O×S×E) = ((O×S)×E) = (OS×E) = (OS×(SO×R)) = (OS×(SO×R))</p>
-<p>OS = O×S = {(o,s): o ∈ O, s ∈ S}</p>
-<p>S ⊆ (R×E×O) = ((R×E)×O) = (RE×O) = (RE×(ER×S)) = (RE×(ER×S))</p>
-<p>RE = R×E = {(r,e): r ∈ R, e ∈ E}</p>
-<p>=&gt;</p>
-<p>E × R = ER ⊆ (SO×(OS×(E × R)))</p>
-<p>O × S = OS ⊆ (ER×(RE×(O × S)))</p>
-<p>R × E = RE ⊆ (OS×(SO×(R × E)))</p>
-<p>S × O = SO ⊆ (RE×(ER×(S × O)))</p>
-<p>=&gt;</p>
-<p>E × R ⊆ (SO × (OS×ER)) =&gt; E ⊆ SO, R ⊆ OS × ER</p>
-<p>O × S ⊆ (ER × (RE×OS)) =&gt; O ⊆ ER, S ⊆ RE × OS</p>
-<p>R × E ⊆ (OS × (SO×RE)) =&gt; R ⊆ OS, E ⊆ SO × RE</p>
-<p>S × O ⊆ (RE × (ER×SO)) =&gt; S ⊆ RE, O ⊆ ER × SO</p>
-<p>=&gt;</p>
-<p>E ⊆ SO ⊆ (SO × RE) ⊆ (SO × RE × OS × ER × (SO))</p>
-<p>O ⊆ ER ⊆ (ER × SO) ⊆ (ER × SO × RE × OS × (ER))</p>
-<p>R ⊆ OS ⊆ (OS × ER) ⊆ (OS × ER × SO × RE × (OS))</p>
-<p>S ⊆ RE ⊆ (RE × OS) ⊆ (RE × OS × ER × SO × (RE))</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    O* o;</div>
+<div class="line">    S* s;</div>
+<div class="line">    E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    E* e;</div>
+<div class="line">    R* r;</div>
+<div class="line">    S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    R* r;</div>
+<div class="line">    E* e;</div>
+<div class="line">    O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    S* s;</div>
+<div class="line">    O* o;</div>
+<div class="line">    R* r;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md66"></a>
+Преобразование 4х множеств кортежей длины 3 к 4м множествам кортежей длины 2:</h1>
+<ol type="1">
+<li>группировка компонент триплетов в связи</li>
+</ol>
+<p>R -&gt; OS×E = OS×(SO×R) = OS×(SO×(OS×E))</p>
+<p>O -&gt; ER×S = ER×(RE×O) = ER×(REx(ER×S))</p>
+<p>S -&gt; RE×O = RE×(ER×S) = RE×(ER×(RE×O))</p>
+<p>E -&gt; SO×R = SO×(OS×E) = SO×(OS×(SO×R))</p>
+<ol type="1">
+<li>Докажем что типы связей представляющие триплеты R,O,S,E эквивалентны типам связей OS, ER, RE, SO соответственно, т.е.:</li>
+</ol>
+<p>R x E -&gt; Rx(SO×R)</p>
+<p>O x S -&gt; Ox(RE×O)</p>
+<p>S x O -&gt; Sx(ER×S)</p>
+<p>E x R -&gt; Ex(OS×E)</p>
+<hr  />
+<ol type="1">
+<li>Справедливо следующее:</li>
+</ol>
+<p>R -&gt; OS×E = OS×(SO×R) = OS×(SO×(OS×E)) = OS×(SO×...) = OSx...</p>
+<p>O -&gt; ER×S = ER×(RE×O) = ER×(REx(ER×S)) = ER×(RE×...) = ERx...</p>
+<p>S -&gt; RE×O = RE×(ER×S) = RE×(ER×(RE×O)) = RE×(ER×...) = REx...</p>
+<p>E -&gt; SO×R = SO×(OS×E) = SO×(OS×(SO×R)) = SO×(OS×...) = SOx...</p>
+<ol type="1">
+<li>Но если связать 2 с триплетами 1:</li>
+</ol>
+<p>R x E -&gt; (OS×...) x (SOx...) = (((ER×...) x (REx...))×...) x (SOx...)</p>
+<p>O x S -&gt; (ER×...) x (REx...) = (((SO×...) x (SOx...))×...) x (REx...)</p>
+<p>S x O -&gt; (RE×...) x (ERx...) = (((OS×...) x (SOx...))×...) x (ERx...)</p>
+<p>E x R -&gt; (SO×...) x (OSx...) = (((RE×...) x (ERx...))×...) x (SOx...)</p>
+<ol type="1">
+<li>Подставляем результаты 2 и 3 в 1:</li>
+</ol>
+<p>R -&gt; OS×E = ((ERx...) x (REx...)) x (SO×...)</p>
+<p>O -&gt; ER×S = ((SOx...) x (SOx...)) x (RE×...)</p>
+<p>S -&gt; RE×O = ((OSx...) x (SOx...)) x (ER×...)</p>
+<p>E -&gt; SO×R = ((REx...) x (ERx...)) x (OS×...)</p>
+<ol type="1">
+<li>Но если сравнить 2 и 4 то получим следующее:</li>
+</ol>
+<p>R -&gt; OS×E = OS×(SO...) = OS × ((RE... x ER...) x (SO...))</p>
+<p>O -&gt; ER×S = ER×(RE...) = ER × ((OS... x SO...) x (ER...))</p>
+<p>S -&gt; RE×O = RE×(ER...) = RE × ((SO... x SO...) x (RE...))</p>
+<p>E -&gt; SO×R = SO×(OS...) = SO × ((ER... x RE...) x (SO...))</p>
+<p>Получаем всего 8 типов связей: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>OS {</div>
+<div class="line">    O* o;   S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>ER {</div>
+<div class="line">    E* e;   R* r;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>RE {</div>
+<div class="line">    R* r;    E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>SO {</div>
+<div class="line">    S* s;    O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    OS* os;  E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    ER* er;  S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    RE* re;  O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    SO* so;  R* r;</div>
+<div class="line">};</div>
+</div><!-- fragment --><ol type="1">
+<li>Сокращение 8 типов связей до 4х</li>
+</ol>
+<p>Докажем правомочность сокращения 8 типов связей до 4, через подмену типов: R -&gt; OS - удаление типа связи R, и использование вместо него типа связи OS O -&gt; ER - удаление типа связи O, и использование вместо него типа связи ER S -&gt; RE - удаление типа связи S, и использование вместо него типа связи RE E -&gt; SO - удаление типа связи E, и использование вместо него типа связи SO</p>
+<p>Для этого во первых надо доказать, что в связях вместо типов триплетов R, O, S, E можно использовать типы связей RE, OS, SO, ER cоответственно.</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>OS {</div>
+<div class="line">    O* o;   S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>ER {</div>
+<div class="line">    E* e;   R* r;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>RE {</div>
+<div class="line">    R* r;   E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>SO {</div>
+<div class="line">    S* s;   O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    OS* os; E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    ER* er; S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    RE* re; O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    SO* so; R* r;</div>
+<div class="line">};</div>
+</div><!-- fragment --><p>Во вторых доказать что</p>
+<p>R -&gt; ((O×S)×E) = (OS×E) = (RxE) O -&gt; ((E×R)×S) = (ER×S) = (O×S) S -&gt; ((R×E)×O) = (RE×O) = (SxO) E -&gt; ((S×O)×R) = (SO×R) = (E×R)</p>
+<p>OS ⊆ O×S = {(o,s): o ∈ O, s ∈ S} SO ⊆ S×O = {(s,o): s ∈ S, o ∈ O} RE ⊆ R×E = {(r,e): r ∈ R, e ∈ E} ER ⊆ E×R = {(e,r): e ∈ E, r ∈ R}</p>
+<p>E = SO ⊆ (SO×OS) O = ER ⊆ (ER×RE) R = OS ⊆ (OS×SO) S = RE ⊆ (RE×ER)</p>
 <p><img src="EORS.jpg" alt="" class="inline"/></p>
 <p>Cтрелка A -&gt; B, может быть прочитана как "A сопряженный с B"</p>
 <p>Так же из этого следует, что множества E, O, R, S эквивалентны. Это ещё раз подтверждает, что в МО сущность можно использовать в качестве субъекта, отношения или объекта.</p>
-<h1><a class="anchor" id="autotoc_md57"></a>
+<h1><a class="anchor" id="autotoc_md68"></a>
 Множество кортежей - сущностей Модели Отношений</h1>
 <p>Кортеж сущность эквивалентен кортежу субъект-объекта:</p>
 <p>e = (s,o,r) = ((s,o),r) = (so,r) = so = (so, re)</p>
-<h1><a class="anchor" id="autotoc_md58"></a>
+<h1><a class="anchor" id="autotoc_md69"></a>
 Множество кортежей - объектов Модели Отношений</h1>
 <p>Кортеж объект эквивалентен кортежу сущность-отношения:</p>
 <p>o = (e,r,s) = ((e,r),s) = (er,s) = er = (er, so)</p>
-<h1><a class="anchor" id="autotoc_md59"></a>
+<h1><a class="anchor" id="autotoc_md70"></a>
 Множество кортежей - отношений Модели Отношений</h1>
 <p>Кортеж отношение эквивалентен кортежу объект-субъекта:</p>
 <p>r = (o,s,e) = ((o,s),e) = (os,e) = os = (os, er)</p>
-<h1><a class="anchor" id="autotoc_md60"></a>
+<h1><a class="anchor" id="autotoc_md71"></a>
 Множество кортежей - субъектов Модели Отношений</h1>
 <p>Кортеж субъект эквивалентен кортежу отношение-сущности:</p>
 <p>s = (r,e,o) = ((r,e),o) = (re,o) = re = (re, os)</p>
-<h1><a class="anchor" id="autotoc_md61"></a>
+<h1><a class="anchor" id="autotoc_md72"></a>
 МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2</h1>
 <p>Множество RM может быть эквивалентно представлено 4мя множествами кортежей длины 2:</p>
 <p>RM = {ER, OS, RE, SO}, где</p>
-<p>ER ⊆ ER×SO = {(er, so): er ∈ ER, so ∈ SO} - множество кортежей сущностей-отношения</p>
-<p>OS ⊆ OS×ER = {(os, er): os ∈ OS, er ∈ ER} - множество кортежей объектов-субъекта</p>
-<p>RE ⊆ RE×OS = {(re, os): re ∈ RE, os ∈ OS} - множество кортежей отношений-сущности</p>
-<p>SO ⊆ SO×RE = {(so, re): so ∈ SO, re ∈ RE} - множество кортежей субъектов-объекта </p>
+<p>E = SO ⊆ SO×OS = {(so, os): so ∈ SO, os ∈ OS} - множество кортежей субъект-объект</p>
+<p>O = ER ⊆ ER×RE = {(er, re): er ∈ ER, re ∈ RE} - множество кортежей сущность-отношение</p>
+<p>R = OS ⊆ OS×SO = {(os, so): os ∈ OS, so ∈ SO} - множество кортежей объект-субъект</p>
+<p>S = RE ⊆ RE×ER = {(re, er): re ∈ RE, er ∈ ER} - множество кортежей отношение-сущность</p>
+<p>Свойство сохранения относительного типа ассоциации. Что это за свойства сохранения относительного типа ассоциации?</p>
+<p>Занимательная аналогия с молекулярной биологией:</p>
+<p>аденин (A) соединяется только с тимином (T) - двойная связь гуанин (G) — только с цитозином (C) - тройная связь </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

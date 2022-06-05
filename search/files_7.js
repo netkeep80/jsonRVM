@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['readme_2emd_208',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
-  ['rm_2emd_209',['RM.md',['../_r_m_8md.html',1,'']]],
-  ['rmodel_2emd_210',['rmodel.md',['../rmodel_8md.html',1,'']]],
-  ['rvm_2emd_211',['RVM.md',['../_r_v_m_8md.html',1,'']]]
+  ['main_2ecpp_209',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['mathematical_5fdefinition_2emd_210',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]]
 ];
