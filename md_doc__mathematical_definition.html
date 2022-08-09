@@ -93,46 +93,26 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 МО в теории множеств</h1>
 <p>МО в теории множеств представляется как множество 4х взаимосвязанных множеств ссылок на кортежи длины 3, компонентами кортежей являются ссылки на кортежи. В качестве ссылок используются индексы кортежей.</p>
 <p>RM = {E, O, R, S}, где</p>
-<p>R ⊆ O×S×E = {(o,s,e): o ∈ S, s ∈ O, e ∈ E} - множество кортежей отношений</p>
-<p>O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов</p>
-<p>S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов</p>
-<p>E ⊆ S×O×R = {(s,o,r): s ∈ O, o ∈ S, r ∈ R} - множество кортежей сущностей</p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span>R {</div>
-<div class="line">    O* o;</div>
-<div class="line">    S* s;</div>
-<div class="line">    E* e;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>O {</div>
-<div class="line">    E* e;</div>
-<div class="line">    R* r;</div>
-<div class="line">    S* s;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>S {</div>
-<div class="line">    R* r;</div>
-<div class="line">    E* e;</div>
-<div class="line">    O* o;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>E {</div>
-<div class="line">    S* s;</div>
-<div class="line">    O* o;</div>
-<div class="line">    R* r;</div>
-<div class="line">};</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md66"></a>
+<p>R -&gt; (S×O)×E = {(s,o,e): s ∈ S, o ∈ O, e ∈ E} - множество кортежей отношений</p>
+<p>S -&gt; (R×E)×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов</p>
+<p>O -&gt; (E×R)×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов</p>
+<p>E -&gt; (O×S)×R = {(o,s,r): o ∈ O, s ∈ S, r ∈ R} - множество кортежей сущностей</p>
+<p>Внешний аспект (использование) в качестве источкика: R -&gt; RE E -&gt; ER O -&gt; OS S -&gt; SO</p>
+<p>Внешний аспект (использование) в качестве назначения: R -&gt; ER E -&gt; RE O -&gt; SO S -&gt; OS</p>
+<p>Внутренний аспект (структура) связи: E = OS R = SO O = ER S = RE</p>
+<h1><a class="anchor" id="autotoc_md66"></a>
 Преобразование 4х множеств кортежей длины 3 к 4м множествам кортежей длины 2:</h1>
 <ol type="1">
 <li>группировка компонент триплетов в связи</li>
 </ol>
-<p>R -&gt; OS×E = OS×(SO×R) = OS×(SO×(OS×E))</p>
+<p>R -&gt; SO×E = SO×(OS×R) = SO×(OS×(SO×E))</p>
 <p>O -&gt; ER×S = ER×(RE×O) = ER×(REx(ER×S))</p>
 <p>S -&gt; RE×O = RE×(ER×S) = RE×(ER×(RE×O))</p>
-<p>E -&gt; SO×R = SO×(OS×E) = SO×(OS×(SO×R))</p>
+<p>E -&gt; OS×R = OS×(SO×E) = OS×(SO×(OS×R))</p>
 <ol type="1">
 <li>Докажем что типы связей представляющие триплеты R,O,S,E эквивалентны типам связей OS, ER, RE, SO соответственно, т.е.:</li>
 </ol>
-<p>R x E -&gt; Rx(SO×R)</p>
+<p>R x E -&gt; OS×(SO×R)xE</p>
 <p>O x S -&gt; Ox(RE×O)</p>
 <p>S x O -&gt; Sx(ER×S)</p>
 <p>E x R -&gt; Ex(OS×E)</p>
@@ -147,10 +127,10 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <ol type="1">
 <li>Но если связать 2 с триплетами 1:</li>
 </ol>
-<p>R x E -&gt; (OS×...) x (SOx...) = (((ER×...) x (REx...))×...) x (SOx...)</p>
-<p>O x S -&gt; (ER×...) x (REx...) = (((SO×...) x (SOx...))×...) x (REx...)</p>
-<p>S x O -&gt; (RE×...) x (ERx...) = (((OS×...) x (SOx...))×...) x (ERx...)</p>
-<p>E x R -&gt; (SO×...) x (OSx...) = (((RE×...) x (ERx...))×...) x (SOx...)</p>
+<p>R -&gt; OS×E = ((SO×R)xO)x(RE×O)</p>
+<p>O -&gt; ER×S =</p>
+<p>S -&gt; RE×O =</p>
+<p>E -&gt; SO×R =</p>
 <ol type="1">
 <li>Подставляем результаты 2 и 3 в 1:</li>
 </ol>
@@ -165,74 +145,13 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <p>O -&gt; ER×S = ER×(RE...) = ER × ((OS... x SO...) x (ER...))</p>
 <p>S -&gt; RE×O = RE×(ER...) = RE × ((SO... x SO...) x (RE...))</p>
 <p>E -&gt; SO×R = SO×(OS...) = SO × ((ER... x RE...) x (SO...))</p>
-<p>Получаем всего 8 типов связей: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>OS {</div>
-<div class="line">    O* o;   S* s;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>ER {</div>
-<div class="line">    E* e;   R* r;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>RE {</div>
-<div class="line">    R* r;    E* e;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>SO {</div>
-<div class="line">    S* s;    O* o;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>R {</div>
-<div class="line">    OS* os;  E* e;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>O {</div>
-<div class="line">    ER* er;  S* s;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>S {</div>
-<div class="line">    RE* re;  O* o;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>E {</div>
-<div class="line">    SO* so;  R* r;</div>
-<div class="line">};</div>
-</div><!-- fragment --><ol type="1">
+<p>Получаем всего 8 типов связей:</p>
+<ol type="1">
 <li>Сокращение 8 типов связей до 4х</li>
 </ol>
 <p>Докажем правомочность сокращения 8 типов связей до 4, через подмену типов: R -&gt; OS - удаление типа связи R, и использование вместо него типа связи OS O -&gt; ER - удаление типа связи O, и использование вместо него типа связи ER S -&gt; RE - удаление типа связи S, и использование вместо него типа связи RE E -&gt; SO - удаление типа связи E, и использование вместо него типа связи SO</p>
 <p>Для этого во первых надо доказать, что в связях вместо типов триплетов R, O, S, E можно использовать типы связей RE, OS, SO, ER cоответственно.</p>
-<div class="fragment"><div class="line"><span class="keyword">struct </span>OS {</div>
-<div class="line">    O* o;   S* s;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>ER {</div>
-<div class="line">    E* e;   R* r;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>RE {</div>
-<div class="line">    R* r;   E* e;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>SO {</div>
-<div class="line">    S* s;   O* o;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>R {</div>
-<div class="line">    OS* os; E* e;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>O {</div>
-<div class="line">    ER* er; S* s;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>S {</div>
-<div class="line">    RE* re; O* o;</div>
-<div class="line">};</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">struct </span>E {</div>
-<div class="line">    SO* so; R* r;</div>
-<div class="line">};</div>
-</div><!-- fragment --><p>Во вторых доказать что</p>
+<p>Во вторых доказать что</p>
 <p>R -&gt; ((O×S)×E) = (OS×E) = (RxE) O -&gt; ((E×R)×S) = (ER×S) = (O×S) S -&gt; ((R×E)×O) = (RE×O) = (SxO) E -&gt; ((S×O)×R) = (SO×R) = (E×R)</p>
 <p>OS ⊆ O×S = {(o,s): o ∈ O, s ∈ S} SO ⊆ S×O = {(s,o): s ∈ S, o ∈ O} RE ⊆ R×E = {(r,e): r ∈ R, e ∈ E} ER ⊆ E×R = {(e,r): e ∈ E, r ∈ R}</p>
 <p>E = SO ⊆ (SO×OS) O = ER ⊆ (ER×RE) R = OS ⊆ (OS×SO) S = RE ⊆ (RE×ER)</p>
@@ -265,8 +184,76 @@ $(document).ready(function(){initNavTree('md_doc__mathematical_definition.html',
 <p>S = RE ⊆ RE×ER = {(re, er): re ∈ RE, er ∈ ER} - множество кортежей отношение-сущность</p>
 <p>Свойство сохранения относительного типа ассоциации. Что это за свойства сохранения относительного типа ассоциации?</p>
 <p>Занимательная аналогия с молекулярной биологией:</p>
-<p>аденин (A) соединяется только с тимином (T) - двойная связь гуанин (G) — только с цитозином (C) - тройная связь </p>
-</div></div><!-- contents -->
+<p>аденин (A) соединяется только с тимином (T) - двойная связь гуанин (G) — только с цитозином (C) - тройная связь</p>
+<h1><a class="anchor" id="autotoc_md73"></a>
+Преобразование типов на языке C</h1>
+<h2><a class="anchor" id="autotoc_md74"></a>
+1. Исходное представление триединств:</h2>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    S* s;</div>
+<div class="line">    O* o;</div>
+<div class="line">    E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    E* e;</div>
+<div class="line">    R* r;</div>
+<div class="line">    S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    R* r;</div>
+<div class="line">    E* e;</div>
+<div class="line">    O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    O* o;</div>
+<div class="line">    S* s;</div>
+<div class="line">    R* r;</div>
+<div class="line">};</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md75"></a>
+2. Выделяем связи типа SO, ER, RE, OS:</h2>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>SO {</div>
+<div class="line">    S* s;</div>
+<div class="line">    O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>ER {</div>
+<div class="line">    E* e;</div>
+<div class="line">    R* r;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>RE {</div>
+<div class="line">    R* r;</div>
+<div class="line">    E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>OS {</div>
+<div class="line">    O* o;</div>
+<div class="line">    S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    SO* so;</div>
+<div class="line">    E* e;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    ER* er;</div>
+<div class="line">    S* s;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    RE* re;</div>
+<div class="line">    O* o;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    OS* os;</div>
+<div class="line">    R* r;</div>
+<div class="line">};</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- start footer part -->

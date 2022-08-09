@@ -136,48 +136,52 @@ var NAVTREE =
       [ "Множество кортежей - объектов Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md69", null ],
       [ "Множество кортежей - отношений Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md70", null ],
       [ "Множество кортежей - субъектов Модели Отношений", "md_doc__mathematical_definition.html#autotoc_md71", null ],
-      [ "МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2", "md_doc__mathematical_definition.html#autotoc_md72", null ]
-    ] ],
-    [ "Модель Отношений", "md_doc__r_m.html", [
-      [ "Виды топологий сущностей МО", "md_doc__r_m.html#autotoc_md74", null ],
-      [ "json проекция в МО", "md_doc__r_m.html#autotoc_md75", null ]
-    ] ],
-    [ "Модель Отношений (старый текст)", "md_doc_rmodel.html", null ],
-    [ "Реляционная виртуальная машина", "md_doc__r_v_m.html", [
-      [ "Инициализация", "md_doc__r_v_m.html#autotoc_md78", null ],
-      [ "Исполнение МО", "md_doc__r_v_m.html#autotoc_md79", null ],
-      [ "Правила json скрипта (проекции МО в json):", "md_doc__r_v_m.html#autotoc_md80", null ],
-      [ "Варианты взаимоотношений узлов json:", "md_doc__r_v_m.html#autotoc_md81", null ],
-      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc__r_v_m.html#autotoc_md82", null ],
-      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc__r_v_m.html#autotoc_md83", null ],
-      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc__r_v_m.html#autotoc_md84", null ],
-      [ "Программирование на МО", "md_doc__r_v_m.html#autotoc_md85", null ],
-      [ "Контекст исполнения сущности", "md_doc__r_v_m.html#autotoc_md86", null ],
-      [ "Стэк", "md_doc__r_v_m.html#autotoc_md87", null ],
-      [ "Аналогия исполнения", "md_doc__r_v_m.html#autotoc_md88", null ]
-    ] ],
-    [ "Словарь общепринятых терминов", "md_doc_wiki_concepts.html", null ],
-    [ "План развития МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html", [
-      [ "1. Понятийный словарь", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md91", null ],
-      [ "2. Введение в МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md92", null ],
-      [ "3. Цели и задачи МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md93", null ],
-      [ "Базовые сущности МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md94", [
+      [ "МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2", "md_doc__mathematical_definition.html#autotoc_md72", null ],
+      [ "Преобразование типов на языке C", "md_doc__mathematical_definition.html#autotoc_md73", [
         [ "Модель Отношений - это язык метапрограммирования.", "md_doc__introduction.html#autotoc_md53", [
           [ "Привести аналогию с ООП", "md_doc__introduction.html#autotoc_md54", null ]
         ] ],
-        [ "0. ent = <sub, rel, obj>", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md95", null ],
-        [ "1. rel = { sub, ent, obj }", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md96", null ],
-        [ "1. sub =  = { ent, rel, obj }", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md97", null ],
-        [ "01. obj", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md98", null ]
+        [ "1. Исходное представление триединств:", "md_doc__mathematical_definition.html#autotoc_md74", null ],
+        [ "2. Выделяем связи типа SO, ER, RE, OS:", "md_doc__mathematical_definition.html#autotoc_md75", null ]
+      ] ]
+    ] ],
+    [ "Модель Отношений", "md_doc__r_m.html", [
+      [ "Виды топологий сущностей МО", "md_doc__r_m.html#autotoc_md77", null ],
+      [ "json проекция в МО", "md_doc__r_m.html#autotoc_md78", null ]
+    ] ],
+    [ "Модель Отношений (старый текст)", "md_doc_rmodel.html", null ],
+    [ "Реляционная виртуальная машина", "md_doc__r_v_m.html", [
+      [ "Инициализация", "md_doc__r_v_m.html#autotoc_md81", null ],
+      [ "Исполнение МО", "md_doc__r_v_m.html#autotoc_md82", null ],
+      [ "Правила json скрипта (проекции МО в json):", "md_doc__r_v_m.html#autotoc_md83", null ],
+      [ "Варианты взаимоотношений узлов json:", "md_doc__r_v_m.html#autotoc_md84", null ],
+      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc__r_v_m.html#autotoc_md85", null ],
+      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc__r_v_m.html#autotoc_md86", null ],
+      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc__r_v_m.html#autotoc_md87", null ],
+      [ "Программирование на МО", "md_doc__r_v_m.html#autotoc_md88", null ],
+      [ "Контекст исполнения сущности", "md_doc__r_v_m.html#autotoc_md89", null ],
+      [ "Стэк", "md_doc__r_v_m.html#autotoc_md90", null ],
+      [ "Аналогия исполнения", "md_doc__r_v_m.html#autotoc_md91", null ]
+    ] ],
+    [ "Словарь общепринятых терминов", "md_doc_wiki_concepts.html", null ],
+    [ "План развития МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html", [
+      [ "1. Понятийный словарь", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md94", null ],
+      [ "2. Введение в МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md95", null ],
+      [ "3. Цели и задачи МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md96", null ],
+      [ "Базовые сущности МО", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md97", [
+        [ "0. ent = <sub, rel, obj>", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md98", null ],
+        [ "1. rel = { sub, ent, obj }", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md99", null ],
+        [ "1. sub =  = { ent, rel, obj }", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md100", null ],
+        [ "01. obj", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md101", null ]
       ] ],
-      [ "Ent = <Sub, Rel, Obj>", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md100", null ]
+      [ "Ent = <Sub, Rel, Obj>", "md_doc__xD0_xBF_xD0_xBB_xD0_xB0_xD0_xBD__xD0_x9C_xD0_x9E.html#autotoc_md103", null ]
     ] ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md101", [
-        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md102", null ],
-        [ "License", "md__r_e_a_d_m_e.html#autotoc_md103", null ],
-        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md104", null ],
-        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md105", null ]
+      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md104", [
+        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md105", null ],
+        [ "License", "md__r_e_a_d_m_e.html#autotoc_md106", null ],
+        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md107", null ],
+        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md108", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -214,7 +218,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"md_doc__r_v_m.html#autotoc_md82"
+"md_doc__mathematical_definition.html#autotoc_md73"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
