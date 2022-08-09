@@ -1,0 +1,8 @@
+{
+   "exception" : "this is a text of exception",
+   "main" : {
+      "exception" : {
+         "" : "throw"
+      }
+   }
+}

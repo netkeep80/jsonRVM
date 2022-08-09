@@ -1,0 +1,13 @@
+{
+   "data" : [ null, 2, false, "4", {} ],
+   "criteria" : {
+      "" : {
+         "is_string" : ""
+      }
+   },
+   "main" : {
+      "data" : {
+         "criteria" : "where"
+      }
+   }
+}

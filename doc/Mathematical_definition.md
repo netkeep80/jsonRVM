@@ -8,56 +8,49 @@
 
 RM = {E, O, R, S}, где
 
-R ⊆ O×S×E = {(o,s,e): o ∈ S, s ∈ O, e ∈ E} - множество кортежей отношений
+R -> (S×O)×E = {(s,o,e): s ∈ S, o ∈ O, e ∈ E} - множество кортежей отношений
 
-O ⊆ E×R×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов
+S -> (R×E)×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов
 
-S ⊆ R×E×O = {(r,e,o): r ∈ R, e ∈ E, o ∈ O} - множество кортежей субъектов
+O -> (E×R)×S = {(e,r,s): e ∈ E, r ∈ R, s ∈ S} - множество кортежей объектов
 
-E ⊆ S×O×R = {(s,o,r): s ∈ O, o ∈ S, r ∈ R} - множество кортежей сущностей
+E -> (O×S)×R = {(o,s,r): o ∈ O, s ∈ S, r ∈ R} - множество кортежей сущностей 
 
-```cpp
-struct R {
-    O* o;
-    S* s;
-    E* e;
-};
 
-struct O {
-    E* e;
-    R* r;
-    S* s;
-};
+Внешний аспект (использование) в качестве источкика:
+R -> RE
+E -> ER
+O -> OS
+S -> SO
 
-struct S {
-    R* r;
-    E* e;
-    O* o;
-};
+Внешний аспект (использование) в качестве назначения:
+R -> ER
+E -> RE
+O -> SO
+S -> OS
 
-struct E {
-    S* s;
-    O* o;
-    R* r;
-};
-```
+Внутренний аспект (структура) связи:
+E = OS
+R = SO
+O = ER
+S = RE
 
 ## Преобразование 4х множеств кортежей длины 3 к 4м множествам кортежей длины 2:
 
 1. группировка компонент триплетов в связи
    
-R -> OS×E = OS×(SO×R) = OS×(SO×(OS×E))
+R -> SO×E = SO×(OS×R) = SO×(OS×(SO×E))
 
 O -> ER×S = ER×(RE×O) = ER×(REx(ER×S))
 
 S -> RE×O = RE×(ER×S) = RE×(ER×(RE×O))
 
-E -> SO×R = SO×(OS×E) = SO×(OS×(SO×R))
+E -> OS×R = OS×(SO×E) = OS×(SO×(OS×R))
 
 2. Докажем что типы связей представляющие триплеты R,O,S,E
  эквивалентны типам связей OS, ER, RE, SO соответственно, т.е.:
 
-R x E -> Rx(SO×R)
+R x E -> OS×(SO×R)xE
 
 O x S -> Ox(RE×O)
 
@@ -80,13 +73,13 @@ E -> SO×R = SO×(OS×E) = SO×(OS×(SO×R)) = SO×(OS×...) = SOx...
 
 3. Но если связать 2 с триплетами 1:
 
-R x E -> (OS×...) x (SOx...) = (((ER×...) x (REx...))×...) x (SOx...)
+R -> OS×E = ((SO×R)xO)x(RE×O)
 
-O x S -> (ER×...) x (REx...) = (((SO×...) x (SOx...))×...) x (REx...)
+O -> ER×S = 
 
-S x O -> (RE×...) x (ERx...) = (((OS×...) x (SOx...))×...) x (ERx...)
+S -> RE×O = 
 
-E x R -> (SO×...) x (OSx...) = (((RE×...) x (ERx...))×...) x (SOx...)
+E -> SO×R = 
 
 4. Подставляем результаты 2 и 3 в 1:
 
@@ -109,39 +102,7 @@ S -> RE×O = RE×(ER...) = RE × ((SO... x SO...) x (RE...))
 E -> SO×R = SO×(OS...) = SO × ((ER... x RE...) x (SO...))
 
 Получаем всего 8 типов связей:
-```cpp
-struct OS {
-    O* o;   S* s;
-};
 
-struct ER {
-    E* e;   R* r;
-};
-
-struct RE {
-    R* r;    E* e;
-};
-
-struct SO {
-    S* s;    O* o;
-};
-
-struct R {
-    OS* os;  E* e;
-};
-
-struct O {
-    ER* er;  S* s;
-};
-
-struct S {
-    RE* re;  O* o;
-};
-
-struct E {
-    SO* so;  R* r;
-};
-```
 
 1. Сокращение 8 типов связей до 4х
 
@@ -153,41 +114,6 @@ E -> SO - удаление типа связи E, и использование 
 
 Для этого во первых надо доказать, что в связях вместо типов триплетов R, O, S, E
 можно использовать типы связей RE, OS, SO, ER cоответственно.
-
-
-```cpp
-struct OS {
-    O* o;   S* s;
-};
-
-struct ER {
-    E* e;   R* r;
-};
-
-struct RE {
-    R* r;   E* e;
-};
-
-struct SO {
-    S* s;   O* o;
-};
-
-struct R {
-    OS* os; E* e;
-};
-
-struct O {
-    ER* er; S* s;
-};
-
-struct S {
-    RE* re; O* o;
-};
-
-struct E {
-    SO* so; R* r;
-};
-```
 
 Во вторых доказать что 
 
@@ -258,3 +184,76 @@ S = RE ⊆ RE×ER = {(re, er): re ∈ RE, er ∈ ER} - множество кор
 
 аденин (A) соединяется только с тимином (T) - двойная связь
 гуанин (G) — только с цитозином (C) - тройная связь
+
+## Преобразование типов на языке C
+
+### 1. Исходное представление триединств:
+
+```cpp
+struct R {
+    S* s;
+    O* o;
+    E* e;
+};
+
+struct O {
+    E* e;
+    R* r;
+    S* s;
+};
+
+struct S {
+    R* r;
+    E* e;
+    O* o;
+};
+
+struct E {
+    O* o;
+    S* s;
+    R* r;
+};
+```
+
+### 2. Выделяем связи типа SO, ER, RE, OS:
+```cpp
+struct SO {
+    S* s;
+    O* o;
+};
+
+struct ER {
+    E* e;
+    R* r;
+};
+
+struct RE {
+    R* r;
+    E* e;
+};
+
+struct OS {
+    O* o;
+    S* s;
+};
+
+struct R {
+    SO* so;
+    E* e;
+};
+
+struct O {
+    ER* er;
+    S* s;
+};
+
+struct S {
+    RE* re;
+    O* o;
+};
+
+struct E {
+    OS* os;
+    R* r;
+};
+```

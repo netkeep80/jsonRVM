@@ -1,0 +1,162 @@
+{
+   "Ents" : {
+      "Obj1" : "RE1",
+      "Obj2" : "RE2",
+      "Objs" : {
+         "Rel1" : "SO1",
+         "Rel2" : "SO2",
+         "Rels" : {
+            "Sub1" : "ER1",
+            "Sub2" : "ER2",
+            "Subs" : {
+               "Ent1" : "OS1",
+               "Ent2" : "OS2",
+               "Ents" : {
+                  "Obj1" : "RE1",
+                  "Obj2" : "RE2"
+               }
+            }
+         }
+      }
+   },
+   "Objs" : {
+      "Rel1" : "SO1",
+      "Rel2" : "SO2",
+      "Rels" : {
+         "Sub1" : "ER1",
+         "Sub2" : "ER2",
+         "Subs" : {
+            "Ent1" : "OS1",
+            "Ent2" : "OS2",
+            "Ents" : {
+               "Obj1" : "RE1",
+               "Obj2" : "RE2",
+               "Objs" : {
+                  "Rel1" : "SO1",
+                  "Rel2" : "SO2"
+               }
+            }
+         }
+      }
+   },
+   "Rels" : {
+      "Sub1" : "ER1",
+      "Sub2" : "ER2",
+      "Subs" : {
+         "Ent1" : "OS1",
+         "Ent2" : "OS2",
+         "Ents" : {
+            "Obj1" : "RE1",
+            "Obj2" : "RE2",
+            "Objs" : {
+               "Rel1" : "SO1",
+               "Rel2" : "SO2",
+               "Rels" : {
+                  "Sub1" : "ER1",
+                  "Sub2" : "ER2"
+               }
+            }
+         }
+      }
+   },
+   "Subs" : {
+      "Ent1" : "OS1",
+      "Ent2" : "OS2",
+      "Ents" : {
+         "Obj1" : "RE1",
+         "Obj2" : "RE2",
+         "Objs" : {
+            "Rel1" : "SO1",
+            "Rel2" : "SO2",
+            "Rels" : {
+               "Sub1" : "ER1",
+               "Sub2" : "ER2",
+               "Subs" : {
+                  "Ent1" : "OS1",
+                  "Ent2" : "OS2"
+               }
+            }
+         }
+      }
+   },
+   "SO" : {
+      "ER1" : "S1",
+      "ER2" : "S2",
+      "ER" : {
+         "OS1" : "E1",
+         "OS2" : "E2",
+         "OS" : {
+            "RE1" : "O1",
+            "RE2" : "O2",
+            "RE" : {
+               "SO1" : "R1",
+               "SO2" : "R2",
+               "SO" : {
+                  "ER1" : "S1",
+                  "ER2" : "S2"
+               }
+            }
+         }
+      }
+   },
+   "ER" : {
+      "OS1" : "E1",
+      "OS2" : "E2",
+      "OS" : {
+         "RE1" : "O1",
+         "RE2" : "O2",
+         "RE" : {
+            "SO1" : "R1",
+            "SO2" : "R2",
+            "SO" : {
+               "ER1" : "S1",
+               "ER2" : "S2",
+               "ER" : {
+                  "OS1" : "E1",
+                  "OS2" : "E2"
+               }
+            }
+         }
+      }
+   },
+   "OS" : {
+      "RE1" : "O1",
+      "RE2" : "O2",
+      "RE" : {
+         "SO1" : "R1",
+         "SO2" : "R2",
+         "SO" : {
+            "ER1" : "S1",
+            "ER2" : "S2",
+            "ER" : {
+               "OS1" : "E1",
+               "OS2" : "E2",
+               "OS" : {
+                  "RE1" : "O1",
+                  "RE2" : "O2"
+               }
+            }
+         }
+      }
+   },
+   "RE" : {
+      "SO1" : "R1",
+      "SO2" : "R2",
+      "SO" : {
+         "ER1" : "S1",
+         "ER2" : "S2",
+         "ER" : {
+            "OS1" : "E1",
+            "OS2" : "E2",
+            "OS" : {
+               "RE1" : "O1",
+               "RE2" : "O2",
+               "RE" : {
+                  "SO1" : "R1",
+                  "SO2" : "R2"
+               }
+            }
+         }
+      }
+   }
+}
