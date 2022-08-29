@@ -1,14 +1,4 @@
 {
-   "Ent is OS" : {
-      "Obj is ER" : {
-         "Ent is OS" : "Obj is ER"
-      }
-   },
-   "Rel is SO" : {
-      "Sub is RE" : {
-         "Rel is SO" : "Sub is RE"
-      }
-   },
    "." : {
       "1" : {
          "Ent is OS" : "Obj is ER"
@@ -17,6 +7,20 @@
    "/" : {
       "0" : {
          "Rel is SO" : "Sub is RE"
+      }
+   },
+   "ent" : {
+      "rel1" : {
+         "sub1" : {
+            "rel2" : "sub2"
+         }
+      }
+   },
+   "rel" : {
+      "ent1" : {
+         "obj1" : {
+            "ent1" : "obj2"
+         }
       }
    }
 }

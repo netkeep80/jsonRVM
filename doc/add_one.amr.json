@@ -1,0 +1,29 @@
+{
+   "ent=obj/sub" : {
+      "rel=sub/obj" : {
+         "ent=obj/sub" : {
+            "rel=sub/obj" : ""
+         }
+      }
+   },
+   "sub=rel/ent" : {
+      "obj=ent/rel" : {
+         "sub=rel/ent" : {
+            "obj=ent/rel" : ""
+         }
+      }
+   },
+   "+" : "данная сущность добавляет объект к субъекту",
+   "main ent" : {
+      "{/result:/one}" : "+"
+   },
+   "main ent2" : {
+      "$obj" : "/one",
+      "" : "+",
+      "$sub" : "/result"
+   },
+   "" : {
+      "result" : 0,
+      "one" : 1
+   }
+}

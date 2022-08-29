@@ -1,0 +1,27 @@
+{
+   "ent" : {
+      "sub\\obj1" : {
+         "ent3" : {
+            "sub\\obj3" : ""
+         },
+         "ent4" : {
+            "sub\\obj4" : ""
+         }
+      },
+      "sub\\obj2" : {
+         "ent4" : {}
+      }
+   },
+   "sub" : {
+      "ent/rel1" : {
+         "sub" : {
+            "ent/rel" : ""
+         }
+      },
+      "ent/rel2" : {
+         "sub" : {
+            "ent/rel" : ""
+         }
+      }
+   }
+}

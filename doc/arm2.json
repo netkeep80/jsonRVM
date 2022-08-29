@@ -1,23 +1,54 @@
 {
-   "Ent1" : "<-Rel1",
-   "Ent2" : "<-Rel2",
-   "<-RE" : {
-      "Sub1" : "<-Obj1",
-      "Sub2" : "<-Obj2",
-      "<-OS" : {
-         "Rel1" : "<-Ent1",
-         "Rel2" : "<-Ent2",
-         "<-ER" : {
-            "Obj1" : "<-Sub1",
-            "Obj2" : "<-Sub2",
-            "<-SO" : {
-               "Ent1" : "<-Rel1",
-               "Ent2" : "<-Rel2",
-               "<-RE" : {
-                  "Sub1" : "<-Obj1",
-                  "Sub2" : "<-Obj2"
-               }
-            }
+   "$вариант 1 однородное дерево сущностей" : {
+      "Описание" : "уровень описания сущности, являющейся объектом для поля субъекта",
+      "$er" : "some ent name as obj",
+      "some ent name as sub" : {
+         "Описание" : "уровень описания сущности, являющейся объектом для поля субъекта",
+         "$er" : "some ent name as obj",
+         "some ent name as sub" : "some ent name as obj",
+         "$re" : "some ent name as sub"
+      },
+      "$re" : "some ent name as sub"
+   },
+   "$вариант 2 однородное дерево сущностей" : {
+      "-+" : "some ent name as obj",
+      "some ent name as sub" : {
+         "-+" : "some ent name as obj",
+         "some ent name as sub" : "some ent name as obj",
+         "->" : "some ent name as sub"
+      },
+      "->" : "some ent name as sub"
+   },
+   "$вариант 3 ассоциации" : {
+      "Описание" : "это уровень описания ассоциации",
+      "some link name" : {
+         "Описание" : "это тоже уровень описания ассоциации",
+         "$from" : "some link name",
+         "some link2 name" : "some link name",
+         "some link3 name" : {
+            "Описание" : "это тоже уровень описания ассоциации",
+            "$from" : "some link name",
+            "some link2 name" : "some link name",
+            "$to" : "some link name"
+         },
+         "$to" : "some link name"
+      }
+   },
+   "$вариант 4 чередование уровней (R/E/R/E)" : {
+      "Описание" : "это уровень описания ассоциации относительного типа - сущность",
+      "some rel name" : {
+         "Описание" : "это уровень описания ассоциации относительного типа - отношение",
+         "{some obj name : some sub name}" : {
+            "Описание" : "это уровень описания ассоциации относительного типа - сущность",
+            "some rel name" : "some ent name"
+         }
+      },
+      "{some sub name : some obj name}" : {
+         "Описание" : "это уровень описания ассоциации относительного типа - отношение",
+         "some ent name" : "some rel name",
+         "{some obj name : some sub name}" : {
+            "Описание" : "это уровень описания ассоциации относительного типа - сущность",
+            "some rel name" : "some ent name"
          }
       }
    }
