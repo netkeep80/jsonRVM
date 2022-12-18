@@ -39,6 +39,38 @@ SOFTWARE.
 #include "str_switch/str_switch.h"
 #include "string_type.h"
 
+/*
+		План переделки:
+
+1. заменяем 
+{
+	$obj:
+	$rel:
+	$sub:
+}
+на
+{
+	$ent: {
+		$sub:
+		$obj:
+	}
+	$rel: {
+		$obj:
+		$sub:
+	}
+}
+т.е. на 
+{
+	"$source":
+	"$target":
+}
+2. заменяем адреса типа
+	#/point/x
+на 
+	point[x]
+
+3. переделываем структуру контекста на использование типа json
+*/
 
 namespace rm
 {
@@ -54,61 +86,100 @@ namespace rm
 	static InitDict	You_must_define_import_relations_model_to_function_in_your_RM_dictionary = import_relations_model_to;
 #endif
 
+	//	Старая версия: 
 	//	Контекст исполнения сущности
 	//	инстанцированная проекция модели сущности
 	//	экземпляр сущности
-	struct vm_ctx
+	struct vm_rel
 	{
-		vm_ctx& $;	//	parent context reference
+		vm_rel& $;	//	parent context reference
 		json& ent;	//	context entity reference сущность, is model for instance
 		json& obj;	//	context object reference
 		json& rel;	//	relation instance value
 		json& sub;	//	context subject reference
 
-		vm_ctx(json& Rel, json& Obj, json& Sub, json& Ent, vm_ctx& Ctx)
+		vm_rel(json& Rel, json& Obj, json& Sub, json& Ent, vm_rel& Ctx)
 			: rel(Rel), obj(Obj), sub(Sub), ent(Ent), $(Ctx) {}
 
-		vm_ctx(json& Rel, json& Ent)
+		vm_rel(json& Rel, json& Ent)
 			: rel(Rel), obj(Rel), sub(Rel), ent(Ent), $(*this) {}
 
-		vm_ctx(json& Rel)
+		vm_rel(json& Rel)
 			: rel(Rel), obj(Rel), sub(Rel), ent(Rel), $(*this) {}
 
 		void throw_json(const string& function, const json& error) const
 		{
 			json	j;
 			j[function] = error;
-			j["vm_ctx"]["$rel/"] = rel;
-			if (obj != rel) j["vm_ctx"]["$obj/"] = obj;
-			if (sub != rel) j["vm_ctx"]["$sub/"] = sub;
-			if (ent != rel) j["vm_ctx"]["$ent/"] = ent;
+			j["vm_rel"]["$rel/"] = rel;
+			if (obj != rel) j["vm_rel"]["$obj/"] = obj;
+			if (sub != rel) j["vm_rel"]["$sub/"] = sub;
+			if (ent != rel) j["vm_rel"]["$ent/"] = ent;
 			throw j;
 		}
 	};
 
-	using binary_view = void (*)(vm& rmvm, vm_ctx& $);
+	/*struct vm_sub;	//	is rel->SO
+	struct vm_rel;	//	is ER->sub
+
+	//	Субъект отношения
+	struct vm_sub	//	is rel->SO
+	{
+		vm_rel* rel{nullptr};	//	parent context reference
+		json&	SO;		//	entity
+		
+		vm_sub(json& ent) : SO(ent) {}
+		vm_sub(vm_rel* Rel, json& ent) : rel(Rel), SO(ent) {}
+
+		void throw_json(const string& function, const json& error) const {
+			json	j;
+			j[function] = error;
+			j["vm_sub"]["SO/"] = SO;
+			throw j;
+		}
+	};
+
+	//	Контекст отношения есть отношение объекта субъекту
+	struct vm_rel	//	is ER->sub
+	{
+		json&	ER;	//	construct object
+		vm_sub* sub{nullptr};	//	parent subject reference
+
+		vm_rel(json& obj) : ER(obj) {}
+		vm_rel(json& obj, vm_sub* Sub) : ER(obj), sub(Sub) {}
+
+		void throw_json(const string& function, const json& error) const {
+			json	j;
+			j[function] = error;
+			j["vm_rel"]["ER/"] = ER;
+			throw j;
+		}
+	};*/
+
+	using binary_view = void (*)(vm& rmvm, vm_rel& $);
 	using binary_view_map_t = map<json const*, binary_view>;
 
-	struct base_entity
-	{
+	struct base_entity {
 		const json_pointer<json> path{};
 		const string description{};
-		static void	view(vm& rmvm, vm_ctx& $) {}
+		static void	view(vm& rmvm, vm_rel& $) {}
 	};
 	
-	struct callctx
-	{
-		json& rel;
-		vm_ctx& $;
-		vm& rvm;
-		const string& key;
-		json& value;
-		json	exc;
+	/*
+	Судя по тому что в json проекции семантика уровней дерева чередуется, работа авм имеет 2 фазы: работа с древовидным контекстом исполнения и работа с амо 
+	Это проецирование и исполнение
+	Анализ и синтез
+	Авм это субъект
+	Амо это объект
+	Субъективация это фаза анализа АМО, она приводит к созданию новых сущностей и нового контекста исполнения
+	Объективация это фаза синтеза АМО, это исполнение сущности отношения, т.е. создание новых отношений в АМО
+	Из-за чередования семантики уровней дерева json, похоже семантика местоимений тоже чередуется
+	Местоимения вышестоящих уровней реализуются через выход в вышестоящие контексты закрывающей скобкой "]"
+	Местоимениями объекта и субъекта являются спецсимволы "," и "."
+	так как верхний уровень АВМ это связь субъект->объект то местоимения могут адресоваться либо в иерархии субъекта либо в иерархии объекта 
+	*/
 
-		callctx(json& Rel, vm_ctx& Ctx, vm& vm, const string& k, json& v)
-			: rel(Rel), $(Ctx), rvm(vm), key(k), value(v) {}
-	};
-	
+
 	class vm : protected database_api, public json, public binary_view_map_t
 	{
 	////////////////////////////// VERSION //////////////////////////////
@@ -118,26 +189,17 @@ namespace rm
 	private:
 		struct rval { static const bool is_lval{ false }; };
 		struct lval { static const bool is_lval{ true }; };
-		mutex __object_mutex;
-		mutex __array_mutex;
-		mutex __null_mutex;
 
 		template<class val_type>
-		void	ref_in_json_to(json*& jptr, const string& it)
-		{
+		void	ref_in_json_to(json*& jptr, const string& it) {
 			json& ref = *jptr;
 
-			switch (ref.type())
-			{
+			switch (ref.type()) {
 			case json::value_t::object:
-				if constexpr (val_type::is_lval)
-				{
-					lock_guard<mutex> guard(__object_mutex);
+				if constexpr (val_type::is_lval) {
 					jptr = &ref[it];
 					return;
-				}
-				else
-				{
+				} else {
 					auto rel = ref.find(it);
 
 					if (rel == ref.end())
@@ -148,14 +210,10 @@ namespace rm
 				}
 
 			case json::value_t::array:
-				if constexpr (val_type::is_lval)
-				{
-					lock_guard<mutex> guard(__array_mutex);
+				if constexpr (val_type::is_lval) {
 					jptr = &ref[std::stoul(it)];
 					return;
-				}
-				else
-				{
+				} else {
 					auto id = std::stoul(it);
 					if (id >= ref.size())
 						throw json({ {it, *jptr} });
@@ -165,8 +223,7 @@ namespace rm
 				}
 
 			case json::value_t::null:
-				if constexpr (val_type::is_lval)
-				{
+				if constexpr (val_type::is_lval) {
 					int& _Errno_ref = errno; // Nonzero cost, pay it once
 					const char* _Ptr = it.c_str();
 					char* _Eptr;
@@ -175,8 +232,6 @@ namespace rm
 
 					if (_Errno_ref == ERANGE)
 						throw json({ {it, *jptr} });
-
-					lock_guard<mutex> guard(__null_mutex);
 
 					if (_Ptr == _Eptr)
 						jptr = &ref[it];
@@ -192,8 +247,7 @@ namespace rm
 		}
 
 		template<class val_type>
-		json& string_ref_to(vm_ctx& $, const string& str)
-		{
+		json& string_ref_to(vm_rel& $, const string& str) {
 			json* jptr;
 			size_t	len = str.length();
 			size_t	pos = str.find_first_of('/', 0);
@@ -203,8 +257,7 @@ namespace rm
 			size_t	prev = pos + 1;
 			string	it = str.substr(0, pos);
 
-			SWITCH(it)
-			{
+			SWITCH(it) {
 				CASE("$$$$ent") : jptr = &$.$.$.$.ent;	break;
 				CASE("$$$$sub") : jptr = &$.$.$.$.sub;	break;
 				CASE("$$$$obj") : jptr = &$.$.$.$.obj;	break;
@@ -227,8 +280,7 @@ namespace rm
 				assert(ref.is_object());
 				auto res = ref.find(it);
 
-				if (res == ref.end())
-				{
+				if (res == ref.end()) {
 					try { this->get_entity(ref[it], it); }
 					catch (json& j) { $.throw_json(__func__, j); }
 					catch (invalid_argument& e) { $.throw_json(__func__, "entity '"s + str + "' invalid_argument, " + e.what()); }
@@ -242,8 +294,7 @@ namespace rm
 				jptr = &res.value();
 			}
 
-			while (prev < len)
-			{
+			while (prev < len) {
 				pos = str.find_first_of('/', prev);
 				if (pos == string::npos) pos = len;
 				string it = str.substr(prev, pos - prev);
@@ -259,8 +310,7 @@ namespace rm
 		}
 
 		template<class val_type>
-		json& val_or_ref_to(vm_ctx& $, json& val)
-		{
+		json& val_or_ref_to(vm_rel& $, json& val) {
 			if (val.is_object()) {
 				//	это ссылка на json значение?
 				if (auto ref = val.find("$ref"); ref != val.end()) {
@@ -276,50 +326,34 @@ namespace rm
 			return val;
 		}
 
-		static void	callctx_thread(callctx& it)
-		{
-			try {
-				it.rvm.exec_ent(
-					vm_ctx(it.rel, it.$.obj, it.$.sub, it.$.ent, it.$.$),
-					it.rvm.val_or_ref_to<rval>(it.$, it.value)
-				);
-			}
-			catch (json& j) { it.exc = j; }
-			catch (...) { it.exc = json({ __func__, "unknown exception"s }); }
-		}
-
 	public:
-		struct database_api_add_entity : public base_entity
-		{
+		struct database_api_add_entity : public base_entity	{
 			const json_pointer path{ "/add_entity" };
 			const string description{ "Add new entity to database" };
-			static void	view(vm& rmvm, vm_ctx& $)
-			{
+			static void	view(vm& rmvm, vm_rel& $) {
 				string	ent_id = "";
 				rmvm.add_entity($.obj, ent_id);
 				$.sub = ent_id;
 			}
 		};
 
-		struct rmvm_version : public base_entity
-		{
+		struct rmvm_version : public base_entity {
 			const json_pointer path{ "/rmvm/version" };
 			const string description{ "Version of rmvm" };
-			static void	view(vm& rmvm, vm_ctx& $) { $.rel = vm::version; }
+			static void	view(vm& rmvm, vm_rel& $) { $.rel = vm::version; }
 		};
 
-		vm(database_api* db = nullptr)
-			: json(json::object())
-		{
+		vm(database_api* db = nullptr) : json(json::object()) {
 			database_api::link(db);
 			//	rmvm base voc
 			*this << rmvm_version() << database_api_add_entity();
 		}
 
-		json& exec_ent(json& rel, json& ent)
-		{
-			vm_ctx $(rel);
-			try { exec_ent($, ent); }
+		//	объективация сущности в отношение: Ent->Rel
+		json& objectify(json& ent, json& rel) {
+			//	инициализируем контекстное отношение
+			vm_rel $(rel);
+			try { objectify(ent, $); }
 			catch (json& j) { $.throw_json(__func__, j); }
 			catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 			catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
@@ -327,103 +361,101 @@ namespace rm
 			return rel;
 		}
 
+		/*
+		в часть субъекта относятся сущности, которые есть шаблоны смешивающие контекстный субъект и объект
+
+		контекст исполнения это отношение двух текущих регистров $obj/$sub
+		в этом контексте объективируется сущность
+
+		было бы неплохо в проекции json иметь возможность задавать боковые связи для $obj/$sub
+		*/
+
 		//	Исполнение сущности либо json байткода
 		//	имеет прототип отличный от других контроллеров и не является контроллером
 		//	рекурсивно раскручивает структуру проекции контроллера доходя до простых json или вызовов скомпилированных сущностей
-		void exec_ent(vm_ctx& $, json& ent)
-		{
+		//	отношение есть контекст
+		void objectify(json& ent, vm_rel& $) {
 			binary_view_map_t& dict = *this;
 			auto it = dict.find(&ent);
 
-			if (it != dict.end())	//	это скомпилированная сущность?
-			{
+			if (it != dict.end()) {	//	это скомпилированная сущность?
 				try	{ (*it->second)(*this, $); }
 				catch (json& j) { throw j; }
 				catch (json::exception& e) { throw json("json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
 				catch (std::exception& e) { throw json("std::exception: "s + e.what()); }
 				catch (...) { throw json("unknown exception"s); }
 				return;
-			}
-			else switch (ent.type())
-			{
-			case json::value_t::string:	//	иерархический путь к json значению
-				try	{ exec_ent($, string_ref_to<rval>($, ent.get_ref<string const&>())); }
+			} else switch (ent.type()) {
+			//	иерархический путь к json значению
+			//	пример: point[x]
+			case json::value_t::string:
+				try	{ objectify(string_ref_to<rval>($, ent.get_ref<string const&>()), $); }
 				catch (json& j) { throw json({ {ent.get_ref<string const&>(), j} }); }
 				return;
 
-			case json::value_t::array:	//	лямбда вектор, который управляет последовательным изменением проекции сущности
-			{
+			//	лямбда вектор, который управляет последовательным изменением проекции сущности
+			//	[a,b,c] === [a][b][c]
+			case json::value_t::array: {
 				auto it = ent.begin();
 				auto end = ent.end();
-				try { for (; it != end; ++it) exec_ent($, *it); }
+				try { for (; it != end; ++it) objectify(*it, $); }
 				catch (json& j) { throw json({ {"["s + to_string(it - ent.begin()) + "]"s, j} }); }
 				return;
 			}
 
-			case json::value_t::object:
-			{
+			case json::value_t::object:	{
 				auto end = ent.end();
 
 				if (auto ref = ent.find("$ref"); ref != end) {	//	это ссылка на json значение
 					if (ref->is_string()) {
-						try { exec_ent($, string_ref_to<rval>($, ref->get_ref<string const&>())); }
+						try { objectify(string_ref_to<rval>($, ref->get_ref<string const&>()),$); }
 						catch (json& j) { throw json({ {ref->get_ref<string const&>(), j} }); }
-					}
-					else
+					} else
 						throw json({ {"$ref", *ref} });
-				}
-				else if (auto rel = ent.find("$rel"); rel != end) {	//	это сущность, которую надо исполнить в новом контексте?
+				} else if (auto rel = ent.find("$rel"); rel != end) {	//	это сущность, которую надо исполнить в новом контексте?
 					auto obj = ent.find("$obj");
 					auto sub = ent.find("$sub");
 
 					try {
-						exec_ent(
-							vm_ctx(
+						objectify(
+							val_or_ref_to<rval>($, *rel),
+							vm_rel(
 								$.rel,
 								obj == end ? $.rel : val_or_ref_to<rval>($, *obj),
 								sub == end ? $.rel : val_or_ref_to<lval>($, *sub),
 								ent,
-								$),
-							val_or_ref_to<rval>($, *rel)
+								$)
 						);
 					}
 					catch (json & j) { throw json({ {"$rel"s, j} }); }
-				}
-				else {	//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
+				} else {	//	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 					auto it = ent.begin();
-					vector<callctx>	vct;
-					vct.reserve(ent.size());
 
 					try {
 						for (; it != end; ++it) {
-							vct.emplace_back(
-								string_ref_to<lval>($, it.key()),
-								$,
-								*this,
-								it.key(),
-								it.value()
+							objectify(
+								val_or_ref_to<rval>($, it.value()),
+								vm_rel(
+									string_ref_to<lval>($, it.key()),
+									$.obj,
+									$.sub,
+									$.ent,
+									$.$)
 							);
 						}
 					}
-					catch (json& j) { throw json({ {it.key(), j} }); }
-					
-					for_each( std::execution::par, vct.begin(), vct.end(), callctx_thread);
-
-					for(auto& it : vct)
-						if (!it.exc.is_null())
-							throw json({ {it.key, it.exc} });
+					catch (json& j) { throw json({ {it.key(), j} }); }					
 				}
 				return;
 			}
 
 			default:	//	остальные простые типы есть результат исполнения отношения
-				$.rel = ent;
+				$.rel = ent;	//	???
 
 			case json::value_t::null:	//	null - означает отсутствие отношения, т.е. неизменность проекции
 				return;
 			}
 		}
-
 
 		/// <summary>
 		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
@@ -432,13 +464,11 @@ namespace rm
 		/// <param name="bent">Экземпляр базовой сущности</param>
 		/// <returns>Ссылка на виртуальную машину</returns>
 		template<class base_entity_t = base_entity>
-		vm&	operator << (const base_entity_t& bent)
-		{
+		vm&	operator << (const base_entity_t& bent)	{
 			json& ent = (*this)[bent.path] = { { "description", bent.description } };
 			static_cast<binary_view_map_t&>(*this)[&(ent)] = base_entity_t::view;
 			return *this;
 		}
-
 
 		/// <summary>
 		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
@@ -448,8 +478,7 @@ namespace rm
 		/// <param name="view"></param>
 		/// <param name="description"></param>
 		/// <returns></returns>
-		json& add_base_entity(json& entity, const string& name, const binary_view view, const string& description)
-		{
+		json& add_base_entity(json& entity, const string& name, const binary_view view, const string& description) {
 			entity[name] = { { "description", description } };
 			static_cast<binary_view_map_t&>(*this)[&(entity[name])] = view;
 			return entity[name];

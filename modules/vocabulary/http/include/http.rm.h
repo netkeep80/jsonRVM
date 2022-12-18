@@ -186,7 +186,7 @@ namespace rm
 	}
 
 
-	void jsonToXML(vm& rmvm, vm_ctx& $)
+	void jsonToXML(vm& rmvm, vm_rel& $)
 	{
 		$.sub = json2xml($.obj);
 	}
@@ -408,7 +408,7 @@ namespace rm
 #define CA_CERT_FILE "./ca-bundle.crt"
 
 	template<typename _convert, const method& mtd>
-	void  HTTP_METHOD(vm& rmvm, vm_ctx& $)
+	void  HTTP_METHOD(vm& rmvm, vm_rel& $)
 	{
 		if (!$.obj.is_object())
 			$.throw_json(__func__, ": $obj must be object"s);
@@ -620,7 +620,7 @@ namespace rm
 	}
 
 	template<typename method>
-	void	http_add_methods(vm& rmvm, vm_ctx& $, Server& svr, json& api)
+	void	http_add_methods(vm& rmvm, vm_rel& $, Server& svr, json& api)
 	{
 		if (!api.is_object())
 			$.throw_json(__func__, ": $obj/GET must be object"s);
@@ -641,7 +641,7 @@ namespace rm
 
 					try
 					{
-						rmvm.exec_ent(rel, ent);
+						rmvm.objectify(ent, rel);
 						res.status = 200;
 					}
 					catch (json& j)
@@ -657,7 +657,7 @@ namespace rm
 	}
 
 
-	inline void  http_service(vm& rmvm, vm_ctx& $)
+	inline void  http_service(vm& rmvm, vm_rel& $)
 	{
 		//typename _convert;
 		method mtd;

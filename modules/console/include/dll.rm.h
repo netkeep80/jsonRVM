@@ -95,7 +95,7 @@ namespace rm
 
 	//////////////////////////	base dictionary  ///////////////////////////////////
 
-	void  jsonLoadDLL(vm& rmvm, vm_ctx& $)
+	void  jsonLoadDLL(vm& rmvm, vm_rel& $)
 	{
 		try
 		{

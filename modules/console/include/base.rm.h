@@ -190,33 +190,33 @@ namespace rm
 	/// </summary>
 	/// <param name="rmvm">Виртуальная машины</param>
 	/// <param name="$">Контекст исполнения</param>
-	void  sleep_ms(vm& rmvm, vm_ctx& $) {
+	void  sleep_ms(vm& rmvm, vm_rel& $) {
 		this_thread::sleep_for(chrono::milliseconds($.obj.get<json::number_unsigned_t>()));
 	}
 
-	void  jsonCopy(vm& rmvm, vm_ctx& $)
+	void  jsonCopy(vm& rmvm, vm_rel& $)
 	{	//	полное копированиее json значения объекта в субъект
 		$.sub = $.obj;
 	}
 
-	void  jsonView(vm& rmvm, vm_ctx& $)
+	void  jsonView(vm& rmvm, vm_rel& $)
 	{	//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 		//	проецируем во внешнем контексте
 		//	1. Создание дочернего контекста исполнения
 		//	2. Исполнение сущности $.obj
-		rmvm.exec_ent(
-			vm_ctx(
+		rmvm.objectify(
+			$.obj,
+			vm_rel(
 				$.sub,
 				$.$.obj,
 				$.$.sub,
 				$.$.ent,
 				$.$
-			),
-			$.obj
+			)
 		);
 	}
 
-	void  jsonXOR(vm& rmvm, vm_ctx& $)
+	void  jsonXOR(vm& rmvm, vm_rel& $)
 	{
 		$.rel = $.sub ^ $.obj;
 	}
@@ -255,7 +255,7 @@ enum class value_t : std::uint8_t
 	OPP_ANYTO(operation, json::number_unsigned_t, number_unsigned)
 
 #define	OP_BODY( name, operation )																\
-void  json##name (vm& rmvm, vm_ctx& $)															\
+void  json##name (vm& rmvm, vm_rel& $)															\
 {																								\
 	switch( (uint8_t($.sub.type()) << sub_field) | uint8_t($.obj.type()) )						\
 	{ VM_OPP( operation ) default: $.rel = json(); }											\
@@ -267,7 +267,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	OP_BODY(Div, /);
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	void  jsonPower(vm& rmvm, vm_ctx& $)
+	void  jsonPower(vm& rmvm, vm_rel& $)
 	{
 		if ($.sub.is_number() && $.obj.is_number())
 		{
@@ -288,7 +288,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.rel = json();
 	}
 
-	void  jsonSqrt(vm& rmvm, vm_ctx& $)
+	void  jsonSqrt(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_number())
 			$.sub = json::number_float_t(sqrt($.obj.get<json::number_float_t>()));
@@ -299,7 +299,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	////////////////////////////////////////////////////////////////////////////////////
 
 
-	void  jsonForEachObject(vm& rmvm, vm_ctx& $)
+	void  jsonForEachObject(vm& rmvm, vm_rel& $)
 	{	/*
 			Множественный exec_ent для проекции объекта типа array
 		*/
@@ -311,7 +311,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json& value = $.rel[i];
-					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.sub); i++;
+					rmvm.objectify($.sub, vm_rel(value, it, value, $.ent, $.$)); i++;
 				}
 				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
@@ -320,7 +320,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj must be array!"s);
 	}
 
-	void  jsonForEachSubject(vm& rmvm, vm_ctx& $)
+	void  jsonForEachSubject(vm& rmvm, vm_rel& $)
 	{	/*
 			Множественный exec_ent для субъекта типа array
 		*/
@@ -332,7 +332,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json& value = $.rel[i];
-					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.obj); i++;
+					rmvm.objectify($.obj, vm_rel(value, it, value, $.ent, $.$)); i++;
 				}
 				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
@@ -341,18 +341,18 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$sub must be array!"s);
 	}
 
-	void  jsonSize(vm& rmvm, vm_ctx& $)
+	void  jsonSize(vm& rmvm, vm_rel& $)
 	{
 		$.sub = $.obj.size();
 	}
 
 #define define_json_is_type(json_type)							\
-	void  json_is_##json_type(vm& rmvm, vm_ctx& $)		\
+	void  json_is_##json_type(vm& rmvm, vm_rel& $)		\
 	{															\
 		$.sub = $.obj.is_##json_type();						\
 	}
 
-	void  json_is_not_null(vm& rmvm, vm_ctx& $)
+	void  json_is_not_null(vm& rmvm, vm_rel& $)
 	{
 		$.sub = !$.obj.is_null();
 	}
@@ -369,7 +369,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		define_json_is_type(structured)
 		define_json_is_type(discarded)
 
-		void  jsonIntegerSequence(vm& rmvm, vm_ctx& $)
+		void  jsonIntegerSequence(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_object())
 		{
@@ -385,7 +385,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj must has 'from', 'to' and 'step' properties!"s);
 	}
 
-	void  jsonUnion(vm& rmvm, vm_ctx& $)
+	void  jsonUnion(vm& rmvm, vm_rel& $)
 	{
 		if (!$.sub.is_array())
 		{
@@ -407,9 +407,9 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		$.rel = $.sub;
 	}
 
-	void  jsonNull(vm& rmvm, vm_ctx& $) {}
+	void  jsonNull(vm& rmvm, vm_rel& $) {}
 
-	void  jsonInt32(vm& rmvm, vm_ctx& $)
+	void  jsonInt32(vm& rmvm, vm_rel& $)
 	{
 		switch ($.obj.type())
 		{
@@ -442,7 +442,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		$.rel = $.sub;
 	}
 
-	void  jsonDouble(vm& rmvm, vm_ctx& $)
+	void  jsonDouble(vm& rmvm, vm_rel& $)
 	{
 		switch ($.obj.type())
 		{
@@ -480,7 +480,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	}
 
 
-	void  string_string(vm& rmvm, vm_ctx& $)
+	void  string_string(vm& rmvm, vm_rel& $)
 	{
 		$.sub = ""s;
 		string& result = $.sub.get_ref<string&>();
@@ -510,7 +510,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	}
 
 
-	void  string_add(vm& rmvm, vm_ctx& $)
+	void  string_add(vm& rmvm, vm_rel& $)
 	{
 		if (!$.sub.is_string())	$.sub = ""s;
 		string& result = $.sub.get_ref<string&>();
@@ -540,14 +540,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	}
 
 
-	void  string_find(vm& rmvm, vm_ctx& $)
+	void  string_find(vm& rmvm, vm_rel& $)
 	{
 		if (!($.obj.is_string() && $.sub.is_string())) $.throw_json(__func__, "$obj and $sub must be strings!"s);
 		$.rel = static_cast<json::number_integer_t>($.obj.get_ref<string const&>().find($.sub.get_ref<string&>().c_str()));
 	}
 
 
-	void  string_split(vm& rmvm, vm_ctx& $)
+	void  string_split(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_string() && $.sub.is_string())
 		{
@@ -568,7 +568,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj and $sub must be string!"s);
 	}
 
-	void  string_join(vm& rmvm, vm_ctx& $)
+	void  string_join(vm& rmvm, vm_rel& $)
 	{
 		string	result = "";
 		bool	first = true;
@@ -619,7 +619,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj must be string and $sub must be array!"s);
 	}
 
-	void  jsonGet(vm& rmvm, vm_ctx& $)
+	void  jsonGet(vm& rmvm, vm_rel& $)
 	{
 		if ($.sub.is_array())
 		{
@@ -639,7 +639,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$sub must be array or object!"s);
 	}
 
-	void  jsonSet(vm& rmvm, vm_ctx& $)
+	void  jsonSet(vm& rmvm, vm_rel& $)
 	{
 		if ($.sub.is_array())
 		{
@@ -668,7 +668,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$sub must be array, object or null!"s);
 	}
 
-	void  jsonErase(vm& rmvm, vm_ctx& $)
+	void  jsonErase(vm& rmvm, vm_rel& $)
 	{
 		if ($.sub.is_object())
 		{
@@ -681,17 +681,17 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$sub must be object!"s);
 	}
 
-	void  jsonIsEq(vm& rmvm, vm_ctx& $)
+	void  jsonIsEq(vm& rmvm, vm_rel& $)
 	{
 		$.rel = $.sub == $.obj;
 	}
 
-	void  jsonIsNotEq(vm& rmvm, vm_ctx& $)
+	void  jsonIsNotEq(vm& rmvm, vm_rel& $)
 	{
 		$.rel = $.sub != $.obj;
 	}
 
-	void  jsonSum(vm& rmvm, vm_ctx& $)
+	void  jsonSum(vm& rmvm, vm_rel& $)
 	{
 		__int64	isum = 0;
 		double	dsum = 0.0;
@@ -725,7 +725,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj must be json array!"s);
 	}
 
-	void  jsonWhere(vm& rmvm, vm_ctx& $)
+	void  jsonWhere(vm& rmvm, vm_rel& $)
 	{
 		$.rel = json::array();		//	подготовка выходного массива
 
@@ -738,7 +738,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json	boolres;
-					rmvm.exec_ent(vm_ctx(boolres, it, boolres, $.ent, $.$), $.sub);
+					rmvm.objectify($.sub, vm_rel(boolres, it, boolres, $.ent, $.$));
 					if (boolres.is_boolean())
 						if (boolres.get<bool>())
 							$.rel.push_back(it);	//	фильтруем
@@ -751,7 +751,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj must be json array!"s);
 	}
 
-	void  jsonBelow(vm& rmvm, vm_ctx& $)	//	<
+	void  jsonBelow(vm& rmvm, vm_rel& $)	//	<
 	{
 		if ($.sub.type() == $.obj.type()) switch ($.obj.type())
 		{
@@ -786,7 +786,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		}
 	}
 
-	void  jsonGreater(vm& rmvm, vm_ctx& $)	//	>
+	void  jsonGreater(vm& rmvm, vm_rel& $)	//	>
 	{
 		if ($.sub.type() == $.obj.type()) switch ($.obj.type())
 		{
@@ -821,7 +821,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		}
 	}
 
-	void  jsonAnd(vm& rmvm, vm_ctx& $)
+	void  jsonAnd(vm& rmvm, vm_rel& $)
 	{
 		if ($.sub.is_boolean() && $.obj.is_boolean())
 			$.rel = $.sub.get<bool>() && $.obj.get<bool>();
@@ -829,7 +829,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			$.throw_json(__func__, "$obj and $sub must be boolean!"s);
 	}
 
-	void  if_rel_then_obj_else_sub(vm& rmvm, vm_ctx& $)
+	void  if_rel_then_obj_else_sub(vm& rmvm, vm_rel& $)
 	{
 		if (!$.rel.is_boolean())
 			$.throw_json(__func__, "$obj must be boolean!"s);
@@ -837,14 +837,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		try
 		{
 			if ($.rel.get<bool>())
-				rmvm.exec_ent($.$, $.obj);
+				rmvm.objectify($.obj, $.$);
 			else
-				rmvm.exec_ent($.$, $.sub);
+				rmvm.objectify($.sub, $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
-	void  if_rel_then_sub_else_obj(vm& rmvm, vm_ctx& $)
+	void  if_rel_then_sub_else_obj(vm& rmvm, vm_rel& $)
 	{
 		if (!$.rel.is_boolean())
 			$.throw_json(__func__, "$obj must be boolean!"s);
@@ -852,14 +852,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		try
 		{
 			if ($.rel.get<bool>())
-				rmvm.exec_ent($.$, $.sub);
+				rmvm.objectify($.sub, $.$);
 			else
-				rmvm.exec_ent($.$, $.obj);
+				rmvm.objectify($.obj, $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
-	void  IfObjTrueThenExecSub(vm& rmvm, vm_ctx& $)
+	void  IfObjTrueThenExecSub(vm& rmvm, vm_rel& $)
 	{
 		if (!$.obj.is_boolean())
 			$.throw_json(__func__, "$obj must be boolean!"s);
@@ -867,12 +867,12 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		try
 		{
 			if ($.obj.get<bool>())
-				rmvm.exec_ent($.$, $.sub);
+				rmvm.objectify($.sub, $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
-	void  IfObjFalseThenExecSub(vm& rmvm, vm_ctx& $)
+	void  IfObjFalseThenExecSub(vm& rmvm, vm_rel& $)
 	{
 		if (!$.obj.is_boolean())
 			$.throw_json(__func__, "$obj must be boolean!"s);
@@ -880,12 +880,12 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		try
 		{
 			if (!$.obj.get<bool>())
-				rmvm.exec_ent($.$, $.sub);
+				rmvm.objectify($.sub, $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 	}
 
-	void  ExecSubWhileObjTrue(vm& rmvm, vm_ctx& $)
+	void  ExecSubWhileObjTrue(vm& rmvm, vm_rel& $)
 	{
 		while (true)
 		{
@@ -893,13 +893,13 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			if (!$.obj.get<bool>()) return;
 			try
 			{
-				rmvm.exec_ent($.$, $.sub);
+				rmvm.objectify($.sub, $.$);
 			}
 			catch (json& j) { throw json({ { __func__, j} }); }
 		}
 	}
 
-	void  json_switch_bool(vm& rmvm, vm_ctx& $)
+	void  json_switch_bool(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_null())
 			return;
@@ -912,8 +912,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 
 		try
 		{
-			if ($.obj.get<bool>())	rmvm.exec_ent($.$, $.sub["true"]);
-			else	rmvm.exec_ent($.$, $.sub["false"]);
+			if ($.obj.get<bool>())	rmvm.objectify($.sub["true"], $.$);
+			else	rmvm.objectify($.sub["false"], $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -921,7 +921,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		catch (...) { $.throw_json(__func__, "unknown exception"s); }
 	}
 
-	void  json_switch_number(vm& rmvm, vm_ctx& $)
+	void  json_switch_number(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_null())
 			return;
@@ -941,9 +941,9 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 				key = to_string($.obj.get<json::number_integer_t>());
 
 			if ($.sub.count(key))
-				rmvm.exec_ent($.$, $.sub[key]);
+				rmvm.objectify($.sub[key], $.$);
 			else
-				rmvm.exec_ent($.$, $.sub["default"]);
+				rmvm.objectify($.sub["default"], $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -952,7 +952,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	}
 
 
-	void  json_switch_string(vm& rmvm, vm_ctx& $)
+	void  json_switch_string(vm& rmvm, vm_rel& $)
 	{
 		if ($.obj.is_null())
 			return;
@@ -965,8 +965,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 
 		try
 		{
-			if ($.sub.count($.obj.get_ref<string const&>())) rmvm.exec_ent($.$, $.sub[$.obj.get_ref<string const&>()]);
-			else rmvm.exec_ent($.$, $.sub["default"]);
+			if ($.sub.count($.obj.get_ref<string const&>())) rmvm.objectify($.sub[$.obj.get_ref<string const&>()], $.$);
+			else rmvm.objectify($.sub["default"], $.$);
 		}
 		catch (json& j) { throw json({ { __func__, j} }); }
 		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
@@ -975,33 +975,33 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	}
 
 
-	void  json_throw(vm& rmvm, vm_ctx& $) { throw $.obj; }
+	void  json_throw(vm& rmvm, vm_rel& $) { throw $.obj; }
 
 
-	void  json_catch(vm& rmvm, vm_ctx& $)
+	void  json_catch(vm& rmvm, vm_rel& $)
 	{
 		//	контекст EV относится к сущности внутри которой идёт проецирование объекта в субъект
 		//	проецируем во внешнем контексте
 		try
 		{
-			rmvm.exec_ent(vm_ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$), $.obj);
+			rmvm.objectify($.obj, vm_rel($.rel, $.$.obj, $.$.sub, $.$.ent, $.$));
 		}
 		catch (json& j)
 		{
 			$.rel = j;
-			rmvm.exec_ent(vm_ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$), $.sub);
+			rmvm.objectify($.sub, vm_rel($.rel, $.$.obj, $.$.sub, $.$.ent, $.$));
 		}
 	}
 
 
 #define define_object_method(object_method)										\
-		void  json_call_##object_method(vm& rmvm, vm_ctx& $)	\
+		void  json_call_##object_method(vm& rmvm, vm_rel& $)	\
 		{																		\
 			$.sub = $.obj.##object_method();									\
 		}
 
 #define define_static_method(static_method)										\
-		void  json_call_##static_method(vm& rmvm, vm_ctx& $)	\
+		void  json_call_##static_method(vm& rmvm, vm_rel& $)	\
 		{																		\
 			$.rel = json::##static_method();									\
 		}
@@ -1010,18 +1010,18 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		define_static_method(meta)
 		define_static_method(object)
 
-		void  json_call_null(vm& rmvm, vm_ctx& $)
+		void  json_call_null(vm& rmvm, vm_rel& $)
 	{
 		$.rel = json();
 	}
 
-	void  jsonPrint(vm& rmvm, vm_ctx& $)
+	void  jsonPrint(vm& rmvm, vm_rel& $)
 	{
 		cout << $.obj.dump(1) << endl;
 	}
 
 
-	void  jsonTAG(vm& rmvm, vm_ctx& $)
+	void  jsonTAG(vm& rmvm, vm_rel& $)
 	{
 		if (!$.sub.is_object())
 			$.throw_json(__func__, "$sub must be json object!"s);
@@ -1041,14 +1041,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		rmvm.objectify($.obj, vm_rel(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$));
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
 	}
 
 
-	void  jsonXML(vm& rmvm, vm_ctx& $)
+	void  jsonXML(vm& rmvm, vm_rel& $)
 	{
 		std::string res = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"s;
 
@@ -1072,14 +1072,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контекс itsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		rmvm.objectify($.obj, vm_rel(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$));
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
 	}
 
 
-	void  jsonHTML(vm& rmvm, vm_ctx& $)
+	void  jsonHTML(vm& rmvm, vm_rel& $)
 	{
 		std::string res = "<!DOCTYPE html>"s;
 
@@ -1103,7 +1103,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		rmvm.objectify($.obj, vm_rel(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$));
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1112,7 +1112,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	struct json_dump : public base_entity {
 		const json_pointer<json> path{ "/json/dump" };
 		const string description{ "Dump $obj to $sub" };
-		static void	view(vm& rmvm, vm_ctx& $) { $.sub = $.obj.dump(3); }
+		static void	view(vm& rmvm, vm_rel& $) { $.sub = $.obj.dump(3); }
 	};
 
 
@@ -1120,7 +1120,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 	struct steady_clock : public base_entity {
 		const json_pointer<json> path{ "/steady_clock/"s + name_t::str };
 		const string description{ "Sets $rel to time since epoch in "s + name_t::str };
-		static void	view(vm& rmvm, vm_ctx& $) {
+		static void	view(vm& rmvm, vm_rel& $) {
 			$.rel = chrono::duration_cast<duration_t>(chrono::steady_clock::now().time_since_epoch()).count();
 		}
 	};

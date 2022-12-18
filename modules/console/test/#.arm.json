@@ -1,0 +1,1676 @@
+{
+   "CalculateMeanValues" : {
+      "#/MeasValues" : {
+         "description" : "calculate mean values",
+         "$obj" : {
+            "$ref" : "#/MeasProcessed"
+         },
+         "$rel" : "foreachobj",
+         "$sub" : {
+            "$rel/param1" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param3"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param1"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq-200"
+               }
+            ],
+            "$rel/param6" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param4"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param6"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq0"
+               }
+            ],
+            "$rel/param11" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param5"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param11"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq0"
+               }
+            ],
+            "$rel/param7" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param8"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param7"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq0"
+               }
+            ],
+            "$rel/param12" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param12"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param13"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq0"
+               }
+            ],
+            "$rel/param9" : [
+               {
+                  "$rel/data" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param10"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/etalon" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param9"
+                     },
+                     "$rel" : "="
+                  },
+                  "$rel/meas_count" : {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$rel" : "#/CalcStatistic/NotEq0"
+               }
+            ],
+            "$rel/FileName" : {
+               "$obj" : {
+                  "$ref" : "$obj/FileName"
+               },
+               "$rel" : "="
+            },
+            "$rel/param2" : {
+               "$obj" : {
+                  "$ref" : "$obj/param2"
+               },
+               "$rel" : "="
+            },
+            "$rel/param37" : {
+               "$obj" : {
+                  "$ref" : "$obj/param37"
+               },
+               "$rel" : "="
+            }
+         }
+      }
+   },
+   "CalculateTotalValues" : {
+      "#/TotalValues" : {
+         "description" : "calculate total values",
+         "$obj" : {
+            "$ref" : "#/MeasValues"
+         },
+         "$rel" : {
+            "$rel/param1" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param1"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ],
+            "$rel/param6" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param6"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ],
+            "$rel/param11" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param11"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ],
+            "$rel/param7" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param7"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ],
+            "$rel/param12" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param12"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ],
+            "$rel/param9" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : {
+                     "$rel/array" : "foreachobj"
+                  },
+                  "$sub" : {
+                     "$obj" : {
+                        "$ref" : "$obj/param9"
+                     },
+                     "$rel" : "="
+                  }
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$rel/array"
+                  },
+                  "$rel" : "#/CalcStatistic/Mean"
+               }
+            ]
+         }
+      }
+   },
+   "PrepareFullReport" : [
+      "json/object",
+      {
+         "$obj" : {
+            "$ref" : "#/FileName"
+         },
+         "$rel" : "=",
+         "$sub" : {
+            "$ref" : "$rel/header/0/0"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "#/FullReportColumnsName"
+         },
+         "$rel" : "=",
+         "$sub" : {
+            "$ref" : "$rel/header/1"
+         }
+      },
+      {
+         "$rel/sequence" : {
+            "$obj" : {
+               "from" : 0,
+               "to" : 999
+            },
+            "$rel" : "sequence/integer"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/sequence"
+         },
+         "$rel" : {
+            "$rel/rows" : "foreachobj"
+         },
+         "$sub" : {
+            "$obj" : {
+               "$ref" : "$obj"
+            },
+            "$rel" : "get",
+            "$sub" : {
+               "$ref" : "#/MeasValues"
+            }
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/rows"
+         },
+         "$rel" : {
+            "$rel/body" : "foreachobj"
+         },
+         "$sub" : [
+            {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "is_null",
+               "$sub" : {
+                  "$ref" : "$rel/obj_is_null"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/obj_is_null"
+               },
+               "$rel" : "then",
+               "$sub" : {
+                  "$obj" : [
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null,
+                     null
+                  ],
+                  "$rel" : "=",
+                  "$sub" : {
+                     "$ref" : "$rel/result"
+                  }
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/obj_is_null"
+               },
+               "$rel" : "else",
+               "$sub" : {
+                  "$obj" : {
+                     "$ref" : "#/FullReportColumnsArray"
+                  },
+                  "$rel" : {
+                     "$rel/result" : "foreachobj"
+                  },
+                  "$sub" : [
+                     {
+                        "$rel/func" : {
+                           "$rel/$obj" : {
+                              "$obj" : {
+                                 "$ref" : "$obj"
+                              },
+                              "$rel" : "="
+                           },
+                           "$rel/$rel" : {
+                              "$obj" : {
+                                 "$ref" : "#/eq_entity_name"
+                              },
+                              "$rel" : "="
+                           }
+                        }
+                     },
+                     "$rel/func"
+                  ]
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/result"
+               },
+               "$rel" : "="
+            }
+         ]
+      },
+      {
+         "description" : "prepare full report arrays",
+         "$obj" : {
+            "$ref" : "$rel/body"
+         },
+         "$rel" : {
+            "#/FullReport" : "union"
+         },
+         "$sub" : {
+            "$ref" : "$rel/header"
+         }
+      }
+   ],
+   "FullReportColumnsArray" : [
+      "$$obj/FileName",
+      "$$obj/param11/meas_count",
+      "$$obj/param11/1",
+      "$$obj/param11/2",
+      "$$obj/param11/3",
+      "$$obj/param11/etalon",
+      "$$obj/param6/1",
+      "$$obj/param6/2",
+      "$$obj/param6/3",
+      "$$obj/param6/etalon",
+      "$$obj/param1/1",
+      "$$obj/param1/2",
+      "$$obj/param1/3",
+      "$$obj/param1/etalon",
+      "$$obj/param7/1",
+      "$$obj/param7/2",
+      "$$obj/param7/3",
+      "$$obj/param7/etalon",
+      "$$obj/param12/1",
+      "$$obj/param12/2",
+      "$$obj/param12/3",
+      "$$obj/param12/etalon",
+      "$$obj/param9/1",
+      "$$obj/param9/2",
+      "$$obj/param9/3",
+      "$$obj/param9/etalon",
+      "$$obj/param37",
+      "$$obj/param2"
+   ],
+   "FullReportColumnsName" : [
+      "FileName",
+      "param11/meas_count",
+      "param11/1",
+      "param11/2",
+      "param11/3",
+      "param11/etalon",
+      "param6/1",
+      "param6/2",
+      "param6/3",
+      "param6/etalon",
+      "param1/1",
+      "param1/2",
+      "param1/3",
+      "param1/etalon",
+      "param7/1",
+      "param7/2",
+      "param7/3",
+      "param7/etalon",
+      "param12/1",
+      "param12/2",
+      "param12/3",
+      "param12/etalon",
+      "param9/1",
+      "param9/2",
+      "param9/3",
+      "param9/etalon",
+      "param37",
+      "param2"
+   ],
+   "MeanValue" : [
+      {
+         "$rel/sum" : {
+            "$obj" : {
+               "$ref" : "$obj"
+            },
+            "$rel" : "sum"
+         },
+         "$rel/size" : {
+            "$obj" : {
+               "$ref" : "$obj"
+            },
+            "$rel" : "size"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/size"
+         },
+         "$rel" : {
+            "$rel/is_size_eq_zero" : "=="
+         },
+         "$sub" : 0
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/is_size_eq_zero"
+         },
+         "$rel" : "then",
+         "$sub" : {
+            "$rel/res" : "json/null"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/is_size_eq_zero"
+         },
+         "$rel" : "else",
+         "$sub" : {
+            "$obj" : {
+               "$ref" : "$rel/size"
+            },
+            "$rel" : {
+               "$rel/res" : ":"
+            },
+            "$sub" : {
+               "$ref" : "$rel/sum"
+            }
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/res"
+         },
+         "$rel" : "="
+      }
+   ],
+   "MeanNumber" : [
+      {
+         "$rel/data" : {
+            "$obj" : {
+               "$ref" : "$obj"
+            },
+            "$rel" : "where",
+            "$sub" : "is_number"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/data"
+         },
+         "$rel" : {
+            "$rel/sum" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "sum"
+            },
+            "$rel/size" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "size"
+            }
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/size"
+         },
+         "$rel" : {
+            "$rel/is_size_eq_zero" : "=="
+         },
+         "$sub" : {
+            "$ref" : "#/zero"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/is_size_eq_zero"
+         },
+         "$rel" : "then",
+         "$sub" : {
+            "$rel/res" : "json/null"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/is_size_eq_zero"
+         },
+         "$rel" : "else",
+         "$sub" : {
+            "$obj" : {
+               "$ref" : "$rel/size"
+            },
+            "$rel" : {
+               "$rel/res" : ":"
+            },
+            "$sub" : {
+               "$ref" : "$rel/sum"
+            }
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/res"
+         },
+         "$rel" : "="
+      }
+   ],
+   "WhereValueNotEq0" : {
+      "val" : 0,
+      "$obj" : {
+         "$ref" : "$obj"
+      },
+      "$rel" : "where",
+      "$sub" : [
+         {
+            "$rel/not_eq_val" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "!=",
+               "$sub" : {
+                  "$ref" : "$ent/val"
+               }
+            }
+         },
+         {
+            "$rel/not_null" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "is_not_null"
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel/not_eq_val"
+            },
+            "$rel" : "&&",
+            "$sub" : {
+               "$ref" : "$rel/not_null"
+            }
+         }
+      ]
+   },
+   "WhereValueNotEq-200" : {
+      "val" : -200,
+      "$obj" : {
+         "$ref" : "$obj"
+      },
+      "$rel" : "where",
+      "$sub" : [
+         {
+            "$rel/not_eq_val" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "!=",
+               "$sub" : {
+                  "$ref" : "$ent/val"
+               }
+            }
+         },
+         {
+            "$rel/not_null" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "is_not_null"
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel/not_eq_val"
+            },
+            "$rel" : "&&",
+            "$sub" : {
+               "$ref" : "$rel/not_null"
+            }
+         }
+      ]
+   },
+   "CalcStatistic" : {
+      "NotEq0" : [
+         {
+            "$rel/array" : {
+               "$obj" : {
+                  "$ref" : "$obj/data"
+               },
+               "$rel" : "#/WhereValueNotEq0"
+            },
+            "$rel/meas_count" : {
+               "$obj" : {
+                  "$ref" : "$obj/meas_count"
+               },
+               "$rel" : "="
+            },
+            "$rel/etalon" : {
+               "$obj" : {
+                  "$ref" : "$obj/etalon"
+               },
+               "$rel" : "="
+            },
+            "$rel/sqetalon" : {
+               "$obj" : {
+                  "$ref" : "$obj/etalon"
+               },
+               "$rel" : "*",
+               "$sub" : {
+                  "$ref" : "$obj/etalon"
+               }
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel/array"
+            },
+            "$rel" : {
+               "$rel/mean" : {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : "#/MeanValue"
+               },
+               "$rel/success_count" : {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : "size"
+               }
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel"
+            },
+            "$rel" : {
+               "$rel/delta" : {
+                  "$obj" : {
+                     "$ref" : "$obj/etalon"
+                  },
+                  "$rel" : "-",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/sqmean" : {
+                  "$obj" : {
+                     "$ref" : "$obj/mean"
+                  },
+                  "$rel" : "*",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/corr" : {
+                  "$obj" : {
+                     "$ref" : "$obj/etalon"
+                  },
+                  "$rel" : "*",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/1" : {
+                  "$obj" : 0,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               },
+               "$rel/2" : {
+                  "$obj" : 1,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               },
+               "$rel/3" : {
+                  "$obj" : 2,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               }
+            },
+            "get_at_or_null" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$sub"
+                  },
+                  "$rel" : "size"
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : ">"
+               },
+               {
+                  "$obj" : {
+                     "$obj" : {
+                        "$ref" : "$obj"
+                     },
+                     "$rel" : "get",
+                     "$sub" : {
+                        "$ref" : "$sub"
+                     }
+                  },
+                  "$rel" : "if_rel_then_obj_else_sub",
+                  "$sub" : "json/null"
+               }
+            ]
+         },
+         {
+            "" : "$rel",
+            "$rel/sqdelta" : {
+               "" : "*",
+               "$obj" : "$obj/delta",
+               "$sub" : "$obj/delta"
+            }
+         },
+         {
+            "key" : "array",
+            "$rel" : {
+               "$obj" : {
+                  "$ref" : "$ent/key"
+               },
+               "$rel" : "erase"
+            }
+         }
+      ],
+      "NotEq-200" : [
+         {
+            "$rel/array" : {
+               "$obj" : {
+                  "$ref" : "$obj/data"
+               },
+               "$rel" : "#/WhereValueNotEq-200"
+            },
+            "$rel/meas_count" : {
+               "$obj" : {
+                  "$ref" : "$obj/meas_count"
+               },
+               "$rel" : "="
+            },
+            "$rel/etalon" : {
+               "$obj" : {
+                  "$ref" : "$obj/etalon"
+               },
+               "$rel" : "="
+            },
+            "$rel/sqetalon" : {
+               "$obj" : {
+                  "$ref" : "$obj/etalon"
+               },
+               "$rel" : "*",
+               "$sub" : {
+                  "$ref" : "$obj/etalon"
+               }
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel/array"
+            },
+            "$rel" : {
+               "$rel/mean" : {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : "#/MeanValue"
+               },
+               "$rel/success_count" : {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : "size"
+               }
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel"
+            },
+            "$rel" : {
+               "$rel/delta" : {
+                  "$obj" : {
+                     "$ref" : "$obj/etalon"
+                  },
+                  "$rel" : "-",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/sqmean" : {
+                  "$obj" : {
+                     "$ref" : "$obj/mean"
+                  },
+                  "$rel" : "*",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/corr" : {
+                  "$obj" : {
+                     "$ref" : "$obj/etalon"
+                  },
+                  "$rel" : "*",
+                  "$sub" : {
+                     "$ref" : "$obj/mean"
+                  }
+               },
+               "$rel/1" : {
+                  "$obj" : 0,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               },
+               "$rel/2" : {
+                  "$obj" : 1,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               },
+               "$rel/3" : {
+                  "$obj" : 2,
+                  "$rel" : "$$ent/get_at_or_null",
+                  "$sub" : {
+                     "$ref" : "$obj/array"
+                  }
+               }
+            },
+            "get_at_or_null" : [
+               {
+                  "$obj" : {
+                     "$ref" : "$sub"
+                  },
+                  "$rel" : "size"
+               },
+               {
+                  "$obj" : {
+                     "$ref" : "$obj"
+                  },
+                  "$rel" : ">"
+               },
+               {
+                  "$obj" : {
+                     "$obj" : {
+                        "$ref" : "$obj"
+                     },
+                     "$rel" : "get",
+                     "$sub" : {
+                        "$ref" : "$sub"
+                     }
+                  },
+                  "$rel" : "if_rel_then_obj_else_sub",
+                  "$sub" : "json/null"
+               }
+            ]
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel"
+            },
+            "$rel" : {
+               "$rel/sqdelta" : {
+                  "$obj" : {
+                     "$ref" : "$obj/delta"
+                  },
+                  "$rel" : "*",
+                  "$sub" : {
+                     "$ref" : "$obj/delta"
+                  }
+               }
+            }
+         },
+         {
+            "key" : "array",
+            "$rel" : {
+               "$obj" : {
+                  "$ref" : "$ent/key"
+               },
+               "$rel" : "erase"
+            }
+         }
+      ],
+      "Mean" : [
+         {
+            "$rel/$obj/data" : {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "where",
+               "$sub" : {
+                  "$obj" : {
+                     "$ref" : "$obj/etalon"
+                  },
+                  "$rel" : "!=",
+                  "$sub" : {
+                     "$ref" : "#/fzero"
+                  }
+               }
+            }
+         },
+         {
+            "$obj" : {
+               "$ref" : "$rel/$obj/data"
+            },
+            "$rel" : {
+               "$rel/$obj" : {
+                  "$rel/mean" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/mean"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/meas_count" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/meas_count"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : "sum"
+                     }
+                  ],
+                  "$rel/success_count" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/success_count"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : "sum"
+                     }
+                  ],
+                  "$rel/etalon" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/etalon"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/delta" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/delta"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/corr" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/corr"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/sqmean" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/sqmean"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/sqetalon" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/sqetalon"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ],
+                  "$rel/sqdelta" : [
+                     {
+                        "$obj" : {
+                           "$ref" : "$obj"
+                        },
+                        "$rel" : {
+                           "$rel/array" : "foreachobj"
+                        },
+                        "$sub" : {
+                           "$obj" : {
+                              "$ref" : "$obj/sqdelta"
+                           },
+                           "$rel" : "="
+                        }
+                     },
+                     {
+                        "$obj" : {
+                           "$ref" : "$rel/array"
+                        },
+                        "$rel" : {
+                           "$ref" : "#/MeanNumber"
+                        }
+                     }
+                  ]
+               }
+            }
+         },
+         {
+            "procent" : 100.0,
+            "$obj" : {
+               "$ref" : "$rel/$obj"
+            },
+            "$rel" : {
+               "$rel/corr" : [
+                  {
+                     "$rel/mean_mul_mean" : {
+                        "$obj" : {
+                           "$ref" : "$obj/mean"
+                        },
+                        "$rel" : "*",
+                        "$sub" : {
+                           "$ref" : "$obj/mean"
+                        }
+                     },
+                     "$rel/etalon_mul_etalon" : {
+                        "$obj" : {
+                           "$ref" : "$obj/etalon"
+                        },
+                        "$rel" : "*",
+                        "$sub" : {
+                           "$ref" : "$obj/etalon"
+                        }
+                     },
+                     "$rel/mean_mul_etalon" : {
+                        "$obj" : {
+                           "$ref" : "$obj/mean"
+                        },
+                        "$rel" : "*",
+                        "$sub" : {
+                           "$ref" : "$obj/etalon"
+                        }
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/mean_mul_mean"
+                     },
+                     "$rel" : {
+                        "$rel/mean_mul_mean_sub_sqmean" : "-"
+                     },
+                     "$sub" : {
+                        "$ref" : "$obj/sqmean"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/etalon_mul_etalon"
+                     },
+                     "$rel" : {
+                        "$rel/etalon_mul_etalon_sub_sqetalon" : "-"
+                     },
+                     "$sub" : {
+                        "$ref" : "$obj/sqetalon"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/mean_mul_etalon"
+                     },
+                     "$rel" : {
+                        "$rel/mean_mul_etalon_sub_corr" : "-"
+                     },
+                     "$sub" : {
+                        "$ref" : "$obj/corr"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/mean_mul_mean_sub_sqmean"
+                     },
+                     "$rel" : {
+                        "$rel/mean_etalon_res" : "*"
+                     },
+                     "$sub" : {
+                        "$ref" : "$rel/etalon_mul_etalon_sub_sqetalon"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/mean_etalon_res"
+                     },
+                     "$rel" : "sqrt",
+                     "$sub" : {
+                        "$ref" : "$rel/denominator"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/denominator"
+                     },
+                     "$rel" : ":",
+                     "$sub" : {
+                        "$ref" : "$rel/mean_mul_etalon_sub_corr"
+                     }
+                  }
+               ],
+               "$rel/sqdelta" : [
+                  {
+                     "$obj" : {
+                        "$ref" : "$obj/delta"
+                     },
+                     "$rel" : {
+                        "$rel/delta_sq" : "*"
+                     },
+                     "$sub" : {
+                        "$ref" : "$obj/delta"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$rel/delta_sq"
+                     },
+                     "$rel" : "-",
+                     "$sub" : {
+                        "$ref" : "$obj/sqdelta"
+                     }
+                  },
+                  {
+                     "$rel" : "sqrt"
+                  }
+               ],
+               "$rel/success_count" : [
+                  {
+                     "$obj" : {
+                        "$ref" : "$obj/success_count"
+                     },
+                     "$rel" : "float",
+                     "$sub" : {
+                        "$ref" : "$rel/success_float"
+                     }
+                  },
+                  {
+                     "$obj" : {
+                        "$ref" : "$obj/meas_count"
+                     },
+                     "$rel" : ":",
+                     "$sub" : {
+                        "$ref" : "$rel/success_float"
+                     }
+                  },
+                  {
+                     "$rel" : "*",
+                     "$sub" : {
+                        "$ref" : "$ent/procent"
+                     }
+                  }
+               ],
+               "$rel/delta" : {
+                  "$obj" : {
+                     "$ref" : "$obj/delta"
+                  },
+                  "$rel" : "="
+               },
+               "$rel/meas_count" : {
+                  "$obj" : {
+                     "$ref" : "$obj/meas_count"
+                  },
+                  "$rel" : "="
+               }
+            }
+         },
+         {
+            "key" : "$obj",
+            "$rel" : {
+               "$obj" : {
+                  "$ref" : "$ent/key"
+               },
+               "$rel" : "erase"
+            }
+         }
+      ]
+   },
+   "FileNameSplitter" : ".",
+   "FileName" : "full_report.json",
+   "zero" : 0,
+   "fzero" : 0.0,
+   "csv_splitter" : ";",
+   "folder_splitter" : "\\",
+   "empty_splitter" : "",
+   "eq_entity_name" : "=",
+   "config" : {
+      "FullReportNamePrefix" : "full_report_data",
+      "ShortReportNamePrefix" : "short_report_data",
+      "ReportNamePostfix" : "csv",
+      "OutputFolder" : ".\\"
+   },
+   "SaveFullReport2" : [
+      {
+         "<<" : "#/FullReport",
+         "$rel/Report" : "foreachobj",
+         ">>" : {
+            "<<" : "#/csv_splitter",
+            "$rel" : "string/join",
+            ">>" : "$obj"
+         }
+      },
+      {
+         "$rel/FileInfo/PathFolder" : {
+            "$obj" : {
+               "$ref" : "#/config/OutputFolder"
+            },
+            "$rel" : "="
+         },
+         "$rel/FileInfo/FileName" : [
+            {
+               "$rel/0" : {
+                  "$obj" : {
+                     "$ref" : "#/config/FullReportNamePrefix"
+                  },
+                  "$rel" : "="
+               },
+               "$rel/1" : {
+                  "$obj" : {
+                     "$ref" : "#/config/ReportNamePostfix"
+                  },
+                  "$rel" : "="
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "#/FileNameSplitter"
+               },
+               "$rel" : "string/join"
+            }
+         ]
+      }
+   ],
+   "SaveShortReport2" : [
+      "json/object",
+      {
+         "$obj" : [
+            "Parameter",
+            "Average",
+            "StandardDeviation",
+            "Correlation",
+            "Successful",
+            "MeasCount"
+         ],
+         "$rel" : "=",
+         "$sub" : {
+            "$ref" : "$rel/header/0"
+         }
+      },
+      {
+         "$obj" : [ "param11", "param6", "param1", "param7", "param12", "param9" ],
+         "$rel" : {
+            "$rel/body" : "foreachobj"
+         },
+         "$sub" : [
+            {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : {
+                  "$rel/vals" : "get"
+               },
+               "$sub" : {
+                  "$ref" : "#/TotalValues"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$obj"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/0"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/vals/delta"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/1"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/vals/sqdelta"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/2"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/vals/corr"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/3"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/vals/success_count"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/4"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/vals/meas_count"
+               },
+               "$rel" : "=",
+               "$sub" : {
+                  "$ref" : "$rel/col/5"
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "$rel/col"
+               },
+               "$rel" : "="
+            }
+         ]
+      },
+      {
+         "$obj" : {
+            "$ref" : "$rel/body"
+         },
+         "$rel" : {
+            "#/ShortReport" : "union"
+         },
+         "$sub" : {
+            "$ref" : "$rel/header"
+         }
+      },
+      {
+         "$obj" : {
+            "$ref" : "#/ShortReport"
+         },
+         "$rel" : {
+            "$rel/Report" : "foreachobj"
+         },
+         "$sub" : {
+            "$obj" : {
+               "$ref" : "#/csv_splitter"
+            },
+            "$rel" : "string/join",
+            "$sub" : {
+               "$ref" : "$obj"
+            }
+         }
+      },
+      {
+         "$rel/FileInfo/PathFolder" : {
+            "$obj" : {
+               "$ref" : "#/config/OutputFolder"
+            },
+            "$rel" : "="
+         },
+         "$rel/FileInfo/FileName" : [
+            {
+               "$rel/0" : {
+                  "$obj" : {
+                     "$ref" : "#/config/ShortReportNamePrefix"
+                  },
+                  "$rel" : "="
+               },
+               "$rel/1" : {
+                  "$obj" : {
+                     "$ref" : "#/config/ReportNamePostfix"
+                  },
+                  "$rel" : "="
+               }
+            },
+            {
+               "$obj" : {
+                  "$ref" : "#/FileNameSplitter"
+               },
+               "$rel" : "string/join"
+            }
+         ]
+      }
+   ]
+}

@@ -79,8 +79,8 @@ TEST_CASE("absolute addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    vm_rel $(res, root[""]);
+    root.objectify(root[""], $);
     cout << res.dump(2) << endl;
     
     CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -100,8 +100,8 @@ TEST_CASE("relative addressing in rmodel") {
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
     in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    vm_rel $(res, root[""]);
+    root.objectify(root[""], $);
     cout << res.dump(2) << endl;
     
     CHECK(res["$$$$ent"]["id"].get_ref<string&>() == "$$$$ent/id"s);
@@ -140,8 +140,8 @@ TEST_CASE("testing call version.json") {
         REQUIRE(in.good());
         in >> root[""];
         
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        vm_rel $(res, root[""]);
+        root.objectify(root[""], $);
         CHECK(res["rmvm_version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __func__, j } }); }
@@ -166,8 +166,8 @@ TEST_CASE("testing base entity 'where'") {
         REQUIRE(in.good());
         in >> root[""];
 
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        vm_rel $(res, root[""]);
+        root.objectify(root[""], $);
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }
@@ -190,7 +190,7 @@ TEST_CASE("performance test") {
     //	base vocabulary
     import_relations_model_to(root);
     json    res;
-    cout << root.exec_ent(res, json("performance")).dump(2);
+    cout << root.objectify(json("performance"), res).dump(2);
     CHECK(res["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
     CHECK(res["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
     CHECK(res["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);

@@ -1,0 +1,19 @@
+{
+   "2 уровня" : {
+      "#" : {
+         "$ref" : "#[RVM[load[dll]]]",
+         "PathFolder" : ".\\",
+         "FileName" : "fs.rm.dll",
+         "error" : "#[additional_rm_loaded[fs.rm.dll]]"
+      }
+   },
+   "4 уровня" : {
+      "#" : {
+         "#[RVM[load[dll]]]" : {
+            "PathFolder" : ".\\",
+            "FileName" : "fs.rm.dll",
+            "error" : "#[additional_rm_loaded[fs.rm.dll]]"
+         }
+      }
+   }
+}

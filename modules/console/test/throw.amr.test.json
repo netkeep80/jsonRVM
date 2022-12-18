@@ -1,0 +1,4 @@
+{
+   "$ref" : "throw",
+   "text" : "this is a text of exception"
+}

@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		cout << root.exec_ent(res, json(entry_point)).dump(2);
+		cout << root.objectify(json(entry_point), res).dump(2);
 		return 0;	//	ok
 	}
 	catch (json& j)

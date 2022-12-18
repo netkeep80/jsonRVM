@@ -1,0 +1,4 @@
+{
+  "$rel/rmvm_version" : "rmvm/version",
+  "$rel/meta" : "json/meta"
+}

@@ -100,7 +100,7 @@ namespace nlohmann
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void  fs_dir_scan(vm& rmvm, vm_ctx& $)
+void  fs_dir_scan(vm& rmvm, vm_rel& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__func__, "$obj must be json object with PathFolder and FileNameFormat properties!" );
@@ -135,7 +135,7 @@ void  fs_dir_scan(vm& rmvm, vm_ctx& $)
 
 }
 
-void  fs_dir_create(vm& rmvm, vm_ctx& $)
+void  fs_dir_create(vm& rmvm, vm_rel& $)
 {
 	if (!$.obj.is_string())
 		$.throw_json(__func__, "$obj must be json string with PathName!" );
@@ -144,7 +144,7 @@ void  fs_dir_create(vm& rmvm, vm_ctx& $)
 	$.sub = bool(CreateDirectoryA(PathName.c_str(), nullptr));
 }
 
-void  fs_dir_delete(vm& rmvm, vm_ctx& $)
+void  fs_dir_delete(vm& rmvm, vm_rel& $)
 {
 	if (!$.obj.is_string())
 		$.throw_json(__func__, "$obj must be json string with PathName!" );
@@ -153,7 +153,7 @@ void  fs_dir_delete(vm& rmvm, vm_ctx& $)
 	$.sub = bool(RemoveDirectoryA(PathName.c_str()));
 }
 
-void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
+void  fs_file_load_rm(vm& rmvm, vm_rel& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
@@ -180,7 +180,7 @@ void  fs_file_load_rm(vm& rmvm, vm_ctx& $)
 		$.rel = false;
 }
 
-void  fs_file_read_json(vm& rmvm, vm_ctx& $)
+void  fs_file_read_json(vm& rmvm, vm_rel& $)
 {
 	if (!$.obj.is_object())
 		$.throw_json(__func__, "$obj must be json object with PathFolder and FileName properties!" );
@@ -201,7 +201,7 @@ void  fs_file_read_json(vm& rmvm, vm_ctx& $)
 
 }
 
-void  jsonFileToString(vm& rmvm, vm_ctx& $)
+void  jsonFileToString(vm& rmvm, vm_rel& $)
 {
 	$.sub = json();
 
@@ -230,7 +230,7 @@ void  jsonFileToString(vm& rmvm, vm_ctx& $)
 	$.rel = false;
 }
 
-void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
+void  jsonFileToStringArray(vm& rmvm, vm_rel& $)
 {
 	if ($.obj.is_object())
 	{
@@ -272,7 +272,7 @@ void  jsonFileToStringArray(vm& rmvm, vm_ctx& $)
 	$.throw_json(__func__, "$obj must be json object with PathFolder and FileName property!" );
 }
 
-void  jsonStringArrayToFile(vm& rmvm, vm_ctx& $)
+void  jsonStringArrayToFile(vm& rmvm, vm_rel& $)
 {
 	if ($.obj.is_object() && $.sub.is_array())
 	{
@@ -301,7 +301,7 @@ void  jsonStringArrayToFile(vm& rmvm, vm_ctx& $)
 		$.throw_json(__func__, "$obj must be object and $sub must be array!" );
 }
 
-void  fs_file_write_json(vm& rmvm, vm_ctx& $)
+void  fs_file_write_json(vm& rmvm, vm_rel& $)
 {
 	if ($.obj.is_object())
 	{
@@ -327,7 +327,7 @@ void  fs_file_write_json(vm& rmvm, vm_ctx& $)
 }
 
 
-void  jsonToFiles(vm& rmvm, vm_ctx& $)
+void  jsonToFiles(vm& rmvm, vm_rel& $)
 {
 	$.rel = json::array();
 
@@ -412,7 +412,7 @@ void  jsonToFiles(vm& rmvm, vm_ctx& $)
 }
 
 
-void	rmvm_dump(vm& rmvm, vm_ctx& $)
+void	rmvm_dump(vm& rmvm, vm_rel& $)
 {
 	string filename = "rmvm.dump.json";
 	std::ofstream out(filename);

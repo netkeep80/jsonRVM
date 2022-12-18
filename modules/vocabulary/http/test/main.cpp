@@ -148,8 +148,8 @@ TEST_CASE("Test http://localhost:8080/hi") {
 )");
 
 	json    res;
-	vm_ctx $(res, root[""]);
-	root.exec_ent($, root[""]);
+	vm_rel $(res, root[""]);
+	root.objectify(root[""], $);
 	cout << res.dump(2) << endl;
 
 	CHECK(res["body"].get_ref<string&>() == "Hello World!\n"s);
