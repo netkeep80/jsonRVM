@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Пространство имен rm</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -25,33 +25,34 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td id="projectalign">
    <div id="projectname">jsonRVM
    </div>
-   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.17 -->
+<!-- Создано системой Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -65,7 +66,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -79,9 +80,16 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="header">
@@ -90,26 +98,29 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 <a href="#typedef-members">Определения типов</a> &#124;
 <a href="#func-members">Функции</a> &#124;
 <a href="#var-members">Переменные</a>  </div>
-  <div class="headertitle">
-<div class="title">Пространство имен rm</div>  </div>
+  <div class="headertitle"><div class="title">Пространство имен rm</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Классы</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1base__entity.html">base_entity</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1callctx.html">callctx</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html">database_api</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Абстрактный интерфейс для работы с сущностями базы данных через JSON.  <a href="classrm_1_1database__api.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1_d_l_l.html">DLL</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1_d_l_ls.html">DLLs</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Менеджер загрузки и управления DLL-библиотеками для расширения функционала RVM.  <a href="classrm_1_1_d_l_ls.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1file__database__t.html">file_database_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Реализация файловой базы данных для хранения сущностей в формате JSON.  <a href="classrm_1_1file__database__t.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1interface__t.html">interface_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Базовый шаблонный класс для реализации статического полиморфизма через CRTP.  <a href="classrm_1_1interface__t.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1json__dump.html">json_dump</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,197 +143,202 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1type__pair__null.html">type_pair_null</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html">vm</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Виртуальная машина для выполнения отношений (сущностей), представленных в формате JSON.  <a href="classrm_1_1vm.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контекст выполнения для работы с сущностями в виртуальной машине отношений  <a href="structrm_1_1vm__ctx.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Определения типов</h2></td></tr>
-<tr class="memitem:a89a608ae2bcb4c994d843008354fe993"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> = void(*)(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
-<tr class="separator:a89a608ae2bcb4c994d843008354fe993"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a870ad9b4a90cbda34085a4bf43ba0800"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">binary_view_map_t</a> = map&lt; json const  *, <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> &gt;</td></tr>
-<tr class="separator:a870ad9b4a90cbda34085a4bf43ba0800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac469421ec7c50b1fb7a3d71bd5384bfd" id="r_ac469421ec7c50b1fb7a3d71bd5384bfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">binary_view</a> = <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>(*)(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="separator:ac469421ec7c50b1fb7a3d71bd5384bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa1490c3e06b36d948389de0c518965e" id="r_aaa1490c3e06b36d948389de0c518965e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aaa1490c3e06b36d948389de0c518965e">binary_view_map_t</a> = map&lt; json <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> *, <a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">binary_view</a> &gt;</td></tr>
+<tr class="separator:aaa1490c3e06b36d948389de0c518965e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:a22f84d438e39fcc290c63f67580a395e"><td class="memTemplParams" colspan="2">template&lt;size_t size&gt; </td></tr>
-<tr class="memitem:a22f84d438e39fcc290c63f67580a395e"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">str_size</a> (const char(&amp;str)[size])</td></tr>
+<tr class="memitem:a22f84d438e39fcc290c63f67580a395e" id="r_a22f84d438e39fcc290c63f67580a395e"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> size&gt; </td></tr>
+<tr class="memitem:a22f84d438e39fcc290c63f67580a395e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">str_size</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a>(&amp;str)[size])</td></tr>
 <tr class="separator:a22f84d438e39fcc290c63f67580a395e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04361b6c2ec93d40270af30bdde86ffc"><td class="memTemplParams" colspan="2">template&lt;size_t size&gt; </td></tr>
-<tr class="memitem:a04361b6c2ec93d40270af30bdde86ffc"><td class="memTemplItemLeft" align="right" valign="top">constexpr auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">selch</a> (const char(&amp;str)[size], const size_t index)</td></tr>
+<tr class="memitem:a04361b6c2ec93d40270af30bdde86ffc" id="r_a04361b6c2ec93d40270af30bdde86ffc"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> size&gt; </td></tr>
+<tr class="memitem:a04361b6c2ec93d40270af30bdde86ffc"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">selch</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a>(&amp;str)[size], <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">index</a>)</td></tr>
 <tr class="separator:a04361b6c2ec93d40270af30bdde86ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15d07b40b1a6cd0b250ac67c328f9739"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739">operator^</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a15d07b40b1a6cd0b250ac67c328f9739" id="r_a15d07b40b1a6cd0b250ac67c328f9739"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739">operator^</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a15d07b40b1a6cd0b250ac67c328f9739"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a569610ab133b63e65d75117d023e1841"><td class="memTemplParams" colspan="2">template&lt;typename type_t &gt; </td></tr>
-<tr class="memitem:a569610ab133b63e65d75117d023e1841"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a569610ab133b63e65d75117d023e1841">diff_operation</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a569610ab133b63e65d75117d023e1841" id="r_a569610ab133b63e65d75117d023e1841"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">typename</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">type_t</a> &gt; </td></tr>
+<tr class="memitem:a569610ab133b63e65d75117d023e1841"><td class="memTemplItemLeft" align="right" valign="top">json&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacerm.html#a569610ab133b63e65d75117d023e1841">diff_operation</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a569610ab133b63e65d75117d023e1841"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69cf30fab0c837bfeaa88a4104f06451"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451">xor_array</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a69cf30fab0c837bfeaa88a4104f06451" id="r_a69cf30fab0c837bfeaa88a4104f06451"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451">xor_array</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a69cf30fab0c837bfeaa88a4104f06451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4f545644d118c245b1419230531b8a3"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab4f545644d118c245b1419230531b8a3">xor_boolean</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:ab4f545644d118c245b1419230531b8a3" id="r_ab4f545644d118c245b1419230531b8a3"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab4f545644d118c245b1419230531b8a3">xor_boolean</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:ab4f545644d118c245b1419230531b8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7cc5feec3915758e93087ccd4e8a4d8"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8">xor_number_float</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:ae7cc5feec3915758e93087ccd4e8a4d8" id="r_ae7cc5feec3915758e93087ccd4e8a4d8"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8">xor_number_float</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:ae7cc5feec3915758e93087ccd4e8a4d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a254f59bf6ede298fe8de9f6fbb5382f3"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3">xor_number_integer</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a254f59bf6ede298fe8de9f6fbb5382f3" id="r_a254f59bf6ede298fe8de9f6fbb5382f3"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3">xor_number_integer</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a254f59bf6ede298fe8de9f6fbb5382f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cc2095b8cd319edba3adc57d6af8b94"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94">xor_number_unsigned</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a6cc2095b8cd319edba3adc57d6af8b94" id="r_a6cc2095b8cd319edba3adc57d6af8b94"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94">xor_number_unsigned</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a6cc2095b8cd319edba3adc57d6af8b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a11d0b2546e178925bb6352cb7329f7"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7">xor_object</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a9a11d0b2546e178925bb6352cb7329f7" id="r_a9a11d0b2546e178925bb6352cb7329f7"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7">xor_object</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a9a11d0b2546e178925bb6352cb7329f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aab555663930f470888fc81d8a33459"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a3aab555663930f470888fc81d8a33459">xor_string</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a3aab555663930f470888fc81d8a33459" id="r_a3aab555663930f470888fc81d8a33459"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a3aab555663930f470888fc81d8a33459">xor_string</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a3aab555663930f470888fc81d8a33459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a4003479b4ae7071bb2f472d77c0d48"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7a4003479b4ae7071bb2f472d77c0d48">value_xor_array</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a7a4003479b4ae7071bb2f472d77c0d48" id="r_a7a4003479b4ae7071bb2f472d77c0d48"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7a4003479b4ae7071bb2f472d77c0d48">value_xor_array</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a7a4003479b4ae7071bb2f472d77c0d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ae12d755f25ecbb79359e21c2765fa7"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7ae12d755f25ecbb79359e21c2765fa7">array_xor_value</a> (const json &amp;a, const json &amp;b)</td></tr>
+<tr class="memitem:a7ae12d755f25ecbb79359e21c2765fa7" id="r_a7ae12d755f25ecbb79359e21c2765fa7"><td class="memItemLeft" align="right" valign="top">json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7ae12d755f25ecbb79359e21c2765fa7">array_xor_value</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">a</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">b</a>)</td></tr>
 <tr class="separator:a7ae12d755f25ecbb79359e21c2765fa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aedad2d281b11c88b6b08e410ff879d2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e">sleep_ms</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
-<tr class="memdesc:aedad2d281b11c88b6b08e410ff879d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Усыпляет этот поток на $.obj миллисекунд  <a href="namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e">Подробнее...</a><br /></td></tr>
+<tr class="memitem:aedad2d281b11c88b6b08e410ff879d2e" id="r_aedad2d281b11c88b6b08e410ff879d2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e">sleep_ms</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memdesc:aedad2d281b11c88b6b08e410ff879d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Усыпляет этот поток на $.obj миллисекунд  <br /></td></tr>
 <tr class="separator:aedad2d281b11c88b6b08e410ff879d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8a155b58bb443ca3bf6fe104c3c1ae4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab8a155b58bb443ca3bf6fe104c3c1ae4">jsonCopy</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ab8a155b58bb443ca3bf6fe104c3c1ae4" id="r_ab8a155b58bb443ca3bf6fe104c3c1ae4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab8a155b58bb443ca3bf6fe104c3c1ae4">jsonCopy</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ab8a155b58bb443ca3bf6fe104c3c1ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a70128400bca2b41cd1448f2d48879b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7a70128400bca2b41cd1448f2d48879b">jsonView</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a7a70128400bca2b41cd1448f2d48879b" id="r_a7a70128400bca2b41cd1448f2d48879b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7a70128400bca2b41cd1448f2d48879b">jsonView</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a7a70128400bca2b41cd1448f2d48879b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e0fa9654f7cf9a6a134a04ef2e32fa0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a3e0fa9654f7cf9a6a134a04ef2e32fa0">jsonXOR</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a3e0fa9654f7cf9a6a134a04ef2e32fa0" id="r_a3e0fa9654f7cf9a6a134a04ef2e32fa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a3e0fa9654f7cf9a6a134a04ef2e32fa0">jsonXOR</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a3e0fa9654f7cf9a6a134a04ef2e32fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c7d0997ec99952a5d349c066811b0d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a1c7d0997ec99952a5d349c066811b0d1">OP_BODY</a> (Add,+)</td></tr>
+<tr class="memitem:a1c7d0997ec99952a5d349c066811b0d1" id="r_a1c7d0997ec99952a5d349c066811b0d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a1c7d0997ec99952a5d349c066811b0d1">OP_BODY</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Add</a>,+)</td></tr>
 <tr class="separator:a1c7d0997ec99952a5d349c066811b0d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4fcc532b37ac2ea771815afa4863e58"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#af4fcc532b37ac2ea771815afa4863e58">OP_BODY</a> (Substract, -)</td></tr>
+<tr class="memitem:af4fcc532b37ac2ea771815afa4863e58" id="r_af4fcc532b37ac2ea771815afa4863e58"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#af4fcc532b37ac2ea771815afa4863e58">OP_BODY</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Substract</a>, -)</td></tr>
 <tr class="separator:af4fcc532b37ac2ea771815afa4863e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbcfcac92c7390f35866ff7afe1903e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5">OP_BODY</a> (Mul, *)</td></tr>
+<tr class="memitem:abbcfcac92c7390f35866ff7afe1903e5" id="r_abbcfcac92c7390f35866ff7afe1903e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5">OP_BODY</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Mul</a>, *)</td></tr>
 <tr class="separator:abbcfcac92c7390f35866ff7afe1903e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a384e283e71b6a3106bc525bbaa4109c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a384e283e71b6a3106bc525bbaa4109c0">OP_BODY</a> (Div,/)</td></tr>
+<tr class="memitem:a384e283e71b6a3106bc525bbaa4109c0" id="r_a384e283e71b6a3106bc525bbaa4109c0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a384e283e71b6a3106bc525bbaa4109c0">OP_BODY</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Div</a>,/)</td></tr>
 <tr class="separator:a384e283e71b6a3106bc525bbaa4109c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a840659979cba1959c9357e267adc4f09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a840659979cba1959c9357e267adc4f09">jsonPower</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a840659979cba1959c9357e267adc4f09" id="r_a840659979cba1959c9357e267adc4f09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a840659979cba1959c9357e267adc4f09">jsonPower</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a840659979cba1959c9357e267adc4f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a548173288c7fdfc99bcb350a593a7d26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a548173288c7fdfc99bcb350a593a7d26">jsonSqrt</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a548173288c7fdfc99bcb350a593a7d26" id="r_a548173288c7fdfc99bcb350a593a7d26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a548173288c7fdfc99bcb350a593a7d26">jsonSqrt</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a548173288c7fdfc99bcb350a593a7d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b3d88d76d9835a265f4c71ac7714f89"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9b3d88d76d9835a265f4c71ac7714f89">jsonForEachObject</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a9b3d88d76d9835a265f4c71ac7714f89" id="r_a9b3d88d76d9835a265f4c71ac7714f89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9b3d88d76d9835a265f4c71ac7714f89">jsonForEachObject</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a9b3d88d76d9835a265f4c71ac7714f89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e9903438fcb955c0fd16b33ad367dcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a0e9903438fcb955c0fd16b33ad367dcc">jsonForEachSubject</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a0e9903438fcb955c0fd16b33ad367dcc" id="r_a0e9903438fcb955c0fd16b33ad367dcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a0e9903438fcb955c0fd16b33ad367dcc">jsonForEachSubject</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a0e9903438fcb955c0fd16b33ad367dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeba83c1422275879189f6cefb041ce4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeba83c1422275879189f6cefb041ce4f">jsonSize</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aeba83c1422275879189f6cefb041ce4f" id="r_aeba83c1422275879189f6cefb041ce4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeba83c1422275879189f6cefb041ce4f">jsonSize</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aeba83c1422275879189f6cefb041ce4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c5a8f6ee20ae36c79742e2ab055f759"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6c5a8f6ee20ae36c79742e2ab055f759">json_is_not_null</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a6c5a8f6ee20ae36c79742e2ab055f759" id="r_a6c5a8f6ee20ae36c79742e2ab055f759"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6c5a8f6ee20ae36c79742e2ab055f759">json_is_not_null</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a6c5a8f6ee20ae36c79742e2ab055f759"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd8c8701c11203b3207ae27f3c1be215"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#acd8c8701c11203b3207ae27f3c1be215">define_json_is_type</a> (array) define_json_is_type(boolean) define_json_is_type(number_float) define_json_is_type(number_integer) define_json_is_type(number_unsigned) define_json_is_type(null) define_json_is_type(number) define_json_is_type(object) define_json_is_type(string) define_json_is_type(structured) define_json_is_type(discarded) void jsonIntegerSequence(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm</td></tr>
+<tr class="memitem:acd8c8701c11203b3207ae27f3c1be215" id="r_acd8c8701c11203b3207ae27f3c1be215"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#acd8c8701c11203b3207ae27f3c1be215">define_json_is_type</a> (array) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">boolean</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">number_float</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">number_integer</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">number_unsigned</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">null</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">number</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">object</a>) define_json_is_type(string) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">structured</a>) define_json_is_type(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">discarded</a>) <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">jsonIntegerSequence</a>(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a></td></tr>
 <tr class="separator:acd8c8701c11203b3207ae27f3c1be215"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a610895365f144e89242ce3837b38bac2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a610895365f144e89242ce3837b38bac2">jsonUnion</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
-<tr class="separator:a610895365f144e89242ce3837b38bac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5defc52892523ef4bfdbc289829a45ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a5defc52892523ef4bfdbc289829a45ef">jsonNull</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a6d8db490ef02f03cd83cf66e0b1f2470" id="r_a6d8db490ef02f03cd83cf66e0b1f2470"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6d8db490ef02f03cd83cf66e0b1f2470">jsonUnion</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="separator:a6d8db490ef02f03cd83cf66e0b1f2470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5defc52892523ef4bfdbc289829a45ef" id="r_a5defc52892523ef4bfdbc289829a45ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a5defc52892523ef4bfdbc289829a45ef">jsonNull</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a5defc52892523ef4bfdbc289829a45ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06d7b66ce8c6bf479f32819a4a42e58f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a06d7b66ce8c6bf479f32819a4a42e58f">jsonInt32</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a06d7b66ce8c6bf479f32819a4a42e58f" id="r_a06d7b66ce8c6bf479f32819a4a42e58f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a06d7b66ce8c6bf479f32819a4a42e58f">jsonInt32</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a06d7b66ce8c6bf479f32819a4a42e58f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab629d4095b04549a49316cad0007814"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aab629d4095b04549a49316cad0007814">jsonDouble</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aab629d4095b04549a49316cad0007814" id="r_aab629d4095b04549a49316cad0007814"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aab629d4095b04549a49316cad0007814">jsonDouble</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aab629d4095b04549a49316cad0007814"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb5d0f9dc335300ab90fd120766b8a8f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeb5d0f9dc335300ab90fd120766b8a8f">string_string</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aeb5d0f9dc335300ab90fd120766b8a8f" id="r_aeb5d0f9dc335300ab90fd120766b8a8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeb5d0f9dc335300ab90fd120766b8a8f">string_string</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aeb5d0f9dc335300ab90fd120766b8a8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab741bc596a21e84aace52e0d93673a49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab741bc596a21e84aace52e0d93673a49">string_add</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ab741bc596a21e84aace52e0d93673a49" id="r_ab741bc596a21e84aace52e0d93673a49"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab741bc596a21e84aace52e0d93673a49">string_add</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ab741bc596a21e84aace52e0d93673a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00a5e4a100e2a9f6489e5149c8f71a08"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a00a5e4a100e2a9f6489e5149c8f71a08">string_find</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a00a5e4a100e2a9f6489e5149c8f71a08" id="r_a00a5e4a100e2a9f6489e5149c8f71a08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a00a5e4a100e2a9f6489e5149c8f71a08">string_find</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a00a5e4a100e2a9f6489e5149c8f71a08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a957afd2d67c0db553e366a64c62eaf50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a957afd2d67c0db553e366a64c62eaf50">string_split</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a957afd2d67c0db553e366a64c62eaf50" id="r_a957afd2d67c0db553e366a64c62eaf50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a957afd2d67c0db553e366a64c62eaf50">string_split</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a957afd2d67c0db553e366a64c62eaf50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba9312ddda9207734b5c41ea6642af0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aba9312ddda9207734b5c41ea6642af0f">string_join</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aba9312ddda9207734b5c41ea6642af0f" id="r_aba9312ddda9207734b5c41ea6642af0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aba9312ddda9207734b5c41ea6642af0f">string_join</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aba9312ddda9207734b5c41ea6642af0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb5b7a77d9d6037a1087d03be71a31c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeb5b7a77d9d6037a1087d03be71a31c7">jsonGet</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aeb5b7a77d9d6037a1087d03be71a31c7" id="r_aeb5b7a77d9d6037a1087d03be71a31c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aeb5b7a77d9d6037a1087d03be71a31c7">jsonGet</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aeb5b7a77d9d6037a1087d03be71a31c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7a35e03d7a3bd1804ded3761cf9d3b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab7a35e03d7a3bd1804ded3761cf9d3b6">jsonSet</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ab7a35e03d7a3bd1804ded3761cf9d3b6" id="r_ab7a35e03d7a3bd1804ded3761cf9d3b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab7a35e03d7a3bd1804ded3761cf9d3b6">jsonSet</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ab7a35e03d7a3bd1804ded3761cf9d3b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24d6c2c990b81611e1bcfff8e5d73f5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a24d6c2c990b81611e1bcfff8e5d73f5f">jsonErase</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a24d6c2c990b81611e1bcfff8e5d73f5f" id="r_a24d6c2c990b81611e1bcfff8e5d73f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a24d6c2c990b81611e1bcfff8e5d73f5f">jsonErase</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a24d6c2c990b81611e1bcfff8e5d73f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ddab2882e0cbd5797334d17de2d2564"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a8ddab2882e0cbd5797334d17de2d2564">jsonIsEq</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a8ddab2882e0cbd5797334d17de2d2564" id="r_a8ddab2882e0cbd5797334d17de2d2564"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a8ddab2882e0cbd5797334d17de2d2564">jsonIsEq</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a8ddab2882e0cbd5797334d17de2d2564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33725083d6f4226776788365792df73b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a33725083d6f4226776788365792df73b">jsonIsNotEq</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a33725083d6f4226776788365792df73b" id="r_a33725083d6f4226776788365792df73b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a33725083d6f4226776788365792df73b">jsonIsNotEq</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a33725083d6f4226776788365792df73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a268a5e7cbcef21b37fdd59ec01c6d39c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a268a5e7cbcef21b37fdd59ec01c6d39c">jsonSum</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a268a5e7cbcef21b37fdd59ec01c6d39c" id="r_a268a5e7cbcef21b37fdd59ec01c6d39c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a268a5e7cbcef21b37fdd59ec01c6d39c">jsonSum</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a268a5e7cbcef21b37fdd59ec01c6d39c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae80715389635b457e5a31d416ef9044e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae80715389635b457e5a31d416ef9044e">jsonWhere</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ae80715389635b457e5a31d416ef9044e" id="r_ae80715389635b457e5a31d416ef9044e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae80715389635b457e5a31d416ef9044e">jsonWhere</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ae80715389635b457e5a31d416ef9044e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfbd8bf3cb34d2648f0a5c7b05b8bb7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abfbd8bf3cb34d2648f0a5c7b05b8bb7c">jsonBelow</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:abfbd8bf3cb34d2648f0a5c7b05b8bb7c" id="r_abfbd8bf3cb34d2648f0a5c7b05b8bb7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abfbd8bf3cb34d2648f0a5c7b05b8bb7c">jsonBelow</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:abfbd8bf3cb34d2648f0a5c7b05b8bb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfd2c829cdf1a433cbec4998f7710a0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#adfd2c829cdf1a433cbec4998f7710a0a">jsonGreater</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:adfd2c829cdf1a433cbec4998f7710a0a" id="r_adfd2c829cdf1a433cbec4998f7710a0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#adfd2c829cdf1a433cbec4998f7710a0a">jsonGreater</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:adfd2c829cdf1a433cbec4998f7710a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aefdbecb4bce753b69ffc613e7c3a87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7aefdbecb4bce753b69ffc613e7c3a87">jsonAnd</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a7aefdbecb4bce753b69ffc613e7c3a87" id="r_a7aefdbecb4bce753b69ffc613e7c3a87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a7aefdbecb4bce753b69ffc613e7c3a87">jsonAnd</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a7aefdbecb4bce753b69ffc613e7c3a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c59e6be6c0815e2155a454cafc0ab1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9c59e6be6c0815e2155a454cafc0ab1f">if_rel_then_obj_else_sub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a9c59e6be6c0815e2155a454cafc0ab1f" id="r_a9c59e6be6c0815e2155a454cafc0ab1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a9c59e6be6c0815e2155a454cafc0ab1f">if_rel_then_obj_else_sub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a9c59e6be6c0815e2155a454cafc0ab1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc0e5f95922def6e5fe254c058dc0d76"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abc0e5f95922def6e5fe254c058dc0d76">if_rel_then_sub_else_obj</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:abc0e5f95922def6e5fe254c058dc0d76" id="r_abc0e5f95922def6e5fe254c058dc0d76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#abc0e5f95922def6e5fe254c058dc0d76">if_rel_then_sub_else_obj</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:abc0e5f95922def6e5fe254c058dc0d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad1ee6c0d39fb7c344ebd083cd2e6b10b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b">IfObjTrueThenExecSub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ad1ee6c0d39fb7c344ebd083cd2e6b10b" id="r_ad1ee6c0d39fb7c344ebd083cd2e6b10b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b">IfObjTrueThenExecSub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ad1ee6c0d39fb7c344ebd083cd2e6b10b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21ce290800600f428c14cf4b748528aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a21ce290800600f428c14cf4b748528aa">IfObjFalseThenExecSub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a21ce290800600f428c14cf4b748528aa" id="r_a21ce290800600f428c14cf4b748528aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a21ce290800600f428c14cf4b748528aa">IfObjFalseThenExecSub</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a21ce290800600f428c14cf4b748528aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2311aed65961ce3a449f4d2eb1d0a86d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d">ExecSubWhileObjTrue</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a2311aed65961ce3a449f4d2eb1d0a86d" id="r_a2311aed65961ce3a449f4d2eb1d0a86d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d">ExecSubWhileObjTrue</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a2311aed65961ce3a449f4d2eb1d0a86d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d960d8aaa961cf261e075550cb2c028"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a1d960d8aaa961cf261e075550cb2c028">json_switch_bool</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a1d960d8aaa961cf261e075550cb2c028" id="r_a1d960d8aaa961cf261e075550cb2c028"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a1d960d8aaa961cf261e075550cb2c028">json_switch_bool</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a1d960d8aaa961cf261e075550cb2c028"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42a498df5d38a0a784693c6d519cc17b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a42a498df5d38a0a784693c6d519cc17b">json_switch_number</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a42a498df5d38a0a784693c6d519cc17b" id="r_a42a498df5d38a0a784693c6d519cc17b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a42a498df5d38a0a784693c6d519cc17b">json_switch_number</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a42a498df5d38a0a784693c6d519cc17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14d22264da728bdfcee13e5e72bb82fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a14d22264da728bdfcee13e5e72bb82fd">json_switch_string</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a14d22264da728bdfcee13e5e72bb82fd" id="r_a14d22264da728bdfcee13e5e72bb82fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a14d22264da728bdfcee13e5e72bb82fd">json_switch_string</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a14d22264da728bdfcee13e5e72bb82fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dd5412dabb5a873df7fe8218aeb4fc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a4dd5412dabb5a873df7fe8218aeb4fc1">json_throw</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a4dd5412dabb5a873df7fe8218aeb4fc1" id="r_a4dd5412dabb5a873df7fe8218aeb4fc1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a4dd5412dabb5a873df7fe8218aeb4fc1">json_throw</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a4dd5412dabb5a873df7fe8218aeb4fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a367173baa01f996fcba5afbe11a55b2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a367173baa01f996fcba5afbe11a55b2f">json_catch</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:a367173baa01f996fcba5afbe11a55b2f" id="r_a367173baa01f996fcba5afbe11a55b2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a367173baa01f996fcba5afbe11a55b2f">json_catch</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:a367173baa01f996fcba5afbe11a55b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae073b718c2865f521a04f105c3f4abf5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae073b718c2865f521a04f105c3f4abf5">define_static_method</a> (array) define_static_method(meta) define_static_method(object) void json_call_null(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm</td></tr>
+<tr class="memitem:ae073b718c2865f521a04f105c3f4abf5" id="r_ae073b718c2865f521a04f105c3f4abf5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae073b718c2865f521a04f105c3f4abf5">define_static_method</a> (array) define_static_method(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">meta</a>) define_static_method(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">object</a>) <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">json_call_null</a>(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a></td></tr>
 <tr class="separator:ae073b718c2865f521a04f105c3f4abf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab92b545627c7a59a9bdcb9ffa52b5970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab92b545627c7a59a9bdcb9ffa52b5970">jsonPrint</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
-<tr class="separator:ab92b545627c7a59a9bdcb9ffa52b5970"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada66b33246a331787644215ea1758b30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ada66b33246a331787644215ea1758b30">jsonTAG</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:ae12f7edb4a994cfc2d1933cb6bfebe55" id="r_ae12f7edb4a994cfc2d1933cb6bfebe55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ae12f7edb4a994cfc2d1933cb6bfebe55">jsonPrint</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="separator:ae12f7edb4a994cfc2d1933cb6bfebe55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada66b33246a331787644215ea1758b30" id="r_ada66b33246a331787644215ea1758b30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ada66b33246a331787644215ea1758b30">jsonTAG</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:ada66b33246a331787644215ea1758b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9d2e02e729da065d7fa1c7a4a35b0d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa9d2e02e729da065d7fa1c7a4a35b0d2">jsonXML</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aa9d2e02e729da065d7fa1c7a4a35b0d2" id="r_aa9d2e02e729da065d7fa1c7a4a35b0d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa9d2e02e729da065d7fa1c7a4a35b0d2">jsonXML</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aa9d2e02e729da065d7fa1c7a4a35b0d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa4d1c30f7dc4e13f696c1c63f47ee0de">jsonHTML</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aa4d1c30f7dc4e13f696c1c63f47ee0de" id="r_aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa4d1c30f7dc4e13f696c1c63f47ee0de">jsonHTML</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
 <tr class="separator:aa4d1c30f7dc4e13f696c1c63f47ee0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a555b1c8445cfb272aa963e8a018a08f0"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a555b1c8445cfb272aa963e8a018a08f0">import_relations_model_to</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm)</td></tr>
-<tr class="separator:a555b1c8445cfb272aa963e8a018a08f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f8bbb9c4741de4185d81c9fdbb9f743"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a5f8bbb9c4741de4185d81c9fdbb9f743">LoadAndInitDict</a> (const string &amp;LibName, <a class="el" href="classrm_1_1vm.html">vm</a> &amp;Ent)</td></tr>
-<tr class="separator:a5f8bbb9c4741de4185d81c9fdbb9f743"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3fa9181d2cb8044b78cabed19818b09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab3fa9181d2cb8044b78cabed19818b09">jsonLoadDLL</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memitem:aa52ac6d4e07c237bc99ef61882b56029" id="r_aa52ac6d4e07c237bc99ef61882b56029"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#aa52ac6d4e07c237bc99ef61882b56029">import_relations_model_to</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>)</td></tr>
+<tr class="separator:aa52ac6d4e07c237bc99ef61882b56029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94ba10f5c4e4ae6903260608fb2187b5" id="r_a94ba10f5c4e4ae6903260608fb2187b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a94ba10f5c4e4ae6903260608fb2187b5">LoadAndInitDict</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">LibName</a>, <a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Ent</a>)</td></tr>
+<tr class="separator:a94ba10f5c4e4ae6903260608fb2187b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3fa9181d2cb8044b78cabed19818b09" id="r_ab3fa9181d2cb8044b78cabed19818b09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#ab3fa9181d2cb8044b78cabed19818b09">jsonLoadDLL</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td></tr>
+<tr class="memdesc:ab3fa9181d2cb8044b78cabed19818b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контроллер загрузки DLL-словаря в виртуальную машину  <br /></td></tr>
 <tr class="separator:ab3fa9181d2cb8044b78cabed19818b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8600084aefb87317d1a6d5c773f87015"><td class="memItemLeft" align="right" valign="top">const string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a8600084aefb87317d1a6d5c773f87015">ImportLoadDLLEntity</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;rmvm)</td></tr>
-<tr class="separator:a8600084aefb87317d1a6d5c773f87015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f046c239a143222b4a99fa4f2ee15ba" id="r_a6f046c239a143222b4a99fa4f2ee15ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a6f046c239a143222b4a99fa4f2ee15ba">ImportLoadDLLEntity</a> (<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>)</td></tr>
+<tr class="separator:a6f046c239a143222b4a99fa4f2ee15ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a0d97929631e4a2001b614b3b3d932cb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrm_1_1_d_l_ls.html">rm::DLLs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1">LoadedDLLs</a></td></tr>
+<tr class="memitem:adc74dd13ef412f318cfea27f93a8ef00" id="r_adc74dd13ef412f318cfea27f93a8ef00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a></td></tr>
+<tr class="separator:adc74dd13ef412f318cfea27f93a8ef00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d97929631e4a2001b614b3b3d932cb1" id="r_a0d97929631e4a2001b614b3b3d932cb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classrm_1_1_d_l_ls.html">rm::DLLs</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacerm.html#a0d97929631e4a2001b614b3b3d932cb1">LoadedDLLs</a></td></tr>
 <tr class="separator:a0d97929631e4a2001b614b3b3d932cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Типы</h2>
-<a id="a89a608ae2bcb4c994d843008354fe993"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89a608ae2bcb4c994d843008354fe993">&#9670;&nbsp;</a></span>binary_view</h2>
+<a id="ac469421ec7c50b1fb7a3d71bd5384bfd" name="ac469421ec7c50b1fb7a3d71bd5384bfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac469421ec7c50b1fb7a3d71bd5384bfd">&#9670;&#160;</a></span>binary_view</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">rm::binary_view</a> = typedef void (*)(<a class="el" href="classrm_1_1vm.html">vm</a>&amp; rmvm, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; $)</td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">using</a> <a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">rm::binary_view</a> = <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">typedef</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> (*)(<a class="el" href="classrm_1_1vm.html">vm</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">rmvm</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00089">89</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00119">119</a></p>
 
 </div>
 </div>
-<a id="a870ad9b4a90cbda34085a4bf43ba0800"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a870ad9b4a90cbda34085a4bf43ba0800">&#9670;&nbsp;</a></span>binary_view_map_t</h2>
+<a id="aaa1490c3e06b36d948389de0c518965e" name="aaa1490c3e06b36d948389de0c518965e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa1490c3e06b36d948389de0c518965e">&#9670;&#160;</a></span>binary_view_map_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacerm.html#a870ad9b4a90cbda34085a4bf43ba0800">rm::binary_view_map_t</a> = typedef map&lt;json const*, <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a>&gt;</td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">using</a> <a class="el" href="namespacerm.html#aaa1490c3e06b36d948389de0c518965e">rm::binary_view_map_t</a> = <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">typedef</a> map&lt;json <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> *, <a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">binary_view</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00090">90</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00120">120</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Функции</h2>
-<a id="a7ae12d755f25ecbb79359e21c2765fa7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ae12d755f25ecbb79359e21c2765fa7">&#9670;&nbsp;</a></span>array_xor_value()</h2>
+<a id="a7ae12d755f25ecbb79359e21c2765fa7" name="a7ae12d755f25ecbb79359e21c2765fa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ae12d755f25ecbb79359e21c2765fa7">&#9670;&#160;</a></span>array_xor_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,13 +349,13 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
         <tr>
           <td class="memname">json rm::array_xor_value </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -359,8 +375,8 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 
 </div>
 </div>
-<a id="acd8c8701c11203b3207ae27f3c1be215"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acd8c8701c11203b3207ae27f3c1be215">&#9670;&nbsp;</a></span>define_json_is_type()</h2>
+<a id="acd8c8701c11203b3207ae27f3c1be215" name="acd8c8701c11203b3207ae27f3c1be215"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd8c8701c11203b3207ae27f3c1be215">&#9670;&#160;</a></span>define_json_is_type()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -377,8 +393,8 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 
 </div>
 </div>
-<a id="ae073b718c2865f521a04f105c3f4abf5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae073b718c2865f521a04f105c3f4abf5">&#9670;&nbsp;</a></span>define_static_method()</h2>
+<a id="ae073b718c2865f521a04f105c3f4abf5" name="ae073b718c2865f521a04f105c3f4abf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae073b718c2865f521a04f105c3f4abf5">&#9670;&#160;</a></span>define_static_method()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -395,24 +411,24 @@ $(document).ready(function(){initNavTree('namespacerm.html',''); initResizable()
 
 </div>
 </div>
-<a id="a569610ab133b63e65d75117d023e1841"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a569610ab133b63e65d75117d023e1841">&#9670;&nbsp;</a></span>diff_operation()</h2>
+<a id="a569610ab133b63e65d75117d023e1841" name="a569610ab133b63e65d75117d023e1841"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a569610ab133b63e65d75117d023e1841">&#9670;&#160;</a></span>diff_operation()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename type_t &gt; </div>
+template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">typename</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">type_t</a> &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">json rm::diff_operation </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -427,14 +443,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a2311aed65961ce3a449f4d2eb1d0a86d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2311aed65961ce3a449f4d2eb1d0a86d">&#9670;&nbsp;</a></span>ExecSubWhileObjTrue()</h2>
+<a id="a2311aed65961ce3a449f4d2eb1d0a86d" name="a2311aed65961ce3a449f4d2eb1d0a86d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2311aed65961ce3a449f4d2eb1d0a86d">&#9670;&#160;</a></span>ExecSubWhileObjTrue()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::ExecSubWhileObjTrue </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::ExecSubWhileObjTrue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -457,14 +473,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a9c59e6be6c0815e2155a454cafc0ab1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c59e6be6c0815e2155a454cafc0ab1f">&#9670;&nbsp;</a></span>if_rel_then_obj_else_sub()</h2>
+<a id="a9c59e6be6c0815e2155a454cafc0ab1f" name="a9c59e6be6c0815e2155a454cafc0ab1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c59e6be6c0815e2155a454cafc0ab1f">&#9670;&#160;</a></span>if_rel_then_obj_else_sub()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::if_rel_then_obj_else_sub </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::if_rel_then_obj_else_sub </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -487,14 +503,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="abc0e5f95922def6e5fe254c058dc0d76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc0e5f95922def6e5fe254c058dc0d76">&#9670;&nbsp;</a></span>if_rel_then_sub_else_obj()</h2>
+<a id="abc0e5f95922def6e5fe254c058dc0d76" name="abc0e5f95922def6e5fe254c058dc0d76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc0e5f95922def6e5fe254c058dc0d76">&#9670;&#160;</a></span>if_rel_then_sub_else_obj()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::if_rel_then_sub_else_obj </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::if_rel_then_sub_else_obj </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -517,14 +533,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a21ce290800600f428c14cf4b748528aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21ce290800600f428c14cf4b748528aa">&#9670;&nbsp;</a></span>IfObjFalseThenExecSub()</h2>
+<a id="a21ce290800600f428c14cf4b748528aa" name="a21ce290800600f428c14cf4b748528aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21ce290800600f428c14cf4b748528aa">&#9670;&#160;</a></span>IfObjFalseThenExecSub()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::IfObjFalseThenExecSub </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::IfObjFalseThenExecSub </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -547,14 +563,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ad1ee6c0d39fb7c344ebd083cd2e6b10b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad1ee6c0d39fb7c344ebd083cd2e6b10b">&#9670;&nbsp;</a></span>IfObjTrueThenExecSub()</h2>
+<a id="ad1ee6c0d39fb7c344ebd083cd2e6b10b" name="ad1ee6c0d39fb7c344ebd083cd2e6b10b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1ee6c0d39fb7c344ebd083cd2e6b10b">&#9670;&#160;</a></span>IfObjTrueThenExecSub()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::IfObjTrueThenExecSub </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::IfObjTrueThenExecSub </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -577,14 +593,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a555b1c8445cfb272aa963e8a018a08f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a555b1c8445cfb272aa963e8a018a08f0">&#9670;&nbsp;</a></span>import_relations_model_to()</h2>
+<a id="aa52ac6d4e07c237bc99ef61882b56029" name="aa52ac6d4e07c237bc99ef61882b56029"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa52ac6d4e07c237bc99ef61882b56029">&#9670;&#160;</a></span>import_relations_model_to()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const string&amp; rm::import_relations_model_to </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp; rm::import_relations_model_to </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em></td><td>)</td>
@@ -597,14 +613,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a8600084aefb87317d1a6d5c773f87015"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8600084aefb87317d1a6d5c773f87015">&#9670;&nbsp;</a></span>ImportLoadDLLEntity()</h2>
+<a id="a6f046c239a143222b4a99fa4f2ee15ba" name="a6f046c239a143222b4a99fa4f2ee15ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f046c239a143222b4a99fa4f2ee15ba">&#9670;&#160;</a></span>ImportLoadDLLEntity()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const string&amp; rm::ImportLoadDLLEntity </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp; rm::ImportLoadDLLEntity </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em></td><td>)</td>
@@ -613,18 +629,18 @@ template&lt;typename type_t &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00123">123</a></p>
+<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00181">181</a></p>
 
 </div>
 </div>
-<a id="a367173baa01f996fcba5afbe11a55b2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a367173baa01f996fcba5afbe11a55b2f">&#9670;&nbsp;</a></span>json_catch()</h2>
+<a id="a367173baa01f996fcba5afbe11a55b2f" name="a367173baa01f996fcba5afbe11a55b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a367173baa01f996fcba5afbe11a55b2f">&#9670;&#160;</a></span>json_catch()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_catch </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_catch </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -647,14 +663,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a6c5a8f6ee20ae36c79742e2ab055f759"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c5a8f6ee20ae36c79742e2ab055f759">&#9670;&nbsp;</a></span>json_is_not_null()</h2>
+<a id="a6c5a8f6ee20ae36c79742e2ab055f759" name="a6c5a8f6ee20ae36c79742e2ab055f759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c5a8f6ee20ae36c79742e2ab055f759">&#9670;&#160;</a></span>json_is_not_null()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_is_not_null </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_is_not_null </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -677,14 +693,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a1d960d8aaa961cf261e075550cb2c028"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d960d8aaa961cf261e075550cb2c028">&#9670;&nbsp;</a></span>json_switch_bool()</h2>
+<a id="a1d960d8aaa961cf261e075550cb2c028" name="a1d960d8aaa961cf261e075550cb2c028"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d960d8aaa961cf261e075550cb2c028">&#9670;&#160;</a></span>json_switch_bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_switch_bool </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_switch_bool </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -707,14 +723,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a42a498df5d38a0a784693c6d519cc17b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42a498df5d38a0a784693c6d519cc17b">&#9670;&nbsp;</a></span>json_switch_number()</h2>
+<a id="a42a498df5d38a0a784693c6d519cc17b" name="a42a498df5d38a0a784693c6d519cc17b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42a498df5d38a0a784693c6d519cc17b">&#9670;&#160;</a></span>json_switch_number()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_switch_number </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_switch_number </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -737,14 +753,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a14d22264da728bdfcee13e5e72bb82fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14d22264da728bdfcee13e5e72bb82fd">&#9670;&nbsp;</a></span>json_switch_string()</h2>
+<a id="a14d22264da728bdfcee13e5e72bb82fd" name="a14d22264da728bdfcee13e5e72bb82fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14d22264da728bdfcee13e5e72bb82fd">&#9670;&#160;</a></span>json_switch_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_switch_string </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_switch_string </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -767,14 +783,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a4dd5412dabb5a873df7fe8218aeb4fc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dd5412dabb5a873df7fe8218aeb4fc1">&#9670;&nbsp;</a></span>json_throw()</h2>
+<a id="a4dd5412dabb5a873df7fe8218aeb4fc1" name="a4dd5412dabb5a873df7fe8218aeb4fc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dd5412dabb5a873df7fe8218aeb4fc1">&#9670;&#160;</a></span>json_throw()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::json_throw </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::json_throw </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -797,14 +813,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a7aefdbecb4bce753b69ffc613e7c3a87"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7aefdbecb4bce753b69ffc613e7c3a87">&#9670;&nbsp;</a></span>jsonAnd()</h2>
+<a id="a7aefdbecb4bce753b69ffc613e7c3a87" name="a7aefdbecb4bce753b69ffc613e7c3a87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aefdbecb4bce753b69ffc613e7c3a87">&#9670;&#160;</a></span>jsonAnd()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonAnd </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonAnd </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -827,14 +843,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="abfbd8bf3cb34d2648f0a5c7b05b8bb7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfbd8bf3cb34d2648f0a5c7b05b8bb7c">&#9670;&nbsp;</a></span>jsonBelow()</h2>
+<a id="abfbd8bf3cb34d2648f0a5c7b05b8bb7c" name="abfbd8bf3cb34d2648f0a5c7b05b8bb7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfbd8bf3cb34d2648f0a5c7b05b8bb7c">&#9670;&#160;</a></span>jsonBelow()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonBelow </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonBelow </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -857,14 +873,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ab8a155b58bb443ca3bf6fe104c3c1ae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8a155b58bb443ca3bf6fe104c3c1ae4">&#9670;&nbsp;</a></span>jsonCopy()</h2>
+<a id="ab8a155b58bb443ca3bf6fe104c3c1ae4" name="ab8a155b58bb443ca3bf6fe104c3c1ae4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8a155b58bb443ca3bf6fe104c3c1ae4">&#9670;&#160;</a></span>jsonCopy()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonCopy </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonCopy </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -887,14 +903,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="aab629d4095b04549a49316cad0007814"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab629d4095b04549a49316cad0007814">&#9670;&nbsp;</a></span>jsonDouble()</h2>
+<a id="aab629d4095b04549a49316cad0007814" name="aab629d4095b04549a49316cad0007814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab629d4095b04549a49316cad0007814">&#9670;&#160;</a></span>jsonDouble()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonDouble </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonDouble </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -917,14 +933,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a24d6c2c990b81611e1bcfff8e5d73f5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24d6c2c990b81611e1bcfff8e5d73f5f">&#9670;&nbsp;</a></span>jsonErase()</h2>
+<a id="a24d6c2c990b81611e1bcfff8e5d73f5f" name="a24d6c2c990b81611e1bcfff8e5d73f5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d6c2c990b81611e1bcfff8e5d73f5f">&#9670;&#160;</a></span>jsonErase()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonErase </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonErase </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -947,14 +963,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a9b3d88d76d9835a265f4c71ac7714f89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b3d88d76d9835a265f4c71ac7714f89">&#9670;&nbsp;</a></span>jsonForEachObject()</h2>
+<a id="a9b3d88d76d9835a265f4c71ac7714f89" name="a9b3d88d76d9835a265f4c71ac7714f89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b3d88d76d9835a265f4c71ac7714f89">&#9670;&#160;</a></span>jsonForEachObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonForEachObject </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonForEachObject </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -977,14 +993,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a0e9903438fcb955c0fd16b33ad367dcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e9903438fcb955c0fd16b33ad367dcc">&#9670;&nbsp;</a></span>jsonForEachSubject()</h2>
+<a id="a0e9903438fcb955c0fd16b33ad367dcc" name="a0e9903438fcb955c0fd16b33ad367dcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e9903438fcb955c0fd16b33ad367dcc">&#9670;&#160;</a></span>jsonForEachSubject()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonForEachSubject </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonForEachSubject </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1007,14 +1023,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="aeb5b7a77d9d6037a1087d03be71a31c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb5b7a77d9d6037a1087d03be71a31c7">&#9670;&nbsp;</a></span>jsonGet()</h2>
+<a id="aeb5b7a77d9d6037a1087d03be71a31c7" name="aeb5b7a77d9d6037a1087d03be71a31c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb5b7a77d9d6037a1087d03be71a31c7">&#9670;&#160;</a></span>jsonGet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonGet </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonGet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1037,14 +1053,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="adfd2c829cdf1a433cbec4998f7710a0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfd2c829cdf1a433cbec4998f7710a0a">&#9670;&nbsp;</a></span>jsonGreater()</h2>
+<a id="adfd2c829cdf1a433cbec4998f7710a0a" name="adfd2c829cdf1a433cbec4998f7710a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfd2c829cdf1a433cbec4998f7710a0a">&#9670;&#160;</a></span>jsonGreater()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonGreater </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonGreater </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1067,14 +1083,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="aa4d1c30f7dc4e13f696c1c63f47ee0de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4d1c30f7dc4e13f696c1c63f47ee0de">&#9670;&nbsp;</a></span>jsonHTML()</h2>
+<a id="aa4d1c30f7dc4e13f696c1c63f47ee0de" name="aa4d1c30f7dc4e13f696c1c63f47ee0de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4d1c30f7dc4e13f696c1c63f47ee0de">&#9670;&#160;</a></span>jsonHTML()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonHTML </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonHTML </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1097,14 +1113,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a06d7b66ce8c6bf479f32819a4a42e58f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06d7b66ce8c6bf479f32819a4a42e58f">&#9670;&nbsp;</a></span>jsonInt32()</h2>
+<a id="a06d7b66ce8c6bf479f32819a4a42e58f" name="a06d7b66ce8c6bf479f32819a4a42e58f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06d7b66ce8c6bf479f32819a4a42e58f">&#9670;&#160;</a></span>jsonInt32()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonInt32 </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonInt32 </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1127,14 +1143,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a8ddab2882e0cbd5797334d17de2d2564"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ddab2882e0cbd5797334d17de2d2564">&#9670;&nbsp;</a></span>jsonIsEq()</h2>
+<a id="a8ddab2882e0cbd5797334d17de2d2564" name="a8ddab2882e0cbd5797334d17de2d2564"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ddab2882e0cbd5797334d17de2d2564">&#9670;&#160;</a></span>jsonIsEq()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonIsEq </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonIsEq </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1157,14 +1173,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a33725083d6f4226776788365792df73b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33725083d6f4226776788365792df73b">&#9670;&nbsp;</a></span>jsonIsNotEq()</h2>
+<a id="a33725083d6f4226776788365792df73b" name="a33725083d6f4226776788365792df73b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33725083d6f4226776788365792df73b">&#9670;&#160;</a></span>jsonIsNotEq()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonIsNotEq </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonIsNotEq </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1187,14 +1203,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ab3fa9181d2cb8044b78cabed19818b09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3fa9181d2cb8044b78cabed19818b09">&#9670;&nbsp;</a></span>jsonLoadDLL()</h2>
+<a id="ab3fa9181d2cb8044b78cabed19818b09" name="ab3fa9181d2cb8044b78cabed19818b09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3fa9181d2cb8044b78cabed19818b09">&#9670;&#160;</a></span>jsonLoadDLL()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonLoadDLL </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonLoadDLL </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1213,18 +1229,51 @@ template&lt;typename type_t &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00098">98</a></p>
+<p>Контроллер загрузки DLL-словаря в виртуальную машину </p>
+<p>Функциональность:</p><ol type="1">
+<li>Принимает JSON-объект с параметрами загрузки</li>
+<li>Валидирует обязательные поля "PathFolder" и "FileName"</li>
+<li>Формирует полный путь к библиотеке</li>
+<li>Инициирует загрузку через DLLs-менеджер</li>
+<li>Возвращает версию загруженного словаря через $.sub</li>
+</ol>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rmvm</td><td>Ссылка на виртуальную машину отношений </td></tr>
+    <tr><td class="paramname">$</td><td>Контекст выполнения с параметрами:<ul>
+<li>$obj: входные параметры {PathFolder:string, FileName:string}</li>
+<li>$sub: выходное значение (версия словаря)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Исключения</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">json::exception</td><td>При:<ul>
+<li>Отсутствии обязательных полей во входных данных</li>
+<li>Ошибках загрузки <a class="el" href="structrm_1_1_d_l_l.html">DLL</a></li>
+<li>Отсутствии точки входа в словаре</li>
+<li>Системных ошибках (например, проблемы с доступом к файлу)</li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Заметки</dt><dd>Формирует трассируемые исключения с детальной диагностикой через <a class="el" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">vm_ctx::throw_json</a> </dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00144">144</a></p>
 
 </div>
 </div>
-<a id="a5defc52892523ef4bfdbc289829a45ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5defc52892523ef4bfdbc289829a45ef">&#9670;&nbsp;</a></span>jsonNull()</h2>
+<a id="a5defc52892523ef4bfdbc289829a45ef" name="a5defc52892523ef4bfdbc289829a45ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5defc52892523ef4bfdbc289829a45ef">&#9670;&#160;</a></span>jsonNull()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonNull </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonNull </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1247,14 +1296,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a840659979cba1959c9357e267adc4f09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a840659979cba1959c9357e267adc4f09">&#9670;&nbsp;</a></span>jsonPower()</h2>
+<a id="a840659979cba1959c9357e267adc4f09" name="a840659979cba1959c9357e267adc4f09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840659979cba1959c9357e267adc4f09">&#9670;&#160;</a></span>jsonPower()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonPower </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonPower </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1277,14 +1326,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ab92b545627c7a59a9bdcb9ffa52b5970"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab92b545627c7a59a9bdcb9ffa52b5970">&#9670;&nbsp;</a></span>jsonPrint()</h2>
+<a id="ae12f7edb4a994cfc2d1933cb6bfebe55" name="ae12f7edb4a994cfc2d1933cb6bfebe55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae12f7edb4a994cfc2d1933cb6bfebe55">&#9670;&#160;</a></span>jsonPrint()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; void rm::jsonPrint </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonPrint </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1307,14 +1356,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ab7a35e03d7a3bd1804ded3761cf9d3b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7a35e03d7a3bd1804ded3761cf9d3b6">&#9670;&nbsp;</a></span>jsonSet()</h2>
+<a id="ab7a35e03d7a3bd1804ded3761cf9d3b6" name="ab7a35e03d7a3bd1804ded3761cf9d3b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7a35e03d7a3bd1804ded3761cf9d3b6">&#9670;&#160;</a></span>jsonSet()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonSet </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonSet </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1337,14 +1386,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="aeba83c1422275879189f6cefb041ce4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeba83c1422275879189f6cefb041ce4f">&#9670;&nbsp;</a></span>jsonSize()</h2>
+<a id="aeba83c1422275879189f6cefb041ce4f" name="aeba83c1422275879189f6cefb041ce4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeba83c1422275879189f6cefb041ce4f">&#9670;&#160;</a></span>jsonSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonSize </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonSize </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1367,14 +1416,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a548173288c7fdfc99bcb350a593a7d26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a548173288c7fdfc99bcb350a593a7d26">&#9670;&nbsp;</a></span>jsonSqrt()</h2>
+<a id="a548173288c7fdfc99bcb350a593a7d26" name="a548173288c7fdfc99bcb350a593a7d26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a548173288c7fdfc99bcb350a593a7d26">&#9670;&#160;</a></span>jsonSqrt()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonSqrt </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonSqrt </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1397,14 +1446,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a268a5e7cbcef21b37fdd59ec01c6d39c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a268a5e7cbcef21b37fdd59ec01c6d39c">&#9670;&nbsp;</a></span>jsonSum()</h2>
+<a id="a268a5e7cbcef21b37fdd59ec01c6d39c" name="a268a5e7cbcef21b37fdd59ec01c6d39c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a268a5e7cbcef21b37fdd59ec01c6d39c">&#9670;&#160;</a></span>jsonSum()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonSum </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonSum </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1427,14 +1476,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ada66b33246a331787644215ea1758b30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada66b33246a331787644215ea1758b30">&#9670;&nbsp;</a></span>jsonTAG()</h2>
+<a id="ada66b33246a331787644215ea1758b30" name="ada66b33246a331787644215ea1758b30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada66b33246a331787644215ea1758b30">&#9670;&#160;</a></span>jsonTAG()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonTAG </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonTAG </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1457,14 +1506,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a610895365f144e89242ce3837b38bac2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a610895365f144e89242ce3837b38bac2">&#9670;&nbsp;</a></span>jsonUnion()</h2>
+<a id="a6d8db490ef02f03cd83cf66e0b1f2470" name="a6d8db490ef02f03cd83cf66e0b1f2470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d8db490ef02f03cd83cf66e0b1f2470">&#9670;&#160;</a></span>jsonUnion()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; void rm::jsonUnion </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonUnion </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1487,14 +1536,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a7a70128400bca2b41cd1448f2d48879b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a70128400bca2b41cd1448f2d48879b">&#9670;&nbsp;</a></span>jsonView()</h2>
+<a id="a7a70128400bca2b41cd1448f2d48879b" name="a7a70128400bca2b41cd1448f2d48879b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a70128400bca2b41cd1448f2d48879b">&#9670;&#160;</a></span>jsonView()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonView </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonView </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1517,14 +1566,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="ae80715389635b457e5a31d416ef9044e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae80715389635b457e5a31d416ef9044e">&#9670;&nbsp;</a></span>jsonWhere()</h2>
+<a id="ae80715389635b457e5a31d416ef9044e" name="ae80715389635b457e5a31d416ef9044e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae80715389635b457e5a31d416ef9044e">&#9670;&#160;</a></span>jsonWhere()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonWhere </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonWhere </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1547,14 +1596,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="aa9d2e02e729da065d7fa1c7a4a35b0d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9d2e02e729da065d7fa1c7a4a35b0d2">&#9670;&nbsp;</a></span>jsonXML()</h2>
+<a id="aa9d2e02e729da065d7fa1c7a4a35b0d2" name="aa9d2e02e729da065d7fa1c7a4a35b0d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9d2e02e729da065d7fa1c7a4a35b0d2">&#9670;&#160;</a></span>jsonXML()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonXML </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonXML </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1577,14 +1626,14 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a3e0fa9654f7cf9a6a134a04ef2e32fa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e0fa9654f7cf9a6a134a04ef2e32fa0">&#9670;&nbsp;</a></span>jsonXOR()</h2>
+<a id="a3e0fa9654f7cf9a6a134a04ef2e32fa0" name="a3e0fa9654f7cf9a6a134a04ef2e32fa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0fa9654f7cf9a6a134a04ef2e32fa0">&#9670;&#160;</a></span>jsonXOR()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::jsonXOR </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::jsonXOR </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1607,16 +1656,16 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a5f8bbb9c4741de4185d81c9fdbb9f743"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f8bbb9c4741de4185d81c9fdbb9f743">&#9670;&nbsp;</a></span>LoadAndInitDict()</h2>
+<a id="a94ba10f5c4e4ae6903260608fb2187b5" name="a94ba10f5c4e4ae6903260608fb2187b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94ba10f5c4e4ae6903260608fb2187b5">&#9670;&#160;</a></span>LoadAndInitDict()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const string&amp; rm::LoadAndInitDict </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp; rm::LoadAndInitDict </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
           <td class="paramname"><em>LibName</em>, </td>
         </tr>
         <tr>
@@ -1633,12 +1682,12 @@ template&lt;typename type_t &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00090">90</a></p>
+<p class="definition">См. определение в файле <a class="el" href="dll_8rm_8h_source.html">dll.rm.h</a> строка <a class="el" href="dll_8rm_8h_source.html#l00115">115</a></p>
 
 </div>
 </div>
-<a id="a1c7d0997ec99952a5d349c066811b0d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c7d0997ec99952a5d349c066811b0d1">&#9670;&nbsp;</a></span>OP_BODY() <span class="overload">[1/4]</span></h2>
+<a id="a1c7d0997ec99952a5d349c066811b0d1" name="a1c7d0997ec99952a5d349c066811b0d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c7d0997ec99952a5d349c066811b0d1">&#9670;&#160;</a></span>OP_BODY() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1646,7 +1695,7 @@ template&lt;typename type_t &gt; </div>
         <tr>
           <td class="memname">rm::OP_BODY </td>
           <td>(</td>
-          <td class="paramtype">Add&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Add</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -1665,8 +1714,8 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a384e283e71b6a3106bc525bbaa4109c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a384e283e71b6a3106bc525bbaa4109c0">&#9670;&nbsp;</a></span>OP_BODY() <span class="overload">[2/4]</span></h2>
+<a id="a384e283e71b6a3106bc525bbaa4109c0" name="a384e283e71b6a3106bc525bbaa4109c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a384e283e71b6a3106bc525bbaa4109c0">&#9670;&#160;</a></span>OP_BODY() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1674,7 +1723,7 @@ template&lt;typename type_t &gt; </div>
         <tr>
           <td class="memname">rm::OP_BODY </td>
           <td>(</td>
-          <td class="paramtype">Div&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Div</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -1693,8 +1742,8 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="abbcfcac92c7390f35866ff7afe1903e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbcfcac92c7390f35866ff7afe1903e5">&#9670;&nbsp;</a></span>OP_BODY() <span class="overload">[3/4]</span></h2>
+<a id="abbcfcac92c7390f35866ff7afe1903e5" name="abbcfcac92c7390f35866ff7afe1903e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbcfcac92c7390f35866ff7afe1903e5">&#9670;&#160;</a></span>OP_BODY() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1702,7 +1751,7 @@ template&lt;typename type_t &gt; </div>
         <tr>
           <td class="memname">rm::OP_BODY </td>
           <td>(</td>
-          <td class="paramtype">Mul&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Mul</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -1721,8 +1770,8 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="af4fcc532b37ac2ea771815afa4863e58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4fcc532b37ac2ea771815afa4863e58">&#9670;&nbsp;</a></span>OP_BODY() <span class="overload">[4/4]</span></h2>
+<a id="af4fcc532b37ac2ea771815afa4863e58" name="af4fcc532b37ac2ea771815afa4863e58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4fcc532b37ac2ea771815afa4863e58">&#9670;&#160;</a></span>OP_BODY() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1730,7 +1779,7 @@ template&lt;typename type_t &gt; </div>
         <tr>
           <td class="memname">rm::OP_BODY </td>
           <td>(</td>
-          <td class="paramtype">Substract&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Substract</a>&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
@@ -1749,8 +1798,8 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a15d07b40b1a6cd0b250ac67c328f9739"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15d07b40b1a6cd0b250ac67c328f9739">&#9670;&nbsp;</a></span>operator^()</h2>
+<a id="a15d07b40b1a6cd0b250ac67c328f9739" name="a15d07b40b1a6cd0b250ac67c328f9739"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d07b40b1a6cd0b250ac67c328f9739">&#9670;&#160;</a></span>operator^()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1761,13 +1810,13 @@ template&lt;typename type_t &gt; </div>
         <tr>
           <td class="memname">json rm::operator^ </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -1787,27 +1836,27 @@ template&lt;typename type_t &gt; </div>
 
 </div>
 </div>
-<a id="a04361b6c2ec93d40270af30bdde86ffc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04361b6c2ec93d40270af30bdde86ffc">&#9670;&nbsp;</a></span>selch()</h2>
+<a id="a04361b6c2ec93d40270af30bdde86ffc" name="a04361b6c2ec93d40270af30bdde86ffc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04361b6c2ec93d40270af30bdde86ffc">&#9670;&#160;</a></span>selch()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t size&gt; </div>
+template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> size&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto rm::selch </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">auto</a> rm::selch </td>
           <td>(</td>
-          <td class="paramtype">const char(&amp;)&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a>(&amp;)&#160;</td>
           <td class="paramname"><em>str</em>[size], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a>&#160;</td>
           <td class="paramname"><em>index</em>&#160;</td>
         </tr>
         <tr>
@@ -1823,18 +1872,18 @@ template&lt;size_t size&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__type_8h_source.html">string_type.h</a> строка <a class="el" href="string__type_8h_source.html#l00060">60</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__type_8h_source.html">string_type.h</a> строка <a class="el" href="string__type_8h_source.html#l00100">100</a></p>
 
 </div>
 </div>
-<a id="aedad2d281b11c88b6b08e410ff879d2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedad2d281b11c88b6b08e410ff879d2e">&#9670;&nbsp;</a></span>sleep_ms()</h2>
+<a id="aedad2d281b11c88b6b08e410ff879d2e" name="aedad2d281b11c88b6b08e410ff879d2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedad2d281b11c88b6b08e410ff879d2e">&#9670;&#160;</a></span>sleep_ms()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::sleep_ms </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::sleep_ms </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1866,21 +1915,21 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a22f84d438e39fcc290c63f67580a395e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22f84d438e39fcc290c63f67580a395e">&#9670;&nbsp;</a></span>str_size()</h2>
+<a id="a22f84d438e39fcc290c63f67580a395e" name="a22f84d438e39fcc290c63f67580a395e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f84d438e39fcc290c63f67580a395e">&#9670;&#160;</a></span>str_size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t size&gt; </div>
+template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> size&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr auto rm::str_size </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">auto</a> rm::str_size </td>
           <td>(</td>
-          <td class="paramtype">const char(&amp;)&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a>(&amp;)&#160;</td>
           <td class="paramname"><em>str</em>[size]</td><td>)</td>
           <td></td>
         </tr>
@@ -1892,18 +1941,18 @@ template&lt;size_t size&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__type_8h_source.html">string_type.h</a> строка <a class="el" href="string__type_8h_source.html#l00057">57</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__type_8h_source.html">string_type.h</a> строка <a class="el" href="string__type_8h_source.html#l00097">97</a></p>
 
 </div>
 </div>
-<a id="ab741bc596a21e84aace52e0d93673a49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab741bc596a21e84aace52e0d93673a49">&#9670;&nbsp;</a></span>string_add()</h2>
+<a id="ab741bc596a21e84aace52e0d93673a49" name="ab741bc596a21e84aace52e0d93673a49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab741bc596a21e84aace52e0d93673a49">&#9670;&#160;</a></span>string_add()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::string_add </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::string_add </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1926,14 +1975,14 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a00a5e4a100e2a9f6489e5149c8f71a08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00a5e4a100e2a9f6489e5149c8f71a08">&#9670;&nbsp;</a></span>string_find()</h2>
+<a id="a00a5e4a100e2a9f6489e5149c8f71a08" name="a00a5e4a100e2a9f6489e5149c8f71a08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00a5e4a100e2a9f6489e5149c8f71a08">&#9670;&#160;</a></span>string_find()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::string_find </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::string_find </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1956,14 +2005,14 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="aba9312ddda9207734b5c41ea6642af0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba9312ddda9207734b5c41ea6642af0f">&#9670;&nbsp;</a></span>string_join()</h2>
+<a id="aba9312ddda9207734b5c41ea6642af0f" name="aba9312ddda9207734b5c41ea6642af0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba9312ddda9207734b5c41ea6642af0f">&#9670;&#160;</a></span>string_join()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::string_join </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::string_join </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -1986,14 +2035,14 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a957afd2d67c0db553e366a64c62eaf50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a957afd2d67c0db553e366a64c62eaf50">&#9670;&nbsp;</a></span>string_split()</h2>
+<a id="a957afd2d67c0db553e366a64c62eaf50" name="a957afd2d67c0db553e366a64c62eaf50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a957afd2d67c0db553e366a64c62eaf50">&#9670;&#160;</a></span>string_split()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::string_split </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::string_split </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -2016,14 +2065,14 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="aeb5d0f9dc335300ab90fd120766b8a8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb5d0f9dc335300ab90fd120766b8a8f">&#9670;&nbsp;</a></span>string_string()</h2>
+<a id="aeb5d0f9dc335300ab90fd120766b8a8f" name="aeb5d0f9dc335300ab90fd120766b8a8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb5d0f9dc335300ab90fd120766b8a8f">&#9670;&#160;</a></span>string_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::string_string </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::string_string </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td>
           <td class="paramname"><em>rmvm</em>, </td>
@@ -2046,8 +2095,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a7a4003479b4ae7071bb2f472d77c0d48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a4003479b4ae7071bb2f472d77c0d48">&#9670;&nbsp;</a></span>value_xor_array()</h2>
+<a id="a7a4003479b4ae7071bb2f472d77c0d48" name="a7a4003479b4ae7071bb2f472d77c0d48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a4003479b4ae7071bb2f472d77c0d48">&#9670;&#160;</a></span>value_xor_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2058,13 +2107,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::value_xor_array </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2084,8 +2133,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a69cf30fab0c837bfeaa88a4104f06451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a69cf30fab0c837bfeaa88a4104f06451">&#9670;&nbsp;</a></span>xor_array()</h2>
+<a id="a69cf30fab0c837bfeaa88a4104f06451" name="a69cf30fab0c837bfeaa88a4104f06451"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69cf30fab0c837bfeaa88a4104f06451">&#9670;&#160;</a></span>xor_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2096,13 +2145,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_array </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2122,8 +2171,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="ab4f545644d118c245b1419230531b8a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4f545644d118c245b1419230531b8a3">&#9670;&nbsp;</a></span>xor_boolean()</h2>
+<a id="ab4f545644d118c245b1419230531b8a3" name="ab4f545644d118c245b1419230531b8a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4f545644d118c245b1419230531b8a3">&#9670;&#160;</a></span>xor_boolean()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2134,13 +2183,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_boolean </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2160,8 +2209,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="ae7cc5feec3915758e93087ccd4e8a4d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7cc5feec3915758e93087ccd4e8a4d8">&#9670;&nbsp;</a></span>xor_number_float()</h2>
+<a id="ae7cc5feec3915758e93087ccd4e8a4d8" name="ae7cc5feec3915758e93087ccd4e8a4d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7cc5feec3915758e93087ccd4e8a4d8">&#9670;&#160;</a></span>xor_number_float()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2172,13 +2221,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_number_float </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2198,8 +2247,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a254f59bf6ede298fe8de9f6fbb5382f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a254f59bf6ede298fe8de9f6fbb5382f3">&#9670;&nbsp;</a></span>xor_number_integer()</h2>
+<a id="a254f59bf6ede298fe8de9f6fbb5382f3" name="a254f59bf6ede298fe8de9f6fbb5382f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a254f59bf6ede298fe8de9f6fbb5382f3">&#9670;&#160;</a></span>xor_number_integer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2210,13 +2259,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_number_integer </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2236,8 +2285,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a6cc2095b8cd319edba3adc57d6af8b94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cc2095b8cd319edba3adc57d6af8b94">&#9670;&nbsp;</a></span>xor_number_unsigned()</h2>
+<a id="a6cc2095b8cd319edba3adc57d6af8b94" name="a6cc2095b8cd319edba3adc57d6af8b94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cc2095b8cd319edba3adc57d6af8b94">&#9670;&#160;</a></span>xor_number_unsigned()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2248,13 +2297,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_number_unsigned </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2274,8 +2323,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a9a11d0b2546e178925bb6352cb7329f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a11d0b2546e178925bb6352cb7329f7">&#9670;&nbsp;</a></span>xor_object()</h2>
+<a id="a9a11d0b2546e178925bb6352cb7329f7" name="a9a11d0b2546e178925bb6352cb7329f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a11d0b2546e178925bb6352cb7329f7">&#9670;&#160;</a></span>xor_object()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2286,13 +2335,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_object </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2312,8 +2361,8 @@ template&lt;size_t size&gt; </div>
 
 </div>
 </div>
-<a id="a3aab555663930f470888fc81d8a33459"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3aab555663930f470888fc81d8a33459">&#9670;&nbsp;</a></span>xor_string()</h2>
+<a id="a3aab555663930f470888fc81d8a33459" name="a3aab555663930f470888fc81d8a33459"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aab555663930f470888fc81d8a33459">&#9670;&#160;</a></span>xor_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2324,13 +2373,13 @@ template&lt;size_t size&gt; </div>
         <tr>
           <td class="memname">json rm::xor_string </td>
           <td>(</td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>a</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>b</em>&#160;</td>
         </tr>
         <tr>
@@ -2351,8 +2400,42 @@ template&lt;size_t size&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Переменные</h2>
-<a id="a0d97929631e4a2001b614b3b3d932cb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d97929631e4a2001b614b3b3d932cb1">&#9670;&nbsp;</a></span>LoadedDLLs</h2>
+<a id="adc74dd13ef412f318cfea27f93a8ef00" name="adc74dd13ef412f318cfea27f93a8ef00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc74dd13ef412f318cfea27f93a8ef00">&#9670;&#160;</a></span>$</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp; rm::$</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Инициализатор</b><div class="fragment"><div class="line">{</div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>.is_object())</div>
+<div class="line">        {</div>
+<div class="line">            json::number_integer_t  <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">from</a> = <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>[<span class="stringliteral">&quot;from&quot;</span>];</div>
+<div class="line">            json::number_integer_t  <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">to</a> = <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>[<span class="stringliteral">&quot;to&quot;</span>];</div>
+<div class="line">            json::number_integer_t  <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">step</a> = <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>.count(<span class="stringliteral">&quot;step&quot;</span>) ? <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a>[<span class="stringliteral">&quot;step&quot;</span>] : 1;</div>
+<div class="line">            <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a> = json::array();</div>
+<div class="line"> </div>
+<div class="line">            <span class="keywordflow">for</span> (json::number_integer_t <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">i</a> = <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">from</a>; <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">i</a> &lt;= <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">to</a>; <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">i</a> += <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">step</a>)</div>
+<div class="line">                <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_variable" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a>.push_back(<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">i</a>);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">            <a class="code hl_variable" href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">$</a>.<a class="code hl_function" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json</a>(<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">__func__</a>, <span class="stringliteral">&quot;$obj must has &#39;from&#39;, &#39;to&#39; and &#39;step&#39; properties!&quot;</span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>)</div>
+<div class="ttc" id="anamespacerm_html_adc74dd13ef412f318cfea27f93a8ef00"><div class="ttname"><a href="namespacerm.html#adc74dd13ef412f318cfea27f93a8ef00">rm::$</a></div><div class="ttdeci">vm_ctx &amp; $</div><div class="ttdef"><b>Definition</b> <a href="base_8rm_8h_source.html#l00372">base.rm.h:373</a></div></div>
+<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_acb06c430cfb3f2a63f13e24de1701714"><div class="ttname"><a href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">rm::vm_ctx::throw_json</a></div><div class="ttdeci">void throw_json(const string &amp;function, const json &amp;error) const</div><div class="ttdef"><b>Definition</b> <a href="vm_8rm_8h_source.html#l00104">vm.rm.h:104</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_ae2b79f5a395732d62aaa2553e9122446"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">rm::vm_ctx::obj</a></div><div class="ttdeci">json &amp; obj</div><div class="ttdef"><b>Definition</b> <a href="vm_8rm_8h_source.html#l00091">vm.rm.h:91</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html_ae335c37b8a77e66d9e89d9b95cd83f8e"><div class="ttname"><a href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">rm::vm_ctx::sub</a></div><div class="ttdeci">json &amp; sub</div><div class="ttdef"><b>Definition</b> <a href="vm_8rm_8h_source.html#l00093">vm.rm.h:93</a></div></div>
+</div><!-- fragment -->
+<p class="definition">См. определение в файле <a class="el" href="base_8rm_8h_source.html">base.rm.h</a> строка <a class="el" href="base_8rm_8h_source.html#l00372">372</a></p>
+
+</div>
+</div>
+<a id="a0d97929631e4a2001b614b3b3d932cb1" name="a0d97929631e4a2001b614b3b3d932cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d97929631e4a2001b614b3b3d932cb1">&#9670;&#160;</a></span>LoadedDLLs</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2371,9 +2454,7 @@ template&lt;size_t size&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacerm.html">rm</a></li>
-    <li class="footer">Создано системой
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

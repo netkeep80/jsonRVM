@@ -1,5 +1,5 @@
 var structrm_1_1string__type =
 [
-    [ "size", "structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1", null ],
-    [ "str", "structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19", null ]
+    [ "size", "structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f", null ],
+    [ "str", "structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4", null ]
 ];

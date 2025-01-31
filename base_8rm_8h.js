@@ -1,7 +1,7 @@
 var base_8rm_8h =
 [
-    [ "json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
-    [ "steady_clock", "structrm_1_1steady__clock.html", "structrm_1_1steady__clock" ],
+    [ "rm::json_dump", "structrm_1_1json__dump.html", "structrm_1_1json__dump" ],
+    [ "rm::steady_clock< duration_t, name_t >", "structrm_1_1steady__clock.html", "structrm_1_1steady__clock" ],
     [ "define_json_is_type", "base_8rm_8h.html#a181d9fd7e55679e7b17ed6076a023b84", null ],
     [ "define_object_method", "base_8rm_8h.html#a67ee0817546165e752bc8858ab404a59", null ],
     [ "define_static_method", "base_8rm_8h.html#a794dacf84960f6e2019fc37a95062673", null ],
@@ -22,7 +22,7 @@ var base_8rm_8h =
     [ "if_rel_then_sub_else_obj", "base_8rm_8h.html#abc0e5f95922def6e5fe254c058dc0d76", null ],
     [ "IfObjFalseThenExecSub", "base_8rm_8h.html#a21ce290800600f428c14cf4b748528aa", null ],
     [ "IfObjTrueThenExecSub", "base_8rm_8h.html#ad1ee6c0d39fb7c344ebd083cd2e6b10b", null ],
-    [ "import_relations_model_to", "base_8rm_8h.html#a555b1c8445cfb272aa963e8a018a08f0", null ],
+    [ "import_relations_model_to", "base_8rm_8h.html#aa52ac6d4e07c237bc99ef61882b56029", null ],
     [ "json_catch", "base_8rm_8h.html#a367173baa01f996fcba5afbe11a55b2f", null ],
     [ "json_is_not_null", "base_8rm_8h.html#a6c5a8f6ee20ae36c79742e2ab055f759", null ],
     [ "json_switch_bool", "base_8rm_8h.html#a1d960d8aaa961cf261e075550cb2c028", null ],
@@ -44,13 +44,13 @@ var base_8rm_8h =
     [ "jsonIsNotEq", "base_8rm_8h.html#a33725083d6f4226776788365792df73b", null ],
     [ "jsonNull", "base_8rm_8h.html#a5defc52892523ef4bfdbc289829a45ef", null ],
     [ "jsonPower", "base_8rm_8h.html#a840659979cba1959c9357e267adc4f09", null ],
-    [ "jsonPrint", "base_8rm_8h.html#ab92b545627c7a59a9bdcb9ffa52b5970", null ],
+    [ "jsonPrint", "base_8rm_8h.html#ae12f7edb4a994cfc2d1933cb6bfebe55", null ],
     [ "jsonSet", "base_8rm_8h.html#ab7a35e03d7a3bd1804ded3761cf9d3b6", null ],
     [ "jsonSize", "base_8rm_8h.html#aeba83c1422275879189f6cefb041ce4f", null ],
     [ "jsonSqrt", "base_8rm_8h.html#a548173288c7fdfc99bcb350a593a7d26", null ],
     [ "jsonSum", "base_8rm_8h.html#a268a5e7cbcef21b37fdd59ec01c6d39c", null ],
     [ "jsonTAG", "base_8rm_8h.html#ada66b33246a331787644215ea1758b30", null ],
-    [ "jsonUnion", "base_8rm_8h.html#a610895365f144e89242ce3837b38bac2", null ],
+    [ "jsonUnion", "base_8rm_8h.html#a6d8db490ef02f03cd83cf66e0b1f2470", null ],
     [ "jsonView", "base_8rm_8h.html#a7a70128400bca2b41cd1448f2d48879b", null ],
     [ "jsonWhere", "base_8rm_8h.html#ae80715389635b457e5a31d416ef9044e", null ],
     [ "jsonXML", "base_8rm_8h.html#aa9d2e02e729da065d7fa1c7a4a35b0d2", null ],
@@ -73,5 +73,6 @@ var base_8rm_8h =
     [ "xor_number_integer", "base_8rm_8h.html#a254f59bf6ede298fe8de9f6fbb5382f3", null ],
     [ "xor_number_unsigned", "base_8rm_8h.html#a6cc2095b8cd319edba3adc57d6af8b94", null ],
     [ "xor_object", "base_8rm_8h.html#a9a11d0b2546e178925bb6352cb7329f7", null ],
-    [ "xor_string", "base_8rm_8h.html#a3aab555663930f470888fc81d8a33459", null ]
+    [ "xor_string", "base_8rm_8h.html#a3aab555663930f470888fc81d8a33459", null ],
+    [ "$", "base_8rm_8h.html#adc74dd13ef412f318cfea27f93a8ef00", null ]
 ];

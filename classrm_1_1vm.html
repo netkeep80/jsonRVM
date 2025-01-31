@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Класс rm::vm</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -25,33 +25,34 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td id="projectalign">
    <div id="projectname">jsonRVM
    </div>
-   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.17 -->
+<!-- Создано системой Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -65,7 +66,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -79,9 +80,16 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="header">
@@ -90,74 +98,94 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 <a href="#pub-methods">Открытые члены</a> &#124;
 <a href="#pub-static-attribs">Статические открытые данные</a> &#124;
 <a href="classrm_1_1vm-members.html">Полный список членов класса</a>  </div>
-  <div class="headertitle">
-<div class="title">Класс rm::vm</div>  </div>
+  <div class="headertitle"><div class="title">Класс rm::vm</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Виртуальная машина для выполнения отношений (сущностей), представленных в формате JSON.  
+ <a href="classrm_1_1vm.html#details">Подробнее...</a></p>
 
 <p><code>#include &lt;<a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a>&gt;</code></p>
 <div class="dynheader">
 Граф наследования:rm::vm:</div>
 <div class="dyncontent">
-<div class="center"><!-- SVG 0 -->
-</div>
+<div class="center"><!-- SVG 0 --></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">см. легенду</a>]</span></center></div>
 <div class="dynheader">
 Граф связей класса rm::vm:</div>
 <div class="dyncontent">
-<div class="center"><!-- SVG 1 -->
-</div>
+<div class="center"><!-- SVG 1 --></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">см. легенду</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Классы</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1database__api__add__entity.html">database_api_add_entity</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm_1_1rmvm__version.html">rmvm_version</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr class="memitem:a195332ba5d7b93aa8d15207198f07fec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">vm</a> (<a class="el" href="classrm_1_1database__api.html">database_api</a> *db=nullptr)</td></tr>
+<tr class="memitem:a195332ba5d7b93aa8d15207198f07fec" id="r_a195332ba5d7b93aa8d15207198f07fec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec">vm</a> (<a class="el" href="classrm_1_1database__api.html">database_api</a> *<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">db</a>=<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">nullptr</a>)</td></tr>
 <tr class="separator:a195332ba5d7b93aa8d15207198f07fec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d10fb6a2ccf5480b54846b05e2f7e81"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a4d10fb6a2ccf5480b54846b05e2f7e81">exec_ent</a> (json &amp;rel, json &amp;ent)</td></tr>
-<tr class="separator:a4d10fb6a2ccf5480b54846b05e2f7e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a485ca533acff87ec99438f68df9f4a2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">exec_ent</a> (<a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$, json &amp;ent)</td></tr>
+<tr class="memitem:a89c7b3058c699a8b01c4953c0852c53a" id="r_a89c7b3058c699a8b01c4953c0852c53a"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a89c7b3058c699a8b01c4953c0852c53a">exec_ent</a> (json &amp;rel, json &amp;ent)</td></tr>
+<tr class="separator:a89c7b3058c699a8b01c4953c0852c53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a485ca533acff87ec99438f68df9f4a2f" id="r_a485ca533acff87ec99438f68df9f4a2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f">exec_ent</a> (<a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;$, json &amp;ent)</td></tr>
 <tr class="separator:a485ca533acff87ec99438f68df9f4a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memTemplParams" colspan="2">template&lt;class base_entity_t  = base_entity&gt; </td></tr>
-<tr class="memitem:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3">operator&lt;&lt;</a> (const base_entity_t &amp;bent)</td></tr>
-<tr class="memdesc:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <a href="classrm_1_1vm.html#a48559e303866aa8c2de0fc8ef64bbaf3">Подробнее...</a><br /></td></tr>
-<tr class="separator:a48559e303866aa8c2de0fc8ef64bbaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43e33a3dca5f84a505fa51713be54b58"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">add_base_entity</a> (json &amp;entity, const string &amp;name, const <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a> view, const string &amp;description)</td></tr>
-<tr class="memdesc:a43e33a3dca5f84a505fa51713be54b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <a href="classrm_1_1vm.html#a43e33a3dca5f84a505fa51713be54b58">Подробнее...</a><br /></td></tr>
-<tr class="separator:a43e33a3dca5f84a505fa51713be54b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f7ea7f45b8a6908305edc8df7f67f1" id="r_a48f7ea7f45b8a6908305edc8df7f67f1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">class</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">base_entity_t</a>  = base_entity&gt; </td></tr>
+<tr class="memitem:a48f7ea7f45b8a6908305edc8df7f67f1"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classrm_1_1vm.html">vm</a> &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a48f7ea7f45b8a6908305edc8df7f67f1">operator&lt;&lt;</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">base_entity_t</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">bent</a>)</td></tr>
+<tr class="memdesc:a48f7ea7f45b8a6908305edc8df7f67f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <br /></td></tr>
+<tr class="separator:a48f7ea7f45b8a6908305edc8df7f67f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abda00b04a9a4a0de4b618ae9e7ecbee8" id="r_abda00b04a9a4a0de4b618ae9e7ecbee8"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#abda00b04a9a4a0de4b618ae9e7ecbee8">add_base_entity</a> (json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">name</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">binary_view</a> view, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;description)</td></tr>
+<tr class="memdesc:abda00b04a9a4a0de4b618ae9e7ecbee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией  <br /></td></tr>
+<tr class="separator:abda00b04a9a4a0de4b618ae9e7ecbee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Статические открытые данные</h2></td></tr>
-<tr class="memitem:a441b59d53c4816cdeacedf59cec254d0"><td class="memItemLeft" align="right" valign="top">static const string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0">version</a> = &quot;3.0.0&quot;s</td></tr>
+<tr class="memitem:a441b59d53c4816cdeacedf59cec254d0" id="r_a441b59d53c4816cdeacedf59cec254d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">static</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0">version</a> = &quot;3.0.0&quot;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a></td></tr>
 <tr class="separator:a441b59d53c4816cdeacedf59cec254d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Дополнительные унаследованные члены</h2></td></tr>
 <tr class="inherit_header pro_methods_classrm_1_1database__api"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classrm_1_1database__api')"><img src="closed.png" alt="-"/>&#160;Защищенные члены унаследованные от <a class="el" href="classrm_1_1database__api.html">rm::database_api</a></td></tr>
-<tr class="memitem:a8a3c953e202846082d0476f65c9ebb35 inherit pro_methods_classrm_1_1database__api"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a8a3c953e202846082d0476f65c9ebb35">get_entity</a> (json &amp;ent, const string &amp;ent_id)</td></tr>
+<tr class="memitem:a8a3c953e202846082d0476f65c9ebb35 inherit pro_methods_classrm_1_1database__api" id="r_a8a3c953e202846082d0476f65c9ebb35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">virtual</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a8a3c953e202846082d0476f65c9ebb35">get_entity</a> (json &amp;ent, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ent_id</a>)</td></tr>
 <tr class="separator:a8a3c953e202846082d0476f65c9ebb35 inherit pro_methods_classrm_1_1database__api"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45a70b9606c95b53a518781187462897 inherit pro_methods_classrm_1_1database__api"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a45a70b9606c95b53a518781187462897">add_entity</a> (const json &amp;ent, string &amp;ent_id)</td></tr>
+<tr class="memitem:a45a70b9606c95b53a518781187462897 inherit pro_methods_classrm_1_1database__api" id="r_a45a70b9606c95b53a518781187462897"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">virtual</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a45a70b9606c95b53a518781187462897">add_entity</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;ent, string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ent_id</a>)</td></tr>
 <tr class="separator:a45a70b9606c95b53a518781187462897 inherit pro_methods_classrm_1_1database__api"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56c9f0098a1b0f99d54a84ab1ba1178e inherit pro_methods_classrm_1_1database__api"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a56c9f0098a1b0f99d54a84ab1ba1178e">query_entity</a> (json &amp;ent, const json &amp;query)</td></tr>
+<tr class="memitem:a56c9f0098a1b0f99d54a84ab1ba1178e inherit pro_methods_classrm_1_1database__api" id="r_a56c9f0098a1b0f99d54a84ab1ba1178e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">virtual</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1database__api.html#a56c9f0098a1b0f99d54a84ab1ba1178e">query_entity</a> (json &amp;ent, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">query</a>)</td></tr>
 <tr class="separator:a56c9f0098a1b0f99d54a84ab1ba1178e inherit pro_methods_classrm_1_1database__api"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classrm_1_1interface__t"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classrm_1_1interface__t')"><img src="closed.png" alt="-"/>&#160;Защищенные члены унаследованные от <a class="el" href="classrm_1_1interface__t.html">rm::interface_t&lt; database_api &gt;</a></td></tr>
-<tr class="memitem:a6749acdb352836b1ed439b61e9b4388a inherit pro_methods_classrm_1_1interface__t"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a">link</a> (<a class="el" href="classrm_1_1database__api.html">database_api</a> *ptr)</td></tr>
+<tr class="memitem:a6749acdb352836b1ed439b61e9b4388a inherit pro_methods_classrm_1_1interface__t" id="r_a6749acdb352836b1ed439b61e9b4388a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a">link</a> (<a class="el" href="classrm_1_1database__api.html">database_api</a> *ptr)</td></tr>
 <tr class="separator:a6749acdb352836b1ed439b61e9b4388a inherit pro_methods_classrm_1_1interface__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa045f5055c2b6f9bded7ae17cfd81bcf inherit pro_methods_classrm_1_1interface__t"><td class="memItemLeft" align="right" valign="top">auto &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1interface__t.html#aa045f5055c2b6f9bded7ae17cfd81bcf">impl</a> () const</td></tr>
-<tr class="separator:aa045f5055c2b6f9bded7ae17cfd81bcf inherit pro_methods_classrm_1_1interface__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73a9b8ae68d96c7609208f3497cc8d3e inherit pro_methods_classrm_1_1interface__t" id="r_a73a9b8ae68d96c7609208f3497cc8d3e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">auto</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classrm_1_1interface__t.html#a73a9b8ae68d96c7609208f3497cc8d3e">impl</a> () <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a></td></tr>
+<tr class="separator:a73a9b8ae68d96c7609208f3497cc8d3e inherit pro_methods_classrm_1_1interface__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock">
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00112">112</a></p>
+<div class="textblock"><p>Виртуальная машина для выполнения отношений (сущностей), представленных в формате JSON. </p>
+<p>Класс реализует механизм выполнения JSON-структур как байткода, обеспечивая:</p><ul>
+<li>Рекурсивную интерпретацию JSON-сущностей и контроллеров</li>
+<li>Управление контекстами выполнения (<a class="el" href="structrm_1_1vm__ctx.html" title="Контекст выполнения для работы с сущностями в виртуальной машине отношений">vm_ctx</a>) с иерархией ссылок</li>
+<li>Потокобезопасные операции с использованием мьютексов</li>
+<li>Интеграцию с системой хранения через <a class="el" href="classrm_1_1database__api.html" title="Абстрактный интерфейс для работы с сущностями базы данных через JSON.">database_api</a></li>
+<li>Поддержку параллельного выполнения через execution policies</li>
+<li>Систему обработки исключений с детализацией ошибок в JSON-формате</li>
+</ul>
+<p>Особенности:</p><ul>
+<li>Использует JSON-pointer для навигации по структурам данных</li>
+<li>Поддерживает бинарные представления сущностей через binary_view_map_t</li>
+<li>Реализует механизм ссылок ($ref) для динамического разрешения зависимостей</li>
+<li>Обеспечивает базовый словарь системных сущностей (версия, добавление сущностей)</li>
+</ul>
+<p>Пример использования: </p><div class="fragment"><div class="line"><a class="code hl_class" href="classrm_1_1vm.html">rm::vm</a> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">machine</a>(&amp;<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">db_implementation</a>);</div>
+<div class="line">json <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a> = {{<span class="stringliteral">&quot;$rel&quot;</span>, <span class="stringliteral">&quot;some_entity&quot;</span>}, {<span class="stringliteral">&quot;$obj&quot;</span>, ...}};</div>
+<div class="line"><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">machine</a>.exec_ent(<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a>);</div>
+<div class="ttc" id="aclassrm_1_1vm_html"><div class="ttname"><a href="classrm_1_1vm.html">rm::vm</a></div><div class="ttdoc">Виртуальная машина для выполнения отношений (сущностей), представленных в формате JSON.</div><div class="ttdef"><b>Definition</b> <a href="vm_8rm_8h_source.html#l00167">vm.rm.h:168</a></div></div>
+<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00167">167</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
-<a id="a195332ba5d7b93aa8d15207198f07fec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a195332ba5d7b93aa8d15207198f07fec">&#9670;&nbsp;</a></span>vm()</h2>
+<a id="a195332ba5d7b93aa8d15207198f07fec" name="a195332ba5d7b93aa8d15207198f07fec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a195332ba5d7b93aa8d15207198f07fec">&#9670;&#160;</a></span>vm()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,7 +197,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
           <td class="memname">rm::vm::vm </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classrm_1_1database__api.html">database_api</a> *&#160;</td>
-          <td class="paramname"><em>db</em> = <code>nullptr</code></td><td>)</td>
+          <td class="paramname"><em>db</em> = <code><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">nullptr</a></code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -180,13 +208,13 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00311">311</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00429">429</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Методы</h2>
-<a id="a43e33a3dca5f84a505fa51713be54b58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43e33a3dca5f84a505fa51713be54b58">&#9670;&nbsp;</a></span>add_base_entity()</h2>
+<a id="abda00b04a9a4a0de4b618ae9e7ecbee8" name="abda00b04a9a4a0de4b618ae9e7ecbee8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abda00b04a9a4a0de4b618ae9e7ecbee8">&#9670;&#160;</a></span>add_base_entity()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -195,7 +223,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">json&amp; rm::vm::add_base_entity </td>
+          <td class="memname">json &amp; rm::vm::add_base_entity </td>
           <td>(</td>
           <td class="paramtype">json &amp;&#160;</td>
           <td class="paramname"><em>entity</em>, </td>
@@ -203,19 +231,19 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
           <td class="paramname"><em>name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespacerm.html#a89a608ae2bcb4c994d843008354fe993">binary_view</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd">binary_view</a>&#160;</td>
           <td class="paramname"><em>view</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
           <td class="paramname"><em>description</em>&#160;</td>
         </tr>
         <tr>
@@ -243,12 +271,12 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00451">451</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00628">628</a></p>
 
 </div>
 </div>
-<a id="a4d10fb6a2ccf5480b54846b05e2f7e81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d10fb6a2ccf5480b54846b05e2f7e81">&#9670;&nbsp;</a></span>exec_ent() <span class="overload">[1/2]</span></h2>
+<a id="a89c7b3058c699a8b01c4953c0852c53a" name="a89c7b3058c699a8b01c4953c0852c53a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89c7b3058c699a8b01c4953c0852c53a">&#9670;&#160;</a></span>exec_ent() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -257,7 +285,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">json&amp; rm::vm::exec_ent </td>
+          <td class="memname">json &amp; rm::vm::exec_ent </td>
           <td>(</td>
           <td class="paramtype">json &amp;&#160;</td>
           <td class="paramname"><em>rel</em>, </td>
@@ -281,12 +309,12 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00319">319</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00437">437</a></p>
 
 </div>
 </div>
-<a id="a485ca533acff87ec99438f68df9f4a2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a485ca533acff87ec99438f68df9f4a2f">&#9670;&nbsp;</a></span>exec_ent() <span class="overload">[2/2]</span></h2>
+<a id="a485ca533acff87ec99438f68df9f4a2f" name="a485ca533acff87ec99438f68df9f4a2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a485ca533acff87ec99438f68df9f4a2f">&#9670;&#160;</a></span>exec_ent() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +323,7 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::vm::exec_ent </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::vm::exec_ent </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;&#160;</td>
           <td class="paramname"><em>$</em>, </td>
@@ -319,25 +347,25 @@ $(document).ready(function(){initNavTree('classrm_1_1vm.html',''); initResizable
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00333">333</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00466">466</a></p>
 
 </div>
 </div>
-<a id="a48559e303866aa8c2de0fc8ef64bbaf3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48559e303866aa8c2de0fc8ef64bbaf3">&#9670;&nbsp;</a></span>operator&lt;&lt;()</h2>
+<a id="a48f7ea7f45b8a6908305edc8df7f67f1" name="a48f7ea7f45b8a6908305edc8df7f67f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f7ea7f45b8a6908305edc8df7f67f1">&#9670;&#160;</a></span>operator&lt;&lt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class base_entity_t  = base_entity&gt; </div>
+template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">class</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">base_entity_t</a>  = base_entity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classrm_1_1vm.html">vm</a>&amp; rm::vm::operator&lt;&lt; </td>
+          <td class="memname"><a class="el" href="classrm_1_1vm.html">vm</a> &amp; rm::vm::operator&lt;&lt; </td>
           <td>(</td>
-          <td class="paramtype">const base_entity_t &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">base_entity_t</a> &amp;&#160;</td>
           <td class="paramname"><em>bent</em></td><td>)</td>
           <td></td>
         </tr>
@@ -364,13 +392,13 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>Ссылка на виртуальную машину</dd></dl>
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00435">435</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00613">613</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Данные класса</h2>
-<a id="a441b59d53c4816cdeacedf59cec254d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a441b59d53c4816cdeacedf59cec254d0">&#9670;&nbsp;</a></span>version</h2>
+<a id="a441b59d53c4816cdeacedf59cec254d0" name="a441b59d53c4816cdeacedf59cec254d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a441b59d53c4816cdeacedf59cec254d0">&#9670;&#160;</a></span>version</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -379,7 +407,7 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const string rm::vm::version = &quot;3.0.0&quot;s</td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string rm::vm::version = &quot;3.0.0&quot;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a></td>
         </tr>
       </table>
   </td>
@@ -389,7 +417,7 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00115">115</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00171">171</a></p>
 
 </div>
 </div>
@@ -402,9 +430,7 @@ template&lt;class base_entity_t  = base_entity&gt; </div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacerm.html">rm</a></li><li class="navelem"><a class="el" href="classrm_1_1vm.html">vm</a></li>
-    <li class="footer">Создано системой
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Структура rm::vm_ctx</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -25,33 +25,34 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td id="projectalign">
    <div id="projectname">jsonRVM
    </div>
-   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.17 -->
+<!-- Создано системой Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -65,7 +66,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -79,9 +80,16 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="header">
@@ -89,47 +97,76 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 <a href="#pub-methods">Открытые члены</a> &#124;
 <a href="#pub-attribs">Открытые атрибуты</a> &#124;
 <a href="structrm_1_1vm__ctx-members.html">Полный список членов класса</a>  </div>
-  <div class="headertitle">
-<div class="title">Структура rm::vm_ctx</div>  </div>
+  <div class="headertitle"><div class="title">Структура rm::vm_ctx</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Контекст выполнения для работы с сущностями в виртуальной машине отношений  
+ <a href="structrm_1_1vm__ctx.html#details">Подробнее...</a></p>
 
 <p><code>#include &lt;<a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a>&gt;</code></p>
 <div class="dynheader">
 Граф связей класса rm::vm_ctx:</div>
 <div class="dyncontent">
-<div class="center"><!-- SVG 0 -->
-</div>
+<div class="center"><!-- SVG 0 --></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">см. легенду</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
-<tr class="memitem:a9b0fe8aa3b4d2d9250efdca9187f8195"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">vm_ctx</a> (json &amp;Rel, json &amp;Obj, json &amp;Sub, json &amp;Ent, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;Ctx)</td></tr>
+<tr class="memitem:a9b0fe8aa3b4d2d9250efdca9187f8195" id="r_a9b0fe8aa3b4d2d9250efdca9187f8195"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195">vm_ctx</a> (json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Rel</a>, json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Obj</a>, json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Sub</a>, json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Ent</a>, <a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Ctx</a>)</td></tr>
 <tr class="separator:a9b0fe8aa3b4d2d9250efdca9187f8195"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c236cd297bfe0fd44a1dd449ab4ecaf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">vm_ctx</a> (json &amp;Rel, json &amp;Ent)</td></tr>
+<tr class="memitem:a6c236cd297bfe0fd44a1dd449ab4ecaf" id="r_a6c236cd297bfe0fd44a1dd449ab4ecaf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf">vm_ctx</a> (json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Rel</a>, json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Ent</a>)</td></tr>
 <tr class="separator:a6c236cd297bfe0fd44a1dd449ab4ecaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d086205ec21bd2e2d36d5c6422ed0c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">vm_ctx</a> (json &amp;Rel)</td></tr>
+<tr class="memitem:a7d086205ec21bd2e2d36d5c6422ed0c3" id="r_a7d086205ec21bd2e2d36d5c6422ed0c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3">vm_ctx</a> (json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Rel</a>)</td></tr>
 <tr class="separator:a7d086205ec21bd2e2d36d5c6422ed0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb06c430cfb3f2a63f13e24de1701714"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json</a> (const string &amp;function, const json &amp;error) const</td></tr>
+<tr class="memitem:acb06c430cfb3f2a63f13e24de1701714" id="r_acb06c430cfb3f2a63f13e24de1701714"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">function</a>, <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">error</a>) <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a></td></tr>
 <tr class="separator:acb06c430cfb3f2a63f13e24de1701714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Открытые атрибуты</h2></td></tr>
-<tr class="memitem:a08ba251c6e6b6b7b8cc7c9f10a24d394"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a08ba251c6e6b6b7b8cc7c9f10a24d394">ent</a></td></tr>
-<tr class="separator:a08ba251c6e6b6b7b8cc7c9f10a24d394"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2b79f5a395732d62aaa2553e9122446"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a></td></tr>
+<tr class="memitem:ace4a6a1bf17b322185a8e5e6bda059aa" id="r_ace4a6a1bf17b322185a8e5e6bda059aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#ace4a6a1bf17b322185a8e5e6bda059aa">$</a></td></tr>
+<tr class="separator:ace4a6a1bf17b322185a8e5e6bda059aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63c3517365e954e163043b46e809885" id="r_af63c3517365e954e163043b46e809885"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#af63c3517365e954e163043b46e809885">ent</a></td></tr>
+<tr class="separator:af63c3517365e954e163043b46e809885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2b79f5a395732d62aaa2553e9122446" id="r_ae2b79f5a395732d62aaa2553e9122446"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446">obj</a></td></tr>
 <tr class="separator:ae2b79f5a395732d62aaa2553e9122446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d5dfd112b297c6c3de4fabc75e6d26c"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rel</a></td></tr>
+<tr class="memitem:a5d5dfd112b297c6c3de4fabc75e6d26c" id="r_a5d5dfd112b297c6c3de4fabc75e6d26c"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#a5d5dfd112b297c6c3de4fabc75e6d26c">rel</a></td></tr>
 <tr class="separator:a5d5dfd112b297c6c3de4fabc75e6d26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae335c37b8a77e66d9e89d9b95cd83f8e"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a></td></tr>
+<tr class="memitem:ae335c37b8a77e66d9e89d9b95cd83f8e" id="r_ae335c37b8a77e66d9e89d9b95cd83f8e"><td class="memItemLeft" align="right" valign="top">json &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e">sub</a></td></tr>
 <tr class="separator:ae335c37b8a77e66d9e89d9b95cd83f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock">
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00060">60</a></p>
+<div class="textblock"><p>Контекст выполнения для работы с сущностями в виртуальной машине отношений </p>
+<p>Структура предоставляет доступ к ключевым элементам контекста выполнения:</p><ul>
+<li>Текущая сущность (ent)</li>
+<li>Целевой объект (obj)</li>
+<li>Отношение (rel)</li>
+<li>Субъект отношения (sub)</li>
+<li>Родительский контекст ($)</li>
+</ul>
+<p>Особенности:</p><ul>
+<li>Иерархическая организация контекстов через ссылку на родительский контекст</li>
+<li>Позволяет модифицировать состояние отношений во время выполнения</li>
+<li>Обеспечивает механизм генерации трассируемых исключений через <a class="el" href="structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714">throw_json()</a></li>
+</ul>
+<dl class="section warning"><dt>Предупреждения</dt><dd>Все ссылки должны оставаться валидными на протяжении времени жизни контекста</dd></dl>
+<p>Пример использования: </p><div class="fragment"><div class="line">json <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a>, <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">relation</a>;</div>
+<div class="line"><a class="code hl_struct" href="structrm_1_1vm__ctx.html">vm_ctx</a> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ctx</a>(<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">relation</a>, <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a>); <span class="comment">// Создание корневого контекста</span></div>
+<div class="line"><a class="code hl_struct" href="structrm_1_1vm__ctx.html">vm_ctx</a> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">child_ctx</a>(<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">relation</a>, <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">entity</a>, <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ctx</a>); <span class="comment">// Создание дочернего контекста</span></div>
+<div class="line"><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ctx</a>.throw_json(<span class="stringliteral">&quot;operation&quot;</span>, {{<span class="stringliteral">&quot;error&quot;</span>, <span class="stringliteral">&quot;something wrong&quot;</span>}}); <span class="comment">// Генерация исключения</span></div>
+<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
+<div class="ttc" id="astructrm_1_1vm__ctx_html"><div class="ttname"><a href="structrm_1_1vm__ctx.html">rm::vm_ctx</a></div><div class="ttdoc">Контекст выполнения для работы с сущностями в виртуальной машине отношений</div><div class="ttdef"><b>Definition</b> <a href="vm_8rm_8h_source.html#l00087">vm.rm.h:88</a></div></div>
+</div><!-- fragment --><dl class="section note"><dt>Заметки</dt><dd>Конструкторы позволяют создавать контексты разного уровня вложенности:<ul>
+<li>vm_ctx(rel) - корневой контекст</li>
+<li>vm_ctx(rel, ent) - контекст с привязкой к сущности</li>
+<li>vm_ctx(rel, obj, sub, ent, ctx) - полный дочерний контекст </li>
+</ul>
+</dd></dl>
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00087">87</a></p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
-<a id="a9b0fe8aa3b4d2d9250efdca9187f8195"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b0fe8aa3b4d2d9250efdca9187f8195">&#9670;&nbsp;</a></span>vm_ctx() <span class="overload">[1/3]</span></h2>
+<a id="a9b0fe8aa3b4d2d9250efdca9187f8195" name="a9b0fe8aa3b4d2d9250efdca9187f8195"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b0fe8aa3b4d2d9250efdca9187f8195">&#9670;&#160;</a></span>vm_ctx() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,12 +217,12 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00068">68</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00095">95</a></p>
 
 </div>
 </div>
-<a id="a6c236cd297bfe0fd44a1dd449ab4ecaf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c236cd297bfe0fd44a1dd449ab4ecaf">&#9670;&nbsp;</a></span>vm_ctx() <span class="overload">[2/3]</span></h2>
+<a id="a6c236cd297bfe0fd44a1dd449ab4ecaf" name="a6c236cd297bfe0fd44a1dd449ab4ecaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c236cd297bfe0fd44a1dd449ab4ecaf">&#9670;&#160;</a></span>vm_ctx() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,12 +255,12 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00071">71</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00098">98</a></p>
 
 </div>
 </div>
-<a id="a7d086205ec21bd2e2d36d5c6422ed0c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d086205ec21bd2e2d36d5c6422ed0c3">&#9670;&nbsp;</a></span>vm_ctx() <span class="overload">[3/3]</span></h2>
+<a id="a7d086205ec21bd2e2d36d5c6422ed0c3" name="a7d086205ec21bd2e2d36d5c6422ed0c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d086205ec21bd2e2d36d5c6422ed0c3">&#9670;&#160;</a></span>vm_ctx() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,13 +283,13 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00074">74</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00101">101</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Методы</h2>
-<a id="acb06c430cfb3f2a63f13e24de1701714"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb06c430cfb3f2a63f13e24de1701714">&#9670;&nbsp;</a></span>throw_json()</h2>
+<a id="acb06c430cfb3f2a63f13e24de1701714" name="acb06c430cfb3f2a63f13e24de1701714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb06c430cfb3f2a63f13e24de1701714">&#9670;&#160;</a></span>throw_json()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -261,15 +298,15 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void rm::vm_ctx::throw_json </td>
+          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">void</a> rm::vm_ctx::throw_json </td>
           <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
           <td class="paramname"><em>function</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const json &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> json &amp;&#160;</td>
           <td class="paramname"><em>error</em>&#160;</td>
         </tr>
         <tr>
@@ -285,29 +322,45 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00077">77</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00104">104</a></p>
 
 </div>
 </div>
 <h2 class="groupheader">Данные класса</h2>
-<a id="a08ba251c6e6b6b7b8cc7c9f10a24d394"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08ba251c6e6b6b7b8cc7c9f10a24d394">&#9670;&nbsp;</a></span>ent</h2>
+<a id="ace4a6a1bf17b322185a8e5e6bda059aa" name="ace4a6a1bf17b322185a8e5e6bda059aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace4a6a1bf17b322185a8e5e6bda059aa">&#9670;&#160;</a></span>$</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; json&amp; rm::vm_ctx::ent</td>
+          <td class="memname"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a>&amp; rm::vm_ctx::$</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00062">62</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00089">89</a></p>
 
 </div>
 </div>
-<a id="ae2b79f5a395732d62aaa2553e9122446"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2b79f5a395732d62aaa2553e9122446">&#9670;&nbsp;</a></span>obj</h2>
+<a id="af63c3517365e954e163043b46e809885" name="af63c3517365e954e163043b46e809885"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63c3517365e954e163043b46e809885">&#9670;&#160;</a></span>ent</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">json&amp; rm::vm_ctx::ent</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00090">90</a></p>
+
+</div>
+</div>
+<a id="ae2b79f5a395732d62aaa2553e9122446" name="ae2b79f5a395732d62aaa2553e9122446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2b79f5a395732d62aaa2553e9122446">&#9670;&#160;</a></span>obj</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,12 +371,12 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00064">64</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00091">91</a></p>
 
 </div>
 </div>
-<a id="a5d5dfd112b297c6c3de4fabc75e6d26c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d5dfd112b297c6c3de4fabc75e6d26c">&#9670;&nbsp;</a></span>rel</h2>
+<a id="a5d5dfd112b297c6c3de4fabc75e6d26c" name="a5d5dfd112b297c6c3de4fabc75e6d26c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5dfd112b297c6c3de4fabc75e6d26c">&#9670;&#160;</a></span>rel</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -334,12 +387,12 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00065">65</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00092">92</a></p>
 
 </div>
 </div>
-<a id="ae335c37b8a77e66d9e89d9b95cd83f8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae335c37b8a77e66d9e89d9b95cd83f8e">&#9670;&nbsp;</a></span>sub</h2>
+<a id="ae335c37b8a77e66d9e89d9b95cd83f8e" name="ae335c37b8a77e66d9e89d9b95cd83f8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae335c37b8a77e66d9e89d9b95cd83f8e">&#9670;&#160;</a></span>sub</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -350,7 +403,7 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
       </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00066">66</a></p>
+<p class="definition">См. определение в файле <a class="el" href="vm_8rm_8h_source.html">vm.rm.h</a> строка <a class="el" href="vm_8rm_8h_source.html#l00093">93</a></p>
 
 </div>
 </div>
@@ -363,9 +416,7 @@ $(document).ready(function(){initNavTree('structrm_1_1vm__ctx.html',''); initRes
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacerm.html">rm</a></li><li class="navelem"><a class="el" href="structrm_1_1vm__ctx.html">vm_ctx</a></li>
-    <li class="footer">Создано системой
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['value_149',['value',['../structrm_1_1callctx.html#a7874b7a61a08cc97cac4aa6e19e6b14f',1,'rm::callctx']]],
-  ['value_5fxor_5farray_150',['value_xor_array',['../namespacerm.html#a7a4003479b4ae7071bb2f472d77c0d48',1,'rm']]],
-  ['version_151',['version',['../classrm_1_1vm.html#a441b59d53c4816cdeacedf59cec254d0',1,'rm::vm']]],
-  ['view_152',['view',['../structrm_1_1base__entity.html#a5ea7f8288322e7d484a995462accf818',1,'rm::base_entity::view()'],['../structrm_1_1vm_1_1database__api__add__entity.html#a5a1bee844d09738b354cbca3021a4c5f',1,'rm::vm::database_api_add_entity::view()'],['../structrm_1_1vm_1_1rmvm__version.html#afac5af346ae1e0fe6a67920dc5ddf0ea',1,'rm::vm::rmvm_version::view()'],['../structrm_1_1json__dump.html#ad4548b4c5013ea48e85a99b42731ebd9',1,'rm::json_dump::view()'],['../structrm_1_1steady__clock.html#a0f8904d361c8ad3eade68780bac62d44',1,'rm::steady_clock::view()']]],
-  ['vm_153',['vm',['../classrm_1_1vm.html',1,'rm::vm'],['../classrm_1_1vm.html#a195332ba5d7b93aa8d15207198f07fec',1,'rm::vm::vm()']]],
-  ['vm_2erm_2eh_154',['vm.rm.h',['../vm_8rm_8h.html',1,'']]],
-  ['vm_5fctx_155',['vm_ctx',['../structrm_1_1vm__ctx.html',1,'rm::vm_ctx'],['../structrm_1_1vm__ctx.html#a9b0fe8aa3b4d2d9250efdca9187f8195',1,'rm::vm_ctx::vm_ctx(json &amp;Rel, json &amp;Obj, json &amp;Sub, json &amp;Ent, vm_ctx &amp;Ctx)'],['../structrm_1_1vm__ctx.html#a6c236cd297bfe0fd44a1dd449ab4ecaf',1,'rm::vm_ctx::vm_ctx(json &amp;Rel, json &amp;Ent)'],['../structrm_1_1vm__ctx.html#a7d086205ec21bd2e2d36d5c6422ed0c3',1,'rm::vm_ctx::vm_ctx(json &amp;Rel)']]],
-  ['vm_5fopp_156',['VM_OPP',['../base_8rm_8h.html#a28fbf920b2d47185312cbb470fd929b3',1,'base.rm.h']]]
+  ['obj_0',['obj',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md5',1,'0. ent = &lt;sub, rel, obj&gt;'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md8',1,'01. obj'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md6',1,'1. rel = { sub, ent, obj }'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md7',1,'1. sub =  = { ent, rel, obj }'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md10',1,'Ent = &lt;Sub, Rel, Obj&gt;'],['../structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446',1,'rm::vm_ctx::obj']]],
+  ['obj_5ffield_1',['obj_field',['../base_8rm_8h.html#aacf201145f6a783a230a50858ab5a166',1,'base.rm.h']]],
+  ['object_20node_2',['object node',['../md_doc_2json__definition.html#autotoc_md73',1,'']]],
+  ['of_20the_20state_20of_20the_20relation_20выяснение_20состояния_20отношения_3',['Clarification of the state of the relation / Выяснение состояния отношения',['../md_doc_2_dictionary.html#clar_state',1,'']]],
+  ['op_5fbody_4',['op_body',['../base_8rm_8h.html#a335f6ddd43d0d2e02df76cff3858e2c3',1,'OP_BODY:&#160;base.rm.h'],['../namespacerm.html#a1c7d0997ec99952a5d349c066811b0d1',1,'rm::OP_BODY(Add,+)'],['../namespacerm.html#af4fcc532b37ac2ea771815afa4863e58',1,'rm::OP_BODY(Substract, -)'],['../namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5',1,'rm::OP_BODY(Mul, *)'],['../namespacerm.html#a384e283e71b6a3106bc525bbaa4109c0',1,'rm::OP_BODY(Div,/)']]],
+  ['operator_3c_3c_5',['operator&lt;&lt;',['../classrm_1_1vm.html#a48f7ea7f45b8a6908305edc8df7f67f1',1,'rm::vm']]],
+  ['operator_5e_6',['operator^',['../namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739',1,'rm']]],
+  ['opp_5fanyto_7',['OPP_ANYTO',['../base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7',1,'base.rm.h']]],
+  ['opp_5fsto_8',['OPP_STO',['../base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83',1,'base.rm.h']]],
+  ['os_3a_9',['2. Выделяем связи типа SO, ER, RE, OS:',['../md_doc_2_mathematical__definition.html#autotoc_md86',1,'']]]
 ];

@@ -23,7 +23,9 @@ var hierarchy =
       [ "rm::vm", "classrm_1_1vm.html", null ]
     ] ],
     [ "rm::string_type< chars >", "structrm_1_1string__type.html", null ],
+    [ "string_type", "structstring__type.html", null ],
     [ "rm::string_type_maker< N, T,... >", "structrm_1_1string__type__maker.html", null ],
+    [ "string_type_maker", "structstring__type__maker.html", null ],
     [ "rm::string_type_maker< N, string_type< chars... >, first, tail... >", "structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html", null ],
     [ "rm::type_map< pairs_t >", "structrm_1_1type__map.html", null ],
     [ "rm::type_pair< key_t, value_t >", "structrm_1_1type__pair.html", null ],

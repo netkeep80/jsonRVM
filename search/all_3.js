@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['callctx_14',['callctx',['../structrm_1_1callctx.html',1,'rm::callctx'],['../structrm_1_1callctx.html#a940f80a16443a17550d906c170fe8e5c',1,'rm::callctx::callctx()']]],
-  ['cp1251_5fto_5futf8_15',['cp1251_to_utf8',['../string__utils_8h.html#a589dfcfbe4c6adc30a26ee395205c7ad',1,'string_utils.h']]],
-  ['cp1251_5fto_5fwstring_16',['cp1251_to_wstring',['../string__utils_8h.html#a2255503e795d2cb329411e02fdca66f6',1,'string_utils.h']]]
+  ['2_0',['МО в теории множеств как множество взаимосвязанных множеств кортежей длины 2',['../md_doc_2_mathematical__definition.html#autotoc_md83',1,'']]],
+  ['2_20введение_20в_20мо_1',['2. Введение в МО',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md2',1,'']]],
+  ['2_20выделяем_20связи_20типа_20so_20er_20re_20os_3a_2',['2. Выделяем связи типа SO, ER, RE, OS:',['../md_doc_2_mathematical__definition.html#autotoc_md86',1,'']]],
+  ['2_20исполняемые_20блоки_3',['2. Исполняемые блоки',['../md__r_e_a_d_m_e.html#autotoc_md110',1,'']]],
+  ['2_20работа_20с_20данными_4',['2. Работа с данными',['../md__r_e_a_d_m_e.html#autotoc_md116',1,'']]],
+  ['2_3a_5',['Преобразование 4х множеств кортежей длины 3 к 4м множествам кортежей длины 2:',['../md_doc_2_mathematical__definition.html#autotoc_md77',1,'']]]
 ];

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: Исходный файл modules/common/include/string_type.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -25,34 +25,40 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td id="projectalign">
    <div id="projectname">jsonRVM
    </div>
-   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.17 -->
+<!-- Создано системой Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -65,7 +71,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('string__type_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -79,97 +85,109 @@ $(document).ready(function(){initNavTree('string__type_8h_source.html',''); init
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
 </div>
 
 <div class="header">
-  <div class="headertitle">
-<div class="title">string_type.h</div>  </div>
+  <div class="headertitle"><div class="title">string_type.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="string__type_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*        R</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">       S__|__O</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">     O   _|_   S</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">  R__|__/_|_\__|__R  jsonRVM</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">     |  \_|_/  |     json Relations (Model) Virtual Machine</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment">     S    |    O     https://github.com/netkeep80/jsonRVM</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">        __|__</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">       /  |  \</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment">      /___|___\</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment">Fractal Triune Entity</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">Licensed under the MIT License &lt;http://opensource.org/licenses/MIT&gt;.</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">Copyright (c) 2016-2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment">Permission is hereby granted, free of charge, to any person obtaining a copy</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment">of this software and associated documentation files (the &quot;Software&quot;), to deal</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment">in the Software without restriction, including without limitation the rights</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment">copies of the Software, and to permit persons to whom the Software is</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment">furnished to do so, subject to the following conditions:</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">The above copyright notice and this permission notice shall be included in all</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment">copies or substantial portions of the Software.</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">SOFTWARE.</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">*/</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacerm.html">rm</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">char</span>... chars&gt;</div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html">   38</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structrm_1_1string__type.html">string_type</a></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    {</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19">   40</a></span>&#160;        constexpr <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">char</span> <a class="code" href="structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19">str</a>[]{ chars... };</div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1">   41</a></span>&#160;        constexpr <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1">size</a>{ <span class="keyword">sizeof</span>...(chars) };</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    };</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> T, <span class="keywordtype">char</span>...&gt;</div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker.html">   45</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structrm_1_1string__type__maker.html">string_type_maker</a></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    {</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463">   47</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="structrm_1_1string__type.html">make</a> = <a class="code" href="structrm_1_1string__type.html">string_type&lt;&gt;</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keywordtype">char</span>... chars, <span class="keywordtype">char</span> first, <span class="keywordtype">char</span>... tail&gt;</div>
-<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html">   51</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structrm_1_1string__type__maker.html">string_type_maker</a>&lt;N, <a class="code" href="structrm_1_1string__type.html">string_type</a>&lt;chars...&gt;, first, tail...&gt;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    {</div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">   53</a></span>&#160;        <span class="keyword">using</span> <a class="code" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">make</a> = std::conditional_t&lt;(<span class="keyword">sizeof</span>...(chars) == N), <a class="code" href="structrm_1_1string__type.html">string_type</a>&lt;chars...&gt;, <span class="keyword">typename</span> <a class="code" href="structrm_1_1string__type__maker.html">string_type_maker</a>&lt;N, <a class="code" href="structrm_1_1string__type.html">string_type</a>&lt;chars..., first&gt;, tail...&gt;<a class="code" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">::make</a>&gt;;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    };</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> size&gt;</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">   57</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">str_size</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>(&amp;str)[size]) { <span class="keywordflow">return</span> size; }</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> size&gt;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">   60</a></span>&#160;    constexpr <span class="keyword">auto</span> <a class="code" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">selch</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>(&amp;str)[size], <span class="keyword">const</span> <span class="keywordtype">size_t</span> index) { <span class="keywordflow">return</span> str[index &gt;= size ? size - 1 : index]; }</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">   62</a></span>&#160;<span class="preprocessor">#define as_type(s) string_type_maker&lt;str_size(s), string_type&lt;&gt;, selch(s,0), selch(s,1), selch(s,2), selch(s,3), selch(s,4), selch(s,5), selch(s,6), selch(s,7), selch(s,8), selch(s,9), selch(s,10), selch(s,11), selch(s,12), selch(s,13), selch(s,14), selch(s,15), selch(s,16), selch(s,17), selch(s,18), selch(s,19), selch(s,20), selch(s,21), selch(s,22), selch(s,23), selch(s,24), selch(s,25), selch(s,26), selch(s,27), selch(s,28), selch(s,29), selch(s,30), selch(s,31), selch(s,32), selch(s,33), selch(s,34), selch(s,35), selch(s,36), selch(s,37), selch(s,38), selch(s,39), selch(s,40), selch(s,41), selch(s,42), selch(s,43), selch(s,44), selch(s,45), selch(s,46), selch(s,47), selch(s,48), selch(s,49), selch(s,50), selch(s,51), selch(s,52), selch(s,53), selch(s,54), selch(s,55), selch(s,56), selch(s,57), selch(s,58), selch(s,59), selch(s,60), selch(s,61), selch(s,62), selch(s,63), selch(s,64)&gt;::make</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff">   63</a></span>&#160;<span class="preprocessor">#define to_sv(s)   as_type(s)::str</span></div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+<a href="string__type_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*        R</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">       S__|__O</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">     O   _|_   S</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">  R__|__/_|_\__|__R  jsonRVM</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">     |  \_|_/  |     json Relations (Model) Virtual Machine</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">     S    |    O     https://github.com/netkeep80/jsonRVM</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">        __|__</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">       /  |  \</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">      /___|___\</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">Fractal Triune Entity</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"></span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">Licensed under the MIT License &lt;http://opensource.org/licenses/MIT&gt;.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">Copyright (c) 2016-2021 Vertushkin Roman Pavlovich &lt;https://vk.com/earthbirthbook&gt;.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"></span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">Permission is hereby granted, free of charge, to any person obtaining a copy</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">of this software and associated documentation files (the &quot;Software&quot;), to deal</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">in the Software without restriction, including without limitation the rights</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">copies of the Software, and to permit persons to whom the Software is</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment">furnished to do so, subject to the following conditions:</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"></span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">The above copyright notice and this permission notice shall be included in all</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">copies or substantial portions of the Software.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"></span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">SOFTWARE.</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacerm.html">rm</a></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>{</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">char</span>... chars&gt;</div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="};">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html">   78</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structrm_1_1string__type.html">string_type</a></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4">   80</a></span>        <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">char</span> <a class="code hl_variable" href="structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4">str</a>[]{ chars... };</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f">   81</a></span>        <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f">size</a>{ <span class="keyword">sizeof</span>...(chars) };</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    };</div>
+</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> T, <span class="keywordtype">char</span>...&gt;</div>
+<div class="foldopen" id="foldopen00085" data-start="{" data-end="};">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker.html">   85</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structrm_1_1string__type__maker.html">string_type_maker</a></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463">   87</a></span>        <span class="keyword">using </span><a class="code hl_struct" href="structrm_1_1string__type.html">make</a> = <a class="code hl_struct" href="structrm_1_1string__type.html">string_type&lt;&gt;</a>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    };</div>
+</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keywordtype">char</span>... chars, <span class="keywordtype">char</span> first, <span class="keywordtype">char</span>... tail&gt;</div>
+<div class="foldopen" id="foldopen00091" data-start="{" data-end="};">
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html">   91</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structrm_1_1string__type__maker.html">string_type_maker</a>&lt;N, <a class="code hl_struct" href="structrm_1_1string__type.html">string_type</a>&lt;chars...&gt;, first, tail...&gt;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">   93</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">make</a> = std::conditional_t&lt;(<span class="keyword">sizeof</span>...(chars) == N), <a class="code hl_struct" href="structrm_1_1string__type.html">string_type</a>&lt;chars...&gt;, <span class="keyword">typename</span> <a class="code hl_struct" href="structrm_1_1string__type__maker.html">string_type_maker</a>&lt;N, <a class="code hl_struct" href="structrm_1_1string__type.html">string_type</a>&lt;chars..., first&gt;, tail...&gt;<a class="code hl_typedef" href="structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463">::make</a>&gt;;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    };</div>
+</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> size&gt;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">   97</a></span>    <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">str_size</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>(&amp;str)[size]) { <span class="keywordflow">return</span> size; }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> size&gt;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">  100</a></span>    <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">selch</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>(&amp;str)[size], <span class="keyword">const</span> <span class="keywordtype">size_t</span> index) { <span class="keywordflow">return</span> str[index &gt;= size ? size - 1 : index]; }</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">  102</a></span><span class="preprocessor">#define as_type(s) string_type_maker&lt;str_size(s), string_type&lt;&gt;, selch(s,0), selch(s,1), selch(s,2), selch(s,3), selch(s,4), selch(s,5), selch(s,6), selch(s,7), selch(s,8), selch(s,9), selch(s,10), selch(s,11), selch(s,12), selch(s,13), selch(s,14), selch(s,15), selch(s,16), selch(s,17), selch(s,18), selch(s,19), selch(s,20), selch(s,21), selch(s,22), selch(s,23), selch(s,24), selch(s,25), selch(s,26), selch(s,27), selch(s,28), selch(s,29), selch(s,30), selch(s,31), selch(s,32), selch(s,33), selch(s,34), selch(s,35), selch(s,36), selch(s,37), selch(s,38), selch(s,39), selch(s,40), selch(s,41), selch(s,42), selch(s,43), selch(s,44), selch(s,45), selch(s,46), selch(s,47), selch(s,48), selch(s,49), selch(s,50), selch(s,51), selch(s,52), selch(s,53), selch(s,54), selch(s,55), selch(s,56), selch(s,57), selch(s,58), selch(s,59), selch(s,60), selch(s,61), selch(s,62), selch(s,63), selch(s,64)&gt;::make</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff">  103</a></span><span class="preprocessor">#define to_sv(s)   as_type(s)::str</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>}</div>
+<div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition</b> <a href="database__api_8h_source.html#l00005">database_api.h:6</a></div></div>
+<div class="ttc" id="anamespacerm_html_a04361b6c2ec93d40270af30bdde86ffc"><div class="ttname"><a href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">rm::selch</a></div><div class="ttdeci">constexpr auto selch(const char(&amp;str)[size], const size_t index)</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00100">string_type.h:100</a></div></div>
+<div class="ttc" id="anamespacerm_html_a22f84d438e39fcc290c63f67580a395e"><div class="ttname"><a href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">rm::str_size</a></div><div class="ttdeci">constexpr auto str_size(const char(&amp;str)[size])</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00097">string_type.h:97</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4_html_ab2a81cad92b26b805ba6172167e59c28"><div class="ttname"><a href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make</a></div><div class="ttdeci">std::conditional_t&lt;(sizeof...(chars)==N), string_type&lt; chars... &gt;, typename string_type_maker&lt; N, string_type&lt; chars..., first &gt;, tail... &gt;::make &gt; make</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00093">string_type.h:93</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type__maker_html"><div class="ttname"><a href="structrm_1_1string__type__maker.html">rm::string_type_maker</a></div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00085">string_type.h:86</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type__maker_html_aadf300e14a514b929f92336efe63a463"><div class="ttname"><a href="structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463">rm::string_type_maker::make</a></div><div class="ttdeci">string_type&lt;&gt; make</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00087">string_type.h:87</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html"><div class="ttname"><a href="structrm_1_1string__type.html">rm::string_type</a></div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00078">string_type.h:79</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html_a7dcd85b970c2ab17c4c4b985492c6dc4"><div class="ttname"><a href="structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4">rm::string_type::str</a></div><div class="ttdeci">static constexpr char str[]</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00080">string_type.h:80</a></div></div>
+<div class="ttc" id="astructrm_1_1string__type_html_ab4df0c70615ee90c7972bd82dd1e8e9f"><div class="ttname"><a href="structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f">rm::string_type::size</a></div><div class="ttdeci">static constexpr size_t size</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00081">string_type.h:81</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructrm_1_1string__type__maker_html"><div class="ttname"><a href="structrm_1_1string__type__maker.html">rm::string_type_maker</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00045">string_type.h:45</a></div></div>
-<div class="ttc" id="anamespacerm_html_a22f84d438e39fcc290c63f67580a395e"><div class="ttname"><a href="namespacerm.html#a22f84d438e39fcc290c63f67580a395e">rm::str_size</a></div><div class="ttdeci">constexpr auto str_size(const char(&amp;str)[size])</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00057">string_type.h:57</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html_a3f9f6ac8b8b4b75a7fed79feaff6ba19"><div class="ttname"><a href="structrm_1_1string__type.html#a3f9f6ac8b8b4b75a7fed79feaff6ba19">rm::string_type::str</a></div><div class="ttdeci">constexpr static char str[]</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00040">string_type.h:40</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html"><div class="ttname"><a href="structrm_1_1string__type.html">rm::string_type</a></div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00038">string_type.h:38</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4_html_ab2a81cad92b26b805ba6172167e59c28"><div class="ttname"><a href="structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28">rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make</a></div><div class="ttdeci">std::conditional_t&lt;(sizeof...(chars)==N), string_type&lt; chars... &gt;, typename string_type_maker&lt; N, string_type&lt; chars..., first &gt;, tail... &gt;::make &gt; make</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00053">string_type.h:53</a></div></div>
-<div class="ttc" id="anamespacerm_html_a04361b6c2ec93d40270af30bdde86ffc"><div class="ttname"><a href="namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc">rm::selch</a></div><div class="ttdeci">constexpr auto selch(const char(&amp;str)[size], const size_t index)</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00060">string_type.h:60</a></div></div>
-<div class="ttc" id="astructrm_1_1string__type_html_a2b430850add7355c851bb511900081d1"><div class="ttname"><a href="structrm_1_1string__type.html#a2b430850add7355c851bb511900081d1">rm::string_type::size</a></div><div class="ttdeci">constexpr static size_t size</div><div class="ttdef"><b>Definition:</b> <a href="string__type_8h_source.html#l00041">string_type.h:41</a></div></div>
-<div class="ttc" id="anamespacerm_html"><div class="ttname"><a href="namespacerm.html">rm</a></div><div class="ttdef"><b>Definition:</b> <a href="database__api_8h_source.html#l00006">database_api.h:6</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_9a5e51f49964887903df6eed98080585.html">common</a></li><li class="navelem"><a class="el" href="dir_0c989e04a2cbea17eef1c625c7a83439.html">include</a></li><li class="navelem"><a class="el" href="string__type_8h.html">string_type.h</a></li>
-    <li class="footer">Создано системой
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

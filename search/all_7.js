@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['get_5fentity_37',['get_entity',['../classrm_1_1database__api.html#a8a3c953e202846082d0476f65c9ebb35',1,'rm::database_api::get_entity()'],['../classrm_1_1file__database__t.html#a44cd851181ab1c52a4ebb8dd263e6a47',1,'rm::file_database_t::get_entity()']]]
+  ['_5fto_5fwstring_0',['_to_wstring',['../string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611',1,'string_utils.h']]]
 ];

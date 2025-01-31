@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>jsonRVM: README</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -25,33 +25,34 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
+ <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td id="projectalign">
    <div id="projectname">jsonRVM
    </div>
-   <div id="projectbrief">jsonRelations(Model)VirtualMachine</div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
   </td>
  </tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.8.17 -->
+<!-- Создано системой Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Поиск');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -65,7 +66,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -79,14 +80,20 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
 </div>
 
-<div class="PageDoc"><div class="header">
-  <div class="headertitle">
-<div class="title">README </div>  </div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">README</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a href="https://gitpod.io/#https://github.com/netkeep80/jsonrvm"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code" class="inline"/></a> <a href="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish?label=Publish%20Doxygen%20to%20gh-pages" alt="GitHub Workflow Status" class="inline"/></a></p>
@@ -104,10 +111,156 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">      __|__</div>
 <div class="line">     /  |  \</div>
 <div class="line">    /___|___\</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md105"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md105"></a>
+Язык метапрограммирования "Модель Отношений" (JSON Relations Model)</h3>
+<h4><a class="anchor" id="autotoc_md106"></a>
+Обзор</h4>
+<p>Язык "Модель Отношений" (Relations Model, RM) — это декларативный DSL (Domain-Specific Language), ориентированный на описание сложных систем через иерархию сущностей и их отношений. Программы представляются в виде JSON-структур, которые исполняются виртуальной машиной RMVM. Ключевые особенности:</p>
+<ol type="1">
+<li><b>Сущности (Entities)</b> <br  />
+ Базовые элементы системы, описываемые JSON-объектами. Могут быть:<ul>
+<li>Примитивами: <code>числа</code>, <code>строки</code>, <code>булевы значения</code>.</li>
+<li>Составными типами: <code>массивы</code>, <code>объекты</code>.</li>
+<li>Ссылками: <code>$ref</code> на другие сущности.</li>
+<li>Исполняемыми конструкциями: <code>$rel</code>, <code>$obj</code>, <code>$sub</code>.</li>
+</ul>
+</li>
+<li><b>Отношения (Relations)</b> <br  />
+ Определяют правила взаимодействия между сущностями. Примеры:<ul>
+<li><b>Создание сущности</b>: <code>add_entity</code>.</li>
+<li><b>Загрузка словарей</b>: <code>load/dll</code>.</li>
+<li><b>Параллельные вычисления</b>.</li>
+</ul>
+</li>
+<li><b>Контексты (Contexts)</b> <br  />
+ Каждое отношение исполняется в контексте, который включает:<ul>
+<li><code>$ent</code> — текущая сущность.</li>
+<li><code>$rel</code> — исполняемое отношение.</li>
+<li><code>$obj</code> — объект отношения (входные данные).</li>
+<li><code>$sub</code> — субъект отношения (результат).</li>
+</ul>
+</li>
+</ol>
+<hr  />
+<h3><a class="anchor" id="autotoc_md108"></a>
+Синтаксис и Конструкции</h3>
+<h4><a class="anchor" id="autotoc_md109"></a>
+1. Ссылки (&lt;tt&gt;$ref&lt;/tt&gt;)</h4>
+<p>Позволяют обращаться к другим сущностям по JSON-пути: </p><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;action&quot;: { &quot;$ref&quot;: &quot;/entities/user&quot; }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md110"></a>
+2. Исполняемые блоки</h4>
+<ul>
+<li><b>Последовательное выполнение</b> (массивы): <div class="fragment"><div class="line">[</div>
+<div class="line">  { &quot;$rel&quot;: &quot;step1&quot; },</div>
+<div class="line">  { &quot;$rel&quot;: &quot;step2&quot; }</div>
+<div class="line">]</div>
+</div><!-- fragment --></li>
+<li><b>Параллельное выполнение</b> (объекты): <div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;task1&quot;: { &quot;$rel&quot;: &quot;process_data&quot; },</div>
+<div class="line">  &quot;task2&quot;: { &quot;$rel&quot;: &quot;validate_data&quot; }</div>
+<div class="line">}</div>
+</div><!-- fragment --></li>
+</ul>
+<h4><a class="anchor" id="autotoc_md111"></a>
+3. Отношения (&lt;tt&gt;$rel&lt;/tt&gt;, &lt;tt&gt;$obj&lt;/tt&gt;, &lt;tt&gt;$sub&lt;/tt&gt;)</h4>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$rel&quot;: &quot;add_entity&quot;,</div>
+<div class="line">  &quot;$obj&quot;: {</div>
+<div class="line">    &quot;type&quot;: &quot;user&quot;,</div>
+<div class="line">    &quot;name&quot;: &quot;Alice&quot;</div>
+<div class="line">  },</div>
+<div class="line">  &quot;$sub&quot;: &quot;$ent/new_user_id&quot;</div>
+<div class="line">}</div>
+</div><!-- fragment --><ul>
+<li><code>$rel</code> — имя отношения.</li>
+<li><code>$obj</code> — входные данные.</li>
+<li><code>$sub</code> — куда сохранить результат.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md112"></a>
+4. Импорт словарей</h4>
+<p>Загрузка внешних модулей через DLL: </p><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
+<div class="line">  &quot;$obj&quot;: {</div>
+<div class="line">    &quot;PathFolder&quot;: &quot;libs/&quot;,</div>
+<div class="line">    &quot;FileName&quot;: &quot;math_operations.dll&quot;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+<h3><a class="anchor" id="autotoc_md114"></a>
+Семантика</h3>
+<h4><a class="anchor" id="autotoc_md115"></a>
+1. Исполнение отношений</h4>
+<ul>
+<li><b>Рекурсивная обработка</b>: VM рекурсивно обходит JSON-структуру, применяя отношения.</li>
+<li><b>Автоматическое распараллеливание</b>: Объекты исполняют свои ключи параллельно.</li>
+<li><b>Обработка ошибок</b>: Исключения включают контекст (сущность, отношение, путь).</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md116"></a>
+2. Работа с данными</h4>
+<ul>
+<li><b>Динамическое разрешение ссылок</b>: <code>$ref</code> вычисляются в рантайме.</li>
+<li><b>Потокобезопасность</b>: Мьютексы защищают доступ к общим данным.</li>
+<li><b>Сериализация</b>: Сущности сохраняются в JSON-файлы через <code>file_database_t</code>.</li>
+</ul>
+<h4><a class="anchor" id="autotoc_md117"></a>
+3. Расширяемость</h4>
+<ul>
+<li><b>Внешние библиотеки</b>: DLL с функциями вида <code>import_relations_model_to</code>.</li>
+<li><b>Базовые сущности</b>: Встроенные отношения (<code>version</code>, <code>add_entity</code>).</li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md119"></a>
+Пример программы</h3>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;schema&quot;: {</div>
+<div class="line">    &quot;$rel&quot;: &quot;add_entity&quot;,</div>
+<div class="line">    &quot;$obj&quot;: {</div>
+<div class="line">      &quot;name&quot;: &quot;Пример системы&quot;,</div>
+<div class="line">      &quot;components&quot;: [</div>
+<div class="line">        { &quot;$ref&quot;: &quot;/entities/logger&quot; },</div>
+<div class="line">        { &quot;$ref&quot;: &quot;/entities/database&quot; }</div>
+<div class="line">      ]</div>
+<div class="line">    },</div>
+<div class="line">    &quot;$sub&quot;: &quot;$ent/system_id&quot;</div>
+<div class="line">  },</div>
+<div class="line">  &quot;init&quot;: [</div>
+<div class="line">    {</div>
+<div class="line">      &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
+<div class="line">      &quot;$obj&quot;: {</div>
+<div class="line">        &quot;PathFolder&quot;: &quot;modules/&quot;,</div>
+<div class="line">        &quot;FileName&quot;: &quot;network.dll&quot;</div>
+<div class="line">      }</div>
+<div class="line">    },</div>
+<div class="line">    {</div>
+<div class="line">      &quot;$rel&quot;: &quot;network/connect&quot;,</div>
+<div class="line">      &quot;$obj&quot;: { &quot;url&quot;: &quot;https://api.example.com&quot; }</div>
+<div class="line">    }</div>
+<div class="line">  ]</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+<h3><a class="anchor" id="autotoc_md121"></a>
+Особенности реализации</h3>
+<ul>
+<li><b>Компиляция строк</b>: Макросы <code>SWITCH</code>/<code>CASE</code> используют хеширование для эффективного сравнения строк.</li>
+<li><b>Кодировки</b>: Поддержка CP1251 и UTF-8 через функции преобразования.</li>
+<li><b>Многопоточность</b>: <code>std::mutex</code> и <code>std::lock_guard</code> для синхронизации.</li>
+</ul>
+<hr  />
+<h3><a class="anchor" id="autotoc_md123"></a>
+Типичные сценарии использования</h3>
+<ol type="1">
+<li><b>ORM-системы</b>: Динамическое создание сущностей БД.</li>
+<li><b>Микросервисы</b>: Параллельное выполнение задач.</li>
+<li><b>Конфигурация систем</b>: Иерархическое описание компонентов.</li>
+<li><b>Плагины</b>: Загрузка внешних модулей через DLL.</li>
+</ol>
+<p>Этот язык позволяет описывать сложные системы в декларативном стиле, абстрагируясь от низкоуровневых деталей, что делает его удобным для моделирования бизнес-логики и распределённых систем.</p>
+<h2><a class="anchor" id="autotoc_md124"></a>
 jsonRVM Documentation</h2>
 <p><a href="https://netkeep80.github.io/jsonRVM/">By Doxygen on russian.</a></p>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 License</h2>
 <p><img src="https://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="" align="right" class="inline"/></p>
 <p>The class is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>:</p>
@@ -115,13 +268,13 @@ License</h2>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-<h2><a class="anchor" id="autotoc_md107"></a>
+<h2><a class="anchor" id="autotoc_md126"></a>
 Thanks</h2>
 <p>I deeply appreciate the help of the following people.</p>
 <ul>
 <li><a href="https://github.com/vmuravyev">Vladimir Muravyev</a> helped to develop the terminological apparatus of the Relations Model.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md127"></a>
 Used third-party tools</h2>
 <p>jsonRVM using the following third-party tools. Thanks a lot!</p>
 <ul>
@@ -137,9 +290,7 @@ Used third-party tools</h2>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Создано системой
-    <a href="http://www.doxygen.org/index.html">
-    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

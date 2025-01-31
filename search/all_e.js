@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['next_99',['next',['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html#afc915bf1a2325612dddc18f3d6eaa8c3',1,'rm::type_pair_list&lt; key_t, first, tail... &gt;']]]
+  ['get_5fentity_0',['get_entity',['../classrm_1_1database__api.html#a8a3c953e202846082d0476f65c9ebb35',1,'rm::database_api::get_entity()'],['../classrm_1_1file__database__t.html#a44cd851181ab1c52a4ebb8dd263e6a47',1,'rm::file_database_t::get_entity()']]]
 ];
