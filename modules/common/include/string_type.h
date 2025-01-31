@@ -31,7 +31,47 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 #pragma once
+#pragma once
 
+/**
+ * @file string_meta.h
+ * @brief Метапрограммные средства для работы со строками на этапе компиляции
+ * 
+ * Реализация типобезопасного представления строковых литералов в виде типов.
+ * Позволяет использовать строки как параметры шаблонов и в compile-time контекстах.
+ *
+ * Основные компоненты:
+ * - string_type: Хранит строку как пакет символов char
+ * - string_type_maker: Рекурсивно собирает символы в тип string_type
+ * - Макросы as_type/to_sv: Преобразуют строковые литералы в типы
+ *
+ * @struct string_type
+ * @tparam chars... Пакет символов строки
+ * @brief Представляет строку как тип с фиксированным размером
+ * @var str  Статический массив символов
+ * @var size Длина строки (без учета завершающего нуля)
+ *
+ * @struct string_type_maker
+ * @brief Рекурсивно конструирует тип string_type из символов строки
+ * @tparam N    Требуемый размер строки
+ * @tparam T    Аккумулятор символов (string_type<...>)
+ * @tparam tail Оставшиеся символы для обработки
+ *
+ * @note Особенности:
+ * - Максимальная длина строки: 64 символа (ограничение макроса selch)
+ * - Поддерживает только строковые литералы (const char[N])
+ * - Все вычисления выполняются на этапе компиляции
+ *
+ * @warning Использование индексов за пределами длины строки приводит 
+ *          к подстановке нуль-терминатора (selch)
+ *
+ * Пример использования:
+ * @code
+ * using MyString = as_type("Hello");
+ * constexpr auto str = to_sv("Meta");
+ * static_assert(MyString::size == 5, "");
+ * @endcode
+ */
 namespace rm
 {
 	template <char... chars>

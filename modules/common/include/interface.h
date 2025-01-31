@@ -2,16 +2,57 @@
 
 namespace rm
 {
-	template<class implementation_t>
+	/**
+	 * @class interface_t
+	 * @brief Базовый шаблонный класс для реализации статического полиморфизма через CRTP
+	 *
+	 * @tparam implementation_t Тип конкретной реализации, должен быть наследником interface_t
+	 *
+	 * Реализует паттерн Curiously Recurring Template Pattern (CRTP), обеспечивая:
+	 * - Механизм связывания интерфейса с конкретной реализацией
+	 * - Безопасный доступ к методам реализации
+	 * - Защиту от использования несвязанного интерфейса
+	 *
+	 * @method link       Связывает интерфейс с конкретной реализацией (protected)
+	 * @method impl       Возвращает ссылку на реализацию с проверкой связывания (protected)
+	 *
+	 * @note Наследники должны:
+	 * 1. Связать реализацию через link() в конструкторе
+	 * 2. Реализовать чисто виртуальные методы интерфейса
+	 * 3. Использовать impl() для доступа к методам реализации
+	 *
+	 * @warning Попытка использования методов интерфейса без предварительного связывания
+	 * с реализацией приведёт к исключению runtime_error
+	 *
+	 * Пример использования:
+	 * @code
+	 * class MyInterface : public interface_t<MyInterface> {
+	 * public:
+	 *     void foo() { impl().foo_impl(); }
+	 * };
+	 *
+	 * class MyImplementation : public MyInterface {
+	 * public:
+	 *     MyImplementation() { link(this); }
+	 *     void foo_impl() {
+	 * 		   // реализация
+	 *     }
+	 * };
+	 * @endcode
+	 */
+	template <class implementation_t>
 	class interface_t
 	{
-		implementation_t* __link{ nullptr };
+		implementation_t *__link{nullptr};
+
 	protected:
-		void	link(implementation_t* ptr) { __link = ptr; }
-		auto&	impl() const
+		void link(implementation_t *ptr) { __link = ptr; }
+		auto &impl() const
 		{
-			if (__link)	return *__link;
-			else		throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
+			if (__link)
+				return *__link;
+			else
+				throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
 		}
 	};
 }

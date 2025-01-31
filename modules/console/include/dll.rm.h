@@ -41,30 +41,56 @@ namespace rm
 
 	struct DLL
 	{
-		HMODULE		handle;
-		InitDict	Init;
+		HMODULE handle;
+		InitDict Init;
 		DLL() : handle(nullptr), Init(nullptr) {}
 	};
 
-
+	/**
+	 * @class DLLs
+	 * @brief Менеджер загрузки и управления DLL-библиотеками для расширения функционала RVM
+	 *
+	 * Класс обеспечивает:
+	 * - Динамическую загрузку/выгрузку DLL
+	 * - Кэширование загруженных модулей
+	 * - Автоматическую очистку ресурсов при разрушении объекта
+	 * - Поиск точек входа в словари отношений
+	 *
+	 * Особенности:
+	 * - Использует Windows API для работы с DLL (LoadLibrary/FreeLibrary)
+	 * - Хранит хэндлы и функции инициализации в map-структуре
+	 * - Генерирует JSON-исключения при ошибках загрузки
+	 * - Поддерживает кодировку UTF-8 для путей к библиотекам
+	 *
+	 * @warning Все операции потокобезопасны только если внешний код синхронизирует доступ
+	 *
+	 * Пример использования:
+	 * @code
+	 * DLLs loader;
+	 * loader.LoadDict("my_library.dll");
+	 * auto& dict = loader["my_library.dll"].Init(my_vm);
+	 * @endcode
+	 */
 	class DLLs : public map<string, DLL>
 	{
 	public:
 		DLLs() = default;
 		~DLLs()
 		{
-			for each (auto dll in *this) if (dll.second.handle)
-			{
-				FreeLibrary(dll.second.handle);
-				dll.second.handle = nullptr;
-				dll.second.Init = nullptr;
-			}
+			for each (auto dll in *this)
+				if (dll.second.handle)
+				{
+					FreeLibrary(dll.second.handle);
+					dll.second.handle = nullptr;
+					dll.second.Init = nullptr;
+				}
 		}
 
-		void	LoadDict(const string& LibName)
+		void LoadDict(const string &LibName)
 		{
-			DLLs& it = *this;
-			if (find(LibName) == end())	it[LibName] = DLL();
+			DLLs &it = *this;
+			if (find(LibName) == end())
+				it[LibName] = DLL();
 
 			if (!it[LibName].handle)
 			{
@@ -73,29 +99,49 @@ namespace rm
 
 				if (it[LibName].handle)
 				{
-					(FARPROC&)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
+					(FARPROC &)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
 					if (!it[LibName].Init)
-						throw json({ { __func__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL} });
+						throw json({{__func__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL}});
 				}
 				else
 				{
 					it[LibName].Init = nullptr;
-					throw json({ { __func__, "can't load '" + LibName + "' dictionary"s} });
+					throw json({{__func__, "can't load '" + LibName + "' dictionary"s}});
 				}
 			}
 		}
 	} LoadedDLLs;
 
-
-	const string&	LoadAndInitDict(const string& LibName, vm& Ent)
+	const string &LoadAndInitDict(const string &LibName, vm &Ent)
 	{
 		LoadedDLLs.LoadDict(LibName);
 		return LoadedDLLs[LibName].Init(Ent);
 	}
 
-	//////////////////////////	base dictionary  ///////////////////////////////////
-
-	void  jsonLoadDLL(vm& rmvm, vm_ctx& $)
+	/**
+	 * @brief Контроллер загрузки DLL-словаря в виртуальную машину
+	 *
+	 * Функциональность:
+	 * 1. Принимает JSON-объект с параметрами загрузки
+	 * 2. Валидирует обязательные поля "PathFolder" и "FileName"
+	 * 3. Формирует полный путь к библиотеке
+	 * 4. Инициирует загрузку через DLLs-менеджер
+	 * 5. Возвращает версию загруженного словаря через $.sub
+	 *
+	 * @param rmvm Ссылка на виртуальную машину отношений
+	 * @param $ Контекст выполнения с параметрами:
+	 *   - $obj: входные параметры {PathFolder:string, FileName:string}
+	 *   - $sub: выходное значение (версия словаря)
+	 *
+	 * @throws json::exception При:
+	 * - Отсутствии обязательных полей во входных данных
+	 * - Ошибках загрузки DLL
+	 * - Отсутствии точки входа в словаре
+	 * - Системных ошибках (например, проблемы с доступом к файлу)
+	 *
+	 * @note Формирует трассируемые исключения с детальной диагностикой через vm_ctx::throw_json
+	 */
+	void jsonLoadDLL(vm &rmvm, vm_ctx &$)
 	{
 		try
 		{
@@ -103,16 +149,28 @@ namespace rm
 			{
 				if ($.obj.count("PathFolder") && $.obj.count("FileName"))
 				{
-					string	FullFileName = $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>();
+					string FullFileName = $.obj["PathFolder"].get<string>() + $.obj["FileName"].get<string>();
 					$.sub = LoadAndInitDict(FullFileName, rmvm);
 					return;
 				}
 			}
 		}
-		catch (json& j) { $.throw_json(__func__, j); }
-		catch (json::exception& e) { $.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id)); }
-		catch (std::exception& e) { $.throw_json(__func__, "std::exception: "s + e.what()); }
-		catch (...) { $.throw_json(__func__, "unknown exception"s); }
+		catch (json &j)
+		{
+			$.throw_json(__func__, j);
+		}
+		catch (json::exception &e)
+		{
+			$.throw_json(__func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id));
+		}
+		catch (std::exception &e)
+		{
+			$.throw_json(__func__, "std::exception: "s + e.what());
+		}
+		catch (...)
+		{
+			$.throw_json(__func__, "unknown exception"s);
+		}
 
 		$.rel = false;
 		$.throw_json(__func__, "$obj must be json object with PathFolder, FileName properties!"s);
@@ -120,9 +178,9 @@ namespace rm
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	const string&  ImportLoadDLLEntity(vm& rmvm)
+	const string &ImportLoadDLLEntity(vm &rmvm)
 	{
-		json&	ent = rmvm.add_base_entity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
+		json &ent = rmvm.add_base_entity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
 		ent["$obj"] = json::object();
 		ent["$obj"]["PathFolder"] = "input: string with path to compiled to dll vocabulary";
 		ent["$obj"]["FileName"] = "input: string with filename of compiled to dll vocabulary";
