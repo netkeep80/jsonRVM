@@ -175,12 +175,34 @@ var NAVTREE =
       [ "Аналогия исполнения", "md_doc_2_r_v_m.html#autotoc_md102", null ]
     ] ],
     [ "Словарь общепринятых терминов", "md_doc_2wiki__concepts.html", null ],
+    [ "Advantages and benefits of the jsonRVM project", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html", [
+      [ "Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md104", [
+        [ "Архитектурные преимущества и концептуальные основы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md105", [
+          [ "Декларативная парадигма программирования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md106", null ],
+          [ "Система сущностей и отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md107", null ]
+        ] ],
+        [ "Технические возможности и производительность", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md108", [
+          [ "Поддержка параллелизма и многопоточности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md109", null ],
+          [ "Оптимизации производительности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md110", null ]
+        ] ],
+        [ "Расширяемость и интеграционные возможности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md111", [
+          [ "Система загрузки внешних модулей", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md112", null ],
+          [ "Интеграция с современными технологиями", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md113", null ]
+        ] ],
+        [ "Практические применения и сценарии использования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md114", [
+          [ "ORM-системы и управление базами данных", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md115", null ],
+          [ "Микросервисная архитектура и распределенные системы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md116", null ],
+          [ "Системы конфигурации и плагины", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md117", null ]
+        ] ],
+        [ "Заключение", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md118", null ]
+      ] ]
+    ] ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md104", [
-        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md124", null ],
-        [ "License", "md__r_e_a_d_m_e.html#autotoc_md125", null ],
-        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md126", null ],
-        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md127", null ]
+      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md119", [
+        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md139", null ],
+        [ "License", "md__r_e_a_d_m_e.html#autotoc_md140", null ],
+        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md141", null ],
+        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md142", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -217,8 +239,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"md_doc_2_dictionary.html#rel_res",
-"structrm_1_1type__pair__null.html#a2271f6cf5d45aaae99e63fd65fe9839e"
+"md_doc_2_dictionary.html#ent",
+"structrm_1_1type__pair__list.html#a7481ecc27e669381435f634b719e20b8"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

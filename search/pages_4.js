@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['введение_0',['Введение',['../md_doc_2_introduction.html',1,'']]],
-  ['виртуальная_20машина_1',['Реляционная виртуальная машина',['../md_doc_2_r_v_m.html',1,'']]],
-  ['в_20руководстве_2',['Сокращения принятые в руководстве',['../md_doc_2_abbreviations.html',1,'']]]
+  ['of_20the_20jsonrvm_20project_0',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]]
 ];

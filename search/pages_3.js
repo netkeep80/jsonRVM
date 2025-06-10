@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ассоциативаня_20модель_20отношений_20формата_20json_0',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]]
+  ['license_0',['LICENSE',['../md_doc_2_l_i_c_e_n_s_e.html',1,'']]]
 ];

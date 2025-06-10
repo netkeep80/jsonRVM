@@ -100,7 +100,7 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 <p><a href="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish" alt="GitHub Workflow Status" class="inline"/></a> <img src="https://img.shields.io/github/last-commit/netkeep80/jsonRVM" alt="GitHub last commit" class="inline"/> <a href="https://github.com/netkeep80/jsonRVM/blob/master/LICENSE"><img src="https://img.shields.io/github/license/netkeep80/jsonRVM" alt="GitHub" class="inline"/></a></p>
 <p align="center"></p>
 <p><img src="rm_view.jpg" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md104"></a>
+<h1><a class="anchor" id="autotoc_md119"></a>
 json Relations (Model) Virtual Machine</h1>
 <div class="fragment"><div class="line">        R</div>
 <div class="line">     S__|__O</div>
@@ -111,9 +111,9 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">      __|__</div>
 <div class="line">     /  |  \</div>
 <div class="line">    /___|___\</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md105"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md120"></a>
 Язык метапрограммирования "Модель Отношений" (JSON Relations Model)</h3>
-<h4><a class="anchor" id="autotoc_md106"></a>
+<h4><a class="anchor" id="autotoc_md121"></a>
 Обзор</h4>
 <p>Язык "Модель Отношений" (Relations Model, RM) — это декларативный DSL (Domain-Specific Language), ориентированный на описание сложных систем через иерархию сущностей и их отношений. Программы представляются в виде JSON-структур, которые исполняются виртуальной машиной RMVM. Ключевые особенности:</p>
 <ol type="1">
@@ -142,14 +142,14 @@ json Relations (Model) Virtual Machine</h1>
 </li>
 </ol>
 <hr  />
-<h3><a class="anchor" id="autotoc_md108"></a>
+<h3><a class="anchor" id="autotoc_md123"></a>
 Синтаксис и Конструкции</h3>
-<h4><a class="anchor" id="autotoc_md109"></a>
+<h4><a class="anchor" id="autotoc_md124"></a>
 1. Ссылки (&lt;tt&gt;$ref&lt;/tt&gt;)</h4>
 <p>Позволяют обращаться к другим сущностям по JSON-пути: </p><div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;action&quot;: { &quot;$ref&quot;: &quot;/entities/user&quot; }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md110"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md125"></a>
 2. Исполняемые блоки</h4>
 <ul>
 <li><b>Последовательное выполнение</b> (массивы): <div class="fragment"><div class="line">[</div>
@@ -163,7 +163,7 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">}</div>
 </div><!-- fragment --></li>
 </ul>
-<h4><a class="anchor" id="autotoc_md111"></a>
+<h4><a class="anchor" id="autotoc_md126"></a>
 3. Отношения (&lt;tt&gt;$rel&lt;/tt&gt;, &lt;tt&gt;$obj&lt;/tt&gt;, &lt;tt&gt;$sub&lt;/tt&gt;)</h4>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;$rel&quot;: &quot;add_entity&quot;,</div>
@@ -178,7 +178,7 @@ json Relations (Model) Virtual Machine</h1>
 <li><code>$obj</code> — входные данные.</li>
 <li><code>$sub</code> — куда сохранить результат.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md112"></a>
+<h4><a class="anchor" id="autotoc_md127"></a>
 4. Импорт словарей</h4>
 <p>Загрузка внешних модулей через DLL: </p><div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
@@ -188,30 +188,30 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md114"></a>
+<h3><a class="anchor" id="autotoc_md129"></a>
 Семантика</h3>
-<h4><a class="anchor" id="autotoc_md115"></a>
+<h4><a class="anchor" id="autotoc_md130"></a>
 1. Исполнение отношений</h4>
 <ul>
 <li><b>Рекурсивная обработка</b>: VM рекурсивно обходит JSON-структуру, применяя отношения.</li>
 <li><b>Автоматическое распараллеливание</b>: Объекты исполняют свои ключи параллельно.</li>
 <li><b>Обработка ошибок</b>: Исключения включают контекст (сущность, отношение, путь).</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md116"></a>
+<h4><a class="anchor" id="autotoc_md131"></a>
 2. Работа с данными</h4>
 <ul>
 <li><b>Динамическое разрешение ссылок</b>: <code>$ref</code> вычисляются в рантайме.</li>
 <li><b>Потокобезопасность</b>: Мьютексы защищают доступ к общим данным.</li>
 <li><b>Сериализация</b>: Сущности сохраняются в JSON-файлы через <code>file_database_t</code>.</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md117"></a>
+<h4><a class="anchor" id="autotoc_md132"></a>
 3. Расширяемость</h4>
 <ul>
 <li><b>Внешние библиотеки</b>: DLL с функциями вида <code>import_relations_model_to</code>.</li>
 <li><b>Базовые сущности</b>: Встроенные отношения (<code>version</code>, <code>add_entity</code>).</li>
 </ul>
 <hr  />
-<h3><a class="anchor" id="autotoc_md119"></a>
+<h3><a class="anchor" id="autotoc_md134"></a>
 Пример программы</h3>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;schema&quot;: {</div>
@@ -240,7 +240,7 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">  ]</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md121"></a>
+<h3><a class="anchor" id="autotoc_md136"></a>
 Особенности реализации</h3>
 <ul>
 <li><b>Компиляция строк</b>: Макросы <code>SWITCH</code>/<code>CASE</code> используют хеширование для эффективного сравнения строк.</li>
@@ -248,7 +248,7 @@ json Relations (Model) Virtual Machine</h1>
 <li><b>Многопоточность</b>: <code>std::mutex</code> и <code>std::lock_guard</code> для синхронизации.</li>
 </ul>
 <hr  />
-<h3><a class="anchor" id="autotoc_md123"></a>
+<h3><a class="anchor" id="autotoc_md138"></a>
 Типичные сценарии использования</h3>
 <ol type="1">
 <li><b>ORM-системы</b>: Динамическое создание сущностей БД.</li>
@@ -257,10 +257,10 @@ json Relations (Model) Virtual Machine</h1>
 <li><b>Плагины</b>: Загрузка внешних модулей через DLL.</li>
 </ol>
 <p>Этот язык позволяет описывать сложные системы в декларативном стиле, абстрагируясь от низкоуровневых деталей, что делает его удобным для моделирования бизнес-логики и распределённых систем.</p>
-<h2><a class="anchor" id="autotoc_md124"></a>
+<h2><a class="anchor" id="autotoc_md139"></a>
 jsonRVM Documentation</h2>
 <p><a href="https://netkeep80.github.io/jsonRVM/">By Doxygen on russian.</a></p>
-<h2><a class="anchor" id="autotoc_md125"></a>
+<h2><a class="anchor" id="autotoc_md140"></a>
 License</h2>
 <p><img src="https://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="" align="right" class="inline"/></p>
 <p>The class is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>:</p>
@@ -268,13 +268,13 @@ License</h2>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
 <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 <p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-<h2><a class="anchor" id="autotoc_md126"></a>
+<h2><a class="anchor" id="autotoc_md141"></a>
 Thanks</h2>
 <p>I deeply appreciate the help of the following people.</p>
 <ul>
 <li><a href="https://github.com/vmuravyev">Vladimir Muravyev</a> helped to develop the terminological apparatus of the Relations Model.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md127"></a>
+<h2><a class="anchor" id="autotoc_md142"></a>
 Used third-party tools</h2>
 <p>jsonRVM using the following third-party tools. Thanks a lot!</p>
 <ul>

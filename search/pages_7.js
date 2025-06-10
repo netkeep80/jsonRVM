@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['план_20развития_20мо_0',['План развития МО',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html',1,'']]],
-  ['понятийный_20словарь_1',['Понятийный словарь',['../md_doc_2_dictionary.html',1,'']]],
-  ['принятые_20в_20руководстве_2',['Сокращения принятые в руководстве',['../md_doc_2_abbreviations.html',1,'']]]
+  ['the_20jsonrvm_20project_0',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]]
 ];
