@@ -1003,7 +1003,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 #define define_static_method(static_method)										\
 		void  json_call_##static_method(vm& rmvm, vm_ctx& $)	\
 		{																		\
-			$.rel = json::##static_method();									\
+			$.rel = json::static_method();									\
 		}
 
 	define_static_method(array)

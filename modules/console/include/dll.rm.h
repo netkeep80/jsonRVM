@@ -32,8 +32,11 @@ SOFTWARE.
 */
 #pragma once
 #include "vm.rm.h"
-#include "windows.h"
 #include "string_utils.h"
+
+#ifdef _WIN32
+#include "windows.h"
+#endif
 
 namespace rm
 {
@@ -41,7 +44,11 @@ namespace rm
 
 	struct DLL
 	{
+#ifdef _WIN32
 		HMODULE handle;
+#else
+		void* handle;
+#endif
 		InitDict Init;
 		DLL() : handle(nullptr), Init(nullptr) {}
 	};
@@ -77,6 +84,7 @@ namespace rm
 		DLLs() = default;
 		~DLLs()
 		{
+#ifdef _WIN32
 			for each (auto dll in *this)
 				if (dll.second.handle)
 				{
@@ -84,6 +92,14 @@ namespace rm
 					dll.second.handle = nullptr;
 					dll.second.Init = nullptr;
 				}
+#else
+			for (auto& dll : *this)
+				if (dll.second.handle)
+				{
+					dll.second.handle = nullptr;
+					dll.second.Init = nullptr;
+				}
+#endif
 		}
 
 		void LoadDict(const string &LibName)
@@ -94,6 +110,7 @@ namespace rm
 
 			if (!it[LibName].handle)
 			{
+#ifdef _WIN32
 				//	перезагружаем либу
 				it[LibName].handle = LoadLibrary(utf8_to_wstring(LibName).c_str());
 
@@ -108,6 +125,9 @@ namespace rm
 					it[LibName].Init = nullptr;
 					throw json({{__func__, "can't load '" + LibName + "' dictionary"s}});
 				}
+#else
+				throw json({{__func__, "DLL loading not supported on this platform"}});
+#endif
 			}
 		}
 	} LoadedDLLs;

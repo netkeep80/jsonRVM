@@ -32,12 +32,15 @@ SOFTWARE.
 */
 #pragma once
 #include <string>
+#ifdef _WIN32
 #include "windows.h"
+#endif
 
 using namespace std;
 
 // ToDo: refactor to std::locale
 
+#ifdef _WIN32
 template<UINT CodePage>
 wstring	_to_wstring(const string& data)
 {
@@ -74,3 +77,12 @@ inline string  wstring_to_utf8(const wstring& data) { return wstring_to_<CP_UTF8
 
 inline string cp1251_to_utf8(const string& data) { return wstring_to_utf8(_to_wstring<CP_ACP>(data)); }
 inline string utf8_to_cp1251(const string& data) { return wstring_to_cp1251(_to_wstring<CP_UTF8>(data)); }
+#else
+inline wstring cp1251_to_wstring(const string& data) { return wstring(data.begin(), data.end()); }
+inline wstring utf8_to_wstring(const string& data) { return wstring(data.begin(), data.end()); }
+inline string  wstring_to_cp1251(const wstring& data) { return string(data.begin(), data.end()); }
+inline string  wstring_to_utf8(const wstring& data) { return string(data.begin(), data.end()); }
+
+inline string cp1251_to_utf8(const string& data) { return data; }
+inline string utf8_to_cp1251(const string& data) { return data; }
+#endif
