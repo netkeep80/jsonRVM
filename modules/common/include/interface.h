@@ -1,4 +1,9 @@
 #pragma once
+#include <stdexcept>
+#include <typeinfo>
+#include <string>
+
+using namespace std::literals;
 
 namespace rm
 {
@@ -52,7 +57,7 @@ namespace rm
 			if (__link)
 				return *__link;
 			else
-				throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
+				throw std::runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
 		}
 	};
 }

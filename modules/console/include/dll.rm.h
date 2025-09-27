@@ -200,7 +200,7 @@ namespace rm
 
 	const string &ImportLoadDLLEntity(vm &rmvm)
 	{
-		json &ent = rmvm.add_base_entity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
+		json &ent = rmvm.add_base_entity(static_cast<json&>(rmvm)["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
 		ent["$obj"] = json::object();
 		ent["$obj"]["PathFolder"] = "input: string with path to compiled to dll vocabulary";
 		ent["$obj"]["FileName"] = "input: string with filename of compiled to dll vocabulary";

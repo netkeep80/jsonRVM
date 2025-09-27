@@ -1,0 +1,100 @@
+Configuring: /tmp/gh-issue-solver-1758964847338
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+------------------------------------------------
+CMAKE_SYSTEM: Linux-6.8.0-79-generic
+CMAKE_SYSTEM_NAME: Linux
+CMAKE_SYSTEM_PROCESSOR: x86_64
+Current revision is 3.0.0
+CMAKE_INSTALL_PREFIX /usr/local
+CMAKE_SOURCE_DIR /tmp/gh-issue-solver-1758964847338
+------------------------------------------------
+Configuring: /tmp/gh-issue-solver-1758964847338/modules
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/console
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/console/test
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/vocabulary
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/vocabulary/fs
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/vocabulary/http
+Configuring: /tmp/gh-issue-solver-1758964847338/modules/vocabulary/http/test
+-- Configuring done (1.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/gh-issue-solver-1758964847338/build
+[  9%] Building CXX object modules/console/CMakeFiles/rmvm.dir/src/main.cpp.o
+In file included from /tmp/gh-issue-solver-1758964847338/modules/common/include/database_api.h:2,
+                 from /tmp/gh-issue-solver-1758964847338/modules/common/include/vm.rm.h:37,
+                 from /tmp/gh-issue-solver-1758964847338/modules/console/src/main.cpp:38:
+/tmp/gh-issue-solver-1758964847338/modules/common/include/interface.h: In member function ‘auto& rm::interface_t<implementation_t>::impl() const’:
+/tmp/gh-issue-solver-1758964847338/modules/common/include/interface.h:60:39: error: there are no arguments to ‘runtime_error’ that depend on a template parameter, so a declaration of ‘runtime_error’ must be available [-fpermissive]
+   60 |                                 throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
+      |                                       ^~~~~~~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/interface.h:60:39: note: (if you use ‘-fpermissive’, G++ will accept your code, but allowing the use of an undeclared name is deprecated)
+/tmp/gh-issue-solver-1758964847338/modules/common/include/interface.h: In instantiation of ‘auto& rm::interface_t<implementation_t>::impl() const [with implementation_t = rm::database_api]’:
+/tmp/gh-issue-solver-1758964847338/modules/common/include/database_api.h:44:72:   required from here
+/tmp/gh-issue-solver-1758964847338/modules/common/include/interface.h:60:52: error: expected primary-expression
+   60 |                                 throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
+      |                                       ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /tmp/gh-issue-solver-1758964847338/modules/console/src/main.cpp:39:
+/tmp/gh-issue-solver-1758964847338/modules/console/include/base.rm.h: In function ‘const std::string& rm::import_relations_model_to(vm&)’:
+/tmp/gh-issue-solver-1758964847338/modules/console/include/base.rm.h:1132:50: error: request for member ‘operator[]’ is ambiguous
+ 1132 |                 rmvm.add_base_entity(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+      |                                                  ^
+In file included from /usr/include/c++/13/map:63,
+                 from /tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:64,
+                 from /tmp/gh-issue-solver-1758964847338/modules/common/include/database_api.h:3:
+/usr/include/c++/13/bits/stl_map.h:524:7: note: candidates are: ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](key_type&&) [with _Key = const nlohmann::basic_json<>*; _Tp = void (*)(rm::vm&, rm::vm_ctx&); _Compare = std::less<const nlohmann::basic_json<>*>; _Alloc = std::allocator<std::pair<const nlohmann::basic_json<>* const, void (*)(rm::vm&, rm::vm_ctx&)> >; mapped_type = void (*)(rm::vm&, rm::vm_ctx&); key_type = const nlohmann::basic_json<>*]’
+  524 |       operator[](key_type&& __k)
+      |       ^~~~~~~~
+/usr/include/c++/13/bits/stl_map.h:504:7: note:                 ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = const nlohmann::basic_json<>*; _Tp = void (*)(rm::vm&, rm::vm_ctx&); _Compare = std::less<const nlohmann::basic_json<>*>; _Alloc = std::allocator<std::pair<const nlohmann::basic_json<>* const, void (*)(rm::vm&, rm::vm_ctx&)> >; mapped_type = void (*)(rm::vm&, rm::vm_ctx&); key_type = const nlohmann::basic_json<>*]’
+  504 |       operator[](const key_type& __k)
+      |       ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:25580:21: note:                 ‘const nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const json_pointer&) const [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; const_reference = const nlohmann::basic_json<>&; json_pointer = nlohmann::json_pointer<nlohmann::basic_json<> >]’
+25580 |     const_reference operator[](const json_pointer& ptr) const
+      |                     ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:25552:15: note:                 ‘nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const json_pointer&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; reference = nlohmann::basic_json<>&; json_pointer = nlohmann::json_pointer<nlohmann::basic_json<> >]’
+25552 |     reference operator[](const json_pointer& ptr)
+      |               ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21279:21: note:                 ‘template<class T> const nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](T*) const [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>]’
+21279 |     const_reference operator[](T* key) const
+      |                     ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21228:15: note:                 ‘template<class T> nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](T*) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>]’
+21228 |     reference operator[](T* key)
+      |               ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21187:21: note:                 ‘const nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const typename object_t::key_type&) const [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; const_reference = const nlohmann::basic_json<>&; typename object_t::key_type = std::__cxx11::basic_string<char>; object_t = std::map<std::__cxx11::basic_string<char>, nlohmann::basic_json<>, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::basic_json<> > > >]’
+21187 |     const_reference operator[](const typename object_t::key_type& key) const
+      |                     ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21138:15: note:                 ‘nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const typename object_t::key_type&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; reference = nlohmann::basic_json<>&; typename object_t::key_type = std::__cxx11::basic_string<char>; object_t = std::map<std::__cxx11::basic_string<char>, nlohmann::basic_json<>, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::basic_json<> > > >]’
+21138 |     reference operator[](const typename object_t::key_type& key)
+      |               ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21100:21: note:                 ‘const nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](size_type) const [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; const_reference = const nlohmann::basic_json<>&; size_type = long unsigned int]’
+21100 |     const_reference operator[](size_type idx) const
+      |                     ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:21047:15: note:                 ‘nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](size_type) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; reference = nlohmann::basic_json<>&; size_type = long unsigned int]’
+21047 |     reference operator[](size_type idx)
+      |               ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/console/include/base.rm.h:1151:82: error: request for member ‘operator[]’ is ambiguous
+ 1151 | #define map_json_static_method(static_method)   rmvm.add_base_entity( rmvm["json"], #static_method, json_call_##static_method, ""s );
+      |                                                                                  ^
+/tmp/gh-issue-solver-1758964847338/modules/console/include/base.rm.h:1152:17: note: in expansion of macro ‘map_json_static_method’
+ 1152 |                 map_json_static_method(array);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~
+/usr/include/c++/13/bits/stl_map.h:524:7: note: candidates are: ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](key_type&&) [with _Key = const nlohmann::basic_json<>*; _Tp = void (*)(rm::vm&, rm::vm_ctx&); _Compare = std::less<const nlohmann::basic_json<>*>; _Alloc = std::allocator<std::pair<const nlohmann::basic_json<>* const, void (*)(rm::vm&, rm::vm_ctx&)> >; mapped_type = void (*)(rm::vm&, rm::vm_ctx&); key_type = const nlohmann::basic_json<>*]’
+  524 |       operator[](key_type&& __k)
+      |       ^~~~~~~~
+/usr/include/c++/13/bits/stl_map.h:504:7: note:                 ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = const nlohmann::basic_json<>*; _Tp = void (*)(rm::vm&, rm::vm_ctx&); _Compare = std::less<const nlohmann::basic_json<>*>; _Alloc = std::allocator<std::pair<const nlohmann::basic_json<>* const, void (*)(rm::vm&, rm::vm_ctx&)> >; mapped_type = void (*)(rm::vm&, rm::vm_ctx&); key_type = const nlohmann::basic_json<>*]’
+  504 |       operator[](const key_type& __k)
+      |       ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:25580:21: note:                 ‘const nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const json_pointer&) const [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; const_reference = const nlohmann::basic_json<>&; json_pointer = nlohmann::json_pointer<nlohmann::basic_json<> >]’
+25580 |     const_reference operator[](const json_pointer& ptr) const
+      |                     ^~~~~~~~
+/tmp/gh-issue-solver-1758964847338/modules/common/include/nlohmann/json.hpp:25552:15: note:                 ‘nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::value_type& nlohmann::basic_json<ObjectType, ArrayType, StringType, BooleanType, NumberIntegerType, NumberUnsignedType, NumberFloatType, AllocatorType, JSONSerializer, BinaryType>::operator[](const json_pointer&) [with ObjectType = std::map; ArrayType = std::vector; StringType = std::__cxx11::basic_string<char>; BooleanType = bool; NumberIntegerType = long int; NumberUnsignedType = long unsigned int; NumberFloatType = double; AllocatorType = std::allocator; JSONSerializer = nlohmann::adl_serializer; BinaryType = std::vector<unsigned char>; reference = nlohmann::basic_json<>&; json_pointer = nlohmann::json_pointer<nlohmann::basic_json<> >]’
+25552 |     reference operator[](const json_pointer& ptr)

@@ -45,12 +45,15 @@ namespace rm
 	using namespace nlohmann;
 
 	class vm;
+	typedef const string &(*InitDict)(vm &rmvm);
 	//	64 bit
 #ifdef WIN32
 #define IMPORT_RELATIONS_MODEL "?import_relations_model_to@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVvm@1@@Z"
 	__declspec(dllexport) const string &import_relations_model_to(vm &rmvm);
-	typedef const string &(*InitDict)(vm &rmvm);
 	static InitDict You_must_define_import_relations_model_to_function_in_your_RM_dictionary = import_relations_model_to;
+#else
+#define IMPORT_RELATIONS_MODEL "import_relations_model_to"
+	const string &import_relations_model_to(vm &rmvm);
 #endif
 
 	/**
@@ -603,6 +606,11 @@ namespace rm
 				}
 		}
 
+		void exec_ent(vm_ctx &&$, json &ent)
+		{
+			exec_ent($, ent);
+		}
+
 		/// <summary>
 		/// Добавление в базовый словарь РВМ сущности с закэшированной бинарной проекцией
 		/// </summary>
@@ -612,7 +620,7 @@ namespace rm
 		template <class base_entity_t = base_entity>
 		vm &operator<<(const base_entity_t &bent)
 		{
-			json &ent = (*this)[bent.path] = {{"description", bent.description}};
+			json &ent = json::operator[](bent.path) = {{"description", bent.description}};
 			static_cast<binary_view_map_t &>(*this)[&(ent)] = base_entity_t::view;
 			return *this;
 		}

@@ -78,9 +78,10 @@ TEST_CASE("absolute addressing in rmodel") {
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    in >> static_cast<json&>(root)[""];
+    vm_ctx $(res, static_cast<json&>(root)[""]);
+    json& root_entry = static_cast<json&>(root)[""];
+    root.exec_ent($, root_entry);
     cout << res.dump(2) << endl;
     
     CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -99,9 +100,10 @@ TEST_CASE("relative addressing in rmodel") {
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    in >> static_cast<json&>(root)[""];
+    vm_ctx $(res, static_cast<json&>(root)[""]);
+    json& root_entry = static_cast<json&>(root)[""];
+    root.exec_ent($, root_entry);
     cout << res.dump(2) << endl;
     
     CHECK(res["$$$$ent"]["id"].get_ref<string&>() == "$$$$ent/id"s);
@@ -138,10 +140,11 @@ TEST_CASE("testing call version.json") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[""];
-        
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        in >> static_cast<json&>(root)[""];
+
+        vm_ctx $(res, static_cast<json&>(root)[""]);
+        json& root_entry = static_cast<json&>(root)[""];
+        root.exec_ent($, root_entry);
         CHECK(res["rmvm_version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __func__, j } }); }
@@ -164,10 +167,11 @@ TEST_CASE("testing base entity 'where'") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[""];
+        in >> static_cast<json&>(root)[""];
 
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        vm_ctx $(res, static_cast<json&>(root)[""]);
+        json& root_entry = static_cast<json&>(root)[""];
+        root.exec_ent($, root_entry);
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }

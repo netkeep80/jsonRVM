@@ -132,13 +132,15 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		cout << root.exec_ent(res, json(entry_point)).dump(2);
+		json entry_point_json(entry_point);
+		cout << root.exec_ent(res, entry_point_json).dump(2);
 		return 0;	//	ok
 	}
 	catch (json& j)
 	{
 		cerr << j.dump(2);
-		dump_json("rmvm.dump.json"s, root);
+		string dump_file = "rmvm.dump.json"s;
+		dump_json(dump_file, root);
 	}
 	
 	return 1;	//	error
