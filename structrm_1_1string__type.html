@@ -104,9 +104,9 @@ $(document).ready(function(){initNavTree('structrm_1_1string__type.html',''); in
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Статические открытые данные</h2></td></tr>
-<tr class="memitem:a7dcd85b970c2ab17c4c4b985492c6dc4" id="r_a7dcd85b970c2ab17c4c4b985492c6dc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">static</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4">str</a> [] { chars... }</td></tr>
+<tr class="memitem:a7dcd85b970c2ab17c4c4b985492c6dc4" id="r_a7dcd85b970c2ab17c4c4b985492c6dc4"><td class="memItemLeft" align="right" valign="top">static constexpr char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4">str</a> [] { chars... }</td></tr>
 <tr class="separator:a7dcd85b970c2ab17c4c4b985492c6dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4df0c70615ee90c7972bd82dd1e8e9f" id="r_ab4df0c70615ee90c7972bd82dd1e8e9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">static</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f">size</a> { sizeof...(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">chars</a>) }</td></tr>
+<tr class="memitem:ab4df0c70615ee90c7972bd82dd1e8e9f" id="r_ab4df0c70615ee90c7972bd82dd1e8e9f"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f">size</a> { sizeof...(chars) }</td></tr>
 <tr class="separator:ab4df0c70615ee90c7972bd82dd1e8e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
@@ -126,7 +126,7 @@ template&lt;char... chars&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">size_t</a> <a class="el" href="structrm_1_1string__type.html">rm::string_type</a>&lt; <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">chars</a> &gt;::size { sizeof...(<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">chars</a>) }</td>
+          <td class="memname">constexpr size_t <a class="el" href="structrm_1_1string__type.html">rm::string_type</a>&lt; chars &gt;::size { sizeof...(chars) }</td>
         </tr>
       </table>
   </td>
@@ -152,7 +152,7 @@ template&lt;char... chars&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">constexpr</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">char</a> <a class="el" href="structrm_1_1string__type.html">rm::string_type</a>&lt; <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">chars</a> &gt;::str[] { chars... }</td>
+          <td class="memname">constexpr char <a class="el" href="structrm_1_1string__type.html">rm::string_type</a>&lt; chars &gt;::str[] { chars... }</td>
         </tr>
       </table>
   </td>

@@ -98,40 +98,39 @@ $(document).ready(function(){initNavTree('graph_legend.html',''); initResizable(
 <div class="contents">
 <p>Обозначения, используемые в графах.</p>
 <p>Рассмотрим следующий пример: </p><div class="fragment"><div class="line"><span class="comment">/*! Невидимый класс из-за усечения */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Invisible</a> { };</div>
+<div class="line"><span class="keyword">class </span>Invisible { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Усеченный класс, отношение наследования скрыто */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Truncated</a> : <span class="keyword">public</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Invisible</a> { };</div>
+<div class="line"><span class="keyword">class </span>Truncated : <span class="keyword">public</span> Invisible { };</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">/* Недокументированный класс */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Undocumented</a> { };</div>
+<div class="line"><span class="keyword">class </span>Undocumented { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Открытое наследование */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">PublicBase</a> : <span class="keyword">public</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Truncated</a> { };</div>
+<div class="line"><span class="keyword">class </span>PublicBase : <span class="keyword">public</span> Truncated { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Шаблон класса */</span></div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Templ</a> {};</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">class </span>Templ {};</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Защищенное наследование */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ProtectedBase</a> { };</div>
+<div class="line"><span class="keyword">class </span>ProtectedBase { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Закрытое наследование */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">PrivateBase</a> { };</div>
+<div class="line"><span class="keyword">class </span>PrivateBase { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Класс, используемый классом Inherited */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Used</a> { };</div>
+<div class="line"><span class="keyword">class </span>Used { };</div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/*! Класс, порожденный от других классов */</span></div>
-<div class="line"><span class="keyword">class </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Inherited</a> : <span class="keyword">public</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">PublicBase</a>,</div>
-<div class="line">                  <span class="keyword">protected</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ProtectedBase</a>,</div>
-<div class="line">                  <span class="keyword">private</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">PrivateBase</a>,</div>
-<div class="line">                  <span class="keyword">public</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Undocumented</a>,</div>
-<div class="line">                  <span class="keyword">public</span> <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Templ</a>&lt;int&gt;</div>
+<div class="line"><span class="keyword">class </span>Inherited : <span class="keyword">public</span> PublicBase,</div>
+<div class="line">                  <span class="keyword">protected</span> ProtectedBase,</div>
+<div class="line">                  <span class="keyword">private</span> PrivateBase,</div>
+<div class="line">                  <span class="keyword">public</span> Undocumented,</div>
+<div class="line">                  <span class="keyword">public</span> Templ&lt;int&gt;</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">private</span>:</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Used</a> *<a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">m_usedClass</a>;</div>
+<div class="line">    Used *m_usedClass;</div>
 <div class="line">};</div>
-<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
 </div><!-- fragment --><p> Если <code>MAX_DOT_GRAPH_HEIGHT</code> в конфигурационном файле установлен в 240, получится следующий граф:</p>
 <center>[!-- SVG 0 --]</center> <p>Прямоугольники в этом графе имеют следующее значение: </p><ul>
 <li>

@@ -1,15 +1,11 @@
 var searchData=
 [
-  ['obj_0',['obj',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md5',1,'0. ent = &lt;sub, rel, obj&gt;'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md8',1,'01. obj'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md6',1,'1. rel = { sub, ent, obj }'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md7',1,'1. sub =  = { ent, rel, obj }'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md10',1,'Ent = &lt;Sub, Rel, Obj&gt;'],['../structrm_1_1vm__ctx.html#ae2b79f5a395732d62aaa2553e9122446',1,'rm::vm_ctx::obj']]],
-  ['obj_5ffield_1',['obj_field',['../base_8rm_8h.html#aacf201145f6a783a230a50858ab5a166',1,'base.rm.h']]],
-  ['object_20node_2',['object node',['../md_doc_2json__definition.html#autotoc_md73',1,'']]],
-  ['of_20the_20jsonrvm_20project_3',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]],
-  ['of_20the_20state_20of_20the_20relation_20выяснение_20состояния_20отношения_4',['Clarification of the state of the relation / Выяснение состояния отношения',['../md_doc_2_dictionary.html#clar_state',1,'']]],
-  ['op_5fbody_5',['op_body',['../base_8rm_8h.html#a335f6ddd43d0d2e02df76cff3858e2c3',1,'OP_BODY:&#160;base.rm.h'],['../namespacerm.html#a1c7d0997ec99952a5d349c066811b0d1',1,'rm::OP_BODY(Add,+)'],['../namespacerm.html#af4fcc532b37ac2ea771815afa4863e58',1,'rm::OP_BODY(Substract, -)'],['../namespacerm.html#abbcfcac92c7390f35866ff7afe1903e5',1,'rm::OP_BODY(Mul, *)'],['../namespacerm.html#a384e283e71b6a3106bc525bbaa4109c0',1,'rm::OP_BODY(Div,/)']]],
-  ['operator_3c_3c_6',['operator&lt;&lt;',['../classrm_1_1vm.html#a48f7ea7f45b8a6908305edc8df7f67f1',1,'rm::vm']]],
-  ['operator_5e_7',['operator^',['../namespacerm.html#a15d07b40b1a6cd0b250ac67c328f9739',1,'rm']]],
-  ['opp_5fanyto_8',['OPP_ANYTO',['../base_8rm_8h.html#aea8edabe8ea9b9ba039ef619c4254ff7',1,'base.rm.h']]],
-  ['opp_5fsto_9',['OPP_STO',['../base_8rm_8h.html#a7acd2162b9787cb77b1bff31e989da83',1,'base.rm.h']]],
-  ['orm_20системы_20и_20управление_20базами_20данных_10',['ORM-системы и управление базами данных',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md115',1,'']]],
-  ['os_3a_11',['2. Выделяем связи типа SO, ER, RE, OS:',['../md_doc_2_mathematical__definition.html#autotoc_md86',1,'']]]
+  ['pair_0',['pair',['../structrm_1_1type__pair__list.html#a7481ecc27e669381435f634b719e20b8',1,'rm::type_pair_list::pair'],['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html#ae9f09fe43960d4532d912498f999d2c5',1,'rm::type_pair_list&lt; key_t, first, tail... &gt;::pair']]],
+  ['pair_5flist_1',['pair_list',['../structrm_1_1type__map.html#af7b102772e2e0d871b582c5edc05bf7c',1,'rm::type_map']]],
+  ['party_20libraries_2',['Используемые библиотеки / Third-party Libraries',['../md__r_e_a_d_m_e.html#autotoc_md228',1,'']]],
+  ['path_3',['path',['../structrm_1_1base__entity.html#afe36cc0cd16ac16716e44f5cea9aea68',1,'rm::base_entity::path'],['../structrm_1_1vm_1_1database__api__add__entity.html#ad60a8036c895e9cc969ba46ae5aa3ad0',1,'rm::vm::database_api_add_entity::path'],['../structrm_1_1vm_1_1rmvm__version.html#adb056d43d64703989ab77eec9d2c9e99',1,'rm::vm::rmvm_version::path'],['../structrm_1_1json__dump.html#a703dcf514a72b527b390e9b7c06f0e6c',1,'rm::json_dump::path'],['../structrm_1_1steady__clock.html#a01b662228b696d746f227ca2e1303696',1,'rm::steady_clock::path']]],
+  ['plan_2emd_4',['plan.md',['../plan_8md.html',1,'']]],
+  ['planning_5',['Анализ и планирование / Analysis and Planning',['../md__r_e_a_d_m_e.html#autotoc_md213',1,'']]],
+  ['program_6',['Example Program',['../md__r_e_a_d_m_e.html#autotoc_md209',1,'']]],
+  ['project_7',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]]
 ];

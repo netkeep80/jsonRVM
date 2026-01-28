@@ -118,12 +118,11 @@ $(document).ready(function(){initNavTree('structstring__type__maker.html',''); i
 </ul>
 </dd></dl>
 <dl class="section warning"><dt>Предупреждения</dt><dd>Использование индексов за пределами длины строки приводит к подстановке нуль-терминатора (selch)</dd></dl>
-<p>Пример использования: </p><div class="fragment"><div class="line"><span class="keyword">using </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">MyString</a> = <a class="code hl_define" href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">as_type</a>(<span class="stringliteral">&quot;Hello&quot;</span>);</div>
+<p>Пример использования: </p><div class="fragment"><div class="line"><span class="keyword">using </span>MyString = <a class="code hl_define" href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">as_type</a>(<span class="stringliteral">&quot;Hello&quot;</span>);</div>
 <div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> str = <a class="code hl_define" href="string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff">to_sv</a>(<span class="stringliteral">&quot;Meta&quot;</span>);</div>
 <div class="line"><span class="keyword">static_assert</span>(MyString::size == 5, <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="ttc" id="astring__type_8h_html_a7478af116857d83acdbe8d72bfcbdd5b"><div class="ttname"><a href="string__type_8h.html#a7478af116857d83acdbe8d72bfcbdd5b">as_type</a></div><div class="ttdeci">#define as_type(s)</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00102">string_type.h:102</a></div></div>
 <div class="ttc" id="astring__type_8h_html_a846c638a7cb71b7fc0235299bf67feff"><div class="ttname"><a href="string__type_8h.html#a846c638a7cb71b7fc0235299bf67feff">to_sv</a></div><div class="ttdeci">#define to_sv(s)</div><div class="ttdef"><b>Definition</b> <a href="string__type_8h_source.html#l00103">string_type.h:103</a></div></div>
-<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
 </div><!-- fragment --> </div><hr/>Объявления и описания членов структуры находятся в файле:<ul>
 <li>modules/common/include/<a class="el" href="string__type_8h_source.html">string_type.h</a></li>
 </ul>

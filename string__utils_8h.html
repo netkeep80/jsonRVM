@@ -99,7 +99,9 @@ $(document).ready(function(){initNavTree('string__utils_8h.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
-<code>#include &quot;windows.h&quot;</code><br />
+<code>#include &lt;codecvt&gt;</code><br />
+<code>#include &lt;locale&gt;</code><br />
+<code>#include &lt;cstring&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Граф включаемых заголовочных файлов для string_utils.h:</div>
 <div class="dyncontent">
@@ -115,48 +117,20 @@ $(document).ready(function(){initNavTree('string__utils_8h.html',''); initResiza
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:a7260675c2e16e0a11fed1b0d0e926611" id="r_a7260675c2e16e0a11fed1b0d0e926611"><td class="memTemplParams" colspan="2">template&lt;UINT CodePage&gt; </td></tr>
-<tr class="memitem:a7260675c2e16e0a11fed1b0d0e926611"><td class="memTemplItemLeft" align="right" valign="top">wstring&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a> (const string &amp;data)</td></tr>
-<tr class="separator:a7260675c2e16e0a11fed1b0d0e926611"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4740d9d1f20e5c6e0dcf0f113c71ce16" id="r_a4740d9d1f20e5c6e0dcf0f113c71ce16"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">UINT</a> CodePage&gt; </td></tr>
-<tr class="memitem:a4740d9d1f20e5c6e0dcf0f113c71ce16"><td class="memTemplItemLeft" align="right" valign="top">string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a4740d9d1f20e5c6e0dcf0f113c71ce16">wstring_to_</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
-<tr class="separator:a4740d9d1f20e5c6e0dcf0f113c71ce16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2255503e795d2cb329411e02fdca66f6" id="r_a2255503e795d2cb329411e02fdca66f6"><td class="memItemLeft" align="right" valign="top">wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a2255503e795d2cb329411e02fdca66f6">cp1251_to_wstring</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
-<tr class="separator:a2255503e795d2cb329411e02fdca66f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a280cf15c4682cd6a8336610a45b3da12" id="r_a280cf15c4682cd6a8336610a45b3da12"><td class="memItemLeft" align="right" valign="top">wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12">utf8_to_wstring</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
+<tr class="memitem:a280cf15c4682cd6a8336610a45b3da12" id="r_a280cf15c4682cd6a8336610a45b3da12"><td class="memItemLeft" align="right" valign="top">wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12">utf8_to_wstring</a> (const string &amp;data)</td></tr>
 <tr class="separator:a280cf15c4682cd6a8336610a45b3da12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:add066b89223564bc52aada71bde6a07e" id="r_add066b89223564bc52aada71bde6a07e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#add066b89223564bc52aada71bde6a07e">wstring_to_cp1251</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
-<tr class="separator:add066b89223564bc52aada71bde6a07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58ecee3b97479b802bd9b2f43437ccc2" id="r_a58ecee3b97479b802bd9b2f43437ccc2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2">wstring_to_utf8</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
+<tr class="memitem:a58ecee3b97479b802bd9b2f43437ccc2" id="r_a58ecee3b97479b802bd9b2f43437ccc2"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2">wstring_to_utf8</a> (const wstring &amp;data)</td></tr>
 <tr class="separator:a58ecee3b97479b802bd9b2f43437ccc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a589dfcfbe4c6adc30a26ee395205c7ad" id="r_a589dfcfbe4c6adc30a26ee395205c7ad"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a589dfcfbe4c6adc30a26ee395205c7ad">cp1251_to_utf8</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
+<tr class="memitem:a2255503e795d2cb329411e02fdca66f6" id="r_a2255503e795d2cb329411e02fdca66f6"><td class="memItemLeft" align="right" valign="top">wstring&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a2255503e795d2cb329411e02fdca66f6">cp1251_to_wstring</a> (const string &amp;data)</td></tr>
+<tr class="separator:a2255503e795d2cb329411e02fdca66f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add066b89223564bc52aada71bde6a07e" id="r_add066b89223564bc52aada71bde6a07e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#add066b89223564bc52aada71bde6a07e">wstring_to_cp1251</a> (const wstring &amp;data)</td></tr>
+<tr class="separator:add066b89223564bc52aada71bde6a07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a589dfcfbe4c6adc30a26ee395205c7ad" id="r_a589dfcfbe4c6adc30a26ee395205c7ad"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#a589dfcfbe4c6adc30a26ee395205c7ad">cp1251_to_utf8</a> (const string &amp;data)</td></tr>
 <tr class="separator:a589dfcfbe4c6adc30a26ee395205c7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac50ed71b36c43f1f2f41593d04cd5231" id="r_ac50ed71b36c43f1f2f41593d04cd5231"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231">utf8_to_cp1251</a> (<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">data</a>)</td></tr>
+<tr class="memitem:ac50ed71b36c43f1f2f41593d04cd5231" id="r_ac50ed71b36c43f1f2f41593d04cd5231"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231">utf8_to_cp1251</a> (const string &amp;data)</td></tr>
 <tr class="separator:ac50ed71b36c43f1f2f41593d04cd5231"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Функции</h2>
-<a id="a7260675c2e16e0a11fed1b0d0e926611" name="a7260675c2e16e0a11fed1b0d0e926611"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7260675c2e16e0a11fed1b0d0e926611">&#9670;&#160;</a></span>_to_wstring()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;UINT CodePage&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">wstring _to_wstring </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00042">42</a></p>
-
-</div>
-</div>
 <a id="a589dfcfbe4c6adc30a26ee395205c7ad" name="a589dfcfbe4c6adc30a26ee395205c7ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a589dfcfbe4c6adc30a26ee395205c7ad">&#9670;&#160;</a></span>cp1251_to_utf8()</h2>
 
@@ -169,7 +143,7 @@ template&lt;UINT CodePage&gt; </div>
         <tr>
           <td class="memname">string cp1251_to_utf8 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -181,7 +155,7 @@ template&lt;UINT CodePage&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00075">75</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00105">105</a></p>
 
 </div>
 </div>
@@ -197,7 +171,7 @@ template&lt;UINT CodePage&gt; </div>
         <tr>
           <td class="memname">wstring cp1251_to_wstring </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -209,7 +183,7 @@ template&lt;UINT CodePage&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00070">70</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00103">103</a></p>
 
 </div>
 </div>
@@ -225,7 +199,7 @@ template&lt;UINT CodePage&gt; </div>
         <tr>
           <td class="memname">string utf8_to_cp1251 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -237,7 +211,7 @@ template&lt;UINT CodePage&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00076">76</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00106">106</a></p>
 
 </div>
 </div>
@@ -253,7 +227,7 @@ template&lt;UINT CodePage&gt; </div>
         <tr>
           <td class="memname">wstring utf8_to_wstring </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> string &amp;&#160;</td>
+          <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -265,29 +239,7 @@ template&lt;UINT CodePage&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00071">71</a></p>
-
-</div>
-</div>
-<a id="a4740d9d1f20e5c6e0dcf0f113c71ce16" name="a4740d9d1f20e5c6e0dcf0f113c71ce16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4740d9d1f20e5c6e0dcf0f113c71ce16">&#9670;&#160;</a></span>wstring_to_()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">UINT</a> CodePage&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">string wstring_to_ </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00054">54</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00087">87</a></p>
 
 </div>
 </div>
@@ -303,7 +255,7 @@ template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0
         <tr>
           <td class="memname">string wstring_to_cp1251 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;&#160;</td>
+          <td class="paramtype">const wstring &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -315,7 +267,7 @@ template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00072">72</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00104">104</a></p>
 
 </div>
 </div>
@@ -331,7 +283,7 @@ template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0
         <tr>
           <td class="memname">string wstring_to_utf8 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">const</a> wstring &amp;&#160;</td>
+          <td class="paramtype">const wstring &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -343,7 +295,7 @@ template&lt;<a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0
 </table>
 </div><div class="memdoc">
 
-<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00073">73</a></p>
+<p class="definition">См. определение в файле <a class="el" href="string__utils_8h_source.html">string_utils.h</a> строка <a class="el" href="string__utils_8h_source.html#l00094">94</a></p>
 
 </div>
 </div>

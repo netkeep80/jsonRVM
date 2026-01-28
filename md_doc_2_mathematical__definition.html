@@ -197,70 +197,69 @@ $(document).ready(function(){initNavTree('md_doc_2_mathematical__definition.html
 Преобразование типов на языке C</h1>
 <h2><a class="anchor" id="autotoc_md85"></a>
 1. Исходное представление триединств:</h2>
-<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    S* s;</div>
+<div class="line">    O* o;</div>
+<div class="line">    E* e;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    E* e;</div>
+<div class="line">    R* r;</div>
+<div class="line">    S* s;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    R* r;</div>
+<div class="line">    E* e;</div>
+<div class="line">    O* o;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    O* o;</div>
+<div class="line">    S* s;</div>
+<div class="line">    R* r;</div>
 <div class="line">};</div>
-<div class="ttc" id="astring__utils_8h_html_a7260675c2e16e0a11fed1b0d0e926611"><div class="ttname"><a href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">_to_wstring</a></div><div class="ttdeci">wstring _to_wstring(const string &amp;data)</div><div class="ttdef"><b>Definition</b> <a href="string__utils_8h_source.html#l00042">string_utils.h:42</a></div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md86"></a>
 2. Выделяем связи типа SO, ER, RE, OS:</h2>
-<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">SO</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>SO {</div>
+<div class="line">    S* s;</div>
+<div class="line">    O* o;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ER</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
+<div class="line"><span class="keyword">struct </span>ER {</div>
+<div class="line">    E* e;</div>
+<div class="line">    R* r;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">RE</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
+<div class="line"><span class="keyword">struct </span>RE {</div>
+<div class="line">    R* r;</div>
+<div class="line">    E* e;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">OS</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
+<div class="line"><span class="keyword">struct </span>OS {</div>
+<div class="line">    O* o;</div>
+<div class="line">    S* s;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">SO</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">so</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">e</a>;</div>
+<div class="line"><span class="keyword">struct </span>R {</div>
+<div class="line">    SO* so;</div>
+<div class="line">    E* e;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">ER</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">er</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">s</a>;</div>
+<div class="line"><span class="keyword">struct </span>O {</div>
+<div class="line">    ER* er;</div>
+<div class="line">    S* s;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">S</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">RE</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">re</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">O</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">o</a>;</div>
+<div class="line"><span class="keyword">struct </span>S {</div>
+<div class="line">    RE* re;</div>
+<div class="line">    O* o;</div>
 <div class="line">};</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">struct </span><a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">E</a> {</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">OS</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">os</a>;</div>
-<div class="line">    <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">R</a>* <a class="code hl_function" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">r</a>;</div>
+<div class="line"><span class="keyword">struct </span>E {</div>
+<div class="line">    OS* os;</div>
+<div class="line">    R* r;</div>
 <div class="line">};</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->

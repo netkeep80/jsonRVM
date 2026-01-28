@@ -21,6 +21,7 @@ var namespacerm =
     [ "vm_ctx", "structrm_1_1vm__ctx.html", "structrm_1_1vm__ctx" ],
     [ "binary_view", "namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd", null ],
     [ "binary_view_map_t", "namespacerm.html#aaa1490c3e06b36d948389de0c518965e", null ],
+    [ "InitDict", "namespacerm.html#a375c4dfe9f5060da78a3b07e83a5c6e7", null ],
     [ "array_xor_value", "namespacerm.html#a7ae12d755f25ecbb79359e21c2765fa7", null ],
     [ "define_json_is_type", "namespacerm.html#acd8c8701c11203b3207ae27f3c1be215", null ],
     [ "define_static_method", "namespacerm.html#ae073b718c2865f521a04f105c3f4abf5", null ],

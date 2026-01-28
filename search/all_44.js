@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ё_0',['Ё',['../md_doc_2_dictionary.html#autotoc_md30',1,'']]]
+  ['—_20json_20relations_20model_20virtual_20machine_0',['jsonRVM — json Relations (Model) Virtual Machine',['../md__r_e_a_d_m_e.html#autotoc_md194',1,'']]]
 ];

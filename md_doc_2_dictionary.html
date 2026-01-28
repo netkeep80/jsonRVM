@@ -154,14 +154,14 @@ $(document).ready(function(){initNavTree('md_doc_2_dictionary.html',''); initRes
 <p>Есть <a class="el" href="md_doc_2_dictionary.html#triplet">**триплет**</a>: &lt; <a class="el" href="md_doc_2_dictionary.html#sub">**субъект**</a>, <a class="el" href="md_doc_2_dictionary.html#rel">**сущность**</a>, <a class="el" href="md_doc_2_dictionary.html#obj">**объект**</a> &gt; либо 2 связи отношения сущности: &lt; <a class="el" href="md_doc_2_dictionary.html#sub">**субъект**</a>, <a class="el" href="md_doc_2_dictionary.html#rel">**сущность**</a>, <a class="el" href="md_doc_2_dictionary.html#obj">**объект**</a> &gt;</p>
 <h1><a class="anchor" id="upper_ctx"></a>
 Вышестоящий контекст исполнения</h1>
-<p>Вышестояший <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**контекст проявления**</a> находится выше <a class="el" href="md_doc_2_dictionary.html#ctx">**текущего контекста исполнения**</a> в <a class="el" href="md_doc_2_dictionary.html#ctx_tree">**граф контекстов исполнения**</a>. Последовательно вышестоящие контексты исполнения обозначается местоимениями $$, $$$, $$$$ и т.д.</p>
+<p>Вышестояший **контекст проявления** находится выше <a class="el" href="md_doc_2_dictionary.html#ctx">**текущего контекста исполнения**</a> в <a class="el" href="md_doc_2_dictionary.html#ctx_tree">**граф контекстов исполнения**</a>. Последовательно вышестоящие контексты исполнения обозначается местоимениями $$, $$$, $$$$ и т.д.</p>
 <h1><a class="anchor" id="autotoc_md27"></a>
 Г</h1>
 <h1><a class="anchor" id="autotoc_md28"></a>
 Д</h1>
 <h1><a class="anchor" id="ctx_tree"></a>
 Мультистек контекстов исполнения</h1>
-<p>Есть структура для хранения <a class="el" href="md_doc_2_dictionary.html#rvm_state">**состояния РВМ**</a>. <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**Контексты исполнения**</a> РВМ образуют мультистэк посредством связей двух типов: <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**родительской связи**</a> и <a class="el" href="md_doc_2_dictionary.html#ctx_ref">**контекстной связи**</a>. РВМ может порождать <a class="el" href="md_doc_2_dictionary.html#child_ctx">**дочерние контексты исполнения**</a> на текущем уровне, на вложенном или на вышестоящем при этом связь с <a class="el" href="md_doc_2_dictionary.html#upper_ctx">**вышестоящим контекстом исполнения**</a> есть независимо от родительского.</p>
+<p>Есть структура для хранения <a class="el" href="md_doc_2_dictionary.html#rvm_state">**состояния РВМ**</a>. <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**Контексты исполнения**</a> РВМ образуют мультистэк посредством связей двух типов: **родительской связи** и <a class="el" href="md_doc_2_dictionary.html#ctx_ref">**контекстной связи**</a>. РВМ может порождать <a class="el" href="md_doc_2_dictionary.html#child_ctx">**дочерние контексты исполнения**</a> на текущем уровне, на вложенном или на вышестоящем при этом связь с <a class="el" href="md_doc_2_dictionary.html#upper_ctx">**вышестоящим контекстом исполнения**</a> есть независимо от родительского.</p>
 <p><img src="tree_stack_of_contexts.dot.jpg" alt="" class="inline"/></p>
 <h1><a class="anchor" id="child_ctx"></a>
 Дочерний контекст исполнения</h1>
@@ -189,17 +189,17 @@ $(document).ready(function(){initNavTree('md_doc_2_dictionary.html',''); initRes
 <p>По своей структуре контекст исполнения тоже является <a class="el" href="md_doc_2_dictionary.html#rel">**отношением**</a> в <a class="el" href="md_doc_2_dictionary.html#ctx_tree">**мультистеке контекстов отношения**</a>.</p>
 <p>Так же функцией контекста исполнения является предоставление доступа через <a class="el" href="md_doc_2_dictionary.html#pronoun">**местоимения**</a> к текущей проявляемой <a class="el" href="md_doc_2_dictionary.html#ent">**сущности отношения**</a>.</p>
 <p>Объективно контекст исполнения это структура данных, включающая следующие члены:</p><ol type="1">
-<li>Ссылка на <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**текущую сущность**</a></li>
-<li>Ссылка на <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**текущий субъект**</a></li>
-<li>Ссылка на <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**текущее отношение**</a></li>
-<li>Ссылка на <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**текущий объект**</a></li>
+<li>Ссылка на **текущую сущность**</li>
+<li>Ссылка на **текущий субъект**</li>
+<li>Ссылка на **текущее отношение**</li>
+<li>Ссылка на **текущий объект**</li>
 </ol>
 <h1><a class="anchor" id="ctx_obj"></a>
 Контекстный объект</h1>
 <p>Местоимение для ссылки на текущий объект контекста исполнения Обозначается через $obj</p>
 <h1><a class="anchor" id="ctx_rel"></a>
 Контекстное отношение</h1>
-<p>Текущее <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**состояние отношения**</a> <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекста исполнения**</a> Местоимение для ссылки на контекстное отношение обозначается через $rel</p>
+<p>Текущее **состояние отношения** <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекста исполнения**</a> Местоимение для ссылки на контекстное отношение обозначается через $rel</p>
 <h1><a class="anchor" id="ctx_ref"></a>
 Контекстная связь</h1>
 <p>Это связь нижележащих контекстов исполнения с вышестоящим. Эта связь хранится в структуре данных контекста исполнения и используется для доступа к вышестоящим уровням контекста исполнения через <a class="el" href="md_doc_2_dictionary.html#pronoun">**местоимения**</a>.</p>
@@ -233,16 +233,16 @@ $(document).ready(function(){initNavTree('md_doc_2_dictionary.html',''); initRes
 М</h1>
 <h1><a class="anchor" id="pronoun"></a>
 Местоимение</h1>
-<p>Указательное местоимение - есть самостоятельное отношение. Имя - ссылка, которая указывает на разные уровни <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекста исполнения**</a> или <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**переменные контекста исполнения**</a> РВМ</p>
-<p>Это члены структуры данных <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**контекста отношения**</a></p><ol type="1">
-<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**Текущая сущность**</a></li>
-<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**Текущий субъект**</a></li>
-<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**Текущее отношение**</a></li>
-<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**Текущий объект**</a></li>
+<p>Указательное местоимение - есть самостоятельное отношение. Имя - ссылка, которая указывает на разные уровни <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекста исполнения**</a> или **переменные контекста исполнения** РВМ</p>
+<p>Это члены структуры данных **контекста отношения**</p><ol type="1">
+<li>**Текущая сущность**</li>
+<li>**Текущий субъект**</li>
+<li>**Текущее отношение**</li>
+<li>**Текущий объект**</li>
 </ol>
 <h1><a class="anchor" id="rm"></a>
 Модель Отношений</h1>
-<p>Множество <a class="el" href="md_doc_2_dictionary.html#ent">**сущностей**</a> связанное <a class="el" href="md_doc_2_dictionary.html#rel">**отношениями**</a>. <a class="el" href="md_doc_2_dictionary.html#rm">**Модель Отношений**</a> определяет <a class="el" href="md_doc_2_dictionary.html#inner_ent_struct">**внутреннюю**</a> и <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**внешнюю**</a> <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**структуру сущности**</a>.</p>
+<p>Множество <a class="el" href="md_doc_2_dictionary.html#ent">**сущностей**</a> связанное <a class="el" href="md_doc_2_dictionary.html#rel">**отношениями**</a>. <a class="el" href="md_doc_2_dictionary.html#rm">**Модель Отношений**</a> определяет <a class="el" href="md_doc_2_dictionary.html#inner_ent_struct">**внутреннюю**</a> и **внешнюю** **структуру сущности**.</p>
 <p><a class="el" href="md_doc_2_dictionary.html#rm">**Модель отношений**</a> исполняется внутри контекста исполнения.</p>
 <p>В Модели Отношений под понятиями субъект, сущность и объект всегда подразумеваются субъект отношения, сущность отношения и объект отношения соответственно.</p>
 <p><img src="rm_view.jpg" alt="" class="inline"/></p>
@@ -255,7 +255,7 @@ $(document).ready(function(){initNavTree('md_doc_2_dictionary.html',''); initRes
 <h1><a class="anchor" id="rel_obj"></a>
 Объект отношения</h1>
 <p>Объект есть сущностная субъективация отношения.</p>
-<p>Есть относительное понятие, выражающее объективный аспект отношения, т.е. под объектом всегда подразумевается объект отношения. Это определенная <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**сущностью объекта**</a> вещь, явление или процесс на которую направлена определённая <a class="el" href="md_doc_2_dictionary.html#ent_rel">**сущностью отношения**</a> деятельность <a class="el" href="md_doc_2_dictionary.html#sub">**субъекта**</a>; при этом, в качестве объекта может выступать и сам <a class="el" href="md_doc_2_dictionary.html#sub">**субъект**</a>.</p>
+<p>Есть относительное понятие, выражающее объективный аспект отношения, т.е. под объектом всегда подразумевается объект отношения. Это определенная **сущностью объекта** вещь, явление или процесс на которую направлена определённая <a class="el" href="md_doc_2_dictionary.html#ent_rel">**сущностью отношения**</a> деятельность <a class="el" href="md_doc_2_dictionary.html#sub">**субъекта**</a>; при этом, в качестве объекта может выступать и сам <a class="el" href="md_doc_2_dictionary.html#sub">**субъект**</a>.</p>
 <p>В МО имеется самостоятельное отношение субъект.</p>
 <h1><a class="anchor" id="objectification"></a>
 Объективация сущности</h1>
@@ -271,7 +271,7 @@ $(document).ready(function(){initNavTree('md_doc_2_dictionary.html',''); initRes
 Clarification of the state of the relation / Выяснение состояния отношения</h1>
 <h1><a class="anchor" id="rel_clar"></a>
 Relation clarification / Выяснение отношения</h1>
-<p>Получение контекстно зависимого <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**значения отношения**</a> в результате <a class="el" href="md_doc_2_dictionary.html#exec_ent">**исполнения сущности**</a> <a class="el" href="md_doc_2_dictionary.html#rel">**отношения**</a> в <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контексте исполнения**</a>. Реализуется посредством исполнения самостоятельного отношения субъекта как сущности.</p>
+<p>Получение контекстно зависимого **значения отношения** в результате <a class="el" href="md_doc_2_dictionary.html#exec_ent">**исполнения сущности**</a> <a class="el" href="md_doc_2_dictionary.html#rel">**отношения**</a> в <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контексте исполнения**</a>. Реализуется посредством исполнения самостоятельного отношения субъекта как сущности.</p>
 <h1><a class="anchor" id="rel"></a>
 Отношение</h1>
 <h1><a class="anchor" id="ent_rel"></a>
@@ -280,12 +280,12 @@ Relation clarification / Выяснение отношения</h1>
 <p>Есть абсолютное понятие, потому что полностью определяется <a class="el" href="md_doc_2_dictionary.html#triplet">**триплетом**</a> сущностей: &lt; <a class="el" href="md_doc_2_dictionary.html#sub">**субъект**</a>, <a class="el" href="md_doc_2_dictionary.html#ent">**сущность**</a>, <a class="el" href="md_doc_2_dictionary.html#obj">**объект**</a> &gt;.</p>
 <p>По сути отношение есть процесс взаимодействия <a class="el" href="md_doc_2_dictionary.html#sub">**субъекта**</a> с <a class="el" href="md_doc_2_dictionary.html#obj">**объектом**</a>, заключенный в отнесении <a class="el" href="md_doc_2_dictionary.html#rel_ent">**сущности**</a> объекта в субъект.</p>
 <p>Субъективно описывается в МО в виде <a class="el" href="md_doc_2_dictionary.html#rel_ent">**сущности отношения**</a>.</p>
-<p>Объективно существует в виде текущего <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**состояния отношения**</a> в <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контексте исполнения**</a>.</p>
+<p>Объективно существует в виде текущего **состояния отношения** в <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контексте исполнения**</a>.</p>
 <h1><a class="anchor" id="autotoc_md42"></a>
 П</h1>
 <h1><a class="anchor" id="ent_view"></a>
 Субъективация отношения</h1>
-<p>Есть фаза работы РВМ, во время которой из отношения создаётся новой <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекст исполнения**</a> для проявления <a class="el" href="md_doc_2_dictionary.html#rel_ent">**сущности отношения**</a> и выяснения субъективного <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**значения отношения**</a>.</p>
+<p>Есть фаза работы РВМ, во время которой из отношения создаётся новой <a class="el" href="md_doc_2_dictionary.html#exec_ctx">**контекст исполнения**</a> для проявления <a class="el" href="md_doc_2_dictionary.html#rel_ent">**сущности отношения**</a> и выяснения субъективного **значения отношения**.</p>
 <h1><a class="anchor" id="autotoc_md43"></a>
 Р</h1>
 <h1><a class="anchor" id="autotoc_md44"></a>
@@ -300,7 +300,7 @@ Relation clarification / Выяснение отношения</h1>
 <p>? </p>
 <h1><a class="anchor" id="parent_ctx"></a>
 Родительский контекст отношения</h1>
-<p>Это <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**контекст отношения**</a> в котором РВМ породила <a class="el" href="md_doc_2_dictionary.html#ctx">**текущий контекст отношения**</a> при вычислении отношения ? <a class="el" href="md_doc_2_dictionary.html#exec_ent">**исполнении сущности**</a>.</p>
+<p>Это **контекст отношения** в котором РВМ породила <a class="el" href="md_doc_2_dictionary.html#ctx">**текущий контекст отношения**</a> при вычислении отношения ? <a class="el" href="md_doc_2_dictionary.html#exec_ent">**исполнении сущности**</a>.</p>
 <h1><a class="anchor" id="autotoc_md45"></a>
 С</h1>
 <h1><a class="anchor" id="link"></a>
@@ -309,7 +309,7 @@ Relation clarification / Выяснение отношения</h1>
 <p>Rel_SO = &lt;Sub, Obj&gt; - объективация Ent = &lt;Rel, Rel_SO&gt; - субъективация</p>
 <h1><a class="anchor" id="ancestor_link"></a>
 Связь с предком</h1>
-<p>Это связь <a class="el" href="md_doc_2_dictionary.html#child_ctx">**дочернего контекста исполнения**</a> с <a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">**родительским контекстом исполнения**</a>. Эта связь автоматически образуется и используется РВМ для своей работы.</p>
+<p>Это связь <a class="el" href="md_doc_2_dictionary.html#child_ctx">**дочернего контекста исполнения**</a> с **родительским контекстом исполнения**. Эта связь автоматически образуется и используется РВМ для своей работы.</p>
 <h1><a class="anchor" id="rel_struct"></a>
 Структура отношения</h1>
 <p>Есть её <a class="el" href="md_doc_2_dictionary.html#rm">**Модель Отношений**</a></p>
