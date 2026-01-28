@@ -1,140 +1,88 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/netkeep80/jsonrvm)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish?label=Publish%20Doxygen%20to%20gh-pages)](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml)
-
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish)](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml)
+[![GitHub Actions](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml/badge.svg)](https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml)
 ![GitHub last commit](https://img.shields.io/github/last-commit/netkeep80/jsonRVM)
-[![GitHub](https://img.shields.io/github/license/netkeep80/jsonRVM)](https://github.com/netkeep80/jsonRVM/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/netkeep80/jsonRVM)](https://github.com/netkeep80/jsonRVM/blob/master/LICENSE.MIT)
 
 <p align="center"><img src="rm_view.jpg"></p>
 
-# json Relations (Model) Virtual Machine
+# jsonRVM — json Relations (Model) Virtual Machine
+
 ```
             R
          S__|__O
        O   _|_   S     Fractal
     R__|__/_|_\__|__R  Triune
        |  \_|_/  |     Entity
-       S    |    O     
+       S    |    O
           __|__
          /  |  \
         /___|___\
 ```
 
-### Язык метапрограммирования "Модель Отношений" (JSON Relations Model)
+---
 
-#### Обзор
-Язык "Модель Отношений" (Relations Model, RM) — это декларативный DSL (Domain-Specific Language), ориентированный на описание сложных систем через иерархию сущностей и их отношений. Программы представляются в виде JSON-структур, которые исполняются виртуальной машиной RMVM. Ключевые особенности:
+## Содержание / Contents
 
-1. **Сущности (Entities)**  
-   Базовые элементы системы, описываемые JSON-объектами. Могут быть:
-   - Примитивами: `числа`, `строки`, `булевы значения`.
-   - Составными типами: `массивы`, `объекты`.
-   - Ссылками: `$ref` на другие сущности.
-   - Исполняемыми конструкциями: `$rel`, `$obj`, `$sub`.
-
-2. **Отношения (Relations)**  
-   Определяют правила взаимодействия между сущностями. Примеры:
-   - **Создание сущности**: `add_entity`.
-   - **Загрузка словарей**: `load/dll`.
-   - **Параллельные вычисления**.
-
-3. **Контексты (Contexts)**  
-   Каждое отношение исполняется в контексте, который включает:
-   - `$ent` — текущая сущность.
-   - `$rel` — исполняемое отношение.
-   - `$obj` — объект отношения (входные данные).
-   - `$sub` — субъект отношения (результат).
+- [Русский](#русский)
+- [English](#english)
+- [Документация / Documentation](#документация--documentation)
 
 ---
 
-### Синтаксис и Конструкции
+# Русский
 
-#### 1. Ссылки (`$ref`)
-Позволяют обращаться к другим сущностям по JSON-пути:
-```json
-{
-  "action": { "$ref": "/entities/user" }
-}
-```
+## Описание
 
-#### 2. Исполняемые блоки
-- **Последовательное выполнение** (массивы):
-  ```json
-  [
-    { "$rel": "step1" },
-    { "$rel": "step2" }
-  ]
-  ```
-- **Параллельное выполнение** (объекты):
-  ```json
-  {
-    "task1": { "$rel": "process_data" },
-    "task2": { "$rel": "validate_data" }
-  }
-  ```
+**jsonRVM** — это виртуальная машина для исполнения программ, написанных на декларативном языке **"Модель Отношений"** (Relations Model, RM). Программы представляются в формате JSON и интерпретируются виртуальной машиной как байткод.
 
-#### 3. Отношения (`$rel`, `$obj`, `$sub`)
-```json
-{
-  "$rel": "add_entity",
-  "$obj": {
-    "type": "user",
-    "name": "Alice"
-  },
-  "$sub": "$ent/new_user_id"
-}
-```
-- `$rel` — имя отношения.
-- `$obj` — входные данные.
-- `$sub` — куда сохранить результат.
+### Основные концепции
 
-#### 4. Импорт словарей
-Загрузка внешних модулей через DLL:
-```json
-{
-  "$rel": "rmvm/load/dll",
-  "$obj": {
-    "PathFolder": "libs/",
-    "FileName": "math_operations.dll"
-  }
-}
-```
+**Модель Отношений** — это язык метапрограммирования, где всё представляется как сущности и их отношения:
 
----
+1. **Сущности (Entities)** — базовые элементы системы в виде JSON-объектов:
+   - Примитивы: числа, строки, булевы значения
+   - Составные типы: массивы, объекты
+   - Ссылки: `$ref` на другие сущности
+   - Исполняемые конструкции: `$rel`, `$obj`, `$sub`
 
-### Семантика
+2. **Отношения (Relations)** — определяют взаимодействие между сущностями:
+   - `$rel` — отношение (контроллер)
+   - `$obj` — объект (входные данные)
+   - `$sub` — субъект (результат)
 
-#### 1. Исполнение отношений
-- **Рекурсивная обработка**: VM рекурсивно обходит JSON-структуру, применяя отношения.
-- **Автоматическое распараллеливание**: Объекты исполняют свои ключи параллельно.
-- **Обработка ошибок**: Исключения включают контекст (сущность, отношение, путь).
+3. **Контексты (Contexts)** — иерархия исполнения с доступом к:
+   - `$ent` — текущая сущность
+   - `$rel` — текущее отношение
+   - `$obj` — текущий объект
+   - `$sub` — текущий субъект
 
-#### 2. Работа с данными
-- **Динамическое разрешение ссылок**: `$ref` вычисляются в рантайме.
-- **Потокобезопасность**: Мьютексы защищают доступ к общим данным.
-- **Сериализация**: Сущности сохраняются в JSON-файлы через `file_database_t`.
+### Ключевые особенности
 
-#### 3. Расширяемость
-- **Внешние библиотеки**: DLL с функциями вида `import_relations_model_to`.
-- **Базовые сущности**: Встроенные отношения (`version`, `add_entity`).
-
----
+- **Декларативный подход** — описание *что* делать, а не *как*
+- **Автоматический параллелизм** — объекты исполняются параллельно, массивы — последовательно
+- **Гомоиконичность** — код и данные имеют одинаковую JSON-структуру
+- **Расширяемость** — поддержка плагинов через DLL-библиотеки
+- **Рефлексия** — программы могут анализировать и модифицировать себя
 
 ### Пример программы
+
 ```json
 {
-  "schema": {
-    "$rel": "add_entity",
-    "$obj": {
-      "name": "Пример системы",
-      "components": [
-        { "$ref": "/entities/logger" },
-        { "$ref": "/entities/database" }
-      ]
-    },
-    "$sub": "$ent/system_id"
-  },
-  "init": [
+  "$rel/result": {
+    "$obj": 1,
+    "$rel": "+",
+    "$sub": 1
+  }
+}
+```
+
+Результат: `result = 2`
+
+### Более сложный пример
+
+```json
+{
+  "$rel": [
     {
       "$rel": "rmvm/load/dll",
       "$obj": {
@@ -143,8 +91,15 @@
       }
     },
     {
-      "$rel": "network/connect",
-      "$obj": { "url": "https://api.example.com" }
+      "$rel": "add_entity",
+      "$obj": {
+        "name": "Пример системы",
+        "components": [
+          { "$ref": "/entities/logger" },
+          { "$ref": "/entities/database" }
+        ]
+      },
+      "$sub": "$ent/system_id"
     }
   ]
 }
@@ -152,51 +107,175 @@
 
 ---
 
-### Особенности реализации
-- **Компиляция строк**: Макросы `SWITCH`/`CASE` используют хеширование для эффективного сравнения строк.
-- **Кодировки**: Поддержка CP1251 и UTF-8 через функции преобразования.
-- **Многопоточность**: `std::mutex` и `std::lock_guard` для синхронизации.
+# English
+
+## Description
+
+**jsonRVM** is a virtual machine for executing programs written in the declarative **"Relations Model"** (RM) language. Programs are represented in JSON format and interpreted by the virtual machine as bytecode.
+
+### Core Concepts
+
+**Relations Model** is a metaprogramming language where everything is represented as entities and their relations:
+
+1. **Entities** — basic system elements as JSON objects:
+   - Primitives: numbers, strings, booleans
+   - Compound types: arrays, objects
+   - References: `$ref` to other entities
+   - Executable constructs: `$rel`, `$obj`, `$sub`
+
+2. **Relations** — define interactions between entities:
+   - `$rel` — relation (controller)
+   - `$obj` — object (input data)
+   - `$sub` — subject (result)
+
+3. **Contexts** — execution hierarchy with access to:
+   - `$ent` — current entity
+   - `$rel` — current relation
+   - `$obj` — current object
+   - `$sub` — current subject
+
+### Key Features
+
+- **Declarative approach** — describe *what* to do, not *how*
+- **Automatic parallelism** — objects execute in parallel, arrays — sequentially
+- **Homoiconicity** — code and data share the same JSON structure
+- **Extensibility** — plugin support via DLL libraries
+- **Reflection** — programs can analyze and modify themselves
+
+### Example Program
+
+```json
+{
+  "$rel/result": {
+    "$obj": 1,
+    "$rel": "+",
+    "$sub": 1
+  }
+}
+```
+
+Result: `result = 2`
+
+### Advanced Example
+
+```json
+{
+  "$rel": [
+    {
+      "$rel": "rmvm/load/dll",
+      "$obj": {
+        "PathFolder": "modules/",
+        "FileName": "network.dll"
+      }
+    },
+    {
+      "$rel": "add_entity",
+      "$obj": {
+        "name": "Example system",
+        "components": [
+          { "$ref": "/entities/logger" },
+          { "$ref": "/entities/database" }
+        ]
+      },
+      "$sub": "$ent/system_id"
+    }
+  ]
+}
+```
 
 ---
 
-### Типичные сценарии использования
-1. **ORM-системы**: Динамическое создание сущностей БД.
-2. **Микросервисы**: Параллельное выполнение задач.
-3. **Конфигурация систем**: Иерархическое описание компонентов.
-4. **Плагины**: Загрузка внешних модулей через DLL.
+## Документация / Documentation
 
-Этот язык позволяет описывать сложные системы в декларативном стиле, абстрагируясь от низкоуровневых деталей, что делает его удобным для моделирования бизнес-логики и распределённых систем.
+### Анализ и планирование / Analysis and Planning
 
-## jsonRVM Documentation
+- [**analysis.md**](analysis.md) — Анализ текущего состояния проекта (сильные и слабые стороны) / Project analysis (strengths and weaknesses)
+- [**plan.md**](plan.md) — План развития проекта / Development roadmap
 
-[By Doxygen on russian.](https://netkeep80.github.io/jsonRVM/)
+### Техническая документация / Technical Documentation
 
-## License
+- [**Doxygen документация**](https://netkeep80.github.io/jsonRVM/) — Автогенерируемая документация API
+- [**doc/Introduction.md**](doc/Introduction.md) — Введение в Модель Отношений
+- [**doc/RVM.md**](doc/RVM.md) — Описание виртуальной машины
+- [**doc/RM.md**](doc/RM.md) — Формальное описание Модели Отношений
+- [**doc/Dictionary.md**](doc/Dictionary.md) — Словарь базовых операций
+
+### Примеры / Examples
+
+- [**examples/**](examples/) — Примеры программ на Модели Отношений
+
+---
+
+## Сборка / Building
+
+### Требования / Requirements
+
+- CMake 3.20+
+- C++17 compatible compiler
+- Windows (для поддержки DLL / for DLL support)
+
+### Команды / Commands
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build .
+```
+
+### Запуск тестов / Running Tests
+
+```bash
+cmake -DENABLE_TESTS=ON ..
+cmake --build .
+ctest
+```
+
+---
+
+## Использование / Usage
+
+```bash
+# Показать справку / Show help
+rmvm.exe
+
+# Исполнить JSON-программу / Execute JSON program
+rmvm.exe program.json
+
+# Загрузить DLL-словарь / Load DLL vocabulary
+rmvm.exe vocabulary.dll
+
+# Показать базовый словарь / Show base vocabulary
+rmvm.exe rmvm.exe
+```
+
+---
+
+## Лицензия / License
 
 <img align="right" src="https://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png">
 
-The class is licensed under the [MIT License](https://opensource.org/licenses/MIT):
+Проект лицензирован под [MIT License](https://opensource.org/licenses/MIT):
 
 Copyright &copy; 2016-2021 [Vertushkin Roman Pavlovich](https://vk.com/earthbirthbook)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## Thanks
+---
 
-I deeply appreciate the help of the following people.
+## Благодарности / Thanks
 
-- [Vladimir Muravyev](https://github.com/vmuravyev) helped to develop the terminological apparatus of the Relations Model.
+- [Vladimir Muravyev](https://github.com/vmuravyev) — помощь в разработке терминологического аппарата Модели Отношений
 
-## Used third-party tools
+---
 
-jsonRVM using the following third-party tools. Thanks a lot!
+## Используемые библиотеки / Third-party Libraries
 
-- [**JSON for Modern C++**](https://github.com/nlohmann/json) for load/exec/unload json view of Relations Model
-- [**The fastest feature-rich C++ single-header testing framework**](https://github.com/onqtam/doctest) for unit testing of Relations (Model) Virtual Machine
-- [**A C++11 single-file header-only cross platform HTTP/HTTPS library**](https://github.com/yhirose/cpp-httplib) for writing http base vocabulary for Relations (Model) Virtual Machine
-- [**xml2json is a header-only C++ library**](https://github.com/Cheedoong/xml2json) for writing http base vocabulary for Relations (Model) Virtual Machine
-- [**Switch for strings in C++11**](https://github.com/Efrit/str_switch) for writing fast switch for Relations (Model) Virtual Machine
+- [**JSON for Modern C++**](https://github.com/nlohmann/json) — работа с JSON
+- [**doctest**](https://github.com/onqtam/doctest) — unit-тестирование
+- [**cpp-httplib**](https://github.com/yhirose/cpp-httplib) — HTTP/HTTPS клиент и сервер
+- [**xml2json**](https://github.com/Cheedoong/xml2json) — конвертация XML в JSON
+- [**str_switch**](https://github.com/Efrit/str_switch) — switch для строк
