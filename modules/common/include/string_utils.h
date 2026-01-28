@@ -1,4 +1,4 @@
-﻿/*        R
+/*        R
 	   S__|__O
 	 O   _|_   S
   R__|__/_|_\__|__R  jsonRVM
@@ -32,12 +32,13 @@ SOFTWARE.
 */
 #pragma once
 #include <string>
-#include "windows.h"
 
 using namespace std;
 
-// ToDo: refactor to std::locale
+#ifdef _WIN32
+#include "windows.h"
 
+// Windows-specific implementation using Windows API
 template<UINT CodePage>
 wstring	_to_wstring(const string& data)
 {
@@ -74,3 +75,34 @@ inline string  wstring_to_utf8(const wstring& data) { return wstring_to_<CP_UTF8
 
 inline string cp1251_to_utf8(const string& data) { return wstring_to_utf8(_to_wstring<CP_ACP>(data)); }
 inline string utf8_to_cp1251(const string& data) { return wstring_to_cp1251(_to_wstring<CP_UTF8>(data)); }
+
+#else
+// Linux/POSIX implementation using standard library
+// On Linux, the filesystem typically uses UTF-8 natively, so conversions are simpler
+
+#include <codecvt>
+#include <locale>
+#include <cstring>
+
+inline wstring utf8_to_wstring(const string& data)
+{
+	if (data.empty()) return wstring();
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	return converter.from_bytes(data);
+}
+
+inline string wstring_to_utf8(const wstring& data)
+{
+	if (data.empty()) return string();
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	return converter.to_bytes(data);
+}
+
+// On Linux, we typically don't need CP1251 conversion, but provide stubs for compatibility
+// These functions assume UTF-8 on Linux
+inline wstring cp1251_to_wstring(const string& data) { return utf8_to_wstring(data); }
+inline string  wstring_to_cp1251(const wstring& data) { return wstring_to_utf8(data); }
+inline string  cp1251_to_utf8(const string& data) { return data; }
+inline string  utf8_to_cp1251(const string& data) { return data; }
+
+#endif

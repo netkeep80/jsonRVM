@@ -1,3 +1,13 @@
+// Workaround for glibc >= 2.34 where SIGSTKSZ is no longer a constant expression
+// This must be defined before including doctest.h on Linux
+#ifdef __linux__
+#include <signal.h>
+#ifdef SIGSTKSZ
+#undef SIGSTKSZ
+#endif
+#define SIGSTKSZ 16384
+#endif
+
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest.h>
 
@@ -70,7 +80,7 @@ DOCTEST_MAKE_STD_HEADERS_CLEAN_FROM_WARNINGS_ON_WALL_END
 
 TEST_CASE("absolute addressing in rmodel") {
     MESSAGE("result:");
-    test_database_t	db(".\\");
+    test_database_t	db("./");
     vm root(&db);
     //	base vocabulary
     import_relations_model_to(root);
@@ -78,9 +88,10 @@ TEST_CASE("absolute addressing in rmodel") {
     char* fileNameInput = "absolute_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    json& root_json = static_cast<json&>(root);
+    in >> root_json[""];
+    vm_ctx $(res, root_json[""]);
+    root.exec_ent($, root_json[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["ent1"]["id"].get_ref<string&>() == "ent1"s);
@@ -91,7 +102,7 @@ TEST_CASE("absolute addressing in rmodel") {
 
 TEST_CASE("relative addressing in rmodel") {
     MESSAGE("result:");
-    test_database_t	db(".\\");
+    test_database_t	db("./");
     vm root(&db);
     //	base vocabulary
     import_relations_model_to(root);
@@ -99,9 +110,10 @@ TEST_CASE("relative addressing in rmodel") {
     char* fileNameInput = "relative_addressing.json";
     std::ifstream in(fileNameInput);
     REQUIRE(in.good());
-    in >> root[""];
-    vm_ctx $(res, root[""]);
-    root.exec_ent($, root[""]);
+    json& root_json = static_cast<json&>(root);
+    in >> root_json[""];
+    vm_ctx $(res, root_json[""]);
+    root.exec_ent($, root_json[""]);
     cout << res.dump(2) << endl;
     
     CHECK(res["$$$$ent"]["id"].get_ref<string&>() == "$$$$ent/id"s);
@@ -127,7 +139,7 @@ TEST_CASE("relative addressing in rmodel") {
 
 TEST_CASE("testing call version.json") {
     MESSAGE("result:");
-    file_database_t	db(".\\");
+    file_database_t	db("./");
     vm root(&db);
     //	base vocabulary
     import_relations_model_to(root);
@@ -138,10 +150,11 @@ TEST_CASE("testing call version.json") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[""];
-        
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        json& root_json = static_cast<json&>(root);
+        in >> root_json[""];
+
+        vm_ctx $(res, root_json[""]);
+        root.exec_ent($, root_json[""]);
         CHECK(res["rmvm_version"].get_ref<string&>() == "3.0.0"s);
     }
     catch (json& j) { throw json({ { __func__, j } }); }
@@ -153,7 +166,7 @@ TEST_CASE("testing call version.json") {
 
 TEST_CASE("testing base entity 'where'") {
     MESSAGE("result:");
-    file_database_t	db(".\\");
+    file_database_t	db("./");
     vm root(&db);
     //	base vocabulary
     import_relations_model_to(root);
@@ -164,10 +177,11 @@ TEST_CASE("testing base entity 'where'") {
     {
         std::ifstream in(fileNameInput);
         REQUIRE(in.good());
-        in >> root[""];
+        json& root_json = static_cast<json&>(root);
+        in >> root_json[""];
 
-        vm_ctx $(res, root[""]);
-        root.exec_ent($, root[""]);
+        vm_ctx $(res, root_json[""]);
+        root.exec_ent($, root_json[""]);
         cout << res.dump(2) << endl;
         CHECK(res[0].get_ref<string&>() == "4"s);
     }
@@ -185,12 +199,13 @@ TEST_CASE("testing base entity 'where'") {
 
 TEST_CASE("performance test") {
     MESSAGE("result:");
-    file_database_t	db(".\\");
+    file_database_t	db("./");
     vm root(&db);
     //	base vocabulary
     import_relations_model_to(root);
     json    res;
-    cout << root.exec_ent(res, json("performance")).dump(2);
+    json perf = json("performance");
+    cout << root.exec_ent(res, perf).dump(2);
     CHECK(res["report"][0].get_ref<string&>() == "Parameter;Average;StandardDeviation;Correlation;Successful;MeasCount"s);
     CHECK(res["report"][1].get_ref<string&>() == "param11;-0.565942;8.813454;0.879269;100.000000;688"s);
     CHECK(res["report"][2].get_ref<string&>() == "param6;0.145000;4.852494;0.911962;100.000000;688"s);

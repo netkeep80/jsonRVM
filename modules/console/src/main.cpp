@@ -42,7 +42,7 @@ SOFTWARE.
 
 using namespace rm;
 
-void	dump_json(string& filename, json& res)
+void	dump_json(const string& filename, json& res)
 {
 	std::ofstream out(filename);
 	if (out.good())
@@ -132,7 +132,8 @@ int main(int argc, char* argv[])
 	
 	try
 	{
-		cout << root.exec_ent(res, json(entry_point)).dump(2);
+		json ent = json(entry_point);
+		cout << root.exec_ent(res, ent).dump(2);
 		return 0;	//	ok
 	}
 	catch (json& j)

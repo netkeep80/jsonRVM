@@ -34,6 +34,7 @@ SOFTWARE.
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <cstdint>
 #include "vm.rm.h"
 
 namespace rm
@@ -96,7 +97,7 @@ namespace rm
 	{
 		json obj = json(), field;
 
-		for (auto& it = a.begin(); it != a.end(); ++it)
+		for (auto it = a.begin(); it != a.end(); ++it)
 		{
 			const string& key = it.key();
 			const json& val = it.value();
@@ -108,7 +109,7 @@ namespace rm
 			else obj[key] = val;
 		}
 
-		for (auto& it = b.begin(); it != b.end(); ++it)
+		for (auto it = b.begin(); it != b.end(); ++it)
 		{
 			const string& key = it.key();
 			const json& val = it.value();
@@ -204,16 +205,14 @@ namespace rm
 		//	проецируем во внешнем контексте
 		//	1. Создание дочернего контекста исполнения
 		//	2. Исполнение сущности $.obj
-		rmvm.exec_ent(
-			vm_ctx(
-				$.sub,
-				$.$.obj,
-				$.$.sub,
-				$.$.ent,
-				$.$
-			),
-			$.obj
+		vm_ctx ctx(
+			$.sub,
+			$.$.obj,
+			$.$.sub,
+			$.$.ent,
+			$.$
 		);
+		rmvm.exec_ent(ctx, $.obj);
 	}
 
 	void  jsonXOR(vm& rmvm, vm_ctx& $)
@@ -311,7 +310,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json& value = $.rel[i];
-					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.sub); i++;
+					vm_ctx ctx(value, it, value, $.ent, $.$);
+					rmvm.exec_ent(ctx, $.sub); i++;
 				}
 				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
@@ -332,7 +332,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json& value = $.rel[i];
-					rmvm.exec_ent(vm_ctx(value, it, value, $.ent, $.$), $.obj); i++;
+					vm_ctx ctx(value, it, value, $.ent, $.$);
+					rmvm.exec_ent(ctx, $.obj); i++;
 				}
 				catch (json& j) { $.throw_json(__func__, json({ {"["s + to_string(i) + "]"s, j} })); }
 			}
@@ -375,7 +376,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		{
 			json::number_integer_t	from = $.obj["from"];
 			json::number_integer_t	to = $.obj["to"];
-			json::number_integer_t	step = $.obj.count("step") ? $.obj["step"] : 1;
+			json::number_integer_t	step = $.obj.count("step") ? $.obj["step"].get<json::number_integer_t>() : 1;
 			$.sub = json::array();
 
 			for (json::number_integer_t i = from; i <= to; i += step)
@@ -693,7 +694,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 
 	void  jsonSum(vm& rmvm, vm_ctx& $)
 	{
-		__int64	isum = 0;
+		int64_t	isum = 0;
 		double	dsum = 0.0;
 
 		if ($.obj.is_array())
@@ -738,7 +739,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 			{
 				try {
 					json	boolres;
-					rmvm.exec_ent(vm_ctx(boolres, it, boolres, $.ent, $.$), $.sub);
+					vm_ctx ctx(boolres, it, boolres, $.ent, $.$);
+					rmvm.exec_ent(ctx, $.sub);
 					if (boolres.is_boolean())
 						if (boolres.get<bool>())
 							$.rel.push_back(it);	//	фильтруем
@@ -984,12 +986,14 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		//	проецируем во внешнем контексте
 		try
 		{
-			rmvm.exec_ent(vm_ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$), $.obj);
+			vm_ctx ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$);
+			rmvm.exec_ent(ctx, $.obj);
 		}
 		catch (json& j)
 		{
 			$.rel = j;
-			rmvm.exec_ent(vm_ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$), $.sub);
+			vm_ctx ctx($.rel, $.$.obj, $.$.sub, $.$.ent, $.$);
+			rmvm.exec_ent(ctx, $.sub);
 		}
 	}
 
@@ -997,13 +1001,13 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 #define define_object_method(object_method)										\
 		void  json_call_##object_method(vm& rmvm, vm_ctx& $)	\
 		{																		\
-			$.sub = $.obj.##object_method();									\
+			$.sub = $.obj.object_method();										\
 		}
 
 #define define_static_method(static_method)										\
 		void  json_call_##static_method(vm& rmvm, vm_ctx& $)	\
 		{																		\
-			$.rel = json::##static_method();									\
+			$.rel = json::static_method();										\
 		}
 
 	define_static_method(array)
@@ -1041,7 +1045,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		vm_ctx ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$);
+		rmvm.exec_ent(ctx, $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1072,7 +1077,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контекс itsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		vm_ctx ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$);
+		rmvm.exec_ent(ctx, $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1103,7 +1109,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		body += ">";
 		//	что бы выходной поток xml попадал в тоже значение $.$rel нужно исполнять в текущем контексitsV
 		json	objview;
-		rmvm.exec_ent(vm_ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$), $.obj);
+		vm_ctx ctx(objview, $.$.obj, $.$.sub, $.$.ent, $.$.$);
+		rmvm.exec_ent(ctx, $.obj);
 		if (objview.is_string()) body += objview.get_ref<string&>();
 		else                     body += objview.dump();
 		body += "</" + tag + ">";
@@ -1128,7 +1135,8 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 
 	const string&	import_relations_model_to(vm& rmvm)
 	{
-		rmvm.add_base_entity(rmvm["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
+		json& rmvm_json = static_cast<json&>(rmvm);
+		rmvm.add_base_entity(rmvm_json["sleep"], "ms"s, sleep_ms, "sleep in milliconds"s);
 		rmvm.add_base_entity(rmvm, "view"s, jsonView, "ViewEntity: View object model in parent ctx and then set subject value"s);
 		rmvm.add_base_entity(rmvm, "="s, jsonCopy, "Copy: copy object model to subject value"s);
 
@@ -1147,7 +1155,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		map_json_is_type(discarded);
 
 		//	json
-#define map_json_static_method(static_method)	rmvm.add_base_entity( rmvm["json"], #static_method, json_call_##static_method, ""s );
+#define map_json_static_method(static_method)	rmvm.add_base_entity( rmvm_json["json"], #static_method, json_call_##static_method, ""s );
 		map_json_static_method(array);
 		map_json_static_method(null);
 		map_json_static_method(meta);
@@ -1169,7 +1177,7 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		rmvm.add_base_entity(rmvm, "get"s, jsonGet, ""s);
 		rmvm.add_base_entity(rmvm, "set"s, jsonSet, ""s);
 		rmvm.add_base_entity(rmvm, "erase"s, jsonErase, "Удаляет элементы, которые соответствуют заданному ключу."s);
-		rmvm.add_base_entity(rmvm["sequence"], "integer"s, jsonIntegerSequence, ""s);
+		rmvm.add_base_entity(rmvm_json["sequence"], "integer"s, jsonIntegerSequence, ""s);
 
 		//	math
 		rmvm.add_base_entity(rmvm, "*"s, jsonMul, ""s);
@@ -1189,11 +1197,11 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		rmvm.add_base_entity(rmvm, "&&"s, jsonAnd, ""s);
 
 		//	strings
-		rmvm.add_base_entity(rmvm["string"], "="s, string_string, ""s);
-		rmvm.add_base_entity(rmvm["string"], "+="s, string_add, ""s);
-		rmvm.add_base_entity(rmvm["string"], "find"s, string_find, ""s);
-		rmvm.add_base_entity(rmvm["string"], "split"s, string_split, ""s);
-		rmvm.add_base_entity(rmvm["string"], "join"s, string_join, ""s);
+		rmvm.add_base_entity(rmvm_json["string"], "="s, string_string, ""s);
+		rmvm.add_base_entity(rmvm_json["string"], "+="s, string_add, ""s);
+		rmvm.add_base_entity(rmvm_json["string"], "find"s, string_find, ""s);
+		rmvm.add_base_entity(rmvm_json["string"], "split"s, string_split, ""s);
+		rmvm.add_base_entity(rmvm_json["string"], "join"s, string_join, ""s);
 
 		//	control
 		rmvm.add_base_entity(rmvm, "foreachobj"s, jsonForEachObject, ""s);
@@ -1205,9 +1213,9 @@ void  json##name (vm& rmvm, vm_ctx& $)															\
 		rmvm.add_base_entity(rmvm, "then"s, IfObjTrueThenExecSub, ""s);
 		rmvm.add_base_entity(rmvm, "else"s, IfObjFalseThenExecSub, "");
 		rmvm.add_base_entity(rmvm, "while"s, ExecSubWhileObjTrue, ""s);
-		rmvm.add_base_entity(rmvm["switch"], "bool"s, json_switch_bool, ""s);
-		rmvm.add_base_entity(rmvm["switch"], "number"s, json_switch_number, ""s);
-		rmvm.add_base_entity(rmvm["switch"], "string"s, json_switch_string, ""s);
+		rmvm.add_base_entity(rmvm_json["switch"], "bool"s, json_switch_bool, ""s);
+		rmvm.add_base_entity(rmvm_json["switch"], "number"s, json_switch_number, ""s);
+		rmvm.add_base_entity(rmvm_json["switch"], "string"s, json_switch_string, ""s);
 		rmvm.add_base_entity(rmvm, "throw"s, json_throw, "");
 		rmvm.add_base_entity(rmvm, "catch"s, json_catch, "Exec $obj in the parent ctx, if an exception is thrown, then it is written to the current view value and exec $sub in the parent ctx");
 

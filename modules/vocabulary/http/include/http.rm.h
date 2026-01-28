@@ -416,7 +416,8 @@ namespace rm
 		try
 		{
 			string base_uri, uri_path;
-			json const& uri = $.obj.count("URI") ? $.obj["URI"] : ""s;
+			json uri_default = ""s;
+			json const& uri = $.obj.count("URI") ? $.obj["URI"] : uri_default;
 
 			if (uri.is_string())
 			{
@@ -450,28 +451,28 @@ namespace rm
 			else if (uri.is_object())
 			{
 				if (uri.count("scheme"))
-					base_uri = uri["scheme"] + "://";
+					base_uri = uri["scheme"].get<string>() + "://";
 
 				if (uri.count("authority"))
-					base_uri += uri["authority"];
+					base_uri += uri["authority"].get<string>();
 				else
 				{	//	authority   = [ userinfo "@" ] host [ ":" port ]
 					if (uri.count("user_info"))
-						base_uri += uri["user_info"] + "@";
+						base_uri += uri["user_info"].get<string>() + "@";
 					if (uri.count("host"))
-						base_uri += uri["host"];
+						base_uri += uri["host"].get<string>();
 					if (uri.count("port"))
-						base_uri += ":" + uri["port"];
+						base_uri += ":" + uri["port"].get<string>();
 				}
 
 				if (uri.count("path"))
-					uri_path = uri["path"];
+					uri_path = uri["path"].get<string>();
 
 				if (uri.count("query"))
-					uri_path += "?" + uri["query"];
+					uri_path += "?" + uri["query"].get<string>();
 
 				if (uri.count("fragment"))
-					uri_path += "#" + uri["fragment"];
+					uri_path += "#" + uri["fragment"].get<string>();
 			}
 
 			if ($.obj.count("timeout"))
@@ -600,7 +601,7 @@ namespace rm
 	}
 
 
-	inline unsigned get_unsigned(const json& obj, const string& field, unsigned default = unsigned())
+	inline unsigned get_unsigned(const json& obj, const string& field, unsigned default_value = unsigned())
 	{
 		if (obj.count(field))
 		{
@@ -616,7 +617,7 @@ namespace rm
 			}
 		}
 
-		return default;
+		return default_value;
 	}
 
 	template<typename method>
@@ -779,10 +780,10 @@ namespace rm
 
 #define add_http_entity(method, converter_type)																					\
 	rmvm.add_base_entity(																											\
-		rmvm["http"][ methods::##method::name ],																									\
+		rmvm_json["http"][ methods::method::name ],																									\
 		string(#converter_type),																								\
-		HTTP_METHOD<application_##converter_type, methods::##method::name>,															\
-		"Calls http webapi "s + methods::##method::name + " method with "s + application_##converter_type::content_type<string>() + " content_type"s		\
+		HTTP_METHOD<application_##converter_type, methods::method::name>,															\
+		"Calls http webapi "s + methods::method::name + " method with "s + application_##converter_type::content_type<string>() + " content_type"s		\
 	);
 
 #define add_http_entites(converter_type)	\
@@ -794,14 +795,15 @@ namespace rm
 
 	const string& import_relations_model_to(vm& rmvm)
 	{
-		rmvm.add_base_entity(rmvm, "ToXML"s, jsonToXML, "");
-		//	rmvm.add_base_entity(rmvm, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
+		json& rmvm_json = static_cast<json&>(rmvm);
+		rmvm.add_base_entity(rmvm_json, "ToXML"s, jsonToXML, "");
+		//	rmvm.add_base_entity(rmvm_json, "html"s, json2html, "Entity that uses JSON templates to convert JSON objects into HTML");
 
 		add_http_entites(urlencoded);
 		add_http_entites(json);
 		add_http_entites(xml);
 
-		rmvm.add_base_entity(rmvm["http"], "service"s, http_service, "");
+		rmvm.add_base_entity(rmvm_json["http"], "service"s, http_service, "");
 
 		return vm::version;
 	}
