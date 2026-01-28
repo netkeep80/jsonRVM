@@ -1,6 +1,14 @@
 var searchData=
 [
-  ['file_5fdatabase_2eh_0',['file_database.h',['../file__database_8h.html',1,'']]],
-  ['file_5fdatabase_5ft_1',['file_database_t',['../classrm_1_1file__database__t.html',1,'rm::file_database_t'],['../classrm_1_1file__database__t.html#a4b91a915809c3cf7559affab136cce4a',1,'rm::file_database_t::file_database_t()']]],
-  ['find_2',['find',['../structrm_1_1type__pair__list.html#ac498ab27b45821d04864bf287a435780',1,'rm::type_pair_list::find'],['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html#a5c058365d1d86d8de6f343b106fcddae',1,'rm::type_pair_list&lt; key_t, first, tail... &gt;::find'],['../structrm_1_1type__map.html#abbf4ae82e81a9c97197443ce18a32c9d',1,'rm::type_map::find']]]
+  ['cтруктура_0',['Лямбда cтруктура {#}',['../md_doc_2_dictionary.html#autotoc_md38',1,'']]],
+  ['c_1',['Преобразование типов на языке C',['../md_doc_2_mathematical__definition.html#autotoc_md84',1,'']]],
+  ['callctx_2',['callctx',['../structrm_1_1callctx.html',1,'rm::callctx'],['../structrm_1_1callctx.html#a940f80a16443a17550d906c170fe8e5c',1,'rm::callctx::callctx()']]],
+  ['clarification_20выяснение_20отношения_3',['Relation clarification / Выяснение отношения',['../md_doc_2_dictionary.html#rel_clar',1,'']]],
+  ['clarification_20of_20the_20state_20of_20the_20relation_20выяснение_20состояния_20отношения_4',['Clarification of the state of the relation / Выяснение состояния отношения',['../md_doc_2_dictionary.html#clar_state',1,'']]],
+  ['commands_5',['Команды / Commands',['../md__r_e_a_d_m_e.html#autotoc_md219',1,'']]],
+  ['concepts_6',['Core Concepts',['../md__r_e_a_d_m_e.html#autotoc_md207',1,'']]],
+  ['contents_7',['Содержание / Contents',['../md__r_e_a_d_m_e.html#autotoc_md196',1,'']]],
+  ['core_20concepts_8',['Core Concepts',['../md__r_e_a_d_m_e.html#autotoc_md207',1,'']]],
+  ['cp1251_5fto_5futf8_9',['cp1251_to_utf8',['../string__utils_8h.html#a589dfcfbe4c6adc30a26ee395205c7ad',1,'string_utils.h']]],
+  ['cp1251_5fto_5fwstring_10',['cp1251_to_wstring',['../string__utils_8h.html#a2255503e795d2cb329411e02fdca66f6',1,'string_utils.h']]]
 ];

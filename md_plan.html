@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jsonRVM: План развития проекта jsonRVM</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
+  <td id="projectalign">
+   <div id="projectname">jsonRVM
+   </div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_plan.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">План развития проекта jsonRVM</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md156"></a> </p>
+<h1><a class="anchor" id="autotoc_md157"></a>
+Введение</h1>
+<p>Данный документ описывает перспективные направления развития проекта jsonRVM с точки зрения пользы для человечества. Для каждого направления определены конкретные задачи, упорядоченные по приоритету.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md159"></a>
+Направление 1: Кроссплатформенность и доступность</h1>
+<h2><a class="anchor" id="autotoc_md160"></a>
+Обоснование</h2>
+<p>Расширение доступности проекта на все основные платформы (Linux, macOS, Windows) позволит большему числу разработчиков использовать jsonRVM, что способствует распространению декларативного подхода к программированию.</p>
+<h2><a class="anchor" id="autotoc_md161"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1.1   </td><td class="markdownTableBodyNone">Реализовать кроссплатформенную загрузку динамических библиотек (dlopen/LoadLibrary)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1.2   </td><td class="markdownTableBodyNone">Заменить CP1251 на UTF-8 для файловых путей   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1.3   </td><td class="markdownTableBodyNone">Устранить Windows-специфичный код (<code>for each</code>, <code>windows.h</code>)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1.4   </td><td class="markdownTableBodyNone">Добавить CI/CD для Linux и macOS (GitHub Actions)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">1.5   </td><td class="markdownTableBodyNone">Создать пакеты для популярных менеджеров (vcpkg, conan)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">1.6   </td><td class="markdownTableBodyNone">Реализовать WebAssembly версию для браузеров   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md163"></a>
+Направление 2: Образование и обучение программированию</h1>
+<h2><a class="anchor" id="autotoc_md164"></a>
+Обоснование</h2>
+<p>Декларативный JSON-подход может стать отличным инструментом для обучения основам программирования, логического мышления и понимания концепций MVC/отношений без необходимости изучения сложного синтаксиса.</p>
+<h2><a class="anchor" id="autotoc_md165"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">2.1   </td><td class="markdownTableBodyNone">Создать интерактивный веб-редактор с визуализацией исполнения   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Высокая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">2.2   </td><td class="markdownTableBodyNone">Разработать пошаговый отладчик (step-by-step debugger)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">2.3   </td><td class="markdownTableBodyNone">Написать серию образовательных примеров (от простого к сложному)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">2.4   </td><td class="markdownTableBodyNone">Создать визуализатор дерева контекстов исполнения   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">2.5   </td><td class="markdownTableBodyNone">Разработать курс "Введение в Модель Отношений"   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">2.6   </td><td class="markdownTableBodyNone">Перевести документацию на английский язык   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">2.7   </td><td class="markdownTableBodyNone">Создать playground-среду онлайн   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md167"></a>
+Направление 3: Интеграция с искусственным интеллектом</h1>
+<h2><a class="anchor" id="autotoc_md168"></a>
+Обоснование</h2>
+<p>JSON-формат идеально подходит для интеграции с LLM (Large Language Models) и системами ИИ. jsonRVM может стать связующим звеном между генеративным ИИ и исполняемой логикой.</p>
+<h2><a class="anchor" id="autotoc_md169"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">3.1   </td><td class="markdownTableBodyNone">Разработать схему JSON Schema для валидации программ МО   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">3.2   </td><td class="markdownTableBodyNone">Создать примеры промптов для генерации программ МО через LLM   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">3.3   </td><td class="markdownTableBodyNone">Реализовать REST API для удалённого исполнения программ   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">3.4   </td><td class="markdownTableBodyNone">Добавить словарь для работы с HTTP API (fetch, GraphQL)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">3.5   </td><td class="markdownTableBodyNone">Интегрировать с LangChain/AutoGPT как исполнитель действий   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">3.6   </td><td class="markdownTableBodyNone">Разработать механизм саморедактирования программ   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md171"></a>
+Направление 4: Производительность и оптимизация</h1>
+<h2><a class="anchor" id="autotoc_md172"></a>
+Обоснование</h2>
+<p>Улучшение производительности позволит использовать jsonRVM в более требовательных сценариях: обработка больших данных, real-time системы, встроенные устройства.</p>
+<h2><a class="anchor" id="autotoc_md173"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">4.1   </td><td class="markdownTableBodyNone">Реализовать кэширование разрешённых ссылок ($ref)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">4.2   </td><td class="markdownTableBodyNone">Добавить ленивое вычисление (lazy evaluation)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">4.3   </td><td class="markdownTableBodyNone">Создать профилировщик производительности   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">4.4   </td><td class="markdownTableBodyNone">Оптимизировать работу с большими JSON-файлами (streaming)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Высокая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">4.5   </td><td class="markdownTableBodyNone">Реализовать JIT-компиляцию горячих путей   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Очень высокая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">4.6   </td><td class="markdownTableBodyNone">Добавить поддержку SIMD для массовых операций   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md175"></a>
+Направление 5: Расширение экосистемы</h1>
+<h2><a class="anchor" id="autotoc_md176"></a>
+Обоснование</h2>
+<p>Богатая экосистема библиотек и интеграций сделает jsonRVM практичным инструментом для решения реальных задач.</p>
+<h2><a class="anchor" id="autotoc_md177"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5.1   </td><td class="markdownTableBodyNone">Реализовать словарь для работы с файловой системой   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">5.2   </td><td class="markdownTableBodyNone">Добавить поддержку регулярных выражений   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5.3   </td><td class="markdownTableBodyNone">Создать словарь для работы с датой/временем   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">5.4   </td><td class="markdownTableBodyNone">Реализовать интеграцию с SQLite   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5.5   </td><td class="markdownTableBodyNone">Добавить поддержку WebSocket   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">5.6   </td><td class="markdownTableBodyNone">Создать словарь для криптографических операций   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5.7   </td><td class="markdownTableBodyNone">Реализовать интеграцию с Redis/MongoDB   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Средняя   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md179"></a>
+Направление 6: Моделирование и симуляция</h1>
+<h2><a class="anchor" id="autotoc_md180"></a>
+Обоснование</h2>
+<p>Концепция триединой сущности и модели отношений идеально подходит для моделирования сложных систем: социальных сетей, экономических моделей, экологических систем.</p>
+<h2><a class="anchor" id="autotoc_md181"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">6.1   </td><td class="markdownTableBodyNone">Создать библиотеку примитивов для агентного моделирования   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">6.2   </td><td class="markdownTableBodyNone">Реализовать визуализатор графов отношений   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">6.3   </td><td class="markdownTableBodyNone">Добавить поддержку временных рядов и симуляции   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">6.4   </td><td class="markdownTableBodyNone">Создать примеры моделирования экосистем   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">6.5   </td><td class="markdownTableBodyNone">Разработать инструменты для анализа социальных графов   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Высокая   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md183"></a>
+Направление 7: Качество и надёжность</h1>
+<h2><a class="anchor" id="autotoc_md184"></a>
+Обоснование</h2>
+<p>Повышение качества кода и документации необходимо для привлечения контрибьюторов и промышленного использования.</p>
+<h2><a class="anchor" id="autotoc_md185"></a>
+Задачи по приоритету</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">#   </th><th class="markdownTableHeadNone">Задача   </th><th class="markdownTableHeadNone">Приоритет   </th><th class="markdownTableHeadNone">Сложность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">7.1   </td><td class="markdownTableBodyNone">Добавить автоматическое тестирование (CI с unit-тестами)   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">7.2   </td><td class="markdownTableBodyNone">Исправить опечатку ENABLE_TEST/ENABLE_TESTS в CMakeLists.txt   </td><td class="markdownTableBodyNone">Высокий   </td><td class="markdownTableBodyNone">Тривиальная    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">7.3   </td><td class="markdownTableBodyNone">Внедрить clang-format для единого стиля кода   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">7.4   </td><td class="markdownTableBodyNone">Добавить статический анализ (clang-tidy, cppcheck)   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">7.5   </td><td class="markdownTableBodyNone">Реализовать fuzzing-тестирование JSON-парсера   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средняя    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">7.6   </td><td class="markdownTableBodyNone">Создать CONTRIBUTING.md с гайдлайнами   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Низкая    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">7.7   </td><td class="markdownTableBodyNone">Обновить badge-ссылки в <a class="el" href="_r_e_a_d_m_e_8md.html">README.md</a>   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Тривиальная   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md187"></a>
+Дорожная карта</h1>
+<h2><a class="anchor" id="autotoc_md188"></a>
+Фаза 1: Стабилизация (ближайшие задачи)</h2>
+<ul>
+<li>Задачи 1.1, 1.2, 1.3, 7.1, 7.2</li>
+<li>Цель: работоспособность на Linux/macOS, автотесты</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md189"></a>
+Фаза 2: Доступность (следующий этап)</h2>
+<ul>
+<li>Задачи 2.1, 2.3, 2.6, 3.1, 3.2</li>
+<li>Цель: документация на английском, образовательные материалы</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md190"></a>
+Фаза 3: Практичность (среднесрочная перспектива)</h2>
+<ul>
+<li>Задачи 5.1, 5.2, 5.3, 4.1, 3.3</li>
+<li>Цель: расширение функциональности для реальных задач</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md191"></a>
+Фаза 4: Масштабирование (долгосрочная перспектива)</h2>
+<ul>
+<li>Задачи 1.6, 3.5, 4.5, 6.1</li>
+<li>Цель: WebAssembly, AI-интеграция, высокая производительность</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md193"></a>
+Заключение</h1>
+<p>Проект jsonRVM имеет потенциал стать значимым инструментом в следующих областях:</p><ol type="1">
+<li><b>Образование</b> — обучение программированию через декларативный подход</li>
+<li><b>AI-интеграция</b> — связующее звено между LLM и исполняемой логикой</li>
+<li><b>Моделирование</b> — описание сложных систем через модель отношений</li>
+<li><b>Конфигурация</b> — декларативное описание систем и процессов</li>
+</ol>
+<p>Реализация задач из данного плана позволит раскрыть этот потенциал и принести пользу сообществу разработчиков и исследователей. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

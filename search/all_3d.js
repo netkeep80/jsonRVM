@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ь_0',['Ь',['../md_doc_2_dictionary.html#autotoc_md59',1,'']]]
+  ['щ_0',['Щ',['../md_doc_2_dictionary.html#autotoc_md56',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5fto_5fwstring_0',['_to_wstring',['../string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611',1,'string_utils.h']]]
+  ['6_3a_20моделирование_20и_20симуляция_0',['Направление 6: Моделирование и симуляция',['../md_plan.html#autotoc_md179',1,'']]]
 ];

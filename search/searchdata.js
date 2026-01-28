@@ -1,9 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "$01234:_abcdefghijklmnopqrstuvwx~абвгдежзийклмнопрстуфхцчшщъыьэюяё",
+  0: "$01234567:_abcdefghijklmnopqrstuvwx~абвгдежзийклмнопрстуфхцчшщъыьэюяё—",
   1: "bcdfijrstv",
   2: "r",
-  3: "abdfijlmrstvwп",
+  3: "abdfijlmprstvwп",
   4: "_acdefgijlmoqstuvwx~",
   5: "$dehikloprsv",
   6: "bfkmnpt",

@@ -197,12 +197,120 @@ var NAVTREE =
         [ "Заключение", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md118", null ]
       ] ]
     ] ],
+    [ "Анализ проекта jsonRVM", "md_analysis.html", [
+      [ "Обзор", "md_analysis.html#autotoc_md120", null ],
+      [ "Сильные стороны", "md_analysis.html#autotoc_md122", [
+        [ "1. Архитектурные преимущества", "md_analysis.html#autotoc_md123", [
+          [ "1.1. Декларативный подход", "md_analysis.html#autotoc_md124", null ],
+          [ "1.2. Модель триединой сущности", "md_analysis.html#autotoc_md125", null ],
+          [ "1.3. Встроенный параллелизм", "md_analysis.html#autotoc_md126", null ],
+          [ "1.4. Расширяемость", "md_analysis.html#autotoc_md127", null ]
+        ] ],
+        [ "2. Функциональные преимущества", "md_analysis.html#autotoc_md128", [
+          [ "2.1. Богатый базовый словарь", "md_analysis.html#autotoc_md129", null ],
+          [ "2.2. Гибкая адресация", "md_analysis.html#autotoc_md130", null ],
+          [ "2.3. Обработка исключений", "md_analysis.html#autotoc_md131", null ]
+        ] ],
+        [ "3. Технические преимущества", "md_analysis.html#autotoc_md132", [
+          [ "3.1. Качество кода", "md_analysis.html#autotoc_md133", null ],
+          [ "3.2. Зависимости", "md_analysis.html#autotoc_md134", null ],
+          [ "3.3. Тестирование", "md_analysis.html#autotoc_md135", null ]
+        ] ]
+      ] ],
+      [ "Слабые стороны", "md_analysis.html#autotoc_md137", [
+        [ "1. Архитектурные ограничения", "md_analysis.html#autotoc_md138", [
+          [ "1.1. Платформозависимость", "md_analysis.html#autotoc_md139", null ],
+          [ "1.2. Ограниченная глубина контекста", "md_analysis.html#autotoc_md140", null ],
+          [ "1.3. Отсутствие оптимизаций", "md_analysis.html#autotoc_md141", null ]
+        ] ],
+        [ "2. Функциональные ограничения", "md_analysis.html#autotoc_md142", [
+          [ "2.1. Неполная реализация database_api", "md_analysis.html#autotoc_md143", null ],
+          [ "2.2. Ограниченная работа со строками", "md_analysis.html#autotoc_md144", null ],
+          [ "2.3. Отсутствующие возможности", "md_analysis.html#autotoc_md145", null ]
+        ] ],
+        [ "3. Технические проблемы", "md_analysis.html#autotoc_md146", [
+          [ "3.1. Код", "md_analysis.html#autotoc_md147", null ],
+          [ "3.2. Сборка", "md_analysis.html#autotoc_md148", null ],
+          [ "3.3. Документация", "md_analysis.html#autotoc_md149", null ]
+        ] ],
+        [ "4. Безопасность", "md_analysis.html#autotoc_md150", [
+          [ "4.1. Потенциальные уязвимости", "md_analysis.html#autotoc_md151", null ]
+        ] ]
+      ] ],
+      [ "Статистика проекта", "md_analysis.html#autotoc_md153", null ],
+      [ "Заключение", "md_analysis.html#autotoc_md155", null ]
+    ] ],
+    [ "План развития проекта jsonRVM", "md_plan.html", [
+      [ "Введение", "md_plan.html#autotoc_md157", null ],
+      [ "Направление 1: Кроссплатформенность и доступность", "md_plan.html#autotoc_md159", [
+        [ "Обоснование", "md_plan.html#autotoc_md160", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md161", null ]
+      ] ],
+      [ "Направление 2: Образование и обучение программированию", "md_plan.html#autotoc_md163", [
+        [ "Обоснование", "md_plan.html#autotoc_md164", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md165", null ]
+      ] ],
+      [ "Направление 3: Интеграция с искусственным интеллектом", "md_plan.html#autotoc_md167", [
+        [ "Обоснование", "md_plan.html#autotoc_md168", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md169", null ]
+      ] ],
+      [ "Направление 4: Производительность и оптимизация", "md_plan.html#autotoc_md171", [
+        [ "Обоснование", "md_plan.html#autotoc_md172", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md173", null ]
+      ] ],
+      [ "Направление 5: Расширение экосистемы", "md_plan.html#autotoc_md175", [
+        [ "Обоснование", "md_plan.html#autotoc_md176", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md177", null ]
+      ] ],
+      [ "Направление 6: Моделирование и симуляция", "md_plan.html#autotoc_md179", [
+        [ "Обоснование", "md_plan.html#autotoc_md180", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md181", null ]
+      ] ],
+      [ "Направление 7: Качество и надёжность", "md_plan.html#autotoc_md183", [
+        [ "Обоснование", "md_plan.html#autotoc_md184", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md185", null ]
+      ] ],
+      [ "Дорожная карта", "md_plan.html#autotoc_md187", [
+        [ "Фаза 1: Стабилизация (ближайшие задачи)", "md_plan.html#autotoc_md188", null ],
+        [ "Фаза 2: Доступность (следующий этап)", "md_plan.html#autotoc_md189", null ],
+        [ "Фаза 3: Практичность (среднесрочная перспектива)", "md_plan.html#autotoc_md190", null ],
+        [ "Фаза 4: Масштабирование (долгосрочная перспектива)", "md_plan.html#autotoc_md191", null ]
+      ] ],
+      [ "Заключение", "md_plan.html#autotoc_md193", null ]
+    ] ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md119", [
-        [ "jsonRVM Documentation", "md__r_e_a_d_m_e.html#autotoc_md139", null ],
-        [ "License", "md__r_e_a_d_m_e.html#autotoc_md140", null ],
-        [ "Thanks", "md__r_e_a_d_m_e.html#autotoc_md141", null ],
-        [ "Used third-party tools", "md__r_e_a_d_m_e.html#autotoc_md142", null ]
+      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md194", [
+        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md196", null ]
+      ] ],
+      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md198", [
+        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md199", [
+          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md200", null ],
+          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md201", null ],
+          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md202", null ],
+          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md203", null ]
+        ] ]
+      ] ],
+      [ "English", "md__r_e_a_d_m_e.html#autotoc_md205", [
+        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md206", [
+          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md207", null ],
+          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md208", null ],
+          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md209", null ],
+          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md210", null ]
+        ] ],
+        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md212", [
+          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md213", null ],
+          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md214", null ],
+          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md215", null ]
+        ] ],
+        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md217", [
+          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md218", null ],
+          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md219", null ],
+          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md220", null ]
+        ] ],
+        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md222", null ],
+        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md224", null ],
+        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md226", null ],
+        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md228", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -239,8 +347,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"md_doc_2_dictionary.html#ent",
-"structrm_1_1type__pair__list.html#a7481ecc27e669381435f634b719e20b8"
+"md_doc_2_dictionary.html#ancestor_link",
+"string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['string_5ftype_2eh_0',['string_type.h',['../string__type_8h.html',1,'']]],
-  ['string_5futils_2eh_1',['string_utils.h',['../string__utils_8h.html',1,'']]]
+  ['readme_2emd_0',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['rm_2emd_1',['RM.md',['../_r_m_8md.html',1,'']]],
+  ['rmodel_2emd_2',['rmodel.md',['../rmodel_8md.html',1,'']]],
+  ['rvm_2emd_3',['RVM.md',['../_r_v_m_8md.html',1,'']]]
 ];

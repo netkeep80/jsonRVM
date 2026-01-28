@@ -1,18 +1,7 @@
 var searchData=
 [
-  ['авм_0',['AVM / АВМ',['../md_doc_2_abbreviations.html#autotoc_md15',1,'']]],
-  ['амд_1',['AMD / АМД',['../md_doc_2_abbreviations.html#autotoc_md16',1,'']]],
-  ['анализ_20виртуальной_20машины_20модели_20отношений_2',['Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md104',1,'']]],
-  ['аналогию_20с_20ооп_3',['Привести аналогию с ООП',['../md_doc_2_introduction.html#autotoc_md65',1,'']]],
-  ['аналогия_20исполнения_4',['Аналогия исполнения',['../md_doc_2_r_v_m.html#autotoc_md102',1,'']]],
-  ['архитектура_20и_20распределенные_20системы_5',['Микросервисная архитектура и распределенные системы',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md116',1,'']]],
-  ['архитектурные_20преимущества_20и_20концептуальные_20основы_6',['Архитектурные преимущества и концептуальные основы',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md105',1,'']]],
-  ['ассоциативаня_20модель_20отношений_20формата_20json_7',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]],
-  ['ассоциативная_20модель_8',['Ассоциативная Модель',['../md_doc_2_dictionary.html#autotoc_md20',1,'']]],
-  ['ассоциативная_20модель_20данных_9',['Ассоциативная Модель Данных',['../md_doc_2_dictionary.html#amd',1,'']]],
-  ['ассоциативная_20модель_20отношений_10',['Ассоциативная Модель Отношений',['../md_doc_2_dictionary.html#autotoc_md21',1,'']]],
-  ['ассоциативной_20проекции_20в_20json_11',['идеи по переходу от старой проекции МО в json к ассоциативной проекции в json',['../md_doc_2json__definition.html#autotoc_md74',1,'']]],
-  ['ассоциация_20типа_20отношения_12',['rel - ассоциация типа отношения',['../md_doc_2json__definition.html#autotoc_md67',1,'']]],
-  ['атрибутах_20и_20элементах_20сущности_3a_13',['О свойствах (атрибутах) и элементах сущности:',['../md_doc_2_r_v_m.html#autotoc_md96',1,'']]],
-  ['а_14',['А',['../md_doc_2_dictionary.html#autotoc_md24',1,'']]]
+  ['wiki_5fconcepts_2emd_0',['wiki_concepts.md',['../wiki__concepts_8md.html',1,'']]],
+  ['wstring_5fto_5f_1',['wstring_to_',['../string__utils_8h.html#a4740d9d1f20e5c6e0dcf0f113c71ce16',1,'string_utils.h']]],
+  ['wstring_5fto_5fcp1251_2',['wstring_to_cp1251',['../string__utils_8h.html#add066b89223564bc52aada71bde6a07e',1,'string_utils.h']]],
+  ['wstring_5fto_5futf8_3',['wstring_to_utf8',['../string__utils_8h.html#a58ecee3b97479b802bd9b2f43437ccc2',1,'string_utils.h']]]
 ];

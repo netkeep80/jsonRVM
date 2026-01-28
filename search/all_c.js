@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['ent_0',['ent',['../structrm_1_1vm__ctx.html#af63c3517365e954e163043b46e809885',1,'rm::vm_ctx']]],
-  ['ent_20obj_1',['1. rel = { sub, ent, obj }',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md6',1,'']]],
-  ['ent_20rel_20obj_2',['1. sub =  = { ent, rel, obj }',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md7',1,'']]],
-  ['ent_20sub_20rel_20obj_3',['ent sub rel obj',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md5',1,'0. ent = &lt;sub, rel, obj&gt;'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md10',1,'Ent = &lt;Sub, Rel, Obj&gt;']]],
-  ['eop_20соп_4',['EOP / СОП',['../md_doc_2_abbreviations.html#autotoc_md12',1,'']]],
-  ['er_20re_20os_3a_5',['2. Выделяем связи типа SO, ER, RE, OS:',['../md_doc_2_mathematical__definition.html#autotoc_md86',1,'']]],
-  ['exc_6',['exc',['../structrm_1_1callctx.html#aa704d22ad23751ead767055df5e0a912',1,'rm::callctx']]],
-  ['exec_5fent_7',['exec_ent',['../classrm_1_1vm.html#a89c7b3058c699a8b01c4953c0852c53a',1,'rm::vm::exec_ent(json &amp;rel, json &amp;ent)'],['../classrm_1_1vm.html#a485ca533acff87ec99438f68df9f4a2f',1,'rm::vm::exec_ent(vm_ctx &amp;$, json &amp;ent)']]],
-  ['execsubwhileobjtrue_8',['ExecSubWhileObjTrue',['../namespacerm.html#a2311aed65961ce3a449f4d2eb1d0a86d',1,'rm']]]
+  ['base_2erm_2eh_0',['base.rm.h',['../base_8rm_8h.html',1,'']]],
+  ['base_5fentity_1',['base_entity',['../structrm_1_1base__entity.html',1,'rm']]],
+  ['benefits_20of_20the_20jsonrvm_20project_2',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]],
+  ['binary_5fview_3',['binary_view',['../namespacerm.html#ac469421ec7c50b1fb7a3d71bd5384bfd',1,'rm']]],
+  ['binary_5fview_5fmap_5ft_4',['binary_view_map_t',['../namespacerm.html#aaa1490c3e06b36d948389de0c518965e',1,'rm']]],
+  ['bool_20node_5',['bool node',['../md_doc_2json__definition.html#autotoc_md69',1,'']]],
+  ['building_6',['Сборка / Building',['../md__r_e_a_d_m_e.html#autotoc_md217',1,'']]]
 ];

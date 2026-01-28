@@ -1,29 +1,7 @@
 var searchData=
 [
-  ['обзор_0',['Обзор',['../md__r_e_a_d_m_e.html#autotoc_md121',1,'']]],
-  ['общепринятых_20терминов_1',['Словарь общепринятых терминов',['../md_doc_2wiki__concepts.html',1,'']]],
-  ['объекта_2',['Сущность объекта',['../md_doc_2_dictionary.html#autotoc_md46',1,'']]],
-  ['объекта_20описывающего_20сущность_3',['Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность',['../md_doc_2_r_v_m.html#autotoc_md97',1,'']]],
-  ['объективация_20сущности_4',['Объективация сущности',['../md_doc_2_dictionary.html#objectification',1,'']]],
-  ['объектов_20модели_20отношений_5',['Множество кортежей - объектов Модели Отношений',['../md_doc_2_mathematical__definition.html#autotoc_md80',1,'']]],
-  ['объект_6',['объект',['../md_doc_2_dictionary.html#ctx_obj',1,'Контекстный объект'],['../md_doc_2_dictionary.html#obj',1,'Объект']]],
-  ['объект_20отношения_7',['Объект отношения',['../md_doc_2_dictionary.html#rel_obj',1,'']]],
-  ['ооп_8',['Привести аналогию с ООП',['../md_doc_2_introduction.html#autotoc_md65',1,'']]],
-  ['описывающего_20сущность_9',['Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность',['../md_doc_2_r_v_m.html#autotoc_md97',1,'']]],
-  ['оптимизации_20производительности_10',['Оптимизации производительности',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md110',1,'']]],
-  ['основы_11',['Архитектурные преимущества и концептуальные основы',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md105',1,'']]],
-  ['особенности_20реализации_12',['Особенности реализации',['../md__r_e_a_d_m_e.html#autotoc_md136',1,'']]],
-  ['отношение_13',['отношение',['../md_doc_2_dictionary.html#ctx_rel',1,'Контекстное отношение'],['../md_doc_2_dictionary.html#rel',1,'Отношение']]],
-  ['отношение_20сущности_14',['Отношение сущности',['../md_doc_2_dictionary.html#ent_rel',1,'']]],
-  ['отношений_15',['отношений',['../md_doc_2_dictionary.html#autotoc_md21',1,'Ассоциативная Модель Отношений'],['../md_doc_2_dictionary.html#rm_root',1,'Корень модели отношений'],['../md_doc_2_dictionary.html#root_ent',1,'Корневая сущность модели отношений'],['../md_doc_2_mathematical__definition.html#autotoc_md80',1,'Множество кортежей - объектов Модели Отношений'],['../md_doc_2_mathematical__definition.html#autotoc_md81',1,'Множество кортежей - отношений Модели Отношений'],['../md_doc_2_mathematical__definition.html#autotoc_md82',1,'Множество кортежей - субъектов Модели Отношений'],['../md_doc_2_mathematical__definition.html#autotoc_md79',1,'Множество кортежей - сущностей Модели Отношений'],['../md_doc_2_r_m.html',1,'Модель Отношений'],['../md_doc_2_dictionary.html#rm',1,'Модель Отношений'],['../md_doc_2_dictionary.html#autotoc_md22',1,'Модель Отношений'],['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md104',1,'Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений'],['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md107',1,'Система сущностей и отношений'],['../md__r_e_a_d_m_e.html#autotoc_md130',1,'1. Исполнение отношений']]],
-  ['отношений_20модели_20отношений_16',['Множество кортежей - отношений Модели Отношений',['../md_doc_2_mathematical__definition.html#autotoc_md81',1,'']]],
-  ['отношений_20старый_20текст_17',['Модель Отношений (старый текст)',['../md_doc_2rmodel.html',1,'']]],
-  ['отношений_20формата_20json_18',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]],
-  ['отношений_20это_20язык_20метапрограммирования_19',['Модель Отношений - это язык метапрограммирования.',['../md_doc_2_introduction.html#autotoc_md64',1,'']]],
-  ['отношений_20json_20relations_20model_20',['Язык метапрограммирования &quot;Модель Отношений&quot; (JSON Relations Model)',['../md__r_e_a_d_m_e.html#autotoc_md120',1,'']]],
-  ['отношения_21',['отношения',['../md_doc_2_dictionary.html#outter_rel_struct',1,'Внешняя структура отношения'],['../md_doc_2_dictionary.html#inner_ent_struct',1,'Внутренняя структура отношения'],['../md_doc_2_dictionary.html#rel_res',1,'Значение отношения'],['../md_doc_2_dictionary.html#rel_obj',1,'Объект отношения'],['../md_doc_2_dictionary.html#parent_ctx',1,'Родительский контекст отношения'],['../md_doc_2_dictionary.html#rel_struct',1,'Структура отношения'],['../md_doc_2_dictionary.html#ent_view',1,'Субъективация отношения'],['../md_doc_2_dictionary.html#rel_sub',1,'Субъект отношения'],['../md_doc_2_dictionary.html#rel_ent',1,'Сущность отношения'],['../md_doc_2_dictionary.html#clar_state',1,'Clarification of the state of the relation / Выяснение состояния отношения'],['../md_doc_2json__definition.html#autotoc_md67',1,'rel - ассоциация типа отношения'],['../md_doc_2_dictionary.html#rel_clar',1,'Relation clarification / Выяснение отношения']]],
-  ['отношения_20tt_20_24rel_20tt_20tt_20_24obj_20tt_20tt_20_24sub_20tt_22',['3. Отношения (&lt;tt&gt;$rel&lt;/tt&gt;, &lt;tt&gt;$obj&lt;/tt&gt;, &lt;tt&gt;$sub&lt;/tt&gt;)',['../md__r_e_a_d_m_e.html#autotoc_md126',1,'']]],
-  ['от_20старой_20проекции_20мо_20в_20json_20к_20ассоциативной_20проекции_20в_20json_23',['идеи по переходу от старой проекции МО в json к ассоциативной проекции в json',['../md_doc_2json__definition.html#autotoc_md74',1,'']]],
-  ['о_24',['О',['../md_doc_2_dictionary.html#autotoc_md41',1,'']]],
-  ['о_20свойствах_20атрибутах_20и_20элементах_20сущности_3a_25',['О свойствах (атрибутах) и элементах сущности:',['../md_doc_2_r_v_m.html#autotoc_md96',1,'']]]
+  ['лицензия_20license_0',['Лицензия / License',['../md__r_e_a_d_m_e.html#autotoc_md224',1,'']]],
+  ['лямбда_20вектор_1',['Лямбда вектор {#}',['../md_doc_2_dictionary.html#autotoc_md37',1,'']]],
+  ['лямбда_20cтруктура_2',['Лямбда cтруктура {#}',['../md_doc_2_dictionary.html#autotoc_md38',1,'']]],
+  ['л_3',['Л',['../md_doc_2_dictionary.html#autotoc_md36',1,'']]]
 ];

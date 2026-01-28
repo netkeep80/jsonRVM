@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['pair_0',['pair',['../structrm_1_1type__pair__list.html#a7481ecc27e669381435f634b719e20b8',1,'rm::type_pair_list::pair'],['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html#ae9f09fe43960d4532d912498f999d2c5',1,'rm::type_pair_list&lt; key_t, first, tail... &gt;::pair']]],
-  ['pair_5flist_1',['pair_list',['../structrm_1_1type__map.html#af7b102772e2e0d871b582c5edc05bf7c',1,'rm::type_map']]],
-  ['party_20tools_2',['Used third-party tools',['../md__r_e_a_d_m_e.html#autotoc_md142',1,'']]],
-  ['path_3',['path',['../structrm_1_1base__entity.html#afe36cc0cd16ac16716e44f5cea9aea68',1,'rm::base_entity::path'],['../structrm_1_1vm_1_1database__api__add__entity.html#ad60a8036c895e9cc969ba46ae5aa3ad0',1,'rm::vm::database_api_add_entity::path'],['../structrm_1_1vm_1_1rmvm__version.html#adb056d43d64703989ab77eec9d2c9e99',1,'rm::vm::rmvm_version::path'],['../structrm_1_1json__dump.html#a703dcf514a72b527b390e9b7c06f0e6c',1,'rm::json_dump::path'],['../structrm_1_1steady__clock.html#a01b662228b696d746f227ca2e1303696',1,'rm::steady_clock::path']]],
-  ['project_4',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]]
+  ['machine_0',['jsonRVM — json Relations (Model) Virtual Machine',['../md__r_e_a_d_m_e.html#autotoc_md194',1,'']]],
+  ['main_1',['main',['../main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main.cpp']]],
+  ['main_2ecpp_2',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['make_3',['make',['../structrm_1_1string__type__maker.html#aadf300e14a514b929f92336efe63a463',1,'rm::string_type_maker::make'],['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html#ab2a81cad92b26b805ba6172167e59c28',1,'rm::string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;::make']]],
+  ['map_5fjson_5fis_5ftype_4',['map_json_is_type',['../base_8rm_8h.html#ae0db49d5997201a16f4ca812505353bd',1,'base.rm.h']]],
+  ['map_5fjson_5fstatic_5fmethod_5',['map_json_static_method',['../base_8rm_8h.html#acd6be3e3a559bfbadd6ded87e64d3d19',1,'base.rm.h']]],
+  ['mathematical_5fdefinition_2emd_6',['Mathematical_definition.md',['../_mathematical__definition_8md.html',1,'']]],
+  ['mhmvc_7',['MHMVC',['../md_doc_2_abbreviations.html#autotoc_md17',1,'']]],
+  ['model_20virtual_20machine_8',['jsonRVM — json Relations (Model) Virtual Machine',['../md__r_e_a_d_m_e.html#autotoc_md194',1,'']]]
 ];

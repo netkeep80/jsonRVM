@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['xor_5farray_0',['xor_array',['../namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451',1,'rm']]],
-  ['xor_5fboolean_1',['xor_boolean',['../namespacerm.html#ab4f545644d118c245b1419230531b8a3',1,'rm']]],
-  ['xor_5fnumber_5ffloat_2',['xor_number_float',['../namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8',1,'rm']]],
-  ['xor_5fnumber_5finteger_3',['xor_number_integer',['../namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3',1,'rm']]],
-  ['xor_5fnumber_5funsigned_4',['xor_number_unsigned',['../namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94',1,'rm']]],
-  ['xor_5fobject_5',['xor_object',['../namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7',1,'rm']]],
-  ['xor_5fstring_6',['xor_string',['../namespacerm.html#a3aab555663930f470888fc81d8a33459',1,'rm']]]
+  ['usage_0',['Использование / Usage',['../md__r_e_a_d_m_e.html#autotoc_md222',1,'']]],
+  ['utf8_5fto_5fcp1251_1',['utf8_to_cp1251',['../string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231',1,'string_utils.h']]],
+  ['utf8_5fto_5fwstring_2',['utf8_to_wstring',['../string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12',1,'string_utils.h']]]
 ];

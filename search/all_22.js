@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['базами_20данных_0',['ORM-системы и управление базами данных',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md115',1,'']]],
-  ['базовые_20сущности_20мо_1',['Базовые сущности МО',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md4',1,'']]],
-  ['базовый_20словарь_20сущностей_2',['Базовый словарь сущностей',['../md_doc_2_dictionary.html#autotoc_md23',1,'']]],
-  ['байткод_20rvm_20_3a_3',['Семантика json значений при исполнении  (json как байткод RVM):',['../md_doc_2_r_v_m.html#autotoc_md98',1,'']]],
-  ['блоки_4',['2. Исполняемые блоки',['../md__r_e_a_d_m_e.html#autotoc_md125',1,'']]],
-  ['б_5',['Б',['../md_doc_2_dictionary.html#autotoc_md25',1,'']]]
+  ['xor_5farray_0',['xor_array',['../namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451',1,'rm']]],
+  ['xor_5fboolean_1',['xor_boolean',['../namespacerm.html#ab4f545644d118c245b1419230531b8a3',1,'rm']]],
+  ['xor_5fnumber_5ffloat_2',['xor_number_float',['../namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8',1,'rm']]],
+  ['xor_5fnumber_5finteger_3',['xor_number_integer',['../namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3',1,'rm']]],
+  ['xor_5fnumber_5funsigned_4',['xor_number_unsigned',['../namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94',1,'rm']]],
+  ['xor_5fobject_5',['xor_object',['../namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7',1,'rm']]],
+  ['xor_5fstring_6',['xor_string',['../namespacerm.html#a3aab555663930f470888fc81d8a33459',1,'rm']]]
 ];

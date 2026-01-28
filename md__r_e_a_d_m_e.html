@@ -96,136 +96,82 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
   <div class="headertitle"><div class="title">README</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a href="https://gitpod.io/#https://github.com/netkeep80/jsonrvm"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code" class="inline"/></a> <a href="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish?label=Publish%20Doxygen%20to%20gh-pages" alt="GitHub Workflow Status" class="inline"/></a></p>
-<p><a href="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml"><img src="https://img.shields.io/github/workflow/status/netkeep80/jsonRVM/publish" alt="GitHub Workflow Status" class="inline"/></a> <img src="https://img.shields.io/github/last-commit/netkeep80/jsonRVM" alt="GitHub last commit" class="inline"/> <a href="https://github.com/netkeep80/jsonRVM/blob/master/LICENSE"><img src="https://img.shields.io/github/license/netkeep80/jsonRVM" alt="GitHub" class="inline"/></a></p>
+<div class="textblock"><p><a href="https://gitpod.io/#https://github.com/netkeep80/jsonrvm"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code" class="inline"/></a> <a href="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml"><img src="https://github.com/netkeep80/jsonRVM/actions/workflows/publish.yml/badge.svg" alt="GitHub Actions" style="pointer-events: none;" class="inline"/></a> <img src="https://img.shields.io/github/last-commit/netkeep80/jsonRVM" alt="GitHub last commit" class="inline"/> <a href="https://github.com/netkeep80/jsonRVM/blob/master/LICENSE.MIT"><img src="https://img.shields.io/github/license/netkeep80/jsonRVM" alt="GitHub" class="inline"/></a></p>
 <p align="center"></p>
 <p><img src="rm_view.jpg" alt="" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md119"></a>
-json Relations (Model) Virtual Machine</h1>
+<h1><a class="anchor" id="autotoc_md194"></a>
+jsonRVM — json Relations (Model) Virtual Machine</h1>
 <div class="fragment"><div class="line">        R</div>
 <div class="line">     S__|__O</div>
 <div class="line">   O   _|_   S     Fractal</div>
 <div class="line">R__|__/_|_\__|__R  Triune</div>
 <div class="line">   |  \_|_/  |     Entity</div>
-<div class="line">   S    |    O     </div>
+<div class="line">   S    |    O</div>
 <div class="line">      __|__</div>
 <div class="line">     /  |  \</div>
 <div class="line">    /___|___\</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md120"></a>
-Язык метапрограммирования "Модель Отношений" (JSON Relations Model)</h3>
-<h4><a class="anchor" id="autotoc_md121"></a>
-Обзор</h4>
-<p>Язык "Модель Отношений" (Relations Model, RM) — это декларативный DSL (Domain-Specific Language), ориентированный на описание сложных систем через иерархию сущностей и их отношений. Программы представляются в виде JSON-структур, которые исполняются виртуальной машиной RMVM. Ключевые особенности:</p>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md196"></a>
+Содержание / Contents</h2>
+<ul>
+<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Русский</a></li>
+<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">English</a></li>
+<li><a class="el" href="string__utils_8h.html#a7260675c2e16e0a11fed1b0d0e926611">Документация / Documentation</a></li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md198"></a>
+Русский</h1>
+<h2><a class="anchor" id="autotoc_md199"></a>
+Описание</h2>
+<p><b>jsonRVM</b> — это виртуальная машина для исполнения программ, написанных на декларативном языке **"Модель Отношений"** (Relations Model, RM). Программы представляются в формате JSON и интерпретируются виртуальной машиной как байткод.</p>
+<h3><a class="anchor" id="autotoc_md200"></a>
+Основные концепции</h3>
+<p><b>Модель Отношений</b> — это язык метапрограммирования, где всё представляется как сущности и их отношения:</p>
 <ol type="1">
-<li><b>Сущности (Entities)</b> <br  />
- Базовые элементы системы, описываемые JSON-объектами. Могут быть:<ul>
-<li>Примитивами: <code>числа</code>, <code>строки</code>, <code>булевы значения</code>.</li>
-<li>Составными типами: <code>массивы</code>, <code>объекты</code>.</li>
-<li>Ссылками: <code>$ref</code> на другие сущности.</li>
-<li>Исполняемыми конструкциями: <code>$rel</code>, <code>$obj</code>, <code>$sub</code>.</li>
+<li><b>Сущности (Entities)</b> — базовые элементы системы в виде JSON-объектов:<ul>
+<li>Примитивы: числа, строки, булевы значения</li>
+<li>Составные типы: массивы, объекты</li>
+<li>Ссылки: <code>$ref</code> на другие сущности</li>
+<li>Исполняемые конструкции: <code>$rel</code>, <code>$obj</code>, <code>$sub</code></li>
 </ul>
 </li>
-<li><b>Отношения (Relations)</b> <br  />
- Определяют правила взаимодействия между сущностями. Примеры:<ul>
-<li><b>Создание сущности</b>: <code>add_entity</code>.</li>
-<li><b>Загрузка словарей</b>: <code>load/dll</code>.</li>
-<li><b>Параллельные вычисления</b>.</li>
+<li><b>Отношения (Relations)</b> — определяют взаимодействие между сущностями:<ul>
+<li><code>$rel</code> — отношение (контроллер)</li>
+<li><code>$obj</code> — объект (входные данные)</li>
+<li><code>$sub</code> — субъект (результат)</li>
 </ul>
 </li>
-<li><b>Контексты (Contexts)</b> <br  />
- Каждое отношение исполняется в контексте, который включает:<ul>
-<li><code>$ent</code> — текущая сущность.</li>
-<li><code>$rel</code> — исполняемое отношение.</li>
-<li><code>$obj</code> — объект отношения (входные данные).</li>
-<li><code>$sub</code> — субъект отношения (результат).</li>
+<li><b>Контексты (Contexts)</b> — иерархия исполнения с доступом к:<ul>
+<li><code>$ent</code> — текущая сущность</li>
+<li><code>$rel</code> — текущее отношение</li>
+<li><code>$obj</code> — текущий объект</li>
+<li><code>$sub</code> — текущий субъект</li>
 </ul>
 </li>
 </ol>
-<hr  />
-<h3><a class="anchor" id="autotoc_md123"></a>
-Синтаксис и Конструкции</h3>
-<h4><a class="anchor" id="autotoc_md124"></a>
-1. Ссылки (&lt;tt&gt;$ref&lt;/tt&gt;)</h4>
-<p>Позволяют обращаться к другим сущностям по JSON-пути: </p><div class="fragment"><div class="line">{</div>
-<div class="line">  &quot;action&quot;: { &quot;$ref&quot;: &quot;/entities/user&quot; }</div>
-<div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md125"></a>
-2. Исполняемые блоки</h4>
+<h3><a class="anchor" id="autotoc_md201"></a>
+Ключевые особенности</h3>
 <ul>
-<li><b>Последовательное выполнение</b> (массивы): <div class="fragment"><div class="line">[</div>
-<div class="line">  { &quot;$rel&quot;: &quot;step1&quot; },</div>
-<div class="line">  { &quot;$rel&quot;: &quot;step2&quot; }</div>
-<div class="line">]</div>
-</div><!-- fragment --></li>
-<li><b>Параллельное выполнение</b> (объекты): <div class="fragment"><div class="line">{</div>
-<div class="line">  &quot;task1&quot;: { &quot;$rel&quot;: &quot;process_data&quot; },</div>
-<div class="line">  &quot;task2&quot;: { &quot;$rel&quot;: &quot;validate_data&quot; }</div>
-<div class="line">}</div>
-</div><!-- fragment --></li>
+<li><b>Декларативный подход</b> — описание <em>что</em> делать, а не <em>как</em></li>
+<li><b>Автоматический параллелизм</b> — объекты исполняются параллельно, массивы — последовательно</li>
+<li><b>Гомоиконичность</b> — код и данные имеют одинаковую JSON-структуру</li>
+<li><b>Расширяемость</b> — поддержка плагинов через DLL-библиотеки</li>
+<li><b>Рефлексия</b> — программы могут анализировать и модифицировать себя</li>
 </ul>
-<h4><a class="anchor" id="autotoc_md126"></a>
-3. Отношения (&lt;tt&gt;$rel&lt;/tt&gt;, &lt;tt&gt;$obj&lt;/tt&gt;, &lt;tt&gt;$sub&lt;/tt&gt;)</h4>
-<div class="fragment"><div class="line">{</div>
-<div class="line">  &quot;$rel&quot;: &quot;add_entity&quot;,</div>
-<div class="line">  &quot;$obj&quot;: {</div>
-<div class="line">    &quot;type&quot;: &quot;user&quot;,</div>
-<div class="line">    &quot;name&quot;: &quot;Alice&quot;</div>
-<div class="line">  },</div>
-<div class="line">  &quot;$sub&quot;: &quot;$ent/new_user_id&quot;</div>
-<div class="line">}</div>
-</div><!-- fragment --><ul>
-<li><code>$rel</code> — имя отношения.</li>
-<li><code>$obj</code> — входные данные.</li>
-<li><code>$sub</code> — куда сохранить результат.</li>
-</ul>
-<h4><a class="anchor" id="autotoc_md127"></a>
-4. Импорт словарей</h4>
-<p>Загрузка внешних модулей через DLL: </p><div class="fragment"><div class="line">{</div>
-<div class="line">  &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
-<div class="line">  &quot;$obj&quot;: {</div>
-<div class="line">    &quot;PathFolder&quot;: &quot;libs/&quot;,</div>
-<div class="line">    &quot;FileName&quot;: &quot;math_operations.dll&quot;</div>
-<div class="line">  }</div>
-<div class="line">}</div>
-</div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md129"></a>
-Семантика</h3>
-<h4><a class="anchor" id="autotoc_md130"></a>
-1. Исполнение отношений</h4>
-<ul>
-<li><b>Рекурсивная обработка</b>: VM рекурсивно обходит JSON-структуру, применяя отношения.</li>
-<li><b>Автоматическое распараллеливание</b>: Объекты исполняют свои ключи параллельно.</li>
-<li><b>Обработка ошибок</b>: Исключения включают контекст (сущность, отношение, путь).</li>
-</ul>
-<h4><a class="anchor" id="autotoc_md131"></a>
-2. Работа с данными</h4>
-<ul>
-<li><b>Динамическое разрешение ссылок</b>: <code>$ref</code> вычисляются в рантайме.</li>
-<li><b>Потокобезопасность</b>: Мьютексы защищают доступ к общим данным.</li>
-<li><b>Сериализация</b>: Сущности сохраняются в JSON-файлы через <code>file_database_t</code>.</li>
-</ul>
-<h4><a class="anchor" id="autotoc_md132"></a>
-3. Расширяемость</h4>
-<ul>
-<li><b>Внешние библиотеки</b>: DLL с функциями вида <code>import_relations_model_to</code>.</li>
-<li><b>Базовые сущности</b>: Встроенные отношения (<code>version</code>, <code>add_entity</code>).</li>
-</ul>
-<hr  />
-<h3><a class="anchor" id="autotoc_md134"></a>
+<h3><a class="anchor" id="autotoc_md202"></a>
 Пример программы</h3>
 <div class="fragment"><div class="line">{</div>
-<div class="line">  &quot;schema&quot;: {</div>
-<div class="line">    &quot;$rel&quot;: &quot;add_entity&quot;,</div>
-<div class="line">    &quot;$obj&quot;: {</div>
-<div class="line">      &quot;name&quot;: &quot;Пример системы&quot;,</div>
-<div class="line">      &quot;components&quot;: [</div>
-<div class="line">        { &quot;$ref&quot;: &quot;/entities/logger&quot; },</div>
-<div class="line">        { &quot;$ref&quot;: &quot;/entities/database&quot; }</div>
-<div class="line">      ]</div>
-<div class="line">    },</div>
-<div class="line">    &quot;$sub&quot;: &quot;$ent/system_id&quot;</div>
-<div class="line">  },</div>
-<div class="line">  &quot;init&quot;: [</div>
+<div class="line">  &quot;$rel/result&quot;: {</div>
+<div class="line">    &quot;$obj&quot;: 1,</div>
+<div class="line">    &quot;$rel&quot;: &quot;+&quot;,</div>
+<div class="line">    &quot;$sub&quot;: 1</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Результат: <code>result = 2</code></p>
+<h3><a class="anchor" id="autotoc_md203"></a>
+Более сложный пример</h3>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$rel&quot;: [</div>
 <div class="line">    {</div>
 <div class="line">      &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
 <div class="line">      &quot;$obj&quot;: {</div>
@@ -234,55 +180,173 @@ json Relations (Model) Virtual Machine</h1>
 <div class="line">      }</div>
 <div class="line">    },</div>
 <div class="line">    {</div>
-<div class="line">      &quot;$rel&quot;: &quot;network/connect&quot;,</div>
-<div class="line">      &quot;$obj&quot;: { &quot;url&quot;: &quot;https://api.example.com&quot; }</div>
+<div class="line">      &quot;$rel&quot;: &quot;add_entity&quot;,</div>
+<div class="line">      &quot;$obj&quot;: {</div>
+<div class="line">        &quot;name&quot;: &quot;Пример системы&quot;,</div>
+<div class="line">        &quot;components&quot;: [</div>
+<div class="line">          { &quot;$ref&quot;: &quot;/entities/logger&quot; },</div>
+<div class="line">          { &quot;$ref&quot;: &quot;/entities/database&quot; }</div>
+<div class="line">        ]</div>
+<div class="line">      },</div>
+<div class="line">      &quot;$sub&quot;: &quot;$ent/system_id&quot;</div>
 <div class="line">    }</div>
 <div class="line">  ]</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md136"></a>
-Особенности реализации</h3>
+<h1><a class="anchor" id="autotoc_md205"></a>
+English</h1>
+<h2><a class="anchor" id="autotoc_md206"></a>
+Description</h2>
+<p><b>jsonRVM</b> is a virtual machine for executing programs written in the declarative **"Relations Model"** (RM) language. Programs are represented in JSON format and interpreted by the virtual machine as bytecode.</p>
+<h3><a class="anchor" id="autotoc_md207"></a>
+Core Concepts</h3>
+<p><b>Relations Model</b> is a metaprogramming language where everything is represented as entities and their relations:</p>
+<ol type="1">
+<li><b>Entities</b> — basic system elements as JSON objects:<ul>
+<li>Primitives: numbers, strings, booleans</li>
+<li>Compound types: arrays, objects</li>
+<li>References: <code>$ref</code> to other entities</li>
+<li>Executable constructs: <code>$rel</code>, <code>$obj</code>, <code>$sub</code></li>
+</ul>
+</li>
+<li><b>Relations</b> — define interactions between entities:<ul>
+<li><code>$rel</code> — relation (controller)</li>
+<li><code>$obj</code> — object (input data)</li>
+<li><code>$sub</code> — subject (result)</li>
+</ul>
+</li>
+<li><b>Contexts</b> — execution hierarchy with access to:<ul>
+<li><code>$ent</code> — current entity</li>
+<li><code>$rel</code> — current relation</li>
+<li><code>$obj</code> — current object</li>
+<li><code>$sub</code> — current subject</li>
+</ul>
+</li>
+</ol>
+<h3><a class="anchor" id="autotoc_md208"></a>
+Key Features</h3>
 <ul>
-<li><b>Компиляция строк</b>: Макросы <code>SWITCH</code>/<code>CASE</code> используют хеширование для эффективного сравнения строк.</li>
-<li><b>Кодировки</b>: Поддержка CP1251 и UTF-8 через функции преобразования.</li>
-<li><b>Многопоточность</b>: <code>std::mutex</code> и <code>std::lock_guard</code> для синхронизации.</li>
+<li><b>Declarative approach</b> — describe <em>what</em> to do, not <em>how</em></li>
+<li><b>Automatic parallelism</b> — objects execute in parallel, arrays — sequentially</li>
+<li><b>Homoiconicity</b> — code and data share the same JSON structure</li>
+<li><b>Extensibility</b> — plugin support via DLL libraries</li>
+<li><b>Reflection</b> — programs can analyze and modify themselves</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md209"></a>
+Example Program</h3>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$rel/result&quot;: {</div>
+<div class="line">    &quot;$obj&quot;: 1,</div>
+<div class="line">    &quot;$rel&quot;: &quot;+&quot;,</div>
+<div class="line">    &quot;$sub&quot;: 1</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Result: <code>result = 2</code></p>
+<h3><a class="anchor" id="autotoc_md210"></a>
+Advanced Example</h3>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$rel&quot;: [</div>
+<div class="line">    {</div>
+<div class="line">      &quot;$rel&quot;: &quot;rmvm/load/dll&quot;,</div>
+<div class="line">      &quot;$obj&quot;: {</div>
+<div class="line">        &quot;PathFolder&quot;: &quot;modules/&quot;,</div>
+<div class="line">        &quot;FileName&quot;: &quot;network.dll&quot;</div>
+<div class="line">      }</div>
+<div class="line">    },</div>
+<div class="line">    {</div>
+<div class="line">      &quot;$rel&quot;: &quot;add_entity&quot;,</div>
+<div class="line">      &quot;$obj&quot;: {</div>
+<div class="line">        &quot;name&quot;: &quot;Example system&quot;,</div>
+<div class="line">        &quot;components&quot;: [</div>
+<div class="line">          { &quot;$ref&quot;: &quot;/entities/logger&quot; },</div>
+<div class="line">          { &quot;$ref&quot;: &quot;/entities/database&quot; }</div>
+<div class="line">        ]</div>
+<div class="line">      },</div>
+<div class="line">      &quot;$sub&quot;: &quot;$ent/system_id&quot;</div>
+<div class="line">    }</div>
+<div class="line">  ]</div>
+<div class="line">}</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md212"></a>
+Документация / Documentation</h2>
+<h3><a class="anchor" id="autotoc_md213"></a>
+Анализ и планирование / Analysis and Planning</h3>
+<ul>
+<li><a class="el" href="md_analysis.html">**analysis.md**</a> — Анализ текущего состояния проекта (сильные и слабые стороны) / Project analysis (strengths and weaknesses)</li>
+<li><a class="el" href="md_plan.html">**plan.md**</a> — План развития проекта / Development roadmap</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md214"></a>
+Техническая документация / Technical Documentation</h3>
+<ul>
+<li><a href="https://netkeep80.github.io/jsonRVM/"><b>Doxygen документация</b></a> — Автогенерируемая документация API</li>
+<li><a class="el" href="md_doc_2_introduction.html">**doc/Introduction.md**</a> — Введение в Модель Отношений</li>
+<li><a class="el" href="md_doc_2_r_v_m.html">**doc/RVM.md**</a> — Описание виртуальной машины</li>
+<li><a class="el" href="md_doc_2_r_m.html">**doc/RM.md**</a> — Формальное описание Модели Отношений</li>
+<li><a class="el" href="md_doc_2_dictionary.html">**doc/Dictionary.md**</a> — Словарь базовых операций</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md215"></a>
+Примеры / Examples</h3>
+<ul>
+<li><a href="examples/"><b>examples/</b></a> — Примеры программ на Модели Отношений</li>
 </ul>
 <hr  />
-<h3><a class="anchor" id="autotoc_md138"></a>
-Типичные сценарии использования</h3>
-<ol type="1">
-<li><b>ORM-системы</b>: Динамическое создание сущностей БД.</li>
-<li><b>Микросервисы</b>: Параллельное выполнение задач.</li>
-<li><b>Конфигурация систем</b>: Иерархическое описание компонентов.</li>
-<li><b>Плагины</b>: Загрузка внешних модулей через DLL.</li>
-</ol>
-<p>Этот язык позволяет описывать сложные системы в декларативном стиле, абстрагируясь от низкоуровневых деталей, что делает его удобным для моделирования бизнес-логики и распределённых систем.</p>
-<h2><a class="anchor" id="autotoc_md139"></a>
-jsonRVM Documentation</h2>
-<p><a href="https://netkeep80.github.io/jsonRVM/">By Doxygen on russian.</a></p>
-<h2><a class="anchor" id="autotoc_md140"></a>
-License</h2>
-<p><img src="https://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="" align="right" class="inline"/></p>
-<p>The class is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>:</p>
-<p>Copyright &copy; 2016-2021 <a href="https://vk.com/earthbirthbook">Vertushkin Roman Pavlovich</a></p>
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-<h2><a class="anchor" id="autotoc_md141"></a>
-Thanks</h2>
-<p>I deeply appreciate the help of the following people.</p>
+<h2><a class="anchor" id="autotoc_md217"></a>
+Сборка / Building</h2>
+<h3><a class="anchor" id="autotoc_md218"></a>
+Требования / Requirements</h3>
 <ul>
-<li><a href="https://github.com/vmuravyev">Vladimir Muravyev</a> helped to develop the terminological apparatus of the Relations Model.</li>
+<li>CMake 3.20+</li>
+<li>C++17 compatible compiler</li>
+<li>Windows (для поддержки DLL / for DLL support)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md142"></a>
-Used third-party tools</h2>
-<p>jsonRVM using the following third-party tools. Thanks a lot!</p>
+<h3><a class="anchor" id="autotoc_md219"></a>
+Команды / Commands</h3>
+<div class="fragment"><div class="line">mkdir build &amp;&amp; cd build</div>
+<div class="line">cmake ..</div>
+<div class="line">cmake --build .</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md220"></a>
+Запуск тестов / Running Tests</h3>
+<div class="fragment"><div class="line">cmake -DENABLE_TESTS=ON ..</div>
+<div class="line">cmake --build .</div>
+<div class="line">ctest</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md222"></a>
+Использование / Usage</h2>
+<div class="fragment"><div class="line"># Показать справку / Show help</div>
+<div class="line">rmvm.exe</div>
+<div class="line"> </div>
+<div class="line"># Исполнить JSON-программу / Execute JSON program</div>
+<div class="line">rmvm.exe program.json</div>
+<div class="line"> </div>
+<div class="line"># Загрузить DLL-словарь / Load DLL vocabulary</div>
+<div class="line">rmvm.exe vocabulary.dll</div>
+<div class="line"> </div>
+<div class="line"># Показать базовый словарь / Show base vocabulary</div>
+<div class="line">rmvm.exe rmvm.exe</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md224"></a>
+Лицензия / License</h2>
+<p><img src="https://opensource.org/trademarks/opensource/OSI-Approved-License-100x137.png" alt="" align="right" class="inline"/></p>
+<p>Проект лицензирован под <a href="https://opensource.org/licenses/MIT">MIT License</a>:</p>
+<p>Copyright &copy; 2016-2021 <a href="https://vk.com/earthbirthbook">Vertushkin Roman Pavlovich</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<hr  />
+<h2><a class="anchor" id="autotoc_md226"></a>
+Благодарности / Thanks</h2>
 <ul>
-<li><a href="https://github.com/nlohmann/json"><b>JSON for Modern C++</b></a> for load/exec/unload json view of Relations Model</li>
-<li><a href="https://github.com/onqtam/doctest"><b>The fastest feature-rich C++ single-header testing framework</b></a> for unit testing of Relations (Model) Virtual Machine</li>
-<li><a href="https://github.com/yhirose/cpp-httplib"><b>A C++11 single-file header-only cross platform HTTP/HTTPS library</b></a> for writing http base vocabulary for Relations (Model) Virtual Machine</li>
-<li><a href="https://github.com/Cheedoong/xml2json"><b>xml2json is a header-only C++ library</b></a> for writing http base vocabulary for Relations (Model) Virtual Machine</li>
-<li><a href="https://github.com/Efrit/str_switch"><b>Switch for strings in C++11</b></a> for writing fast switch for Relations (Model) Virtual Machine </li>
+<li><a href="https://github.com/vmuravyev">Vladimir Muravyev</a> — помощь в разработке терминологического аппарата Модели Отношений</li>
+</ul>
+<hr  />
+<h2><a class="anchor" id="autotoc_md228"></a>
+Используемые библиотеки / Third-party Libraries</h2>
+<ul>
+<li><a href="https://github.com/nlohmann/json"><b>JSON for Modern C++</b></a> — работа с JSON</li>
+<li><a href="https://github.com/onqtam/doctest"><b>doctest</b></a> — unit-тестирование</li>
+<li><a href="https://github.com/yhirose/cpp-httplib"><b>cpp-httplib</b></a> — HTTP/HTTPS клиент и сервер</li>
+<li><a href="https://github.com/Cheedoong/xml2json"><b>xml2json</b></a> — конвертация XML в JSON</li>
+<li><a href="https://github.com/Efrit/str_switch"><b>str_switch</b></a> — switch для строк </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
