@@ -1,7 +1,11 @@
 #pragma once
+#include <stdexcept>
+#include <string>
+#include <typeinfo>
 
 namespace rm
 {
+	using namespace std::literals;
 	/**
 	 * @class interface_t
 	 * @brief Базовый шаблонный класс для реализации статического полиморфизма через CRTP
@@ -52,7 +56,7 @@ namespace rm
 			if (__link)
 				return *__link;
 			else
-				throw runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
+				throw std::runtime_error("Method interface not implemented or interface_t<"s + typeid(implementation_t).name() + "> not linked"s);
 		}
 	};
 }

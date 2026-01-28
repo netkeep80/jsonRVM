@@ -32,16 +32,25 @@ SOFTWARE.
 */
 #pragma once
 #include "vm.rm.h"
+
+#ifdef _WIN32
 #include "windows.h"
 #include "string_utils.h"
+#else
+#include <dlfcn.h>
+#endif
 
 namespace rm
 {
-	//	Поддержка загрузки DLL
+	//	Поддержка загрузки DLL / shared libraries
 
 	struct DLL
 	{
+#ifdef _WIN32
 		HMODULE handle;
+#else
+		void* handle;
+#endif
 		InitDict Init;
 		DLL() : handle(nullptr), Init(nullptr) {}
 	};
@@ -51,16 +60,16 @@ namespace rm
 	 * @brief Менеджер загрузки и управления DLL-библиотеками для расширения функционала RVM
 	 *
 	 * Класс обеспечивает:
-	 * - Динамическую загрузку/выгрузку DLL
+	 * - Динамическую загрузку/выгрузку DLL (Windows) / shared libraries (Linux)
 	 * - Кэширование загруженных модулей
 	 * - Автоматическую очистку ресурсов при разрушении объекта
 	 * - Поиск точек входа в словари отношений
 	 *
 	 * Особенности:
-	 * - Использует Windows API для работы с DLL (LoadLibrary/FreeLibrary)
+	 * - Использует Windows API (LoadLibrary/FreeLibrary) или POSIX (dlopen/dlclose)
 	 * - Хранит хэндлы и функции инициализации в map-структуре
 	 * - Генерирует JSON-исключения при ошибках загрузки
-	 * - Поддерживает кодировку UTF-8 для путей к библиотекам
+	 * - Поддерживает кодировку UTF-8 для путей к библиотекам (Windows)
 	 *
 	 * @warning Все операции потокобезопасны только если внешний код синхронизирует доступ
 	 *
@@ -77,10 +86,14 @@ namespace rm
 		DLLs() = default;
 		~DLLs()
 		{
-			for each (auto dll in *this)
+			for (auto& dll : *this)
 				if (dll.second.handle)
 				{
+#ifdef _WIN32
 					FreeLibrary(dll.second.handle);
+#else
+					dlclose(dll.second.handle);
+#endif
 					dll.second.handle = nullptr;
 					dll.second.Init = nullptr;
 				}
@@ -95,18 +108,31 @@ namespace rm
 			if (!it[LibName].handle)
 			{
 				//	перезагружаем либу
+#ifdef _WIN32
 				it[LibName].handle = LoadLibrary(utf8_to_wstring(LibName).c_str());
+#else
+				it[LibName].handle = dlopen(LibName.c_str(), RTLD_LAZY);
+#endif
 
 				if (it[LibName].handle)
 				{
+#ifdef _WIN32
 					(FARPROC &)it[LibName].Init = GetProcAddress(it[LibName].handle, IMPORT_RELATIONS_MODEL);
+#else
+					it[LibName].Init = reinterpret_cast<InitDict>(dlsym(it[LibName].handle, IMPORT_RELATIONS_MODEL));
+#endif
 					if (!it[LibName].Init)
 						throw json({{__func__, LibName + " does't has function "s + IMPORT_RELATIONS_MODEL}});
 				}
 				else
 				{
 					it[LibName].Init = nullptr;
+#ifdef _WIN32
 					throw json({{__func__, "can't load '" + LibName + "' dictionary"s}});
+#else
+					const char* err = dlerror();
+					throw json({{__func__, "can't load '" + LibName + "' dictionary: "s + (err ? err : "unknown error")}});
+#endif
 				}
 			}
 		}
@@ -180,7 +206,8 @@ namespace rm
 
 	const string &ImportLoadDLLEntity(vm &rmvm)
 	{
-		json &ent = rmvm.add_base_entity(rmvm["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
+		json& rmvm_json = static_cast<json&>(rmvm);
+		json &ent = rmvm.add_base_entity(rmvm_json["rmvm"]["load"], "dll"s, jsonLoadDLL, "Loads compiled entity vocabulary from dll library");
 		ent["$obj"] = json::object();
 		ent["$obj"]["PathFolder"] = "input: string with path to compiled to dll vocabulary";
 		ent["$obj"]["FileName"] = "input: string with filename of compiled to dll vocabulary";

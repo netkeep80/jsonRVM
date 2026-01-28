@@ -45,12 +45,18 @@ namespace rm
 	using namespace nlohmann;
 
 	class vm;
-	//	64 bit
-#ifdef WIN32
+
+	// Function pointer type for dictionary initialization
+	typedef const string &(*InitDict)(vm &rmvm);
+
+#ifdef _WIN32
+	//	64 bit Windows
 #define IMPORT_RELATIONS_MODEL "?import_relations_model_to@rm@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAVvm@1@@Z"
 	__declspec(dllexport) const string &import_relations_model_to(vm &rmvm);
-	typedef const string &(*InitDict)(vm &rmvm);
 	static InitDict You_must_define_import_relations_model_to_function_in_your_RM_dictionary = import_relations_model_to;
+#else
+	// Linux/POSIX - use C linkage for symbol lookup
+#define IMPORT_RELATIONS_MODEL "import_relations_model_to"
 #endif
 
 	/**
@@ -392,9 +398,8 @@ namespace rm
 		{
 			try
 			{
-				it.rvm.exec_ent(
-					vm_ctx(it.rel, it.$.obj, it.$.sub, it.$.ent, it.$.$),
-					it.rvm.val_or_ref_to<rval>(it.$, it.value));
+				vm_ctx ctx(it.rel, it.$.obj, it.$.sub, it.$.ent, it.$.$);
+				it.rvm.exec_ent(ctx, it.rvm.val_or_ref_to<rval>(it.$, it.value));
 			}
 			catch (json &j)
 			{
@@ -549,14 +554,13 @@ namespace rm
 
 						try
 						{
-							exec_ent(
-								vm_ctx(
-									$.rel,
-									obj == end ? $.rel : val_or_ref_to<rval>($, *obj),
-									sub == end ? $.rel : val_or_ref_to<lval>($, *sub),
-									ent,
-									$),
-								val_or_ref_to<rval>($, *rel));
+							vm_ctx ctx(
+								$.rel,
+								obj == end ? $.rel : val_or_ref_to<rval>($, *obj),
+								sub == end ? $.rel : val_or_ref_to<lval>($, *sub),
+								ent,
+								$);
+							exec_ent(ctx, val_or_ref_to<rval>($, *rel));
 						}
 						catch (json &j)
 						{
@@ -612,7 +616,7 @@ namespace rm
 		template <class base_entity_t = base_entity>
 		vm &operator<<(const base_entity_t &bent)
 		{
-			json &ent = (*this)[bent.path] = {{"description", bent.description}};
+			json &ent = static_cast<json &>(*this)[bent.path] = {{"description", bent.description}};
 			static_cast<binary_view_map_t &>(*this)[&(ent)] = base_entity_t::view;
 			return *this;
 		}
