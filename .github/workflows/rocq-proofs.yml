@@ -6,11 +6,13 @@ on:
       - master
     paths:
       - 'proofs/rocq/**'
+      - '.github/workflows/rocq-proofs.yml'
   pull_request:
     branches:
       - master
     paths:
       - 'proofs/rocq/**'
+      - '.github/workflows/rocq-proofs.yml'
   workflow_dispatch:
 
 jobs:
