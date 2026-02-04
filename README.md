@@ -200,6 +200,12 @@ Result: `result = 2`
 - [**doc/RM.md**](doc/RM.md) — Формальное описание Модели Отношений
 - [**doc/Dictionary.md**](doc/Dictionary.md) — Словарь базовых операций
 
+### Математическая модель / Mathematical Model
+
+- [**doc/relations-model-ru.md**](doc/relations-model-ru.md) — Математическое описание Модели Отношений в терминах теории множеств (Russian)
+- [**doc/relations-model-en.md**](doc/relations-model-en.md) — Mathematical description of Relations Model in set theory terms (English)
+- [**proofs/rocq/**](proofs/rocq/) — Формальная верификация на языке Rocq/Coq / Formal verification in Rocq/Coq
+
 ### Примеры / Examples
 
 - [**examples/**](examples/) — Примеры программ на Модели Отношений
