@@ -32,11 +32,10 @@ jobs:
         with:
           coq_version: ${{ matrix.coq-version }}
           ocaml_version: '4.14-flambda'
-          before_script: |
+          custom_script: |
             startGroup "Workaround permission issue"
             sudo chown -R coq:coq .
             endGroup
-          custom_script: |
             startGroup "Build Relations Model proofs"
             cd proofs/rocq
             coqc -Q . RelationsModel RelationsModel.v
@@ -44,7 +43,6 @@ jobs:
             startGroup "Verify proofs"
             echo "All proofs compiled successfully with Coq ${{ matrix.coq-version }}!"
             endGroup
-          after_script: |
             startGroup "Revert permissions"
             sudo chown -R 1001:116 .
             endGroup
