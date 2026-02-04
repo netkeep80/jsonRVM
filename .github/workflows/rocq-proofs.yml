@@ -1,0 +1,55 @@
+name: Rocq Proofs CI
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'proofs/rocq/**'
+      - '.github/workflows/rocq-proofs.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'proofs/rocq/**'
+      - '.github/workflows/rocq-proofs.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        coq-version: ['8.18', '8.19']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Coq
+        uses: coq-community/docker-coq-action@v1
+        with:
+          coq_version: ${{ matrix.coq-version }}
+          ocaml_version: '4.14-flambda'
+          custom_script: |
+            startGroup "Workaround permission issue"
+            sudo chown -R coq:coq .
+            endGroup
+            startGroup "Build Relations Model proofs"
+            cd proofs/rocq
+            coqc -Q . RelationsModel RelationsModel.v
+            endGroup
+            startGroup "Verify proofs"
+            echo "All proofs compiled successfully with Coq ${{ matrix.coq-version }}!"
+            endGroup
+            startGroup "Revert permissions"
+            sudo chown -R 1001:116 .
+            endGroup
+
+      - name: Upload compiled proofs
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-proofs-coq-${{ matrix.coq-version }}
+          path: proofs/rocq/*.vo
+          retention-days: 7
