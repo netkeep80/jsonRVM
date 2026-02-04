@@ -1,6 +1,29 @@
 var searchData=
 [
-  ['usage_0',['Использование / Usage',['../md__r_e_a_d_m_e.html#autotoc_md222',1,'']]],
-  ['utf8_5fto_5fcp1251_1',['utf8_to_cp1251',['../string__utils_8h.html#ac50ed71b36c43f1f2f41593d04cd5231',1,'string_utils.h']]],
-  ['utf8_5fto_5fwstring_2',['utf8_to_wstring',['../string__utils_8h.html#a280cf15c4682cd6a8336610a45b3da12',1,'string_utils.h']]]
+  ['selch_0',['selch',['../namespacerm.html#a04361b6c2ec93d40270af30bdde86ffc',1,'rm']]],
+  ['sets_1',['2. Relations Model as Four Interconnected Sets',['../md_doc_2relations-model-en.html#autotoc_md93',1,'']]],
+  ['size_2',['size',['../structrm_1_1type__map.html#a2b34579d928ed01b1b9b98d3044a9b2b',1,'rm::type_map::size'],['../structrm_1_1type__pair__list_3_01key__t_00_01first_00_01tail_8_8_8_01_4.html#acd8cc0108348f3ab29705928d4cfef9b',1,'rm::type_pair_list&lt; key_t, first, tail... &gt;::size'],['../structrm_1_1string__type.html#ab4df0c70615ee90c7972bd82dd1e8e9f',1,'rm::string_type::size'],['../structrm_1_1type__pair__list.html#a4966d6e630b5312c0f406894098aafb7',1,'rm::type_pair_list::size']]],
+  ['sleep_5fms_3',['sleep_ms',['../namespacerm.html#aedad2d281b11c88b6b08e410ff879d2e',1,'rm']]],
+  ['so_20er_20re_20os_3a_4',['2. Выделяем связи типа SO, ER, RE, OS:',['../md_doc_2_mathematical__definition.html#autotoc_md86',1,'']]],
+  ['state_20of_20the_20relation_20выяснение_20состояния_20отношения_5',['Clarification of the state of the relation / Выяснение состояния отношения',['../md_doc_2_dictionary.html#clar_state',1,'']]],
+  ['steady_5fclock_6',['steady_clock',['../structrm_1_1steady__clock.html',1,'rm']]],
+  ['str_7',['str',['../structrm_1_1string__type.html#a7dcd85b970c2ab17c4c4b985492c6dc4',1,'rm::string_type']]],
+  ['str_5fsize_8',['str_size',['../namespacerm.html#a22f84d438e39fcc290c63f67580a395e',1,'rm']]],
+  ['string_20node_9',['string node',['../md_doc_2json__definition.html#autotoc_md71',1,'']]],
+  ['string_5fadd_10',['string_add',['../namespacerm.html#ab741bc596a21e84aace52e0d93673a49',1,'rm']]],
+  ['string_5ffind_11',['string_find',['../namespacerm.html#a00a5e4a100e2a9f6489e5149c8f71a08',1,'rm']]],
+  ['string_5fjoin_12',['string_join',['../namespacerm.html#aba9312ddda9207734b5c41ea6642af0f',1,'rm']]],
+  ['string_5fsplit_13',['string_split',['../namespacerm.html#a957afd2d67c0db553e366a64c62eaf50',1,'rm']]],
+  ['string_5fstring_14',['string_string',['../namespacerm.html#aeb5d0f9dc335300ab90fd120766b8a8f',1,'rm']]],
+  ['string_5ftype_15',['string_type',['../structrm_1_1string__type.html',1,'rm::string_type&lt; chars &gt;'],['../structstring__type.html',1,'string_type']]],
+  ['string_5ftype_2eh_16',['string_type.h',['../string__type_8h.html',1,'']]],
+  ['string_5ftype_5fmaker_17',['string_type_maker',['../structstring__type__maker.html',1,'string_type_maker'],['../structrm_1_1string__type__maker.html',1,'rm::string_type_maker&lt; N, T,... &gt;']]],
+  ['string_5ftype_5fmaker_3c_20n_2c_20string_5ftype_3c_20chars_2e_2e_2e_20_3e_2c_20first_2c_20tail_2e_2e_2e_20_3e_18',['string_type_maker&lt; N, string_type&lt; chars... &gt;, first, tail... &gt;',['../structrm_1_1string__type__maker_3_01_n_00_01string__type_3_01chars_8_8_8_01_4_00_01first_00_01tail_8_8_8_01_4.html',1,'rm']]],
+  ['string_5futils_2eh_19',['string_utils.h',['../string__utils_8h.html',1,'']]],
+  ['structure_20of_20links_20',['2.2. Internal Structure of Links',['../md_doc_2relations-model-en.html#autotoc_md95',1,'']]],
+  ['sub_21',['sub',['../structrm_1_1vm__ctx.html#ae335c37b8a77e66d9e89d9b95cd83f8e',1,'rm::vm_ctx']]],
+  ['sub_20ent_20obj_22',['1. rel = { sub, ent, obj }',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md6',1,'']]],
+  ['sub_20ent_20rel_20obj_23',['1. sub =  = { ent, rel, obj }',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md7',1,'']]],
+  ['sub_20rel_20obj_24',['sub rel obj',['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md5',1,'0. ent = &lt;sub, rel, obj&gt;'],['../md_doc_2_x_d0_x_b_f_x_d0_x_b_b_x_d0_x_b0_x_d0_x_b_d___x_d0_x9_c_x_d0_x9_e.html#autotoc_md10',1,'Ent = &lt;Sub, Rel, Obj&gt;']]],
+  ['sub_5ffield_25',['sub_field',['../base_8rm_8h.html#a550d7718a13f71b6cc469d1e2a1fd5d3',1,'base.rm.h']]]
 ];

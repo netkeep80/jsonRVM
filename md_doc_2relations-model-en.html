@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jsonRVM: Mathematical Description of the Relations Model</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
+  <td id="projectalign">
+   <div id="projectname">jsonRVM
+   </div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_doc_2relations-model-en.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Mathematical Description of the Relations Model</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md87"></a> </p>
+<h1><a class="anchor" id="autotoc_md88"></a>
+Introduction</h1>
+<p>This document describes the mathematical formalization of the Relations Model (RM) in terms of set theory from the perspective of <a href="https://habr.com/ru/articles/895896/">Links Theory</a>.</p>
+<p>The Relations Model is a metaprogramming language based on the concept of a triune entity. Unlike traditional programming approaches that use two basic concepts (data and functions), in RM everything is represented by a single concept — the entity.</p>
+<h1><a class="anchor" id="autotoc_md89"></a>
+1. Basic Definitions</h1>
+<h2><a class="anchor" id="autotoc_md90"></a>
+1.1. Entity References</h2>
+<p><b>Definition 1.1 (Reference Set).</b> Let L ⊆ ℕ₀ be the set of natural numbers used as unique identifiers (references) to entities.</p>
+<div class="fragment"><div class="line">L = {0, 1, 2, 3, ...} ⊆ ℕ₀</div>
+</div><!-- fragment --><p>Each reference l ∈ L uniquely identifies an entity in the Relations Model.</p>
+<h2><a class="anchor" id="autotoc_md91"></a>
+1.2. Triplets and Duplets</h2>
+<p><b>Definition 1.2 (Reference Vector).</b> The set of all reference vectors of length n ∈ ℕ₀:</p>
+<div class="fragment"><div class="line">Vₙ = Lⁿ</div>
+</div><!-- fragment --><p>where Lⁿ is the Cartesian power of set L.</p>
+<p><b>Definition 1.3 (Duplet).</b> A duplet (ordered pair of references) is an element of the set:</p>
+<div class="fragment"><div class="line">D = L² = L × L = {(a, b) : a ∈ L, b ∈ L}</div>
+</div><!-- fragment --><p><b>Definition 1.4 (Triplet).</b> A triplet (tuple of length 3) is an element of the set:</p>
+<div class="fragment"><div class="line">T = L³ = L × L × L = {(s, r, o) : s ∈ L, r ∈ L, o ∈ L}</div>
+</div><!-- fragment --><p>where:</p><ul>
+<li>s — reference to subject</li>
+<li>r — reference to relation</li>
+<li>o — reference to object</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md92"></a>
+1.3. Representation of Triplet as Nested Ordered Pairs</h2>
+<p>From the perspective of set theory, a triplet can be represented as nested ordered pairs:</p>
+<div class="fragment"><div class="line">(s, r, o) = ((s, r), o)</div>
+</div><!-- fragment --><p>This corresponds to the representation of a tuple through a Kuratowski pair.</p>
+<h1><a class="anchor" id="autotoc_md93"></a>
+2. Relations Model as Four Interconnected Sets</h1>
+<h2><a class="anchor" id="autotoc_md94"></a>
+2.1. Four Aspects of an Entity</h2>
+<p>In the Relations Model, each entity can act in four aspects (roles):</p>
+<ol type="1">
+<li><b>E (Entity)</b> — entity as a whole</li>
+<li><b>R (Relation)</b> — entity in the role of relation (controller)</li>
+<li><b>S (Subject)</b> — entity in the role of subject (view)</li>
+<li><b>O (Object)</b> — entity in the role of object (model)</li>
+</ol>
+<p><b>Definition 2.1 (Relations Model).</b> The Relations Model RM is represented as a quadruple of interconnected sets of tuples of length 3:</p>
+<div class="fragment"><div class="line">RM = {E, O, R, S}</div>
+</div><!-- fragment --><p>where:</p>
+<div class="fragment"><div class="line">R ⊆ (S × O) × E = {((s, o), e) : s ∈ S, o ∈ O, e ∈ E}</div>
+<div class="line">O ⊆ (E × R) × S = {((e, r), s) : e ∈ E, r ∈ R, s ∈ S}</div>
+<div class="line">S ⊆ (R × E) × O = {((r, e), o) : r ∈ R, e ∈ E, o ∈ O}</div>
+<div class="line">E ⊆ (O × S) × R = {((o, s), r) : o ∈ O, s ∈ S, r ∈ R}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md95"></a>
+2.2. Internal Structure of Links</h2>
+<p>The internal aspect (structure) of each entity type is defined through links:</p>
+<div class="fragment"><div class="line">E = SO    (entity is defined by subject-object pair)</div>
+<div class="line">R = OS    (relation is defined by object-subject pair)</div>
+<div class="line">O = ER    (object is defined by entity-relation pair)</div>
+<div class="line">S = RE    (subject is defined by relation-entity pair)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md96"></a>
+2.3. Link Types (Duplets)</h2>
+<p>We define four basic link types:</p>
+<div class="fragment"><div class="line">OS ⊆ O × S = {(o, s) : o ∈ O, s ∈ S}</div>
+<div class="line">SO ⊆ S × O = {(s, o) : s ∈ S, o ∈ O}</div>
+<div class="line">RE ⊆ R × E = {(r, e) : r ∈ R, e ∈ E}</div>
+<div class="line">ER ⊆ E × R = {(e, r) : e ∈ E, r ∈ R}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md97"></a>
+3. Reduction of Triplets to Duplets</h1>
+<h2><a class="anchor" id="autotoc_md98"></a>
+3.1. Theorem on Representation Equivalence</h2>
+<p><b>Theorem 3.1.</b> The set RM can be equivalently represented by four sets of duplets:</p>
+<div class="fragment"><div class="line">RM = {ER, OS, RE, SO}</div>
+</div><!-- fragment --><p>where: </p><div class="fragment"><div class="line">E = SO ⊆ SO × OS = {(so, os) : so ∈ SO, os ∈ OS}</div>
+<div class="line">O = ER ⊆ ER × RE = {(er, re) : er ∈ ER, re ∈ RE}</div>
+<div class="line">R = OS ⊆ OS × SO = {(os, so) : os ∈ OS, so ∈ SO}</div>
+<div class="line">S = RE ⊆ RE × ER = {(re, er) : re ∈ RE, er ∈ ER}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md99"></a>
+3.2. Proof of Equivalence</h2>
+<p>Entity tuple is equivalent to subject-object tuple: </p><div class="fragment"><div class="line">e = (s, o, r) = ((s, o), r) = (so, r) ≡ so = (so, re)</div>
+</div><!-- fragment --><p>Object tuple is equivalent to entity-relation tuple: </p><div class="fragment"><div class="line">o = (e, r, s) = ((e, r), s) = (er, s) ≡ er = (er, so)</div>
+</div><!-- fragment --><p>Relation tuple is equivalent to object-subject tuple: </p><div class="fragment"><div class="line">r = (o, s, e) = ((o, s), e) = (os, e) ≡ os = (os, er)</div>
+</div><!-- fragment --><p>Subject tuple is equivalent to relation-entity tuple: </p><div class="fragment"><div class="line">s = (r, e, o) = ((r, e), o) = (re, o) ≡ re = (re, os)</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md100"></a>
+4. Relations Model as Associative Network</h1>
+<h2><a class="anchor" id="autotoc_md101"></a>
+4.1. Definitions from Links Theory</h2>
+<p><b>Definition 4.1 (Association).</b> An association is an ordered pair consisting of a reference and a reference vector:</p>
+<div class="fragment"><div class="line">A = L × Vₙ</div>
+</div><!-- fragment --><p><b>Definition 4.2 (Associative Network of n-dimensional Vectors).</b> An associative network is a function:</p>
+<div class="fragment"><div class="line">anetⁿ : L → Vₙ</div>
+</div><!-- fragment --><p>mapping a reference l from set L to a reference vector of length n.</p>
+<p><b>Definition 4.3 (Associative Network of Duplets).</b> An associative network of duplets (2D associative network):</p>
+<div class="fragment"><div class="line">anetd : L → L²</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md102"></a>
+4.2. Relations Model as Three-Dimensional Associative Network</h2>
+<p><b>Theorem 4.1.</b> The Relations Model can be represented as a three-dimensional associative network:</p>
+<div class="fragment"><div class="line">λ : L → L × L × L = L³</div>
+</div><!-- fragment --><p>where each entity with identifier l is mapped to a triplet (s, r, o).</p>
+<h2><a class="anchor" id="autotoc_md103"></a>
+4.3. Reduction to Two-Dimensional Associative Network</h2>
+<p><b>Theorem 4.2.</b> A three-dimensional associative network can be transformed into a two-dimensional associative network (duplet network) without information loss.</p>
+<p>The transformation is performed through nested ordered pairs:</p>
+<div class="fragment"><div class="line">anetl : L → NP</div>
+</div><!-- fragment --><p>where NP = {∅ | (l, np), l ∈ L, np ∈ NP} — the set of nested ordered pairs.</p>
+<h1><a class="anchor" id="autotoc_md104"></a>
+5. Triune Entity</h1>
+<h2><a class="anchor" id="autotoc_md105"></a>
+5.1. Definition of Triune Entity</h2>
+<p><b>Definition 5.1.</b> A triune entity is an element of the Relations Model defined by a triplet (s, r, o), where:</p>
+<ul>
+<li><b>s (subject)</b> — subject, defining the view (View)</li>
+<li><b>r (relation)</b> — relation, defining the controller (Controller)</li>
+<li><b>o (object)</b> — object, defining the model (Model)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md106"></a>
+5.2. Entity Topologies</h2>
+<p><b>Definition 5.2 (Topologies).</b> Depending on the link structure, entities form various topologies:</p>
+<ol type="1">
+<li><b>Static self-value</b> (EntId = SubId = RelId = ObjId): <div class="fragment"><div class="line">e(e -e-&gt; e)</div>
+</div><!-- fragment --> The entity structure is topologically closed on itself through itself.</li>
+<li><b>Dynamic self-value</b> (EntId = SubId = ObjId): <div class="fragment"><div class="line">e(e -r-&gt; e)</div>
+</div><!-- fragment --> The entity structure is closed on itself through another relation-entity.</li>
+<li><b>Reference/storage</b> (EntId = SubId): <div class="fragment"><div class="line">e(e -r-&gt; o)</div>
+</div><!-- fragment --> The entity stores the projection of another entity.</li>
+<li><b>Projection source</b> (EntId = ObjId): <div class="fragment"><div class="line">e(s -r-&gt; e)</div>
+</div><!-- fragment --> The entity forms its own projection for perception by other entities.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md107"></a>
+6. Properties of the Relations Model</h1>
+<h2><a class="anchor" id="autotoc_md108"></a>
+6.1. Homoiconicity</h2>
+<p>The Relations Model possesses the property of homoiconicity: code and data have the same structure (JSON representation).</p>
+<h2><a class="anchor" id="autotoc_md109"></a>
+6.2. Reflexivity</h2>
+<p>The Relations Model supports reflection: a program can analyze and modify its own structure at runtime.</p>
+<h2><a class="anchor" id="autotoc_md110"></a>
+6.3. Closure</h2>
+<p><b>Theorem 6.1 (Closure).</b> The sets E, O, R, S are equivalent. Any entity can act as subject, relation, or object in other entities.</p>
+<h2><a class="anchor" id="autotoc_md111"></a>
+6.4. Fractality</h2>
+<p>The structure of the Relations Model is fractal: each entity contains three other entities, each of which is also triune.</p>
+<h1><a class="anchor" id="autotoc_md112"></a>
+7. JSON Representation</h1>
+<h2><a class="anchor" id="autotoc_md113"></a>
+7.1. Type Correspondence</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">JSON Type   </th><th class="markdownTableHeadNone">Interpretation in RM    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Number   </td><td class="markdownTableBodyNone">Topologically closed projection of numeric relation    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Boolean   </td><td class="markdownTableBodyNone">Topologically closed projection of boolean relation    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">String   </td><td class="markdownTableBodyNone">Topologically closed projection of string relation or entity name    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Object   </td><td class="markdownTableBodyNone">Projection of containment relation or entity (if $rel exists)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Array   </td><td class="markdownTableBodyNone">Projection of sequential relation chain    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Null   </td><td class="markdownTableBodyNone">Empty space (potential for projection containment)   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md114"></a>
+7.2. Executable Constructs</h2>
+<p>An entity in JSON representation is defined by an object with fields:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$sub&quot;: &quot;&lt;subject&gt;&quot;,</div>
+<div class="line">  &quot;$rel&quot;: &quot;&lt;relation&gt;&quot;,</div>
+<div class="line">  &quot;$obj&quot;: &quot;&lt;object&gt;&quot;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md115"></a>
+8. Analogy with Molecular Biology</h1>
+<p>An interesting analogy can be drawn with the complementarity principle of nucleotides in DNA:</p>
+<ul>
+<li>Adenine (A) bonds only with thymine (T) — double bond</li>
+<li>Guanine (G) bonds only with cytosine (C) — triple bond</li>
+</ul>
+<p>Similarly in the Relations Model:</p><ul>
+<li>OS is conjugate with SO</li>
+<li>ER is conjugate with RE</li>
+</ul>
+<p>This property of preserving relative association type ensures structural integrity.</p>
+<h1><a class="anchor" id="autotoc_md116"></a>
+9. Conclusion</h1>
+<p>The mathematical formalization of the Relations Model in terms of set theory shows that:</p>
+<ol type="1">
+<li>Triplets (tuples of length 3) can be equivalently represented as nested ordered pairs (two duplets).</li>
+<li>The Relations Model is a three-dimensional associative network of the form λ : L → L³.</li>
+<li>The four interconnected sets {E, O, R, S} are equivalent to four sets of duplets {ER, OS, RE, SO}.</li>
+<li>The triune entity implements the MVC pattern at the level of the basic language structure.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md117"></a>
+References</h1>
+<ol type="1">
+<li>Links Theory — <a href="https://habr.com/ru/articles/895896/">https://habr.com/ru/articles/895896/</a></li>
+<li>Deep Theory — <a href="https://github.com/deep-foundation/deep-theory">https://github.com/deep-foundation/deep-theory</a></li>
+<li>Associative Model of Data — <a href="https://en.wikipedia.org/wiki/Associative_model_of_data">https://en.wikipedia.org/wiki/Associative_model_of_data</a></li>
+<li>Binary Relations — <a href="https://en.wikipedia.org/wiki/Binary_relation">https://en.wikipedia.org/wiki/Binary_relation</a> </li>
+</ol>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

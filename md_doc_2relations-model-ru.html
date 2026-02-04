@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jsonRVM: Математическое описание Модели Отношений</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
+  <td id="projectalign">
+   <div id="projectname">jsonRVM
+   </div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_doc_2relations-model-ru.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Математическое описание Модели Отношений</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md118"></a> </p>
+<h1><a class="anchor" id="autotoc_md119"></a>
+Введение</h1>
+<p>Данный документ описывает математическую формализацию Модели Отношений (МО) в терминах теории множеств с точки зрения <a href="https://habr.com/ru/articles/895896/">Теории связей</a>.</p>
+<p>Модель Отношений — это язык метапрограммирования, основанный на концепции триединой сущности. В отличие от традиционных подходов к программированию, где используются две базовые концепции (данные и функции), в МО всё представляется единой концепцией — сущностью.</p>
+<h1><a class="anchor" id="autotoc_md120"></a>
+1. Базовые определения</h1>
+<h2><a class="anchor" id="autotoc_md121"></a>
+1.1. Ссылки на сущности</h2>
+<p><b>Определение 1.1 (Множество ссылок).</b> Пусть L ⊆ ℕ₀ — множество натуральных чисел, используемых в качестве уникальных идентификаторов (ссылок) на сущности.</p>
+<div class="fragment"><div class="line">L = {0, 1, 2, 3, ...} ⊆ ℕ₀</div>
+</div><!-- fragment --><p>Каждая ссылка l ∈ L однозначно идентифицирует сущность в Модели Отношений.</p>
+<h2><a class="anchor" id="autotoc_md122"></a>
+1.2. Триплеты и Дуплеты</h2>
+<p><b>Определение 1.2 (Вектор ссылок).</b> Множество всех векторов ссылок длины n ∈ ℕ₀:</p>
+<div class="fragment"><div class="line">Vₙ = Lⁿ</div>
+</div><!-- fragment --><p>где Lⁿ — декартова степень множества L.</p>
+<p><b>Определение 1.3 (Дуплет).</b> Дуплет (упорядоченная пара ссылок) — это элемент множества:</p>
+<div class="fragment"><div class="line">D = L² = L × L = {(a, b) : a ∈ L, b ∈ L}</div>
+</div><!-- fragment --><p><b>Определение 1.4 (Триплет).</b> Триплет (кортеж длины 3) — это элемент множества:</p>
+<div class="fragment"><div class="line">T = L³ = L × L × L = {(s, r, o) : s ∈ L, r ∈ L, o ∈ L}</div>
+</div><!-- fragment --><p>где:</p><ul>
+<li>s — ссылка на субъект</li>
+<li>r — ссылка на отношение</li>
+<li>o — ссылка на объект</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md123"></a>
+1.3. Представление триплета через вложенные упорядоченные пары</h2>
+<p>С точки зрения теории множеств, триплет можно представить как вложенные упорядоченные пары:</p>
+<div class="fragment"><div class="line">(s, r, o) = ((s, r), o)</div>
+</div><!-- fragment --><p>Это соответствует представлению кортежа через пару Куратовского.</p>
+<h1><a class="anchor" id="autotoc_md124"></a>
+2. Модель Отношений как четыре взаимосвязанных множества</h1>
+<h2><a class="anchor" id="autotoc_md125"></a>
+2.1. Четыре аспекта сущности</h2>
+<p>В Модели Отношений каждая сущность может выступать в четырёх аспектах (ролях):</p>
+<ol type="1">
+<li><b>E (Entity)</b> — сущность как целое</li>
+<li><b>R (Relation)</b> — сущность в роли отношения (контроллера)</li>
+<li><b>S (Subject)</b> — сущность в роли субъекта (представления)</li>
+<li><b>O (Object)</b> — сущность в роли объекта (модели)</li>
+</ol>
+<p><b>Определение 2.1 (Модель Отношений).</b> Модель Отношений RM представляется как четвёрка взаимосвязанных множеств кортежей длины 3:</p>
+<div class="fragment"><div class="line">RM = {E, O, R, S}</div>
+</div><!-- fragment --><p>где:</p>
+<div class="fragment"><div class="line">R ⊆ (S × O) × E = {((s, o), e) : s ∈ S, o ∈ O, e ∈ E}</div>
+<div class="line">O ⊆ (E × R) × S = {((e, r), s) : e ∈ E, r ∈ R, s ∈ S}</div>
+<div class="line">S ⊆ (R × E) × O = {((r, e), o) : r ∈ R, e ∈ E, o ∈ O}</div>
+<div class="line">E ⊆ (O × S) × R = {((o, s), r) : o ∈ O, s ∈ S, r ∈ R}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md126"></a>
+2.2. Внутренняя структура связей</h2>
+<p>Внутренний аспект (структура) каждого типа сущности определяется через связи:</p>
+<div class="fragment"><div class="line">E = SO    (сущность определяется парой субъект-объект)</div>
+<div class="line">R = OS    (отношение определяется парой объект-субъект)</div>
+<div class="line">O = ER    (объект определяется парой сущность-отношение)</div>
+<div class="line">S = RE    (субъект определяется парой отношение-сущность)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md127"></a>
+2.3. Типы связей (дуплетов)</h2>
+<p>Определим четыре базовых типа связей:</p>
+<div class="fragment"><div class="line">OS ⊆ O × S = {(o, s) : o ∈ O, s ∈ S}</div>
+<div class="line">SO ⊆ S × O = {(s, o) : s ∈ S, o ∈ O}</div>
+<div class="line">RE ⊆ R × E = {(r, e) : r ∈ R, e ∈ E}</div>
+<div class="line">ER ⊆ E × R = {(e, r) : e ∈ E, r ∈ R}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md128"></a>
+3. Сведение триплетов к дуплетам</h1>
+<h2><a class="anchor" id="autotoc_md129"></a>
+3.1. Теорема об эквивалентности представлений</h2>
+<p><b>Теорема 3.1.</b> Множество RM может быть эквивалентно представлено четырьмя множествами дуплетов:</p>
+<div class="fragment"><div class="line">RM = {ER, OS, RE, SO}</div>
+</div><!-- fragment --><p>где: </p><div class="fragment"><div class="line">E = SO ⊆ SO × OS = {(so, os) : so ∈ SO, os ∈ OS}</div>
+<div class="line">O = ER ⊆ ER × RE = {(er, re) : er ∈ ER, re ∈ RE}</div>
+<div class="line">R = OS ⊆ OS × SO = {(os, so) : os ∈ OS, so ∈ SO}</div>
+<div class="line">S = RE ⊆ RE × ER = {(re, er) : re ∈ RE, er ∈ ER}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md130"></a>
+3.2. Доказательство эквивалентности</h2>
+<p>Кортеж-сущность эквивалентен кортежу субъект-объекта: </p><div class="fragment"><div class="line">e = (s, o, r) = ((s, o), r) = (so, r) ≡ so = (so, re)</div>
+</div><!-- fragment --><p>Кортеж-объект эквивалентен кортежу сущность-отношения: </p><div class="fragment"><div class="line">o = (e, r, s) = ((e, r), s) = (er, s) ≡ er = (er, so)</div>
+</div><!-- fragment --><p>Кортеж-отношение эквивалентен кортежу объект-субъекта: </p><div class="fragment"><div class="line">r = (o, s, e) = ((o, s), e) = (os, e) ≡ os = (os, er)</div>
+</div><!-- fragment --><p>Кортеж-субъект эквивалентен кортежу отношение-сущности: </p><div class="fragment"><div class="line">s = (r, e, o) = ((r, e), o) = (re, o) ≡ re = (re, os)</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md131"></a>
+4. Модель Отношений как ассоциативная сеть</h1>
+<h2><a class="anchor" id="autotoc_md132"></a>
+4.1. Определения из Теории связей</h2>
+<p><b>Определение 4.1 (Ассоциация).</b> Ассоциация — это упорядоченная пара, состоящая из ссылки и вектора ссылок:</p>
+<div class="fragment"><div class="line">A = L × Vₙ</div>
+</div><!-- fragment --><p><b>Определение 4.2 (Ассоциативная сеть n-мерных векторов).</b> Ассоциативная сеть — это функция:</p>
+<div class="fragment"><div class="line">anetⁿ : L → Vₙ</div>
+</div><!-- fragment --><p>отображающая ссылку l из множества L в вектор ссылок длины n.</p>
+<p><b>Определение 4.3 (Ассоциативная сеть дуплетов).</b> Ассоциативная сеть дуплетов (двумерная асеть):</p>
+<div class="fragment"><div class="line">anetd : L → L²</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md133"></a>
+4.2. Модель Отношений как трёхмерная ассоциативная сеть</h2>
+<p><b>Теорема 4.1.</b> Модель Отношений может быть представлена как трёхмерная ассоциативная сеть:</p>
+<div class="fragment"><div class="line">λ : L → L × L × L = L³</div>
+</div><!-- fragment --><p>где каждая сущность с идентификатором l отображается в триплет (s, r, o).</p>
+<h2><a class="anchor" id="autotoc_md134"></a>
+4.3. Сведение к двумерной асети</h2>
+<p><b>Теорема 4.2.</b> Трёхмерная ассоциативная сеть может быть преобразована в двумерную ассоциативную сеть (асеть дуплетов) без потери информации.</p>
+<p>Преобразование выполняется через вложенные упорядоченные пары:</p>
+<div class="fragment"><div class="line">anetl : L → NP</div>
+</div><!-- fragment --><p>где NP = {∅ | (l, np), l ∈ L, np ∈ NP} — множество вложенных упорядоченных пар.</p>
+<h1><a class="anchor" id="autotoc_md135"></a>
+5. Триединая сущность</h1>
+<h2><a class="anchor" id="autotoc_md136"></a>
+5.1. Определение триединой сущности</h2>
+<p><b>Определение 5.1.</b> Триединая сущность — это элемент Модели Отношений, определяемый триплетом (s, r, o), где:</p>
+<ul>
+<li><b>s (subject)</b> — субъект, определяющий представление (View)</li>
+<li><b>r (relation)</b> — отношение, определяющее контроллер (Controller)</li>
+<li><b>o (object)</b> — объект, определяющий модель (Model)</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md137"></a>
+5.2. Топологии сущностей</h2>
+<p><b>Определение 5.2 (Топологии).</b> В зависимости от структуры связей, сущности образуют различные топологии:</p>
+<ol type="1">
+<li><b>Статическое собственное значение</b> (EntId = SubId = RelId = ObjId): <div class="fragment"><div class="line">e(e -e-&gt; e)</div>
+</div><!-- fragment --> Структура сущности топологически замкнута сама на себя через себя.</li>
+<li><b>Динамическое собственное значение</b> (EntId = SubId = ObjId): <div class="fragment"><div class="line">e(e -r-&gt; e)</div>
+</div><!-- fragment --> Структура сущности замкнута сама на себя через другую сущность-отношение.</li>
+<li><b>Ссылка/хранилище</b> (EntId = SubId): <div class="fragment"><div class="line">e(e -r-&gt; o)</div>
+</div><!-- fragment --> Сущность сохраняет в себе проекцию другой сущности.</li>
+<li><b>Источник проекции</b> (EntId = ObjId): <div class="fragment"><div class="line">e(s -r-&gt; e)</div>
+</div><!-- fragment --> Сущность формирует собственную проекцию для восприятия другими сущностями.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md138"></a>
+6. Свойства Модели Отношений</h1>
+<h2><a class="anchor" id="autotoc_md139"></a>
+6.1. Гомоиконичность</h2>
+<p>Модель Отношений обладает свойством гомоиконичности: код и данные имеют одинаковую структуру (JSON-представление).</p>
+<h2><a class="anchor" id="autotoc_md140"></a>
+6.2. Рефлексивность</h2>
+<p>Модель Отношений поддерживает рефлексию: программа может анализировать и модифицировать собственную структуру во время выполнения.</p>
+<h2><a class="anchor" id="autotoc_md141"></a>
+6.3. Замкнутость</h2>
+<p><b>Теорема 6.1 (Замкнутость).</b> Множества E, O, R, S эквивалентны. Любая сущность может выступать в роли субъекта, отношения или объекта в других сущностях.</p>
+<h2><a class="anchor" id="autotoc_md142"></a>
+6.4. Фрактальность</h2>
+<p>Структура Модели Отношений является фрактальной: каждая сущность содержит три другие сущности, каждая из которых также триедина.</p>
+<h1><a class="anchor" id="autotoc_md143"></a>
+7. JSON-представление</h1>
+<h2><a class="anchor" id="autotoc_md144"></a>
+7.1. Соответствие типов</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">JSON-тип   </th><th class="markdownTableHeadNone">Интерпретация в МО    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Number   </td><td class="markdownTableBodyNone">Топологически замкнутая проекция числового отношения    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Boolean   </td><td class="markdownTableBodyNone">Топологически замкнутая проекция булева отношения    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">String   </td><td class="markdownTableBodyNone">Топологически замкнутая проекция строкового отношения или имя сущности    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Object   </td><td class="markdownTableBodyNone">Проекция отношения вмещения структуры или сущность (если есть $rel)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Array   </td><td class="markdownTableBodyNone">Проекция цепочки отношений последовательного следования    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Null   </td><td class="markdownTableBodyNone">Пустое пространство (потенциал вмещения проекции)   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md145"></a>
+7.2. Исполняемые конструкции</h2>
+<p>Сущность в JSON-представлении определяется объектом с полями:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;$sub&quot;: &quot;&lt;субъект&gt;&quot;,</div>
+<div class="line">  &quot;$rel&quot;: &quot;&lt;отношение&gt;&quot;,</div>
+<div class="line">  &quot;$obj&quot;: &quot;&lt;объект&gt;&quot;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md146"></a>
+8. Аналогия с молекулярной биологией</h1>
+<p>Интересную аналогию можно провести с принципом комплементарности нуклеотидов в ДНК:</p>
+<ul>
+<li>Аденин (A) соединяется только с тимином (T) — двойная связь</li>
+<li>Гуанин (G) соединяется только с цитозином (C) — тройная связь</li>
+</ul>
+<p>Аналогично в Модели Отношений:</p><ul>
+<li>OS сопряжено с SO</li>
+<li>ER сопряжено с RE</li>
+</ul>
+<p>Это свойство сохранения относительного типа ассоциации обеспечивает целостность структуры.</p>
+<h1><a class="anchor" id="autotoc_md147"></a>
+9. Заключение</h1>
+<p>Математическая формализация Модели Отношений в терминах теории множеств показывает, что:</p>
+<ol type="1">
+<li>Триплеты (кортежи длины 3) могут быть эквивалентно представлены как вложенные упорядоченные пары (два дуплета).</li>
+<li>Модель Отношений является трёхмерной ассоциативной сетью вида λ : L → L³.</li>
+<li>Четыре взаимосвязанных множества {E, O, R, S} эквивалентны четырём множествам дуплетов {ER, OS, RE, SO}.</li>
+<li>Триединая сущность реализует паттерн MVC на уровне базовой структуры языка.</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md148"></a>
+Литература</h1>
+<ol type="1">
+<li>Теория связей — <a href="https://habr.com/ru/articles/895896/">https://habr.com/ru/articles/895896/</a></li>
+<li>Deep Theory — <a href="https://github.com/deep-foundation/deep-theory">https://github.com/deep-foundation/deep-theory</a></li>
+<li>Ассоциативная модель данных — <a href="https://en.wikipedia.org/wiki/Associative_model_of_data">https://en.wikipedia.org/wiki/Associative_model_of_data</a></li>
+<li>Бинарные отношения — <a href="https://ru.wikipedia.org/wiki/Бинарное_отношение">https://ru.wikipedia.org/wiki/Бинарное_отношение</a> </li>
+</ol>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

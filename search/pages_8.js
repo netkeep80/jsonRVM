@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['анализ_20проекта_20jsonrvm_0',['Анализ проекта jsonRVM',['../md_analysis.html',1,'']]],
-  ['ассоциативаня_20модель_20отношений_20формата_20json_1',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]]
+  ['readme_0',['README',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['relations_20model_1',['Mathematical Description of the Relations Model',['../md_doc_2relations-model-en.html',1,'']]]
 ];

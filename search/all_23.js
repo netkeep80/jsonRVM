@@ -1,23 +1,10 @@
 var searchData=
 [
-  ['авм_0',['AVM / АВМ',['../md_doc_2_abbreviations.html#autotoc_md15',1,'']]],
-  ['адресация_1',['2.2. Гибкая адресация',['../md_analysis.html#autotoc_md130',1,'']]],
-  ['амд_2',['AMD / АМД',['../md_doc_2_abbreviations.html#autotoc_md16',1,'']]],
-  ['анализ_20виртуальной_20машины_20модели_20отношений_3',['Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md104',1,'']]],
-  ['анализ_20и_20планирование_20analysis_20and_20planning_4',['Анализ и планирование / Analysis and Planning',['../md__r_e_a_d_m_e.html#autotoc_md213',1,'']]],
-  ['анализ_20проекта_20jsonrvm_5',['Анализ проекта jsonRVM',['../md_analysis.html',1,'']]],
-  ['аналогию_20с_20ооп_6',['Привести аналогию с ООП',['../md_doc_2_introduction.html#autotoc_md65',1,'']]],
-  ['аналогия_20исполнения_7',['Аналогия исполнения',['../md_doc_2_r_v_m.html#autotoc_md102',1,'']]],
-  ['архитектура_20и_20распределенные_20системы_8',['Микросервисная архитектура и распределенные системы',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md116',1,'']]],
-  ['архитектурные_20ограничения_9',['1. Архитектурные ограничения',['../md_analysis.html#autotoc_md138',1,'']]],
-  ['архитектурные_20преимущества_10',['1. Архитектурные преимущества',['../md_analysis.html#autotoc_md123',1,'']]],
-  ['архитектурные_20преимущества_20и_20концептуальные_20основы_11',['Архитектурные преимущества и концептуальные основы',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md105',1,'']]],
-  ['ассоциативаня_20модель_20отношений_20формата_20json_12',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]],
-  ['ассоциативная_20модель_13',['Ассоциативная Модель',['../md_doc_2_dictionary.html#autotoc_md20',1,'']]],
-  ['ассоциативная_20модель_20данных_14',['Ассоциативная Модель Данных',['../md_doc_2_dictionary.html#amd',1,'']]],
-  ['ассоциативная_20модель_20отношений_15',['Ассоциативная Модель Отношений',['../md_doc_2_dictionary.html#autotoc_md21',1,'']]],
-  ['ассоциативной_20проекции_20в_20json_16',['идеи по переходу от старой проекции МО в json к ассоциативной проекции в json',['../md_doc_2json__definition.html#autotoc_md74',1,'']]],
-  ['ассоциация_20типа_20отношения_17',['rel - ассоциация типа отношения',['../md_doc_2json__definition.html#autotoc_md67',1,'']]],
-  ['атрибутах_20и_20элементах_20сущности_3a_18',['О свойствах (атрибутах) и элементах сущности:',['../md_doc_2_r_v_m.html#autotoc_md96',1,'']]],
-  ['а_19',['А',['../md_doc_2_dictionary.html#autotoc_md24',1,'']]]
+  ['xor_5farray_0',['xor_array',['../namespacerm.html#a69cf30fab0c837bfeaa88a4104f06451',1,'rm']]],
+  ['xor_5fboolean_1',['xor_boolean',['../namespacerm.html#ab4f545644d118c245b1419230531b8a3',1,'rm']]],
+  ['xor_5fnumber_5ffloat_2',['xor_number_float',['../namespacerm.html#ae7cc5feec3915758e93087ccd4e8a4d8',1,'rm']]],
+  ['xor_5fnumber_5finteger_3',['xor_number_integer',['../namespacerm.html#a254f59bf6ede298fe8de9f6fbb5382f3',1,'rm']]],
+  ['xor_5fnumber_5funsigned_4',['xor_number_unsigned',['../namespacerm.html#a6cc2095b8cd319edba3adc57d6af8b94',1,'rm']]],
+  ['xor_5fobject_5',['xor_object',['../namespacerm.html#a9a11d0b2546e178925bb6352cb7329f7',1,'rm']]],
+  ['xor_5fstring_6',['xor_string',['../namespacerm.html#a3aab555663930f470888fc81d8a33459',1,'rm']]]
 ];
