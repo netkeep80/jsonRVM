@@ -1,5 +1,7 @@
 # Relations Model - Rocq/Coq Proofs
 
+[![CI](https://github.com/netkeep80/jsonRVM/actions/workflows/rocq-proofs.yml/badge.svg)](https://github.com/netkeep80/jsonRVM/actions/workflows/rocq-proofs.yml)
+
 This directory contains the formal mathematical specification and proofs for the Relations Model (Модель Отношений) in the Rocq proof assistant (formerly known as Coq).
 
 ## Files
