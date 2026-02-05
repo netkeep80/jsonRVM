@@ -31,18 +31,28 @@ where Lⁿ is the Cartesian power of set L.
 **Definition 1.3 (Duplet).** A duplet (ordered pair of references) is an element of the set:
 
 ```
-D = L² = L × L = {(a, b) : a ∈ L, b ∈ L}
+D = L² = L × L = {(b, e) : b ∈ L, e ∈ L}
 ```
+
+where:
+- b — begin (start)
+- e — end (finish)
 
 **Definition 1.4 (Triplet).** A triplet (tuple of length 3) is an element of the set:
 
 ```
-T = L³ = L × L × L = {(s, r, o) : s ∈ L, r ∈ L, o ∈ L}
+T = L³ = L × L × L = {(r, s, o) : r ∈ L, s ∈ L, o ∈ L}
+```
+
+or equivalently:
+
+```
+T = L × D, where D = L × L
 ```
 
 where:
-- s — reference to subject
 - r — reference to relation
+- s — reference to subject
 - o — reference to object
 
 ### 1.3. Representation of Triplet as Nested Ordered Pairs
@@ -50,100 +60,74 @@ where:
 From the perspective of set theory, a triplet can be represented as nested ordered pairs:
 
 ```
-(s, r, o) = ((s, r), o)
-```
-
-This corresponds to the representation of a tuple through a Kuratowski pair.
-
-## 2. Relations Model as Four Interconnected Sets
-
-### 2.1. Four Aspects of an Entity
-
-In the Relations Model, each entity can act in four aspects (roles):
-
-1. **E (Entity)** — entity as a whole
-2. **R (Relation)** — entity in the role of relation (controller)
-3. **S (Subject)** — entity in the role of subject (view)
-4. **O (Object)** — entity in the role of object (model)
-
-**Definition 2.1 (Relations Model).** The Relations Model RM is represented as a quadruple of interconnected sets of tuples of length 3:
-
-```
-RM = {E, O, R, S}
+(r, s, o) = (r, (s, o)) = (e, d)
 ```
 
 where:
+- e — reference to entity (in the role of relation)
+- d = (s, o) — duplet (subject-object)
+
+This corresponds to the representation of a tuple through a Kuratowski pair.
+
+## 2. Internal Structure of Links
+
+### 2.1. Two Aspects of an Entity
+
+In the Relations Model, each entity can be defined through links:
 
 ```
-R ⊆ (S × O) × E = {((s, o), e) : s ∈ S, o ∈ O, e ∈ E}
-O ⊆ (E × R) × S = {((e, r), s) : e ∈ E, r ∈ R, s ∈ S}
-S ⊆ (R × E) × O = {((r, e), o) : r ∈ R, e ∈ E, o ∈ O}
-E ⊆ (O × S) × R = {((o, s), r) : o ∈ O, s ∈ S, r ∈ R}
+E = ER    (entity is defined by entity-relation pair)
+R = SO    (relation is defined by subject-object pair)
+S ⊆ E     (subjects are a subset of entities)
+O ⊆ E     (objects are a subset of entities)
 ```
 
-### 2.2. Internal Structure of Links
+### 2.2. Link Types (Duplets)
 
-The internal aspect (structure) of each entity type is defined through links:
-
-```
-E = SO    (entity is defined by subject-object pair)
-R = OS    (relation is defined by object-subject pair)
-O = ER    (object is defined by entity-relation pair)
-S = RE    (subject is defined by relation-entity pair)
-```
-
-### 2.3. Link Types (Duplets)
-
-We define four basic link types:
+We define two basic link types:
 
 ```
-OS ⊆ O × S = {(o, s) : o ∈ O, s ∈ S}
-SO ⊆ S × O = {(s, o) : s ∈ S, o ∈ O}
-RE ⊆ R × E = {(r, e) : r ∈ R, e ∈ E}
-ER ⊆ E × R = {(e, r) : e ∈ E, r ∈ R}
+SO ⊆ S × O = {(s, o) : s ∈ E, o ∈ E}
+ER ⊆ E × R = {(e, r) : e ∈ E, r ∈ E}
 ```
+
+where:
+- SO — subject-object duplet, defining a relation
+- ER — entity-relation duplet, defining an entity
 
 ## 3. Reduction of Triplets to Duplets
 
 ### 3.1. Theorem on Representation Equivalence
 
-**Theorem 3.1.** The set RM can be equivalently represented by four sets of duplets:
+**Theorem 3.1.** The set RM can be equivalently represented by two subsets of duplets:
 
 ```
-RM = {ER, OS, RE, SO}
+RM = {ER, SO}
 ```
 
 where:
 ```
-E = SO ⊆ SO × OS = {(so, os) : so ∈ SO, os ∈ OS}
-O = ER ⊆ ER × RE = {(er, re) : er ∈ ER, re ∈ RE}
-R = OS ⊆ OS × SO = {(os, so) : os ∈ OS, so ∈ SO}
-S = RE ⊆ RE × ER = {(re, er) : re ∈ RE, er ∈ ER}
+E = ER ⊆ E × R = {(e, r) : e ∈ E, r ∈ E}
+R = SO ⊆ S × O = {(s, o) : s ∈ E, o ∈ E}
 ```
 
 ### 3.2. Proof of Equivalence
 
-Entity tuple is equivalent to subject-object tuple:
+A triplet is equivalent to a combination of two duplets:
+
 ```
-e = (s, o, r) = ((s, o), r) = (so, r) ≡ so = (so, re)
+t = (r, s, o) = (r, (s, o)) = (e, d)
 ```
 
-Object tuple is equivalent to entity-relation tuple:
-```
-o = (e, r, s) = ((e, r), s) = (er, s) ≡ er = (er, so)
-```
+where:
+- e ∈ E — entity in the role of relation
+- d = (s, o) ∈ SO — subject-object duplet
 
-Relation tuple is equivalent to object-subject tuple:
-```
-r = (o, s, e) = ((o, s), e) = (os, e) ≡ os = (os, er)
-```
+Thus, each triplet is uniquely determined by:
+1. A reference to the entity-relation (e)
+2. A subject-object duplet (d = (s, o))
 
-Subject tuple is equivalent to relation-entity tuple:
-```
-s = (r, e, o) = ((r, e), o) = (re, o) ≡ re = (re, os)
-```
-
-## 4. Relations Model as Associative Network
+## 4. Relations Model as a Function
 
 ### 4.1. Definitions from Links Theory
 
@@ -167,19 +151,26 @@ mapping a reference l from set L to a reference vector of length n.
 anetd : L → L²
 ```
 
-### 4.2. Relations Model as Three-Dimensional Associative Network
+### 4.2. Relations Model as a Function
 
-**Theorem 4.1.** The Relations Model can be represented as a three-dimensional associative network:
+**Definition 4.4 (Relations Model).** The Relations Model can be represented as a function:
 
 ```
-λ : L → L × L × L = L³
+rm : E → E × E × E = E³
 ```
 
-where each entity with identifier l is mapped to a triplet (s, r, o).
+where each entity with identifier e is mapped to a triplet (r, s, o).
+
+Equivalently, considering the nested pair structure:
+
+```
+rm : E → E × (E × E)
+rm(e) = (r, (s, o))
+```
 
 ### 4.3. Reduction to Two-Dimensional Associative Network
 
-**Theorem 4.2.** A three-dimensional associative network can be transformed into a two-dimensional associative network (duplet network) without information loss.
+**Theorem 4.1.** A three-dimensional associative network can be transformed into a two-dimensional associative network (duplet network) without information loss.
 
 The transformation is performed through nested ordered pairs:
 
@@ -193,10 +184,10 @@ where NP = {∅ | (l, np), l ∈ L, np ∈ NP} — the set of nested ordered pai
 
 ### 5.1. Definition of Triune Entity
 
-**Definition 5.1.** A triune entity is an element of the Relations Model defined by a triplet (s, r, o), where:
+**Definition 5.1.** A triune entity is an element of the Relations Model defined by a triplet (r, s, o), where:
 
-- **s (subject)** — subject, defining the view (View)
 - **r (relation)** — relation, defining the controller (Controller)
+- **s (subject)** — subject, defining the view (View)
 - **o (object)** — object, defining the model (Model)
 
 ### 5.2. Entity Topologies
@@ -239,7 +230,7 @@ The Relations Model supports reflection: a program can analyze and modify its ow
 
 ### 6.3. Closure
 
-**Theorem 6.1 (Closure).** The sets E, O, R, S are equivalent. Any entity can act as subject, relation, or object in other entities.
+**Theorem 6.1 (Closure).** The sets E, S, O are equivalent. Any entity can act as subject, relation, or object in other entities.
 
 ### 6.4. Fractality
 
@@ -264,8 +255,8 @@ An entity in JSON representation is defined by an object with fields:
 
 ```json
 {
-  "$sub": "<subject>",
   "$rel": "<relation>",
+  "$sub": "<subject>",
   "$obj": "<object>"
 }
 ```
@@ -278,8 +269,7 @@ An interesting analogy can be drawn with the complementarity principle of nucleo
 - Guanine (G) bonds only with cytosine (C) — triple bond
 
 Similarly in the Relations Model:
-- OS is conjugate with SO
-- ER is conjugate with RE
+- ER is conjugate with SO (entity-relation ↔ subject-object)
 
 This property of preserving relative association type ensures structural integrity.
 
@@ -287,11 +277,11 @@ This property of preserving relative association type ensures structural integri
 
 The mathematical formalization of the Relations Model in terms of set theory shows that:
 
-1. Triplets (tuples of length 3) can be equivalently represented as nested ordered pairs (two duplets).
+1. Triplets (tuples of length 3) can be equivalently represented as nested ordered pairs: (r, s, o) = (r, (s, o)) = (e, d).
 
-2. The Relations Model is a three-dimensional associative network of the form λ : L → L³.
+2. The Relations Model is a function of the form rm : E → E³.
 
-3. The four interconnected sets {E, O, R, S} are equivalent to four sets of duplets {ER, OS, RE, SO}.
+3. Two basic duplet types {ER, SO} are sufficient to represent the entire model.
 
 4. The triune entity implements the MVC pattern at the level of the basic language structure.
 
