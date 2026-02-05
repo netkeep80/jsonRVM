@@ -3,12 +3,12 @@ var indexSectionsWithContent =
   0: "$0123456789:abcdefghijklmnopqrstuvwx~абвгдежзийклмнопрстуфхцчшщъыьэюяё—",
   1: "bcdfijrstv",
   2: "r",
-  3: "abdfijlmprstvwп",
+  3: "abcdfijlmprstvwп",
   4: "acdefgijlmoqstuvwx~",
   5: "$dehikloprsv",
   6: "bfikmnpt",
   7: "adimostv",
-  8: "abdjlmoprtавмопрстф"
+  8: "abcdjlmoprtавмопрстф"
 };
 
 var indexSectionNames =

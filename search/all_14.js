@@ -10,11 +10,10 @@ var searchData=
   ['importloaddllentity_7',['ImportLoadDLLEntity',['../namespacerm.html#a6f046c239a143222b4a99fa4f2ee15ba',1,'rm']]],
   ['init_8',['Init',['../structrm_1_1_d_l_l.html#a0902f31f222d9159864ff6f027e556ef',1,'rm::DLL']]],
   ['initdict_9',['InitDict',['../namespacerm.html#a375c4dfe9f5060da78a3b07e83a5c6e7',1,'rm']]],
-  ['interconnected_20sets_10',['2. Relations Model as Four Interconnected Sets',['../md_doc_2relations-model-en.html#autotoc_md93',1,'']]],
-  ['interface_2eh_11',['interface.h',['../interface_8h.html',1,'']]],
-  ['interface_5ft_12',['interface_t',['../classrm_1_1interface__t.html',1,'rm']]],
-  ['interface_5ft_3c_20database_5fapi_20_3e_13',['interface_t&lt; database_api &gt;',['../classrm_1_1interface__t.html',1,'rm']]],
-  ['internal_20structure_20of_20links_14',['2.2. Internal Structure of Links',['../md_doc_2relations-model-en.html#autotoc_md95',1,'']]],
-  ['introduction_15',['Introduction',['../md_doc_2relations-model-en.html#autotoc_md88',1,'']]],
-  ['introduction_2emd_16',['Introduction.md',['../_introduction_8md.html',1,'']]]
+  ['interface_2eh_10',['interface.h',['../interface_8h.html',1,'']]],
+  ['interface_5ft_11',['interface_t',['../classrm_1_1interface__t.html',1,'rm']]],
+  ['interface_5ft_3c_20database_5fapi_20_3e_12',['interface_t&lt; database_api &gt;',['../classrm_1_1interface__t.html',1,'rm']]],
+  ['internal_20structure_20of_20links_13',['2. Internal Structure of Links',['../md_doc_2relations-model-en.html#autotoc_md93',1,'']]],
+  ['introduction_14',['Introduction',['../md_doc_2relations-model-en.html#autotoc_md88',1,'']]],
+  ['introduction_2emd_15',['Introduction.md',['../_introduction_8md.html',1,'']]]
 ];

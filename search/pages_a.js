@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['анализ_20проекта_20jsonrvm_0',['Анализ проекта jsonRVM',['../md_analysis.html',1,'']]],
-  ['ассоциативаня_20модель_20отношений_20формата_20json_1',['Ассоциативаня Модель Отношений формата json',['../md_doc_2json__definition.html',1,'']]]
+  ['the_20jsonrvm_20project_0',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]],
+  ['the_20relations_20model_1',['Mathematical Description of the Relations Model',['../md_doc_2relations-model-en.html',1,'']]]
 ];

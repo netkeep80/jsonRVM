@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['mathematical_20description_20of_20the_20relations_20model_0',['Mathematical Description of the Relations Model',['../md_doc_2relations-model-en.html',1,'']]],
-  ['model_1',['Mathematical Description of the Relations Model',['../md_doc_2relations-model-en.html',1,'']]]
+  ['license_0',['LICENSE',['../md_doc_2_l_i_c_e_n_s_e.html',1,'']]]
 ];
