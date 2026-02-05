@@ -96,47 +96,47 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
   <div class="headertitle"><div class="title">Анализ проекта jsonRVM</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md179"></a> </p>
-<h1><a class="anchor" id="autotoc_md180"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md177"></a> </p>
+<h1><a class="anchor" id="autotoc_md178"></a>
 Обзор</h1>
 <p>jsonRVM (json Relations Model Virtual Machine) — это виртуальная машина для исполнения программ, написанных на декларативном языке "Модель Отношений" (Relations Model, RM). Программы представляются в формате JSON и интерпретируются как байткод. Проект реализован на C++17 и предоставляет уникальный подход к метапрограммированию через сущностно-ориентированную парадигму.</p>
 <p><b>Версия:</b> 3.0.0 <b>Лицензия:</b> MIT <b>Автор:</b> Вертушкин Роман Павлович (2016-2021)</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md182"></a>
+<h1><a class="anchor" id="autotoc_md180"></a>
 Сильные стороны</h1>
-<h2><a class="anchor" id="autotoc_md183"></a>
+<h2><a class="anchor" id="autotoc_md181"></a>
 1. Архитектурные преимущества</h2>
-<h3><a class="anchor" id="autotoc_md184"></a>
+<h3><a class="anchor" id="autotoc_md182"></a>
 1.1. Декларативный подход</h3>
 <ul>
 <li>Программы описывают <em>что</em> должно быть сделано, а не <em>как</em></li>
 <li>JSON-представление обеспечивает универсальность и читаемость</li>
 <li>Гомоиконичность: код и данные имеют одинаковую структуру</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md185"></a>
+<h3><a class="anchor" id="autotoc_md183"></a>
 1.2. Модель триединой сущности</h3>
 <ul>
 <li>Уникальная концепция: каждая сущность определяется триплетом (субъект, отношение, объект)</li>
 <li>Поддержка MVC-паттерна на уровне языка: Model ($obj), View ($sub), Controller ($rel)</li>
 <li>Рекурсивная и фрактальная природа модели позволяет описывать сложные иерархические системы</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md186"></a>
+<h3><a class="anchor" id="autotoc_md184"></a>
 1.3. Встроенный параллелизм</h3>
 <ul>
 <li>Автоматическое распараллеливание: объекты JSON исполняют ключи параллельно (<code>std::execution::par</code>)</li>
 <li>Массивы обеспечивают последовательное выполнение</li>
 <li>Потокобезопасность через мьютексы (<code>std::mutex</code>, <code>std::lock_guard</code>)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md187"></a>
+<h3><a class="anchor" id="autotoc_md185"></a>
 1.4. Расширяемость</h3>
 <ul>
 <li>Система плагинов через динамические библиотеки (DLL)</li>
 <li>Функция <code>import_relations_model_to</code> для регистрации словарей отношений</li>
 <li>Абстракция базы данных через <code>database_api</code> интерфейс</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md188"></a>
+<h2><a class="anchor" id="autotoc_md186"></a>
 2. Функциональные преимущества</h2>
-<h3><a class="anchor" id="autotoc_md189"></a>
+<h3><a class="anchor" id="autotoc_md187"></a>
 2.1. Богатый базовый словарь</h3>
 <p>Реализовано более 60 базовых операций:</p><ul>
 <li><b>Математика:</b> <code>+</code>, <code>-</code>, <code>*</code>, <code>:</code>, <code>pow</code>, <code>sqrt</code>, <code>sum</code></li>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li><b>Генерация:</b> <code>xml</code>, <code>html</code>, <code>tag</code> для создания разметки</li>
 <li><b>Время:</b> <code>steady_clock/milliseconds</code>, <code>steady_clock/seconds</code>, и др.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md190"></a>
+<h3><a class="anchor" id="autotoc_md188"></a>
 2.2. Гибкая адресация</h3>
 <ul>
 <li>Абсолютная адресация: <code>/entity/property/subproperty</code></li>
@@ -156,23 +156,23 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>Многоуровневая контекстная адресация: <code>$$ent</code>, <code>$$$obj</code>, <code>$$$$rel</code> (до 4 уровней вложенности)</li>
 <li>Ссылки через <code>$ref</code> для динамического разрешения</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md191"></a>
+<h3><a class="anchor" id="autotoc_md189"></a>
 2.3. Обработка исключений</h3>
 <ul>
 <li>JSON-исключения с полным контекстом ошибки</li>
 <li>Операции <code>throw</code> и <code>catch</code> на уровне языка</li>
 <li>Детальная трассировка через <code>vm_ctx::throw_json()</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md192"></a>
+<h2><a class="anchor" id="autotoc_md190"></a>
 3. Технические преимущества</h2>
-<h3><a class="anchor" id="autotoc_md193"></a>
+<h3><a class="anchor" id="autotoc_md191"></a>
 3.1. Качество кода</h3>
 <ul>
 <li>Подробная документация в формате Doxygen</li>
 <li>Использование современного C++17 (execution policies, string literals)</li>
 <li>Автоматическая генерация документации через GitHub Actions</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md194"></a>
+<h3><a class="anchor" id="autotoc_md192"></a>
 3.2. Зависимости</h3>
 <ul>
 <li>nlohmann/json — надёжная библиотека для работы с JSON</li>
@@ -180,7 +180,7 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>cpp-httplib — HTTP/HTTPS клиент/сервер</li>
 <li>xml2json — конвертация XML в JSON</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md195"></a>
+<h3><a class="anchor" id="autotoc_md193"></a>
 3.3. Тестирование</h3>
 <ul>
 <li>Unit-тесты на doctest</li>
@@ -188,47 +188,47 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>Проверка адресации, фильтрации, производительности</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md197"></a>
+<h1><a class="anchor" id="autotoc_md195"></a>
 Слабые стороны</h1>
-<h2><a class="anchor" id="autotoc_md198"></a>
+<h2><a class="anchor" id="autotoc_md196"></a>
 1. Архитектурные ограничения</h2>
-<h3><a class="anchor" id="autotoc_md199"></a>
+<h3><a class="anchor" id="autotoc_md197"></a>
 1.1. Платформозависимость</h3>
 <ul>
 <li><b>Критично:</b> DLL-загрузка работает только на Windows (<code>windows.h</code>, <code>LoadLibrary</code>, <code>HMODULE</code>)</li>
 <li>Отсутствует кроссплатформенная абстракция для динамической загрузки</li>
 <li>Использование CP1251 для имён файлов — ограничение для не-Windows систем</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md200"></a>
+<h3><a class="anchor" id="autotoc_md198"></a>
 1.2. Ограниченная глубина контекста</h3>
 <ul>
 <li>Жёстко закодированы только 4 уровня контекстной адресации (<code>$</code>, <code>$$</code>, <code>$$$</code>, <code>$$$$</code>)</li>
 <li>Расширение требует модификации исходного кода <a class="el" href="vm_8rm_8h.html">vm.rm.h</a></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md201"></a>
+<h3><a class="anchor" id="autotoc_md199"></a>
 1.3. Отсутствие оптимизаций</h3>
 <ul>
 <li>Нет JIT-компиляции или кэширования байткода</li>
 <li>Каждое исполнение проходит полную интерпретацию</li>
 <li>Отсутствует ленивая вычисление (lazy evaluation)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md202"></a>
+<h2><a class="anchor" id="autotoc_md200"></a>
 2. Функциональные ограничения</h2>
-<h3><a class="anchor" id="autotoc_md203"></a>
+<h3><a class="anchor" id="autotoc_md201"></a>
 2.1. Неполная реализация database_api</h3>
 <ul>
 <li><code>query_entity</code> — заглушка (только вывод в консоль)</li>
 <li>Нет поддержки транзакций</li>
 <li>Нет механизма миграций или версионирования схемы</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md204"></a>
+<h3><a class="anchor" id="autotoc_md202"></a>
 2.2. Ограниченная работа со строками</h3>
 <ul>
 <li>Нет регулярных выражений</li>
 <li>Нет форматирования строк (printf-style)</li>
 <li>Отсутствует работа с Unicode (только CP1251 ↔ UTF-8)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md205"></a>
+<h3><a class="anchor" id="autotoc_md203"></a>
 2.3. Отсутствующие возможности</h3>
 <ul>
 <li>Нет модульной системы (namespace/module)</li>
@@ -236,9 +236,9 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>Отсутствует отладчик или пошаговое исполнение</li>
 <li>Нет профилировщика производительности</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md206"></a>
+<h2><a class="anchor" id="autotoc_md204"></a>
 3. Технические проблемы</h2>
-<h3><a class="anchor" id="autotoc_md207"></a>
+<h3><a class="anchor" id="autotoc_md205"></a>
 3.1. Код</h3>
 <ul>
 <li>Смешение стилей: MSVC-специфичный синтаксис (<code>for each</code>)</li>
@@ -246,23 +246,23 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>Отсутствует форматирование кода (clang-format)</li>
 <li>Некоторые функции не имеют описания (<code>""s</code> в <code>add_base_entity</code>)</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md208"></a>
+<h3><a class="anchor" id="autotoc_md206"></a>
 3.2. Сборка</h3>
 <ul>
 <li>Нет CI/CD для тестирования (только Doxygen публикация)</li>
 <li>CMakeLists.txt — опечатка: <code>ENABLE_TEST</code> vs <code>ENABLE_TESTS</code></li>
 <li>Отсутствует vcpkg/conan интеграция для зависимостей</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md209"></a>
+<h3><a class="anchor" id="autotoc_md207"></a>
 3.3. Документация</h3>
 <ul>
 <li><a class="el" href="_r_e_a_d_m_e_8md.html">README.md</a> содержит устаревшие badge-ссылки (workflow/status)</li>
 <li>Часть документации только на русском языке</li>
 <li>Нет примеров интеграции с внешними проектами</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md210"></a>
+<h2><a class="anchor" id="autotoc_md208"></a>
 4. Безопасность</h2>
-<h3><a class="anchor" id="autotoc_md211"></a>
+<h3><a class="anchor" id="autotoc_md209"></a>
 4.1. Потенциальные уязвимости</h3>
 <ul>
 <li>Нет санитизации путей при загрузке файлов</li>
@@ -270,7 +270,7 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <li>Возможен DoS через глубокую рекурсию JSON</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md213"></a>
+<h1><a class="anchor" id="autotoc_md211"></a>
 Статистика проекта</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -287,7 +287,7 @@ $(document).ready(function(){initNavTree('md_analysis.html',''); initResizable()
 <td class="markdownTableBodyNone">Третьесторонние библиотеки   </td><td class="markdownTableBodyNone">5   </td></tr>
 </table>
 <hr  />
-<h1><a class="anchor" id="autotoc_md215"></a>
+<h1><a class="anchor" id="autotoc_md213"></a>
 Заключение</h1>
 <p>jsonRVM представляет собой инновационный проект с уникальной концептуальной основой — моделью отношений (Relations Model). Сильные стороны проекта включают декларативный подход, встроенный параллелизм и богатый базовый словарь операций. Основные слабости связаны с платформозависимостью (Windows-only для DLL), отсутствием кроссплатформенной поддержки и некоторыми техническими долгами в коде.</p>
 <p>Проект имеет значительный потенциал для применения в области:</p><ul>

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['9_20заключение_0',['9. Заключение',['../md_doc_2relations-model-ru.html#autotoc_md145',1,'']]],
-  ['9_20conclusion_1',['9. Conclusion',['../md_doc_2relations-model-en.html#autotoc_md115',1,'']]]
+  ['_3a_0',[':',['../md_doc_2_r_v_m.html#autotoc_md152',1,'Правила json скрипта (проекции МО в json):'],['../md_doc_2_r_v_m.html#autotoc_md156',1,'Семантика json значений при исполнении  (json как байткод RVM):']]]
 ];

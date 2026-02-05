@@ -190,205 +190,203 @@ var NAVTREE =
         [ "7.1. Type Correspondence", "md_doc_2relations-model-en.html#autotoc_md112", null ],
         [ "7.2. Executable Constructs", "md_doc_2relations-model-en.html#autotoc_md113", null ]
       ] ],
-      [ "8. Analogy with Molecular Biology", "md_doc_2relations-model-en.html#autotoc_md114", null ],
-      [ "9. Conclusion", "md_doc_2relations-model-en.html#autotoc_md115", null ],
-      [ "References", "md_doc_2relations-model-en.html#autotoc_md116", null ]
+      [ "8. Conclusion", "md_doc_2relations-model-en.html#autotoc_md114", null ],
+      [ "References", "md_doc_2relations-model-en.html#autotoc_md115", null ]
     ] ],
     [ "Математическое описание Модели Отношений", "md_doc_2relations-model-ru.html", [
-      [ "Введение", "md_doc_2relations-model-ru.html#autotoc_md118", null ],
-      [ "1. Базовые определения", "md_doc_2relations-model-ru.html#autotoc_md119", [
-        [ "1.1. Ссылки на сущности", "md_doc_2relations-model-ru.html#autotoc_md120", null ],
-        [ "1.2. Триплеты и Дуплеты", "md_doc_2relations-model-ru.html#autotoc_md121", null ],
-        [ "1.3. Представление триплета через вложенные упорядоченные пары", "md_doc_2relations-model-ru.html#autotoc_md122", null ]
+      [ "Введение", "md_doc_2relations-model-ru.html#autotoc_md117", null ],
+      [ "1. Базовые определения", "md_doc_2relations-model-ru.html#autotoc_md118", [
+        [ "1.1. Ссылки на сущности", "md_doc_2relations-model-ru.html#autotoc_md119", null ],
+        [ "1.2. Триплеты и Дуплеты", "md_doc_2relations-model-ru.html#autotoc_md120", null ],
+        [ "1.3. Представление триплета через вложенные упорядоченные пары", "md_doc_2relations-model-ru.html#autotoc_md121", null ]
       ] ],
-      [ "2. Внутренняя структура связей", "md_doc_2relations-model-ru.html#autotoc_md123", [
-        [ "2.1. Два аспекта сущности", "md_doc_2relations-model-ru.html#autotoc_md124", null ],
-        [ "2.2. Типы связей (дуплетов)", "md_doc_2relations-model-ru.html#autotoc_md125", null ]
+      [ "2. Внутренняя структура связей", "md_doc_2relations-model-ru.html#autotoc_md122", [
+        [ "2.1. Два аспекта сущности", "md_doc_2relations-model-ru.html#autotoc_md123", null ],
+        [ "2.2. Типы связей (дуплетов)", "md_doc_2relations-model-ru.html#autotoc_md124", null ]
       ] ],
-      [ "3. Сведение триплетов к дуплетам", "md_doc_2relations-model-ru.html#autotoc_md126", [
-        [ "3.1. Теорема об эквивалентности представлений", "md_doc_2relations-model-ru.html#autotoc_md127", null ],
-        [ "3.2. Доказательство эквивалентности", "md_doc_2relations-model-ru.html#autotoc_md128", null ]
+      [ "3. Сведение триплетов к дуплетам", "md_doc_2relations-model-ru.html#autotoc_md125", [
+        [ "3.1. Теорема об эквивалентности представлений", "md_doc_2relations-model-ru.html#autotoc_md126", null ],
+        [ "3.2. Доказательство эквивалентности", "md_doc_2relations-model-ru.html#autotoc_md127", null ]
       ] ],
-      [ "4. Модель Отношений как функция", "md_doc_2relations-model-ru.html#autotoc_md129", [
-        [ "4.1. Определение из Теории связей", "md_doc_2relations-model-ru.html#autotoc_md130", null ],
-        [ "4.2. Модель Отношений как функция", "md_doc_2relations-model-ru.html#autotoc_md131", null ],
-        [ "4.3. Сведение к двумерной асети", "md_doc_2relations-model-ru.html#autotoc_md132", null ]
+      [ "4. Модель Отношений как функция", "md_doc_2relations-model-ru.html#autotoc_md128", [
+        [ "4.1. Определение из Теории связей", "md_doc_2relations-model-ru.html#autotoc_md129", null ],
+        [ "4.2. Модель Отношений как функция", "md_doc_2relations-model-ru.html#autotoc_md130", null ],
+        [ "4.3. Сведение к двумерной асети", "md_doc_2relations-model-ru.html#autotoc_md131", null ]
       ] ],
-      [ "5. Триединая сущность", "md_doc_2relations-model-ru.html#autotoc_md133", [
-        [ "5.1. Определение триединой сущности", "md_doc_2relations-model-ru.html#autotoc_md134", null ],
-        [ "5.2. Топологии сущностей", "md_doc_2relations-model-ru.html#autotoc_md135", null ]
+      [ "5. Триединая сущность", "md_doc_2relations-model-ru.html#autotoc_md132", [
+        [ "5.1. Определение триединой сущности", "md_doc_2relations-model-ru.html#autotoc_md133", null ],
+        [ "5.2. Топологии сущностей", "md_doc_2relations-model-ru.html#autotoc_md134", null ]
       ] ],
-      [ "6. Свойства Модели Отношений", "md_doc_2relations-model-ru.html#autotoc_md136", [
-        [ "6.1. Гомоиконичность", "md_doc_2relations-model-ru.html#autotoc_md137", null ],
-        [ "6.2. Рефлексивность", "md_doc_2relations-model-ru.html#autotoc_md138", null ],
-        [ "6.3. Замкнутость", "md_doc_2relations-model-ru.html#autotoc_md139", null ],
-        [ "6.4. Фрактальность", "md_doc_2relations-model-ru.html#autotoc_md140", null ]
+      [ "6. Свойства Модели Отношений", "md_doc_2relations-model-ru.html#autotoc_md135", [
+        [ "6.1. Гомоиконичность", "md_doc_2relations-model-ru.html#autotoc_md136", null ],
+        [ "6.2. Рефлексивность", "md_doc_2relations-model-ru.html#autotoc_md137", null ],
+        [ "6.3. Замкнутость", "md_doc_2relations-model-ru.html#autotoc_md138", null ],
+        [ "6.4. Фрактальность", "md_doc_2relations-model-ru.html#autotoc_md139", null ]
       ] ],
-      [ "7. JSON-представление", "md_doc_2relations-model-ru.html#autotoc_md141", [
-        [ "7.1. Соответствие типов", "md_doc_2relations-model-ru.html#autotoc_md142", null ],
-        [ "7.2. Исполняемые конструкции", "md_doc_2relations-model-ru.html#autotoc_md143", null ]
+      [ "7. JSON-представление", "md_doc_2relations-model-ru.html#autotoc_md140", [
+        [ "7.1. Соответствие типов", "md_doc_2relations-model-ru.html#autotoc_md141", null ],
+        [ "7.2. Исполняемые конструкции", "md_doc_2relations-model-ru.html#autotoc_md142", null ]
       ] ],
-      [ "8. Аналогия с молекулярной биологией", "md_doc_2relations-model-ru.html#autotoc_md144", null ],
-      [ "9. Заключение", "md_doc_2relations-model-ru.html#autotoc_md145", null ],
-      [ "Литература", "md_doc_2relations-model-ru.html#autotoc_md146", null ]
+      [ "8. Заключение", "md_doc_2relations-model-ru.html#autotoc_md143", null ],
+      [ "Литература", "md_doc_2relations-model-ru.html#autotoc_md144", null ]
     ] ],
     [ "Модель Отношений", "md_doc_2_r_m.html", [
-      [ "Виды топологий сущностей МО", "md_doc_2_r_m.html#autotoc_md148", null ],
-      [ "json проекция в МО", "md_doc_2_r_m.html#autotoc_md149", null ]
+      [ "Виды топологий сущностей МО", "md_doc_2_r_m.html#autotoc_md146", null ],
+      [ "json проекция в МО", "md_doc_2_r_m.html#autotoc_md147", null ]
     ] ],
     [ "Модель Отношений (старый текст)", "md_doc_2rmodel.html", null ],
     [ "Реляционная виртуальная машина", "md_doc_2_r_v_m.html", [
-      [ "Инициализация", "md_doc_2_r_v_m.html#autotoc_md152", null ],
-      [ "Исполнение МО", "md_doc_2_r_v_m.html#autotoc_md153", null ],
-      [ "Правила json скрипта (проекции МО в json):", "md_doc_2_r_v_m.html#autotoc_md154", null ],
-      [ "Варианты взаимоотношений узлов json:", "md_doc_2_r_v_m.html#autotoc_md155", null ],
-      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc_2_r_v_m.html#autotoc_md156", null ],
-      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc_2_r_v_m.html#autotoc_md157", null ],
-      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc_2_r_v_m.html#autotoc_md158", null ],
-      [ "Программирование на МО", "md_doc_2_r_v_m.html#autotoc_md159", null ],
-      [ "Контекст исполнения сущности", "md_doc_2_r_v_m.html#autotoc_md160", null ],
-      [ "Стэк", "md_doc_2_r_v_m.html#autotoc_md161", null ],
-      [ "Аналогия исполнения", "md_doc_2_r_v_m.html#autotoc_md162", null ]
+      [ "Инициализация", "md_doc_2_r_v_m.html#autotoc_md150", null ],
+      [ "Исполнение МО", "md_doc_2_r_v_m.html#autotoc_md151", null ],
+      [ "Правила json скрипта (проекции МО в json):", "md_doc_2_r_v_m.html#autotoc_md152", null ],
+      [ "Варианты взаимоотношений узлов json:", "md_doc_2_r_v_m.html#autotoc_md153", null ],
+      [ "О свойствах (атрибутах) и элементах сущности:", "md_doc_2_r_v_m.html#autotoc_md154", null ],
+      [ "Семантика значений разных типов в полях $sub, $rel, $obj json объекта описывающего сущность", "md_doc_2_r_v_m.html#autotoc_md155", null ],
+      [ "Семантика json значений при исполнении  (json как байткод RVM):", "md_doc_2_r_v_m.html#autotoc_md156", null ],
+      [ "Программирование на МО", "md_doc_2_r_v_m.html#autotoc_md157", null ],
+      [ "Контекст исполнения сущности", "md_doc_2_r_v_m.html#autotoc_md158", null ],
+      [ "Стэк", "md_doc_2_r_v_m.html#autotoc_md159", null ],
+      [ "Аналогия исполнения", "md_doc_2_r_v_m.html#autotoc_md160", null ]
     ] ],
     [ "Словарь общепринятых терминов", "md_doc_2wiki__concepts.html", null ],
     [ "Advantages and benefits of the jsonRVM project", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html", [
-      [ "Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md164", [
-        [ "Архитектурные преимущества и концептуальные основы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md165", [
-          [ "Декларативная парадигма программирования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md166", null ],
-          [ "Система сущностей и отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md167", null ]
+      [ "Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md162", [
+        [ "Архитектурные преимущества и концептуальные основы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md163", [
+          [ "Декларативная парадигма программирования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md164", null ],
+          [ "Система сущностей и отношений", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md165", null ]
         ] ],
-        [ "Технические возможности и производительность", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md168", [
-          [ "Поддержка параллелизма и многопоточности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md169", null ],
-          [ "Оптимизации производительности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md170", null ]
+        [ "Технические возможности и производительность", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md166", [
+          [ "Поддержка параллелизма и многопоточности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md167", null ],
+          [ "Оптимизации производительности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md168", null ]
         ] ],
-        [ "Расширяемость и интеграционные возможности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md171", [
-          [ "Система загрузки внешних модулей", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md172", null ],
-          [ "Интеграция с современными технологиями", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md173", null ]
+        [ "Расширяемость и интеграционные возможности", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md169", [
+          [ "Система загрузки внешних модулей", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md170", null ],
+          [ "Интеграция с современными технологиями", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md171", null ]
         ] ],
-        [ "Практические применения и сценарии использования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md174", [
-          [ "ORM-системы и управление базами данных", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md175", null ],
-          [ "Микросервисная архитектура и распределенные системы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md176", null ],
-          [ "Системы конфигурации и плагины", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md177", null ]
+        [ "Практические применения и сценарии использования", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md172", [
+          [ "ORM-системы и управление базами данных", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md173", null ],
+          [ "Микросервисная архитектура и распределенные системы", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md174", null ],
+          [ "Системы конфигурации и плагины", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md175", null ]
         ] ],
-        [ "Заключение", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md178", null ]
+        [ "Заключение", "md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md176", null ]
       ] ]
     ] ],
     [ "Анализ проекта jsonRVM", "md_analysis.html", [
-      [ "Обзор", "md_analysis.html#autotoc_md180", null ],
-      [ "Сильные стороны", "md_analysis.html#autotoc_md182", [
-        [ "1. Архитектурные преимущества", "md_analysis.html#autotoc_md183", [
-          [ "1.1. Декларативный подход", "md_analysis.html#autotoc_md184", null ],
-          [ "1.2. Модель триединой сущности", "md_analysis.html#autotoc_md185", null ],
-          [ "1.3. Встроенный параллелизм", "md_analysis.html#autotoc_md186", null ],
-          [ "1.4. Расширяемость", "md_analysis.html#autotoc_md187", null ]
+      [ "Обзор", "md_analysis.html#autotoc_md178", null ],
+      [ "Сильные стороны", "md_analysis.html#autotoc_md180", [
+        [ "1. Архитектурные преимущества", "md_analysis.html#autotoc_md181", [
+          [ "1.1. Декларативный подход", "md_analysis.html#autotoc_md182", null ],
+          [ "1.2. Модель триединой сущности", "md_analysis.html#autotoc_md183", null ],
+          [ "1.3. Встроенный параллелизм", "md_analysis.html#autotoc_md184", null ],
+          [ "1.4. Расширяемость", "md_analysis.html#autotoc_md185", null ]
         ] ],
-        [ "2. Функциональные преимущества", "md_analysis.html#autotoc_md188", [
-          [ "2.1. Богатый базовый словарь", "md_analysis.html#autotoc_md189", null ],
-          [ "2.2. Гибкая адресация", "md_analysis.html#autotoc_md190", null ],
-          [ "2.3. Обработка исключений", "md_analysis.html#autotoc_md191", null ]
+        [ "2. Функциональные преимущества", "md_analysis.html#autotoc_md186", [
+          [ "2.1. Богатый базовый словарь", "md_analysis.html#autotoc_md187", null ],
+          [ "2.2. Гибкая адресация", "md_analysis.html#autotoc_md188", null ],
+          [ "2.3. Обработка исключений", "md_analysis.html#autotoc_md189", null ]
         ] ],
-        [ "3. Технические преимущества", "md_analysis.html#autotoc_md192", [
-          [ "3.1. Качество кода", "md_analysis.html#autotoc_md193", null ],
-          [ "3.2. Зависимости", "md_analysis.html#autotoc_md194", null ],
-          [ "3.3. Тестирование", "md_analysis.html#autotoc_md195", null ]
+        [ "3. Технические преимущества", "md_analysis.html#autotoc_md190", [
+          [ "3.1. Качество кода", "md_analysis.html#autotoc_md191", null ],
+          [ "3.2. Зависимости", "md_analysis.html#autotoc_md192", null ],
+          [ "3.3. Тестирование", "md_analysis.html#autotoc_md193", null ]
         ] ]
       ] ],
-      [ "Слабые стороны", "md_analysis.html#autotoc_md197", [
-        [ "1. Архитектурные ограничения", "md_analysis.html#autotoc_md198", [
-          [ "1.1. Платформозависимость", "md_analysis.html#autotoc_md199", null ],
-          [ "1.2. Ограниченная глубина контекста", "md_analysis.html#autotoc_md200", null ],
-          [ "1.3. Отсутствие оптимизаций", "md_analysis.html#autotoc_md201", null ]
+      [ "Слабые стороны", "md_analysis.html#autotoc_md195", [
+        [ "1. Архитектурные ограничения", "md_analysis.html#autotoc_md196", [
+          [ "1.1. Платформозависимость", "md_analysis.html#autotoc_md197", null ],
+          [ "1.2. Ограниченная глубина контекста", "md_analysis.html#autotoc_md198", null ],
+          [ "1.3. Отсутствие оптимизаций", "md_analysis.html#autotoc_md199", null ]
         ] ],
-        [ "2. Функциональные ограничения", "md_analysis.html#autotoc_md202", [
-          [ "2.1. Неполная реализация database_api", "md_analysis.html#autotoc_md203", null ],
-          [ "2.2. Ограниченная работа со строками", "md_analysis.html#autotoc_md204", null ],
-          [ "2.3. Отсутствующие возможности", "md_analysis.html#autotoc_md205", null ]
+        [ "2. Функциональные ограничения", "md_analysis.html#autotoc_md200", [
+          [ "2.1. Неполная реализация database_api", "md_analysis.html#autotoc_md201", null ],
+          [ "2.2. Ограниченная работа со строками", "md_analysis.html#autotoc_md202", null ],
+          [ "2.3. Отсутствующие возможности", "md_analysis.html#autotoc_md203", null ]
         ] ],
-        [ "3. Технические проблемы", "md_analysis.html#autotoc_md206", [
-          [ "3.1. Код", "md_analysis.html#autotoc_md207", null ],
-          [ "3.2. Сборка", "md_analysis.html#autotoc_md208", null ],
-          [ "3.3. Документация", "md_analysis.html#autotoc_md209", null ]
+        [ "3. Технические проблемы", "md_analysis.html#autotoc_md204", [
+          [ "3.1. Код", "md_analysis.html#autotoc_md205", null ],
+          [ "3.2. Сборка", "md_analysis.html#autotoc_md206", null ],
+          [ "3.3. Документация", "md_analysis.html#autotoc_md207", null ]
         ] ],
-        [ "4. Безопасность", "md_analysis.html#autotoc_md210", [
-          [ "4.1. Потенциальные уязвимости", "md_analysis.html#autotoc_md211", null ]
+        [ "4. Безопасность", "md_analysis.html#autotoc_md208", [
+          [ "4.1. Потенциальные уязвимости", "md_analysis.html#autotoc_md209", null ]
         ] ]
       ] ],
-      [ "Статистика проекта", "md_analysis.html#autotoc_md213", null ],
-      [ "Заключение", "md_analysis.html#autotoc_md215", null ]
+      [ "Статистика проекта", "md_analysis.html#autotoc_md211", null ],
+      [ "Заключение", "md_analysis.html#autotoc_md213", null ]
     ] ],
     [ "CLAUDE", "md__c_l_a_u_d_e.html", null ],
     [ "План развития проекта jsonRVM", "md_plan.html", [
-      [ "Введение", "md_plan.html#autotoc_md217", null ],
-      [ "Направление 1: Кроссплатформенность и доступность", "md_plan.html#autotoc_md219", [
-        [ "Обоснование", "md_plan.html#autotoc_md220", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md221", null ]
+      [ "Введение", "md_plan.html#autotoc_md215", null ],
+      [ "Направление 1: Кроссплатформенность и доступность", "md_plan.html#autotoc_md217", [
+        [ "Обоснование", "md_plan.html#autotoc_md218", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md219", null ]
       ] ],
-      [ "Направление 2: Образование и обучение программированию", "md_plan.html#autotoc_md223", [
-        [ "Обоснование", "md_plan.html#autotoc_md224", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md225", null ]
+      [ "Направление 2: Образование и обучение программированию", "md_plan.html#autotoc_md221", [
+        [ "Обоснование", "md_plan.html#autotoc_md222", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md223", null ]
       ] ],
-      [ "Направление 3: Интеграция с искусственным интеллектом", "md_plan.html#autotoc_md227", [
-        [ "Обоснование", "md_plan.html#autotoc_md228", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md229", null ]
+      [ "Направление 3: Интеграция с искусственным интеллектом", "md_plan.html#autotoc_md225", [
+        [ "Обоснование", "md_plan.html#autotoc_md226", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md227", null ]
       ] ],
-      [ "Направление 4: Производительность и оптимизация", "md_plan.html#autotoc_md231", [
-        [ "Обоснование", "md_plan.html#autotoc_md232", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md233", null ]
+      [ "Направление 4: Производительность и оптимизация", "md_plan.html#autotoc_md229", [
+        [ "Обоснование", "md_plan.html#autotoc_md230", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md231", null ]
       ] ],
-      [ "Направление 5: Расширение экосистемы", "md_plan.html#autotoc_md235", [
-        [ "Обоснование", "md_plan.html#autotoc_md236", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md237", null ]
+      [ "Направление 5: Расширение экосистемы", "md_plan.html#autotoc_md233", [
+        [ "Обоснование", "md_plan.html#autotoc_md234", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md235", null ]
       ] ],
-      [ "Направление 6: Моделирование и симуляция", "md_plan.html#autotoc_md239", [
-        [ "Обоснование", "md_plan.html#autotoc_md240", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md241", null ]
+      [ "Направление 6: Моделирование и симуляция", "md_plan.html#autotoc_md237", [
+        [ "Обоснование", "md_plan.html#autotoc_md238", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md239", null ]
       ] ],
-      [ "Направление 7: Качество и надёжность", "md_plan.html#autotoc_md243", [
-        [ "Обоснование", "md_plan.html#autotoc_md244", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md245", null ]
+      [ "Направление 7: Качество и надёжность", "md_plan.html#autotoc_md241", [
+        [ "Обоснование", "md_plan.html#autotoc_md242", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md243", null ]
       ] ],
-      [ "Дорожная карта", "md_plan.html#autotoc_md247", [
-        [ "Фаза 1: Стабилизация (ближайшие задачи)", "md_plan.html#autotoc_md248", null ],
-        [ "Фаза 2: Доступность (следующий этап)", "md_plan.html#autotoc_md249", null ],
-        [ "Фаза 3: Практичность (среднесрочная перспектива)", "md_plan.html#autotoc_md250", null ],
-        [ "Фаза 4: Масштабирование (долгосрочная перспектива)", "md_plan.html#autotoc_md251", null ]
+      [ "Дорожная карта", "md_plan.html#autotoc_md245", [
+        [ "Фаза 1: Стабилизация (ближайшие задачи)", "md_plan.html#autotoc_md246", null ],
+        [ "Фаза 2: Доступность (следующий этап)", "md_plan.html#autotoc_md247", null ],
+        [ "Фаза 3: Практичность (среднесрочная перспектива)", "md_plan.html#autotoc_md248", null ],
+        [ "Фаза 4: Масштабирование (долгосрочная перспектива)", "md_plan.html#autotoc_md249", null ]
       ] ],
-      [ "Заключение", "md_plan.html#autotoc_md253", null ]
+      [ "Заключение", "md_plan.html#autotoc_md251", null ]
     ] ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md254", [
-        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md256", null ]
+      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md252", [
+        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md254", null ]
       ] ],
-      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md258", [
-        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md259", [
-          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md260", null ],
-          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md261", null ],
-          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md262", null ],
-          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md263", null ]
+      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md256", [
+        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md257", [
+          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md258", null ],
+          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md259", null ],
+          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md260", null ],
+          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md261", null ]
         ] ]
       ] ],
-      [ "English", "md__r_e_a_d_m_e.html#autotoc_md265", [
-        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md266", [
-          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md267", null ],
-          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md268", null ],
-          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md269", null ],
-          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md270", null ]
+      [ "English", "md__r_e_a_d_m_e.html#autotoc_md263", [
+        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md264", [
+          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md265", null ],
+          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md266", null ],
+          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md267", null ],
+          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md268", null ]
         ] ],
-        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md272", [
-          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md273", null ],
-          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md274", null ],
-          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md275", null ],
-          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md276", null ]
+        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md270", [
+          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md271", null ],
+          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md272", null ],
+          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md273", null ],
+          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md274", null ]
         ] ],
-        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md278", [
-          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md279", null ],
-          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md280", null ],
-          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md281", null ]
+        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md276", [
+          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md277", null ],
+          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md278", null ],
+          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md279", null ]
         ] ],
-        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md283", null ],
-        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md285", null ],
-        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md287", null ],
-        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md289", null ]
+        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md281", null ],
+        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md283", null ],
+        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md285", null ],
+        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md287", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -426,7 +424,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "md_doc_2_dictionary.html",
-"namespacerm.html#a548173288c7fdfc99bcb350a593a7d26"
+"namespacerm.html#a5defc52892523ef4bfdbc289829a45ef"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
