@@ -261,19 +261,7 @@ An entity in JSON representation is defined by an object with fields:
 }
 ```
 
-## 8. Analogy with Molecular Biology
-
-An interesting analogy can be drawn with the complementarity principle of nucleotides in DNA:
-
-- Adenine (A) bonds only with thymine (T) — double bond
-- Guanine (G) bonds only with cytosine (C) — triple bond
-
-Similarly in the Relations Model:
-- ER is conjugate with SO (entity-relation ↔ subject-object)
-
-This property of preserving relative association type ensures structural integrity.
-
-## 9. Conclusion
+## 8. Conclusion
 
 The mathematical formalization of the Relations Model in terms of set theory shows that:
 
