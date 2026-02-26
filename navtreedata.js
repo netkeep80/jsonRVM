@@ -315,78 +315,116 @@ var NAVTREE =
       [ "Заключение", "md_analysis.html#autotoc_md213", null ]
     ] ],
     [ "CLAUDE", "md__c_l_a_u_d_e.html", null ],
-    [ "План развития проекта jsonRVM", "md_plan.html", [
-      [ "Введение", "md_plan.html#autotoc_md215", null ],
-      [ "Направление 1: Кроссплатформенность и доступность", "md_plan.html#autotoc_md217", [
-        [ "Обоснование", "md_plan.html#autotoc_md218", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md219", null ]
+    [ "Анализ перехода jsonRVM на Go, Rust или WebAssembly", "md_migration-analysis.html", [
+      [ "1. Текущее состояние проекта", "md_migration-analysis.html#autotoc_md216", [
+        [ "1.1 Обзор jsonRVM (C++17)", "md_migration-analysis.html#autotoc_md217", null ],
+        [ "1.2 Критические проблемы текущей реализации", "md_migration-analysis.html#autotoc_md218", null ]
       ] ],
-      [ "Направление 2: Образование и обучение программированию", "md_plan.html#autotoc_md221", [
-        [ "Обоснование", "md_plan.html#autotoc_md222", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md223", null ]
-      ] ],
-      [ "Направление 3: Интеграция с искусственным интеллектом", "md_plan.html#autotoc_md225", [
-        [ "Обоснование", "md_plan.html#autotoc_md226", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md227", null ]
-      ] ],
-      [ "Направление 4: Производительность и оптимизация", "md_plan.html#autotoc_md229", [
-        [ "Обоснование", "md_plan.html#autotoc_md230", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md231", null ]
-      ] ],
-      [ "Направление 5: Расширение экосистемы", "md_plan.html#autotoc_md233", [
-        [ "Обоснование", "md_plan.html#autotoc_md234", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md235", null ]
-      ] ],
-      [ "Направление 6: Моделирование и симуляция", "md_plan.html#autotoc_md237", [
-        [ "Обоснование", "md_plan.html#autotoc_md238", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md239", null ]
-      ] ],
-      [ "Направление 7: Качество и надёжность", "md_plan.html#autotoc_md241", [
-        [ "Обоснование", "md_plan.html#autotoc_md242", null ],
-        [ "Задачи по приоритету", "md_plan.html#autotoc_md243", null ]
-      ] ],
-      [ "Дорожная карта", "md_plan.html#autotoc_md245", [
-        [ "Фаза 1: Стабилизация (ближайшие задачи)", "md_plan.html#autotoc_md246", null ],
-        [ "Фаза 2: Доступность (следующий этап)", "md_plan.html#autotoc_md247", null ],
-        [ "Фаза 3: Практичность (среднесрочная перспектива)", "md_plan.html#autotoc_md248", null ],
-        [ "Фаза 4: Масштабирование (долгосрочная перспектива)", "md_plan.html#autotoc_md249", null ]
-      ] ],
-      [ "Заключение", "md_plan.html#autotoc_md251", null ]
-    ] ],
-    [ "README", "md__r_e_a_d_m_e.html", [
-      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md252", [
-        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md254", null ]
-      ] ],
-      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md256", [
-        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md257", [
-          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md258", null ],
-          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md259", null ],
-          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md260", null ],
-          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md261", null ]
+      [ "2. Требования jhub к jsonRVM", "md_migration-analysis.html#autotoc_md220", null ],
+      [ "3. Анализ по языкам", "md_migration-analysis.html#autotoc_md222", [
+        [ "3.1 Go", "md_migration-analysis.html#autotoc_md223", [
+          [ "3.1.1 Преимущества перехода на Go", "md_migration-analysis.html#autotoc_md224", null ],
+          [ "3.1.2 Недостатки перехода на Go", "md_migration-analysis.html#autotoc_md225", null ],
+          [ "3.1.3 Оценка для jhub", "md_migration-analysis.html#autotoc_md226", null ]
+        ] ],
+        [ "3.2 Rust", "md_migration-analysis.html#autotoc_md228", [
+          [ "3.2.1 Преимущества перехода на Rust", "md_migration-analysis.html#autotoc_md229", null ],
+          [ "3.2.2 Недостатки перехода на Rust", "md_migration-analysis.html#autotoc_md230", null ],
+          [ "3.2.3 Оценка для jhub", "md_migration-analysis.html#autotoc_md231", null ]
+        ] ],
+        [ "3.3 WebAssembly (WASM)", "md_migration-analysis.html#autotoc_md233", [
+          [ "3.3.1 WASM как дополнительный таргет для C++ (Emscripten)", "md_migration-analysis.html#autotoc_md234", null ],
+          [ "3.3.2 WASM + WASI (серверная сторона)", "md_migration-analysis.html#autotoc_md235", null ],
+          [ "3.3.3 Оценка WASM как самостоятельного подхода", "md_migration-analysis.html#autotoc_md236", null ]
         ] ]
       ] ],
-      [ "English", "md__r_e_a_d_m_e.html#autotoc_md263", [
-        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md264", [
-          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md265", null ],
-          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md266", null ],
-          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md267", null ],
-          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md268", null ]
+      [ "4. Сравнительная таблица", "md_migration-analysis.html#autotoc_md238", null ],
+      [ "5. Рекомендация", "md_migration-analysis.html#autotoc_md240", [
+        [ "5.1 Основная рекомендация: Go + WASM (TinyGo) для Web GUI", "md_migration-analysis.html#autotoc_md241", null ],
+        [ "5.2 Альтернативная рекомендация: Rust для Production Critical компонентов", "md_migration-analysis.html#autotoc_md242", null ],
+        [ "5.3 WebAssembly — не замена, а дополнение", "md_migration-analysis.html#autotoc_md243", null ]
+      ] ],
+      [ "6. Стратегия миграции", "md_migration-analysis.html#autotoc_md245", [
+        [ "Вариант A: Полный переход на Go (Рекомендуется)", "md_migration-analysis.html#autotoc_md246", null ],
+        [ "Вариант B: Постепенная миграция C++ → Rust", "md_migration-analysis.html#autotoc_md247", null ],
+        [ "Вариант C: Кросс-компиляция существующего C++ (Минимальные затраты)", "md_migration-analysis.html#autotoc_md248", null ]
+      ] ],
+      [ "7. Риски", "md_migration-analysis.html#autotoc_md250", null ],
+      [ "8. Заключение", "md_migration-analysis.html#autotoc_md252", null ],
+      [ "Ссылки", "md_migration-analysis.html#autotoc_md254", null ]
+    ] ],
+    [ "План развития проекта jsonRVM", "md_plan.html", [
+      [ "Введение", "md_plan.html#autotoc_md256", null ],
+      [ "Направление 1: Кроссплатформенность и доступность", "md_plan.html#autotoc_md258", [
+        [ "Обоснование", "md_plan.html#autotoc_md259", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md260", null ]
+      ] ],
+      [ "Направление 2: Образование и обучение программированию", "md_plan.html#autotoc_md262", [
+        [ "Обоснование", "md_plan.html#autotoc_md263", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md264", null ]
+      ] ],
+      [ "Направление 3: Интеграция с искусственным интеллектом", "md_plan.html#autotoc_md266", [
+        [ "Обоснование", "md_plan.html#autotoc_md267", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md268", null ]
+      ] ],
+      [ "Направление 4: Производительность и оптимизация", "md_plan.html#autotoc_md270", [
+        [ "Обоснование", "md_plan.html#autotoc_md271", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md272", null ]
+      ] ],
+      [ "Направление 5: Расширение экосистемы", "md_plan.html#autotoc_md274", [
+        [ "Обоснование", "md_plan.html#autotoc_md275", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md276", null ]
+      ] ],
+      [ "Направление 6: Моделирование и симуляция", "md_plan.html#autotoc_md278", [
+        [ "Обоснование", "md_plan.html#autotoc_md279", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md280", null ]
+      ] ],
+      [ "Направление 7: Качество и надёжность", "md_plan.html#autotoc_md282", [
+        [ "Обоснование", "md_plan.html#autotoc_md283", null ],
+        [ "Задачи по приоритету", "md_plan.html#autotoc_md284", null ]
+      ] ],
+      [ "Дорожная карта", "md_plan.html#autotoc_md286", [
+        [ "Фаза 1: Стабилизация (ближайшие задачи)", "md_plan.html#autotoc_md287", null ],
+        [ "Фаза 2: Доступность (следующий этап)", "md_plan.html#autotoc_md288", null ],
+        [ "Фаза 3: Практичность (среднесрочная перспектива)", "md_plan.html#autotoc_md289", null ],
+        [ "Фаза 4: Масштабирование (долгосрочная перспектива)", "md_plan.html#autotoc_md290", null ]
+      ] ],
+      [ "Заключение", "md_plan.html#autotoc_md292", null ]
+    ] ],
+    [ "README", "md__r_e_a_d_m_e.html", [
+      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md293", [
+        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md295", null ]
+      ] ],
+      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md297", [
+        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md298", [
+          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md299", null ],
+          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md300", null ],
+          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md301", null ],
+          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md302", null ]
+        ] ]
+      ] ],
+      [ "English", "md__r_e_a_d_m_e.html#autotoc_md304", [
+        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md305", [
+          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md306", null ],
+          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md307", null ],
+          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md308", null ],
+          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md309", null ]
         ] ],
-        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md270", [
-          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md271", null ],
-          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md272", null ],
-          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md273", null ],
-          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md274", null ]
+        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md311", [
+          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md312", null ],
+          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md313", null ],
+          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md314", null ],
+          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md315", null ]
         ] ],
-        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md276", [
-          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md277", null ],
-          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md278", null ],
-          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md279", null ]
+        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md317", [
+          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md318", null ],
+          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md319", null ],
+          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md320", null ]
         ] ],
-        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md281", null ],
-        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md283", null ],
-        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md285", null ],
-        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md287", null ]
+        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md322", null ],
+        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md324", null ],
+        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md326", null ],
+        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md328", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -424,7 +462,7 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "md_doc_2_dictionary.html",
-"namespacerm.html#a5defc52892523ef4bfdbc289829a45ef"
+"namespacemembers.html"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

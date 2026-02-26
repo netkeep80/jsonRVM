@@ -1,0 +1,492 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>jsonRVM: Анализ перехода jsonRVM на Go, Rust или WebAssembly</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="rm_view.jpg"/></td>
+  <td id="projectalign">
+   <div id="projectname">jsonRVM
+   </div>
+   <div id="projectbrief">json Relations (Model) Virtual Machine</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Поиск');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_migration-analysis.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Загрузка...</div>
+<div class="SRStatus" id="Searching">Поиск...</div>
+<div class="SRStatus" id="NoMatches">Не найдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Анализ перехода jsonRVM на Go, Rust или WebAssembly</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md214"></a> <b>Статус:</b> Анализ <b>Версия:</b> 1.0 <b>Дата:</b> 2026-02-26 <b>Связанные issue:</b> <a href="https://github.com/netkeep80/jsonRVM/issues/11">#11</a> <b>Контекст:</b> Подготовка к реализации jhub (<a href="https://github.com/netkeep80/BinDiffSynchronizer/blob/main/jhub-tz.md">jhub-tz.md</a>)</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md216"></a>
+1. Текущее состояние проекта</h1>
+<h2><a class="anchor" id="autotoc_md217"></a>
+1.1 Обзор jsonRVM (C++17)</h2>
+<p>jsonRVM — виртуальная машина для исполнения программ на языке «Модель Отношений» (RM), представленных в формате JSON. Реализована на C++17, версия 3.0.0.</p>
+<p><b>Ключевые характеристики:</b></p><ul>
+<li>~2500 строк кода (заголовочные файлы)</li>
+<li>60+ базовых операций</li>
+<li>Встроенная поддержка параллелизма (<code>std::execution::par</code>)</li>
+<li>Расширение через динамические библиотеки (DLL)</li>
+<li>Зависимости: nlohmann/json, doctest, cpp-httplib, xml2json</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md218"></a>
+1.2 Критические проблемы текущей реализации</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Проблема   </th><th class="markdownTableHeadNone">Серьёзность   </th><th class="markdownTableHeadNone">Влияние на jhub    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Загрузка DLL только на Windows (<code>windows.h</code>)   </td><td class="markdownTableBodyNone"><b>Критическая</b>   </td><td class="markdownTableBodyNone">jhub требует Linux/macOS/Windows    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Кодировка CP1251 вместо UTF-8   </td><td class="markdownTableBodyNone">Высокая   </td><td class="markdownTableBodyNone">API и JSON требуют UTF-8    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Нет CI/CD для тестирования   </td><td class="markdownTableBodyNone">Высокая   </td><td class="markdownTableBodyNone">jhub CI/CD требует стабильности    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Windows-специфичный синтаксис (<code>for each</code>)   </td><td class="markdownTableBodyNone">Средняя   </td><td class="markdownTableBodyNone">Не компилируется на Linux/macOS    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Жёсткое ограничение контекстов (4 уровня)   </td><td class="markdownTableBodyNone">Средняя   </td><td class="markdownTableBodyNone">Ограничивает гибкость jhub pipeline    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Отсутствие JIT/кэширования   </td><td class="markdownTableBodyNone">Средняя   </td><td class="markdownTableBodyNone">NFR-1: чтение репо &lt; 100 мс    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Нет REST API   </td><td class="markdownTableBodyNone">Средняя   </td><td class="markdownTableBodyNone">jhub FR-2.5, FR-3.3 требуют API   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md220"></a>
+2. Требования jhub к jsonRVM</h1>
+<p>Согласно спецификации <a href="https://github.com/netkeep80/BinDiffSynchronizer/blob/main/jhub-tz.md">jhub-tz.md</a>, jsonRVM используется как:</p>
+<ol type="1">
+<li><b>Движок исполнения CI/CD</b> (FR-3.1): JSON-пайплайны исполняются через jsonRVM</li>
+<li><b>Верификатор требований</b> (FR-2.2): JSON-требования проверяются через jsonRVM</li>
+<li><b>Web GUI движок</b> (FR-5.1): Web GUI — JSON-приложение на jsonRVM</li>
+<li><b>Ядро jdb</b> (Фаза 5): Исполняемые JSON-документы в базе данных</li>
+</ol>
+<p><b>Нефункциональные требования jhub, влияющие на выбор языка:</b></p><ul>
+<li><b>NFR-5 Кросс-платформенность:</b> Linux, macOS, Windows — все три</li>
+<li><b>NFR-1 Производительность:</b> Открытие репо ≤ 100 мс для 10 000 коммитов</li>
+<li><b>NFR-2 Масштабируемость:</b> До 100 узлов Docker Swarm</li>
+<li><b>NFR-3 Надёжность:</b> RPO ≤ 1 секунда (WAL)</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md222"></a>
+3. Анализ по языкам</h1>
+<h2><a class="anchor" id="autotoc_md223"></a>
+3.1 Go</h2>
+<h3><a class="anchor" id="autotoc_md224"></a>
+3.1.1 Преимущества перехода на Go</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Преимущество   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Важность для jhub    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Кросс-компиляция из коробки</b>   </td><td class="markdownTableBodyNone"><code>GOOS=linux/darwin/windows GOARCH=amd64</code> — один инструмент   </td><td class="markdownTableBodyNone"><b>Критически важно</b> (NFR-5)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Простота развёртывания</b>   </td><td class="markdownTableBodyNone">Статически слинкованный бинарник без зависимостей   </td><td class="markdownTableBodyNone">jhub docker-образы компактнее    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Встроенный HTTP/gRPC</b>   </td><td class="markdownTableBodyNone"><code>net/http</code>, gorilla/mux, стандартная библиотека   </td><td class="markdownTableBodyNone">Нативный REST API (FR-2.5)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Горутины и каналы</b>   </td><td class="markdownTableBodyNone">Параллелизм на уровне языка, легче чем C++ threads   </td><td class="markdownTableBodyNone">Параллельные CI/CD шаги (FR-3.6)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Сборщик мусора</b>   </td><td class="markdownTableBodyNone">Нет ручного управления памятью → меньше ошибок   </td><td class="markdownTableBodyNone">Надёжность jhub    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Отличная экосистема JSON</b>   </td><td class="markdownTableBodyNone"><code>encoding/json</code>, gjson, jsoniter — высокая производительность   </td><td class="markdownTableBodyNone">Ядро jsonRVM    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Быстрая компиляция</b>   </td><td class="markdownTableBodyNone">Go компилируется в разы быстрее C++   </td><td class="markdownTableBodyNone">CI/CD циклы короче    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Читаемость кода</b>   </td><td class="markdownTableBodyNone">Простой синтаксис, легко онбордить контрибьюторов   </td><td class="markdownTableBodyNone">Развитие проекта    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Docker-интеграция</b>   </td><td class="markdownTableBodyNone">Большинство Cloud Native инструментов написаны на Go   </td><td class="markdownTableBodyNone">Нативна для jhub стека    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>WebAssembly</b>   </td><td class="markdownTableBodyNone"><code>GOOS=js GOARCH=wasm</code> — Go → WASM без изменений   </td><td class="markdownTableBodyNone">FR-5.1 Web GUI   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md225"></a>
+3.1.2 Недостатки перехода на Go</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Недостаток   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Влияние    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>GC паузы</b>   </td><td class="markdownTableBodyNone">Stop-the-world GC (хотя и короткие)   </td><td class="markdownTableBodyNone">NFR-1: возможные latency spikes    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Нет generics до 1.18</b>   </td><td class="markdownTableBodyNone">Исторически слабая система типов   </td><td class="markdownTableBodyNone">Типизация RM-программ    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Больше памяти</b>   </td><td class="markdownTableBodyNone">Go runtime потребляет ~5–10 МБ базово   </td><td class="markdownTableBodyNone">Для embedded/WASM    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Нет operator overloading</b>   </td><td class="markdownTableBodyNone">Математические операции RM менее элегантны   </td><td class="markdownTableBodyNone">Код RM-интерпретатора    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Интерфейс с C</b>   </td><td class="markdownTableBodyNone">cgo медленный и сложный   </td><td class="markdownTableBodyNone">Интеграция с существующим C++ кодом    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Производительность CPU</b>   </td><td class="markdownTableBodyNone">Go обычно медленнее Rust/C++ на 10–50%   </td><td class="markdownTableBodyNone">Вычислительно-интенсивные задачи    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Размер WASM</b>   </td><td class="markdownTableBodyNone">Go WASM binary &gt; 2 МБ (TinyGo &lt; 200 КБ)   </td><td class="markdownTableBodyNone">Web GUI (FR-5.1)   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md226"></a>
+3.1.3 Оценка для jhub</h3>
+<div class="fragment"><div class="line">Кросс-платформенность:  ★★★★★ (нативная кросс-компиляция)</div>
+<div class="line">REST API:               ★★★★★ (стандартная библиотека)</div>
+<div class="line">Производительность:     ★★★★☆ (достаточно для jhub NFR-1)</div>
+<div class="line">Docker-интеграция:      ★★★★★ (Cloud Native инструмент)</div>
+<div class="line">WebAssembly:            ★★★★☆ (работает, но размер бинарника)</div>
+<div class="line">Сложность миграции:     ★★★★☆ (умеренная, синтаксис проще)</div>
+<div class="line">Экосистема JSON:        ★★★★★ (богатая)</div>
+<div class="line">Итог:                   ★★★★☆ (4.5/5)</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md228"></a>
+3.2 Rust</h2>
+<h3><a class="anchor" id="autotoc_md229"></a>
+3.2.1 Преимущества перехода на Rust</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Преимущество   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Важность для jhub    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Гарантии безопасности памяти</b>   </td><td class="markdownTableBodyNone">Borrow checker исключает data races, use-after-free   </td><td class="markdownTableBodyNone">NFR-3 Надёжность    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Производительность C++</b>   </td><td class="markdownTableBodyNone">Нет GC, zero-cost abstractions, LLVM backend   </td><td class="markdownTableBodyNone">NFR-1 &lt; 100 мс    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Отличный WebAssembly</b>   </td><td class="markdownTableBodyNone">wasm-bindgen, wasm-pack — лучший WASM ecosystem   </td><td class="markdownTableBodyNone">FR-5.1 Web GUI    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Кросс-компиляция</b>   </td><td class="markdownTableBodyNone">cargo build &ndash;target — множество таргетов   </td><td class="markdownTableBodyNone">NFR-5 Кросс-платформенность    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Async/await</b>   </td><td class="markdownTableBodyNone">tokio, async-std — высокопроизводительный async   </td><td class="markdownTableBodyNone">Параллельные pipeline    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Надёжная типовая система</b>   </td><td class="markdownTableBodyNone">Algebraic types, traits, lifetimes   </td><td class="markdownTableBodyNone">Корректность RM    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>serde_json</b>   </td><td class="markdownTableBodyNone">Лучшая JSON библиотека по производительности   </td><td class="markdownTableBodyNone">Ядро jsonRVM    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Нет runtime</b>   </td><td class="markdownTableBodyNone">Минимальный размер бинарника   </td><td class="markdownTableBodyNone">Docker образы, WASM    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>FFI совместимость</b>   </td><td class="markdownTableBodyNone">Прямой вызов C/C++ кода   </td><td class="markdownTableBodyNone">Постепенная миграция    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Растущая экосистема</b>   </td><td class="markdownTableBodyNone">Axum, Actix-web — топовые HTTP фреймворки   </td><td class="markdownTableBodyNone">REST API jhub   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md230"></a>
+3.2.2 Недостатки перехода на Rust</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Недостаток   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Влияние    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Крутая кривая обучения</b>   </td><td class="markdownTableBodyNone">Borrow checker требует изменения мышления   </td><td class="markdownTableBodyNone">Длительный онбординг    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Медленная компиляция</b>   </td><td class="markdownTableBodyNone">Крупные проекты компилируются долго   </td><td class="markdownTableBodyNone">CI/CD циклы    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Сложный async код</b>   </td><td class="markdownTableBodyNone">Futures, Pin, lifetime в async сложны   </td><td class="markdownTableBodyNone">Отладка CI runner    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Меньше готовых библиотек</b>   </td><td class="markdownTableBodyNone">Экосистема меньше, чем у Go/Python   </td><td class="markdownTableBodyNone">Риск самописных решений    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Verbose синтаксис</b>   </td><td class="markdownTableBodyNone">Явные lifetimes, <code>.unwrap()</code>, <code>?</code> operator   </td><td class="markdownTableBodyNone">Читаемость кода    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Динамическая загрузка</b>   </td><td class="markdownTableBodyNone"><code>dlopen</code> возможна, но сложнее чем в C++   </td><td class="markdownTableBodyNone">DLL-система плагинов   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md231"></a>
+3.2.3 Оценка для jhub</h3>
+<div class="fragment"><div class="line">Кросс-платформенность:  ★★★★★ (отличная поддержка)</div>
+<div class="line">REST API:               ★★★★★ (Axum/Actix — топ производительность)</div>
+<div class="line">Производительность:     ★★★★★ (C++ уровень, без GC)</div>
+<div class="line">Docker-интеграция:      ★★★★☆ (хорошо, но меньше готовых библиотек)</div>
+<div class="line">WebAssembly:            ★★★★★ (лучший WASM ecosystem)</div>
+<div class="line">Сложность миграции:     ★★☆☆☆ (высокая, требует экспертизы)</div>
+<div class="line">Экосистема JSON:        ★★★★★ (serde_json — эталон)</div>
+<div class="line">Итог:                   ★★★★☆ (4.0/5 — высокое качество, высокие затраты)</div>
+</div><!-- fragment --><hr  />
+<h2><a class="anchor" id="autotoc_md233"></a>
+3.3 WebAssembly (WASM)</h2>
+<p><b>Важное уточнение:</b> WebAssembly — это не язык программирования, а <b>целевой формат/платформа</b> для компиляции. jsonRVM может быть скомпилирован в WASM из C++, Go или Rust. Поэтому анализ разделён:</p>
+<h3><a class="anchor" id="autotoc_md234"></a>
+3.3.1 WASM как дополнительный таргет для C++ (Emscripten)</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Аспект   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Важность    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Плюс: Минимальные изменения кода</b>   </td><td class="markdownTableBodyNone">Emscripten компилирует C++ в WASM   </td><td class="markdownTableBodyNone">Небольшие затраты    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Плюс: Запуск в браузере</b>   </td><td class="markdownTableBodyNone">FR-5.1: Web GUI на jsonRVM   </td><td class="markdownTableBodyNone">Самодостаточность    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Минус: Нет DLL плагинов</b>   </td><td class="markdownTableBodyNone">Динамическая загрузка невозможна в WASM   </td><td class="markdownTableBodyNone">Потеря расширяемости    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Минус: Нет прямого FS</b>   </td><td class="markdownTableBodyNone">Виртуальная файловая система, Emscripten FS   </td><td class="markdownTableBodyNone">Сложность jdb    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Минус: Нет нативных threads без COOP</b>   </td><td class="markdownTableBodyNone">SharedArrayBuffer требует заголовков COOP/COEP   </td><td class="markdownTableBodyNone">CI runner ограничен    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Минус: Размер бинарника</b>   </td><td class="markdownTableBodyNone">C++ WASM обычно &gt; 5 МБ   </td><td class="markdownTableBodyNone">Медленная загрузка GUI    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Минус: Нет серверного использования</b>   </td><td class="markdownTableBodyNone">WASM в браузере, не для серверного CI runner   </td><td class="markdownTableBodyNone">jhub backend   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md235"></a>
+3.3.2 WASM + WASI (серверная сторона)</h3>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Аспект   </th><th class="markdownTableHeadNone">Описание   </th><th class="markdownTableHeadNone">Важность для jhub    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Потенциал</b>   </td><td class="markdownTableBodyNone">WASI позволяет запускать WASM вне браузера   </td><td class="markdownTableBodyNone">FR-3.3 CI Runner    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Изоляция</b>   </td><td class="markdownTableBodyNone">WASM sandbox для безопасного выполнения CI шагов   </td><td class="markdownTableBodyNone">FR-6 Безопасность    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Портируемость</b>   </td><td class="markdownTableBodyNone">Один WASM файл — любая WASI runtime   </td><td class="markdownTableBodyNone">NFR-5 Кросс-платформенность    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Зрелость</b>   </td><td class="markdownTableBodyNone">WASI preview 2 (2024) — ещё не полностью готов   </td><td class="markdownTableBodyNone">Риск нестабильности    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Производительность</b>   </td><td class="markdownTableBodyNone">10–30% медленнее нативного кода   </td><td class="markdownTableBodyNone">NFR-1 latency    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Экосистема</b>   </td><td class="markdownTableBodyNone">wasmtime, wasmer — растущие, но не production-ready   </td><td class="markdownTableBodyNone">Риск   </td></tr>
+</table>
+<h3><a class="anchor" id="autotoc_md236"></a>
+3.3.3 Оценка WASM как самостоятельного подхода</h3>
+<div class="fragment"><div class="line">Кросс-платформенность:  ★★★★★ (абсолютная — &quot;write once, run anywhere&quot;)</div>
+<div class="line">REST API:               ★★★☆☆ (через WASI, ограничено)</div>
+<div class="line">Производительность:     ★★★☆☆ (10-30% медленнее нативного)</div>
+<div class="line">Docker-интеграция:      ★★★☆☆ (wasmtime в Docker, нестандартно)</div>
+<div class="line">WebAssembly:            ★★★★★ (это и есть WASM)</div>
+<div class="line">Сложность миграции:     ★★★★☆ (проще для браузерного использования)</div>
+<div class="line">Экосистема JSON:        ★★★☆☆ (зависит от языка-источника)</div>
+<div class="line">Итог:                   ★★★☆☆ (3.0/5 — перспективно, но незрело для production)</div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="autotoc_md238"></a>
+4. Сравнительная таблица</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Критерий   </th><th class="markdownTableHeadNone">C++ (текущий)   </th><th class="markdownTableHeadNone">Go   </th><th class="markdownTableHeadNone">Rust   </th><th class="markdownTableHeadNone">WASM    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Кросс-платформенность   </td><td class="markdownTableBodyNone">★★☆☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Производительность   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Безопасность памяти   </td><td class="markdownTableBodyNone">★★☆☆☆   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★☆    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Web GUI (jhub FR-5)   </td><td class="markdownTableBodyNone">★★☆☆☆   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">REST API (jhub FR-2.5)   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">CI Runner (jhub FR-3.3)   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">JSON экосистема   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Docker интеграция   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Кривая обучения   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★☆☆☆   </td><td class="markdownTableBodyNone">★★★★☆    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Скорость разработки   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★★☆    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Сложность миграции   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★☆☆   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Экосистема   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★★★   </td><td class="markdownTableBodyNone">★★★★☆   </td><td class="markdownTableBodyNone">★★★☆☆    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Итоговый балл (для jhub)</b>   </td><td class="markdownTableBodyNone"><b>★★★☆☆</b>   </td><td class="markdownTableBodyNone"><b>★★★★★</b>   </td><td class="markdownTableBodyNone"><b>★★★★☆</b>   </td><td class="markdownTableBodyNone"><b>★★★☆☆</b>   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md240"></a>
+5. Рекомендация</h1>
+<h2><a class="anchor" id="autotoc_md241"></a>
+5.1 Основная рекомендация: Go + WASM (TinyGo) для Web GUI</h2>
+<p><b>Рекомендуется переход на Go</b> как основной язык реализации jsonRVM в контексте jhub.</p>
+<p><b>Обоснование:</b></p>
+<ol type="1">
+<li><b>jhub — платформа разработки, а не HPC система.</b> Приоритеты: надёжность, скорость разработки, кросс-платформенность — не максимальная производительность CPU. Go удовлетворяет всем требованиям jhub.</li>
+<li><b>Открытый вопрос в jhub-tz.md (Раздел 7):</b> "Какой язык для API Server?" — Go является очевидным ответом:<ul>
+<li>Kubernetes, Docker, Terraform написаны на Go</li>
+<li>Go — стандарт Cloud Native экосистемы</li>
+<li>jhub использует Docker Swarm → логично писать на том же языке</li>
+</ul>
+</li>
+<li><b>NFR-1 (100 мс открытие репо):</b> Go + оптимизированный JSON парсинг (gjson/jsoniter) легко достигает этого при 10 000 коммитов.</li>
+<li><b>FR-5.1 (Web GUI на jsonRVM):</b> TinyGo компилирует Go в &lt; 200 КБ WASM, что делает Web GUI реалистичным.</li>
+<li><b>Постепенная миграция:</b> Архитектура jsonRVM (заголовочные файлы ~2500 строк) позволяет написать Go реализацию параллельно, сохранив C++ версию как reference implementation.</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md242"></a>
+5.2 Альтернативная рекомендация: Rust для Production Critical компонентов</h2>
+<p><b>Rust рекомендуется</b> если в jhub будут требования к:</p><ul>
+<li><b>Безопасности на системном уровне</b> (выполнение недоверенного JSON кода)</li>
+<li><b>Extreme performance</b> (обработка тысяч CI pipeline одновременно)</li>
+<li><b>WASM для CI Runner</b> (WASI + wasmtime: изоляция выполнения)</li>
+</ul>
+<p>Rust также позволяет использовать <code>unsafe</code> блоки для постепенной миграции с C++ кода.</p>
+<h2><a class="anchor" id="autotoc_md243"></a>
+5.3 WebAssembly — не замена, а дополнение</h2>
+<p>WASM не является заменой языка для серверного jsonRVM. Рекомендуется использовать WASM для:</p><ul>
+<li><b>Браузерного Web GUI</b> (FR-5.1) — jsonRVM в WASM выполняет JSON программы прямо в браузере</li>
+<li><b>CI Runner изоляция</b> (WASI) — безопасное выполнение недоверенных pipeline</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md245"></a>
+6. Стратегия миграции</h1>
+<h2><a class="anchor" id="autotoc_md246"></a>
+Вариант A: Полный переход на Go (Рекомендуется)</h2>
+<div class="fragment"><div class="line">Фаза 1 (1-2 месяца): Портирование ядра jsonRVM на Go</div>
+<div class="line">  - Реализация интерпретатора RM на Go</div>
+<div class="line">  - nlohmann/json → encoding/json или gjson</div>
+<div class="line">  - Тесты: портирование doctest сценариев на testing/go</div>
+<div class="line"> </div>
+<div class="line">Фаза 2 (1 месяц): Кросс-платформенность и DLL</div>
+<div class="line">  - Plugin system через Go plugin package</div>
+<div class="line">  - CI/CD для Linux/macOS/Windows</div>
+<div class="line"> </div>
+<div class="line">Фаза 3 (2 месяца): jhub интеграция</div>
+<div class="line">  - REST API (net/http + chi)</div>
+<div class="line">  - Docker интеграция (docker SDK for Go)</div>
+<div class="line">  - TinyGo WASM для Web GUI</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md247"></a>
+Вариант B: Постепенная миграция C++ → Rust</h2>
+<div class="fragment"><div class="line">Фаза 1 (2-3 месяца): Параллельная Rust реализация</div>
+<div class="line">  - serde_json как JSON backend</div>
+<div class="line">  - Постепенный перенос модулей</div>
+<div class="line"> </div>
+<div class="line">Фаза 2 (2 месяца): WASM + WASI</div>
+<div class="line">  - wasm-bindgen для браузерного GUI</div>
+<div class="line">  - wasmtime для CI Runner изоляции</div>
+<div class="line"> </div>
+<div class="line">Фаза 3 (2 месяца): jhub интеграция</div>
+<div class="line">  - Axum REST API</div>
+<div class="line">  - tokio для async CI runner</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md248"></a>
+Вариант C: Кросс-компиляция существующего C++ (Минимальные затраты)</h2>
+<div class="fragment"><div class="line">Шаг 1: Устранить Windows-специфичный код (for each → for)</div>
+<div class="line">Шаг 2: dlopen/LoadLibrary абстракция (1 неделя)</div>
+<div class="line">Шаг 3: Emscripten для WASM браузера (Web GUI)</div>
+<div class="line">Шаг 4: Добавить HTTP REST API (cpp-httplib уже есть)</div>
+<div class="line">Шаг 5: Docker образы для Linux/macOS</div>
+</div><!-- fragment --><p><b>Вариант C</b> — наименьший риск и наименьшие затраты, но не решает фундаментальные проблемы архитектуры для jhub.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md250"></a>
+7. Риски</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Риск   </th><th class="markdownTableHeadNone">Go   </th><th class="markdownTableHeadNone">Rust   </th><th class="markdownTableHeadNone">WASM    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Потеря производительности   </td><td class="markdownTableBodyNone">Низкий (достаточная)   </td><td class="markdownTableBodyNone">Нет   </td><td class="markdownTableBodyNone">Средний (10-30%)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Потеря совместимости плагинов   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone">Высокий    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Сложность онбординга   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone"><b>Высокий</b>   </td><td class="markdownTableBodyNone">Средний    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Незрелость экосистемы   </td><td class="markdownTableBodyNone">Нет   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone"><b>Высокий</b> (WASI)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Объём работ по миграции   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone"><b>Высокий</b>   </td><td class="markdownTableBodyNone">Средний    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Риск для jhub дедлайнов   </td><td class="markdownTableBodyNone">Низкий   </td><td class="markdownTableBodyNone">Средний   </td><td class="markdownTableBodyNone"><b>Высокий</b>   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="autotoc_md252"></a>
+8. Заключение</h1>
+<p>Для реализации jhub рекомендуется следующая стратегия:</p>
+<ol type="1">
+<li><b>Краткосрочно (Фаза 4-5 jhub):</b> Исправить критические проблемы C++ версии:<ul>
+<li>Кросс-платформенная DLL загрузка (dlopen + LoadLibrary)</li>
+<li>Удаление Windows-специфичного синтаксиса</li>
+<li>UTF-8 вместо CP1251</li>
+<li>Добавить Linux CI/CD</li>
+</ul>
+</li>
+<li><b>Среднесрочно (Фаза 6 jhub):</b> Начать реализацию jsonRVM на <b>Go</b>:<ul>
+<li>Go лучше всего соответствует требованиям jhub как платформы</li>
+<li>Поддерживать C++ реализацию как reference implementation</li>
+<li>Использовать Go WASM (TinyGo) для Web GUI</li>
+</ul>
+</li>
+<li><b>Долгосрочно:</b> Рассмотреть отдельные компоненты на <b>Rust</b> для:<ul>
+<li>CI Runner изоляция (WASI sandbox)</li>
+<li>Критические пути производительности</li>
+</ul>
+</li>
+</ol>
+<p><b>WebAssembly</b> — не отдельный вариант языка, а целевой формат развёртывания. Рекомендуется использовать WASM для браузерного Web GUI (через Go/TinyGo или Rust/wasm-pack), но не как основной серверный runtime для jhub.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md254"></a>
+Ссылки</h1>
+<ul>
+<li><a href="https://github.com/netkeep80/BinDiffSynchronizer/blob/main/jhub-tz.md">jhub-tz.md</a> — Техническое задание jhub</li>
+<li><a class="el" href="md_analysis.html">analysis.md</a> — Детальный анализ текущего jsonRVM</li>
+<li><a class="el" href="md_plan.html">plan.md</a> — План развития jsonRVM</li>
+<li><a href="https://go.dev/wiki/WebAssembly">Go WASM</a> — Go WebAssembly</li>
+<li><a href="https://tinygo.org/">TinyGo</a> — Go для WASM &lt; 200 КБ</li>
+<li><a href="https://github.com/rustwasm/wasm-bindgen">wasm-bindgen</a> — Rust → WASM</li>
+<li><a href="https://tokio.rs/">Tokio</a> — Async Rust runtime</li>
+<li><a href="https://github.com/tokio-rs/axum">Axum</a> — Rust HTTP фреймворк</li>
+<li><a href="https://github.com/serde-rs/json">serde_json</a> — Rust JSON библиотека </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

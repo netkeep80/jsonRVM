@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['введение_0',['Введение',['../md_doc_2_introduction.html',1,'']]],
-  ['виртуальная_20машина_1',['Реляционная виртуальная машина',['../md_doc_2_r_v_m.html',1,'']]],
-  ['в_20руководстве_2',['Сокращения принятые в руководстве',['../md_doc_2_abbreviations.html',1,'']]]
+  ['webassembly_0',['Анализ перехода jsonRVM на Go, Rust или WebAssembly',['../md_migration-analysis.html',1,'']]]
 ];

@@ -9,7 +9,7 @@ var searchData=
   ['definition_20of_20triune_20entity_6',['5.1. Definition of Triune Entity',['../md_doc_2relations-model-en.html#autotoc_md104',1,'']]],
   ['definitions_7',['1. Basic Definitions',['../md_doc_2relations-model-en.html#autotoc_md89',1,'']]],
   ['definitions_20from_20links_20theory_8',['4.1. Definitions from Links Theory',['../md_doc_2relations-model-en.html#autotoc_md100',1,'']]],
-  ['description_9',['description',['../structrm_1_1steady__clock.html#adaf544ddd159f4b82efaaa79984f9a72',1,'rm::steady_clock::description'],['../md__r_e_a_d_m_e.html#autotoc_md264',1,'Description'],['../structrm_1_1vm_1_1rmvm__version.html#ab1b81cfc84e7e9ef8a11844bfd988b34',1,'rm::vm::rmvm_version::description'],['../structrm_1_1vm_1_1database__api__add__entity.html#af26d9e47e8fd9d0d4e9553544972927b',1,'rm::vm::database_api_add_entity::description'],['../structrm_1_1json__dump.html#a8b4ce60277789119e5b42305acb6e223',1,'rm::json_dump::description'],['../structrm_1_1base__entity.html#a4de90af0dc2b586d5d1b6413f77f1c82',1,'rm::base_entity::description']]],
+  ['description_9',['description',['../structrm_1_1steady__clock.html#adaf544ddd159f4b82efaaa79984f9a72',1,'rm::steady_clock::description'],['../md__r_e_a_d_m_e.html#autotoc_md305',1,'Description'],['../structrm_1_1vm_1_1rmvm__version.html#ab1b81cfc84e7e9ef8a11844bfd988b34',1,'rm::vm::rmvm_version::description'],['../structrm_1_1vm_1_1database__api__add__entity.html#af26d9e47e8fd9d0d4e9553544972927b',1,'rm::vm::database_api_add_entity::description'],['../structrm_1_1json__dump.html#a8b4ce60277789119e5b42305acb6e223',1,'rm::json_dump::description'],['../structrm_1_1base__entity.html#a4de90af0dc2b586d5d1b6413f77f1c82',1,'rm::base_entity::description']]],
   ['description_20of_20the_20relations_20model_10',['Mathematical Description of the Relations Model',['../md_doc_2relations-model-en.html',1,'']]],
   ['dictionary_2emd_11',['Dictionary.md',['../_dictionary_8md.html',1,'']]],
   ['diff_5foperation_12',['diff_operation',['../namespacerm.html#a569610ab133b63e65d75117d023e1841',1,'rm']]],
@@ -17,7 +17,7 @@ var searchData=
   ['dll_14',['dll',['../structrm_1_1_d_l_l.html',1,'rm::DLL'],['../structrm_1_1_d_l_l.html#a6575e2b3bca060de5a199bbd4d3fb477',1,'rm::DLL::DLL()']]],
   ['dll_2erm_2eh_15',['dll.rm.h',['../dll_8rm_8h.html',1,'']]],
   ['dlls_16',['dlls',['../classrm_1_1_d_l_ls.html',1,'rm::DLLs'],['../classrm_1_1_d_l_ls.html#ae2e532f0ecb570cae63337aa8430a1b2',1,'rm::DLLs::DLLs()']]],
-  ['documentation_17',['documentation',['../md__r_e_a_d_m_e.html#autotoc_md270',1,'Документация / Documentation'],['../md__r_e_a_d_m_e.html#autotoc_md272',1,'Техническая документация / Technical Documentation']]],
+  ['documentation_17',['documentation',['../md__r_e_a_d_m_e.html#autotoc_md311',1,'Документация / Documentation'],['../md__r_e_a_d_m_e.html#autotoc_md313',1,'Техническая документация / Technical Documentation']]],
   ['dump_5fjson_18',['dump_json',['../main_8cpp.html#ab8f19523b4ef182be7bbd08e6d5f23d7',1,'main.cpp']]],
   ['duplets_19',['duplets',['../md_doc_2relations-model-en.html#autotoc_md91',1,'1.2. Triplets and Duplets'],['../md_doc_2relations-model-en.html#autotoc_md95',1,'2.2. Link Types (Duplets)'],['../md_doc_2relations-model-en.html#autotoc_md96',1,'3. Reduction of Triplets to Duplets']]]
 ];
