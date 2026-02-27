@@ -567,6 +567,35 @@ namespace rm
 							throw json({{"$rel"s, j}});
 						}
 					}
+					else if (auto relop = ent.find("<<"); relop != end)
+					{ //	ordered pair format: ent = (rel, (obj, sub))
+						//	"<<" = relation (controller), ">>" = { "<<": obj (model), ">>": sub (view) }
+						json *obj_ptr = nullptr;
+						json *sub_ptr = nullptr;
+
+						if (auto duplet = ent.find(">>"); duplet != end && duplet->is_object())
+						{
+							if (auto obj_it = duplet->find("<<"); obj_it != duplet->end())
+								obj_ptr = &(*obj_it);
+							if (auto sub_it = duplet->find(">>"); sub_it != duplet->end())
+								sub_ptr = &(*sub_it);
+						}
+
+						try
+						{
+							vm_ctx ctx(
+								$.rel,
+								obj_ptr ? val_or_ref_to<rval>($, *obj_ptr) : $.rel,
+								sub_ptr ? val_or_ref_to<lval>($, *sub_ptr) : $.rel,
+								ent,
+								$);
+							exec_ent(ctx, val_or_ref_to<rval>($, *relop));
+						}
+						catch (json &j)
+						{
+							throw json({{"<<"s, j}});
+						}
+					}
 					else
 					{ //	контроллер это лямбда структура, которая управляет параллельным проецированием сущностей
 						auto it = ent.begin();

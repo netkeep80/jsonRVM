@@ -197,6 +197,62 @@ TEST_CASE("testing base entity 'where'") {
 }
 
 
+TEST_CASE("testing ordered pair format (<</>>) - version") {
+    MESSAGE("result:");
+    file_database_t	db("./");
+    vm root(&db);
+    //	base vocabulary
+    import_relations_model_to(root);
+    json    res;
+    char* fileNameInput = "ordered_pair_format.json";
+
+    try
+    {
+        std::ifstream in(fileNameInput);
+        REQUIRE(in.good());
+        json& root_json = static_cast<json&>(root);
+        in >> root_json[""];
+
+        vm_ctx $(res, root_json[""]);
+        root.exec_ent($, root_json[""]);
+        cout << res.dump(2) << endl;
+        CHECK(res.get_ref<string&>() == "3.0.0"s);
+    }
+    catch (json& j) { throw json({ { __func__, j } }); }
+    catch (json::exception& e) { throw json({ { __func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+    catch (std::exception& e) { throw json({ { __func__, "std::exception: "s + e.what() } }); }
+    catch (...) { throw json({ { __func__, "unknown exception"s } }); }
+}
+
+
+TEST_CASE("testing ordered pair format (<</>>) - where filter") {
+    MESSAGE("result:");
+    file_database_t	db("./");
+    vm root(&db);
+    //	base vocabulary
+    import_relations_model_to(root);
+    json    res;
+    char* fileNameInput = "ordered_pair_format_where.json";
+
+    try
+    {
+        std::ifstream in(fileNameInput);
+        REQUIRE(in.good());
+        json& root_json = static_cast<json&>(root);
+        in >> root_json[""];
+
+        vm_ctx $(res, root_json[""]);
+        root.exec_ent($, root_json[""]);
+        cout << res.dump(2) << endl;
+        CHECK(res[0].get_ref<string&>() == "4"s);
+    }
+    catch (json& j) { throw json({ { __func__, j } }); }
+    catch (json::exception& e) { throw json({ { __func__, "json::exception: "s + e.what() + ", id: "s + to_string(e.id) } }); }
+    catch (std::exception& e) { throw json({ { __func__, "std::exception: "s + e.what() } }); }
+    catch (...) { throw json({ { __func__, "unknown exception"s } }); }
+}
+
+
 TEST_CASE("performance test") {
     MESSAGE("result:");
     file_database_t	db("./");
