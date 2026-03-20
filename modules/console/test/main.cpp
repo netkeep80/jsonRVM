@@ -204,7 +204,7 @@ TEST_CASE("testing ordered pair format (<</>>) - version") {
     //	base vocabulary
     import_relations_model_to(root);
     json    res;
-    char* fileNameInput = "ordered_pair_format.json";
+    const char* fileNameInput = "ordered_pair_format.json";
 
     try
     {
@@ -232,7 +232,7 @@ TEST_CASE("testing ordered pair format (<</>>) - where filter") {
     //	base vocabulary
     import_relations_model_to(root);
     json    res;
-    char* fileNameInput = "ordered_pair_format_where.json";
+    const char* fileNameInput = "ordered_pair_format_where.json";
 
     try
     {
