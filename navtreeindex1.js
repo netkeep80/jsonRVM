@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"md_doc_2_abbreviations.html#autotoc_md18":[1,6],
 "md_doc_2_dictionary.html":[2],
 "md_doc_2_dictionary.html#amd":[2,5],
 "md_doc_2_dictionary.html#ancestor_link":[2,55],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "md_plan.html#autotoc_md287":[17,8,0],
 "md_plan.html#autotoc_md288":[17,8,1],
 "md_plan.html#autotoc_md289":[17,8,2],
-"md_plan.html#autotoc_md290":[17,8,3],
-"md_plan.html#autotoc_md292":[17,9]
+"md_plan.html#autotoc_md290":[17,8,3]
 };

@@ -21,6 +21,6 @@ var searchData=
   ['риски_18',['7. Риски',['../md_migration-analysis.html#autotoc_md250',1,'']]],
   ['родительский_20контекст_20отношения_19',['Родительский контекст отношения',['../md_doc_2_dictionary.html#parent_ctx',1,'']]],
   ['руководстве_20',['Сокращения принятые в руководстве',['../md_doc_2_abbreviations.html',1,'']]],
-  ['русский_21',['Русский',['../md__r_e_a_d_m_e.html#autotoc_md297',1,'']]],
+  ['русский_21',['Русский',['../md__r_e_a_d_m_e.html#autotoc_md298',1,'']]],
   ['р_22',['Р',['../md_doc_2_dictionary.html#autotoc_md43',1,'']]]
 ];

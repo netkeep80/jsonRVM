@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['libraries_0',['Используемые библиотеки / Third-party Libraries',['../md__r_e_a_d_m_e.html#autotoc_md328',1,'']]],
-  ['license_1',['license',['../md__r_e_a_d_m_e.html#autotoc_md324',1,'Лицензия / License'],['../md_doc_2_l_i_c_e_n_s_e.html',1,'LICENSE']]],
+  ['libraries_0',['Используемые библиотеки / Third-party Libraries',['../md__r_e_a_d_m_e.html#autotoc_md329',1,'']]],
+  ['license_1',['license',['../md__r_e_a_d_m_e.html#autotoc_md325',1,'Лицензия / License'],['../md_doc_2_l_i_c_e_n_s_e.html',1,'LICENSE']]],
   ['license_2emd_2',['LICENSE.md',['../_l_i_c_e_n_s_e_8md.html',1,'']]],
   ['link_3',['link',['../classrm_1_1interface__t.html#a6749acdb352836b1ed439b61e9b4388a',1,'rm::interface_t']]],
   ['link_20types_20duplets_4',['2.2. Link Types (Duplets)',['../md_doc_2relations-model-en.html#autotoc_md95',1,'']]],

@@ -391,40 +391,41 @@ var NAVTREE =
       ] ],
       [ "Заключение", "md_plan.html#autotoc_md292", null ]
     ] ],
+    [ "Portfolio roadmap", "md__p_o_r_t_f_o_l_i_o.html", null ],
     [ "README", "md__r_e_a_d_m_e.html", [
-      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md293", [
-        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md295", null ]
+      [ "jsonRVM — json Relations (Model) Virtual Machine", "md__r_e_a_d_m_e.html#autotoc_md294", [
+        [ "Содержание / Contents", "md__r_e_a_d_m_e.html#autotoc_md296", null ]
       ] ],
-      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md297", [
-        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md298", [
-          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md299", null ],
-          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md300", null ],
-          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md301", null ],
-          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md302", null ]
+      [ "Русский", "md__r_e_a_d_m_e.html#autotoc_md298", [
+        [ "Описание", "md__r_e_a_d_m_e.html#autotoc_md299", [
+          [ "Основные концепции", "md__r_e_a_d_m_e.html#autotoc_md300", null ],
+          [ "Ключевые особенности", "md__r_e_a_d_m_e.html#autotoc_md301", null ],
+          [ "Пример программы", "md__r_e_a_d_m_e.html#autotoc_md302", null ],
+          [ "Более сложный пример", "md__r_e_a_d_m_e.html#autotoc_md303", null ]
         ] ]
       ] ],
-      [ "English", "md__r_e_a_d_m_e.html#autotoc_md304", [
-        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md305", [
-          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md306", null ],
-          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md307", null ],
-          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md308", null ],
-          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md309", null ]
+      [ "English", "md__r_e_a_d_m_e.html#autotoc_md305", [
+        [ "Description", "md__r_e_a_d_m_e.html#autotoc_md306", [
+          [ "Core Concepts", "md__r_e_a_d_m_e.html#autotoc_md307", null ],
+          [ "Key Features", "md__r_e_a_d_m_e.html#autotoc_md308", null ],
+          [ "Example Program", "md__r_e_a_d_m_e.html#autotoc_md309", null ],
+          [ "Advanced Example", "md__r_e_a_d_m_e.html#autotoc_md310", null ]
         ] ],
-        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md311", [
-          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md312", null ],
-          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md313", null ],
-          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md314", null ],
-          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md315", null ]
+        [ "Документация / Documentation", "md__r_e_a_d_m_e.html#autotoc_md312", [
+          [ "Анализ и планирование / Analysis and Planning", "md__r_e_a_d_m_e.html#autotoc_md313", null ],
+          [ "Техническая документация / Technical Documentation", "md__r_e_a_d_m_e.html#autotoc_md314", null ],
+          [ "Математическая модель / Mathematical Model", "md__r_e_a_d_m_e.html#autotoc_md315", null ],
+          [ "Примеры / Examples", "md__r_e_a_d_m_e.html#autotoc_md316", null ]
         ] ],
-        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md317", [
-          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md318", null ],
-          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md319", null ],
-          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md320", null ]
+        [ "Сборка / Building", "md__r_e_a_d_m_e.html#autotoc_md318", [
+          [ "Требования / Requirements", "md__r_e_a_d_m_e.html#autotoc_md319", null ],
+          [ "Команды / Commands", "md__r_e_a_d_m_e.html#autotoc_md320", null ],
+          [ "Запуск тестов / Running Tests", "md__r_e_a_d_m_e.html#autotoc_md321", null ]
         ] ],
-        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md322", null ],
-        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md324", null ],
-        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md326", null ],
-        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md328", null ]
+        [ "Использование / Usage", "md__r_e_a_d_m_e.html#autotoc_md323", null ],
+        [ "Лицензия / License", "md__r_e_a_d_m_e.html#autotoc_md325", null ],
+        [ "Благодарности / Thanks", "md__r_e_a_d_m_e.html#autotoc_md327", null ],
+        [ "Используемые библиотеки / Third-party Libraries", "md__r_e_a_d_m_e.html#autotoc_md329", null ]
       ] ]
     ] ],
     [ "Пространства имен", "namespaces.html", [
@@ -461,8 +462,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"md_doc_2_dictionary.html",
-"namespacemembers.html"
+"md_doc_2_abbreviations.html#autotoc_md18",
+"md_plan.html#autotoc_md292"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

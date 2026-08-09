@@ -8,7 +8,7 @@ var searchData=
   ['заключение_5',['заключение',['../md_analysis.html#autotoc_md213',1,'Заключение'],['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md176',1,'Заключение'],['../md_plan.html#autotoc_md292',1,'Заключение'],['../md_migration-analysis.html#autotoc_md252',1,'8. Заключение'],['../md_doc_2relations-model-ru.html#autotoc_md143',1,'8. Заключение']]],
   ['замена_20а_20дополнение_6',['5.3 WebAssembly — не замена, а дополнение',['../md_migration-analysis.html#autotoc_md243',1,'']]],
   ['замкнутость_7',['6.3. Замкнутость',['../md_doc_2relations-model-ru.html#autotoc_md138',1,'']]],
-  ['запуск_20тестов_20running_20tests_8',['Запуск тестов / Running Tests',['../md__r_e_a_d_m_e.html#autotoc_md320',1,'']]],
+  ['запуск_20тестов_20running_20tests_8',['Запуск тестов / Running Tests',['../md__r_e_a_d_m_e.html#autotoc_md321',1,'']]],
   ['затраты_9',['Вариант C: Кросс-компиляция существующего C++ (Минимальные затраты)',['../md_migration-analysis.html#autotoc_md248',1,'']]],
   ['значение_20отношения_10',['Значение отношения',['../md_doc_2_dictionary.html#rel_res',1,'']]],
   ['значений_20при_20исполнении_20json_20как_20байткод_20rvm_20_3a_11',['Семантика json значений при исполнении  (json как байткод RVM):',['../md_doc_2_r_v_m.html#autotoc_md156',1,'']]],

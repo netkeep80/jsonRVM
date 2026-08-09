@@ -1,14 +1,14 @@
 var searchData=
 [
-  ['technical_20documentation_0',['Техническая документация / Technical Documentation',['../md__r_e_a_d_m_e.html#autotoc_md313',1,'']]],
-  ['tests_1',['Запуск тестов / Running Tests',['../md__r_e_a_d_m_e.html#autotoc_md320',1,'']]],
-  ['thanks_2',['Благодарности / Thanks',['../md__r_e_a_d_m_e.html#autotoc_md326',1,'']]],
+  ['technical_20documentation_0',['Техническая документация / Technical Documentation',['../md__r_e_a_d_m_e.html#autotoc_md314',1,'']]],
+  ['tests_1',['Запуск тестов / Running Tests',['../md__r_e_a_d_m_e.html#autotoc_md321',1,'']]],
+  ['thanks_2',['Благодарности / Thanks',['../md__r_e_a_d_m_e.html#autotoc_md327',1,'']]],
   ['the_20jsonrvm_20project_3',['Advantages and benefits of the jsonRVM project',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html',1,'']]],
   ['the_20relations_20model_4',['the relations model',['../md_doc_2relations-model-en.html#autotoc_md106',1,'6. Properties of the Relations Model'],['../md_doc_2relations-model-en.html',1,'Mathematical Description of the Relations Model']]],
   ['the_20state_20of_20the_20relation_20выяснение_20состояния_20отношения_5',['Clarification of the state of the relation / Выяснение состояния отношения',['../md_doc_2_dictionary.html#clar_state',1,'']]],
   ['theorem_20on_20representation_20equivalence_6',['3.1. Theorem on Representation Equivalence',['../md_doc_2relations-model-en.html#autotoc_md97',1,'']]],
   ['theory_7',['4.1. Definitions from Links Theory',['../md_doc_2relations-model-en.html#autotoc_md100',1,'']]],
-  ['third_20party_20libraries_8',['Используемые библиотеки / Third-party Libraries',['../md__r_e_a_d_m_e.html#autotoc_md328',1,'']]],
+  ['third_20party_20libraries_8',['Используемые библиотеки / Third-party Libraries',['../md__r_e_a_d_m_e.html#autotoc_md329',1,'']]],
   ['throw_5fjson_9',['throw_json',['../structrm_1_1vm__ctx.html#acb06c430cfb3f2a63f13e24de1701714',1,'rm::vm_ctx']]],
   ['tinygo_20для_20web_20gui_10',['5.1 Основная рекомендация: Go + WASM (TinyGo) для Web GUI',['../md_migration-analysis.html#autotoc_md241',1,'']]],
   ['to_20duplets_11',['3. Reduction of Triplets to Duplets',['../md_doc_2relations-model-en.html#autotoc_md96',1,'']]],

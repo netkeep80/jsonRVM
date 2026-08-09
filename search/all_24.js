@@ -5,7 +5,7 @@ var searchData=
   ['альтернативная_20рекомендация_3a_20rust_20для_20production_20critical_20компонентов_2',['5.2 Альтернативная рекомендация: Rust для Production Critical компонентов',['../md_migration-analysis.html#autotoc_md242',1,'']]],
   ['амд_3',['AMD / АМД',['../md_doc_2_abbreviations.html#autotoc_md16',1,'']]],
   ['анализ_20виртуальной_20машины_20модели_20отношений_4',['Преимущества и польза проекта jsonRVM: Анализ виртуальной машины модели отношений',['../md__advantages_01and_01benefits_01of_01the_01json_r_v_m_01project.html#autotoc_md162',1,'']]],
-  ['анализ_20и_20планирование_20analysis_20and_20planning_5',['Анализ и планирование / Analysis and Planning',['../md__r_e_a_d_m_e.html#autotoc_md312',1,'']]],
+  ['анализ_20и_20планирование_20analysis_20and_20planning_5',['Анализ и планирование / Analysis and Planning',['../md__r_e_a_d_m_e.html#autotoc_md313',1,'']]],
   ['анализ_20перехода_20jsonrvm_20на_20go_20rust_20или_20webassembly_6',['Анализ перехода jsonRVM на Go, Rust или WebAssembly',['../md_migration-analysis.html',1,'']]],
   ['анализ_20по_20языкам_7',['3. Анализ по языкам',['../md_migration-analysis.html#autotoc_md222',1,'']]],
   ['анализ_20проекта_20jsonrvm_8',['Анализ проекта jsonRVM',['../md_analysis.html',1,'']]],
