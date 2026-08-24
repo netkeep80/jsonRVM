@@ -251,15 +251,41 @@ The structure of the Relations Model is fractal: each entity contains three othe
 
 ### 7.2. Executable Constructs
 
-An entity in JSON representation is defined by an object with fields:
+An entity in JSON representation can be defined using two equivalent formats.
+
+**Format 1: Expanded notation (named fields)**
 
 ```json
 {
-  "$rel": "<relation>",
-  "$sub": "<subject>",
-  "$obj": "<object>"
+  "$rel": "<relation-controller>",
+  "$obj": "<object-model>",
+  "$sub": "<subject-view>"
 }
 ```
+
+**Format 2: Compact notation using ordered pairs (ordered pair format)**
+
+Based on the mathematical representation of a triplet as nested ordered pairs:
+`ent = (rel, (obj, sub))`
+
+```json
+{
+  "<<": "<relation-controller>",
+  ">>": {
+    "<<": "<object-model>",
+    ">>": "<subject-view>"
+  }
+}
+```
+
+Field correspondence between formats:
+| Format 1 | Format 2 | Role |
+|----------|----------|------|
+| `$rel`   | `<<`     | Relation-controller (Controller) |
+| `$obj`   | `>>/<<`  | Object-model (Model) |
+| `$sub`   | `>>/>>` | Subject-view (View) |
+
+Note: in Format 2, the value of `>>` is an ordered pair `(obj, sub)`. If the `>>` field is absent or not an object, the object and subject are inherited from the parent context.
 
 ## 8. Conclusion
 

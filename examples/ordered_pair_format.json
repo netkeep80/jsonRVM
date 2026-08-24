@@ -1,0 +1,26 @@
+{
+   "_comment": "Example of ordered pair format (<</>>) for Relations Model",
+   "_description": "Demonstrates ent = (rel, (obj, sub)) representation",
+   "_format": {
+      "<<": "<relation-controller>",
+      ">>": {
+         "<<": "<object-model>",
+         ">>": "<subject-view>"
+      }
+   },
+   "_equivalent_old_format": {
+      "$rel": "<relation-controller>",
+      "$obj": "<object-model>",
+      "$sub": "<subject-view>"
+   },
+   "version_example": {
+      "<<": "rmvm/version"
+   },
+   "addition_example": {
+      "<<": "+",
+      ">>": {
+         "<<": 1,
+         ">>": 1
+      }
+   }
+}
